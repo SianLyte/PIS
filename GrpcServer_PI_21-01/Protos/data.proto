@@ -1,0 +1,122 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GrpcServer_PI_21_01";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+package data;
+
+service DataRetriever {
+  rpc GetContract (IdRequest) returns (ContractReply);
+  rpc GetContracts (google.protobuf.Empty) returns (ContractsReply);
+  rpc AddContract (ContractReply) returns (OperationResult);
+  rpc RemoveContract (IdRequest) returns (OperationResult);
+  rpc UpdateContract (ContractReply) returns (OperationResult);
+
+  rpc GetLocation (IdRequest) returns (LocationReply);
+  rpc GetLocations (google.protobuf.Empty) returns (stream LocationReply);
+  rpc AddLocation (LocationReply) returns (OperationResult);
+  rpc RemoveLocation (IdRequest) returns (OperationResult);
+  rpc UpdateLocation (LocationReply) returns (OperationResult);
+
+  rpc GetOrganization (IdRequest) returns (OrganizationReply);
+  rpc GetOrganizations (google.protobuf.Empty) returns (stream OrganizationReply);
+  rpc AddOrganization (OrganizationReply) returns (OperationResult);
+  rpc RemoveOrganization (IdRequest) returns (OperationResult);
+  rpc UpdateOrganization (OrganizationReply) returns (OperationResult);
+
+  rpc GetAct (IdRequest) returns (ActReply);
+  rpc GetActs (google.protobuf.Empty) returns (stream ActReply);
+  rpc AddAct (ActReply) returns (OperationResult);
+  rpc RemoveAct (IdRequest) returns (OperationResult);
+  rpc UpdateAct (ActReply) returns (OperationResult);
+
+  rpc GetApp (IdRequest) returns (ApplicationReply);
+  rpc GetApps (google.protobuf.Empty) returns (stream ApplicationReply);
+  rpc AddApp (ApplicationReply) returns (OperationResult);
+  rpc RemoveApp (IdRequest) returns (OperationResult);
+  rpc UpdateApp (ApplicationReply) returns (OperationResult);
+
+  rpc GetAnimalCard (IdRequest) returns (AnimalCardReply);
+  rpc GetAnimalCards (google.protobuf.Empty) returns (stream AnimalCardReply);
+  rpc RemoveAnimalCard (IdRequest) returns (OperationResult);
+  rpc AddAnimalCard (AnimalCardReply) returns (OperationResult);
+  rpc UpdateAnimalCard (AnimalCardReply) returns (OperationResult);
+}
+
+message IdRequest {
+  int32 id = 1;
+}
+
+message OperationResult {
+	bool successful = 1;
+	google.protobuf.Int32Value modifiedId = 2;
+}
+
+message ContractReply {
+  int32 idContract = 1;
+  google.protobuf.Timestamp dateConclusion = 2;
+  google.protobuf.Timestamp actionDate = 3;
+  LocationReply locationCost = 4;
+  int32 cost = 5;
+  OrganizationReply executer = 6;
+  OrganizationReply costumer = 7;
+}
+
+message ContractsReply {
+	repeated ContractReply contracts = 1;
+}
+
+message LocationReply {
+  int32 idLocation = 1;
+  string city = 2;
+}
+
+message OrganizationReply {
+	int32 idOrganization = 1;
+	string name = 2;
+	string INN = 3;
+	string KPP = 4;
+	string registrationAddress = 5;
+	string type = 6;
+	string status = 7;
+}
+
+message ActReply {
+	int32 actNumber = 1;
+	int32 countDogs = 2;
+	int32 countCats = 3;
+	OrganizationReply organization = 4;
+	google.protobuf.Timestamp date = 5;
+	string targetCapture = 6;
+	ApplicationReply app = 7;
+	ContractReply contract = 8;
+}
+
+message ApplicationReply {
+	google.protobuf.Timestamp date = 1;
+	int32 number = 2;
+	string locality = 3;
+	string territory = 4;
+	string animalHabitat = 5;
+	string urgencyOfExecution = 6;
+	string animalDescription = 7;
+	string applicantCategory = 8;
+}
+
+message AnimalCardReply {
+	int32 idAnimalCard = 1;
+	string category = 2;
+	string gender = 3;
+	string breed = 4;
+	int32 size = 5;
+	string furType = 6;
+	string color = 7;
+	string ears = 8;
+	string tail = 9;
+	string specialSigns = 10;
+	string identificationLabel = 11;
+	LocationReply locality = 12;
+	ActReply captureAct = 13;
+}

@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GrpcClient_PI_21_01";
+
+package previlege;
+
+service Previlege {
+	rpc GetAccessFor (UserRequest) returns (AccessReply);
+}
+
+message UserRequest {
+	string userPrevilege = 1;
+	string requestingForm = 2;
+}
+
+message AccessReply {
+	bool accessGranted = 1;
+}

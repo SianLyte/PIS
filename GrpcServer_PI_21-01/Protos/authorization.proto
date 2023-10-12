@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GrpcServer_PI_21_01";
+
+import "google/protobuf/wrappers.proto";
+package authorization;
+
+service Authorization {
+	rpc LogIn (Credentials) returns (LogInResult);
+}
+
+message Credentials {
+	string login = 1;
+	string password = 2;
+}
+
+message LogInResult {
+	bool successful = 1;
+	int32 idUser = 2;
+	google.protobuf.StringValue privelege = 3;
+}
