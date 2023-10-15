@@ -39,8 +39,6 @@ namespace GrpcServer_PI_21_01.Data
                 $"validity_date = '{c.DateConclusion}'," +
                 $"customer_id = {c.Costumer.idOrg}," +
                 $"performer_id = {c.Executer.idOrg}," +
-                $"catch_price = {c.Cost}," +
-                $"city_id = {c.LocationCost}" +
                 $" WHERE id = {c.IdContract}") { Connection = cn };
             {
                 cn.Open();
@@ -62,9 +60,8 @@ namespace GrpcServer_PI_21_01.Data
             // 'cont' подаётся с Id = -1. После добавления в БД нужно присвоить
             // этому ссылочному значению новое Id, которое было присвоено самой БД
             using NpgsqlCommand cmd = new($"INSERT INTO municipal_contract " +
-                $"(created_at, validity_date, customer_id, performer_id, catch_price, city_id)" +
-                $"VALUES ('{c.ActionDate}', '{c.DateConclusion}', {c.Costumer.idOrg}, {c.Executer.idOrg}, " +
-                $"{c.Cost}, {c.LocationCost}) RETURNING id")
+                $"(created_at, validity_date, customer_id, performer_id)" +
+                $"VALUES ('{c.ActionDate}', '{c.DateConclusion}', {c.Costumer.idOrg}, {c.Executer.idOrg}) RETURNING id")
             { Connection = cn };
             {
                 cn.Open();
@@ -109,14 +106,12 @@ namespace GrpcServer_PI_21_01.Data
                 NpgsqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    contractsEmpty.Add(new string[7] {
+                    contractsEmpty.Add(new string[5] {
                     reader[0].ToString(), //id
                     reader[1].ToString(), //created_at
                     reader[2].ToString(), //validity_date
                     reader[3].ToString(), //customer_id
-                    reader[4].ToString(), //performer_id
-                    reader[5].ToString(), //catch_price
-                    reader[6].ToString() //city_id
+                    reader[4].ToString() //performer_id
                     });
                 }
                 reader.Close();
@@ -124,8 +119,11 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < contractsEmpty.Count; i++)
                 {
                     var a = contractsEmpty[i];
-                    Contract contract = new Contract(int.Parse(a[0]), DateTime.Parse(a[1]), DateTime.Parse(a[2]), 
-                        Location.GetById(int.Parse(a[6]), cn), int.Parse(a[5]), Organization.GetById(int.Parse(a[3]),cn),
+                    Contract contract = new (
+                        int.Parse(a[0]),
+                        DateTime.Parse(a[1]),
+                        DateTime.Parse(a[2]), 
+                        Organization.GetById(int.Parse(a[3]),cn),
                         Organization.GetById(int.Parse(a[4]), cn));
                     contracts.Add(contract);
                 }

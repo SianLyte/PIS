@@ -45,8 +45,6 @@ namespace GrpcClient_PI_21_01.Views
                 dateConclusion.Value = cont.DateConclusion;
                 dateAction.Value = cont.ActionDate;
                 await FullComboBox();
-                cityCombo.Text = cont.LocationCost.City;
-                CostText.Text = cont.Cost.ToString();
                 executerCombo.Text = cont.Executer.name;
                 customerCombo.Text = cont.Costumer.name;
             }
@@ -94,8 +92,7 @@ namespace GrpcClient_PI_21_01.Views
                     //                customerCombo.SelectedValue.ToString()
                     //};
                     var contr = new Contract(ContId, dateConclusion.Value,
-                        dateAction.Value, cityCombo.SelectedItem as Location,
-                        int.Parse(CostText.Text), executerCombo.SelectedItem as Organization,
+                        dateAction.Value, executerCombo.SelectedItem as Organization,
                         customerCombo.SelectedItem as Organization);
                     await ContractService.UpdateContract(contr);
                     this.Close();
@@ -118,8 +115,6 @@ namespace GrpcClient_PI_21_01.Views
                 //                    OrgRepository.Organizations[int.Parse(customerCombo.SelectedValue.ToString()) - 1]);
                 var contr = new Contract(-1,
                     dateConclusion.Value, dateAction.Value,
-                    cityCombo.SelectedItem as Location,
-                    int.Parse(CostText.Text),
                     executerCombo.SelectedItem as Organization,
                     customerCombo.SelectedItem as Organization);
                 await ContractService.AddContract(contr);

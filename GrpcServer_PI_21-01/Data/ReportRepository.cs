@@ -1,4 +1,5 @@
 ﻿using GrpcServer_PI_21_01.Models;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ namespace GrpcServer_PI_21_01.Data
     class ReportRepository
     {
         private static List<Report> reports = new();
+
+        static readonly NpgsqlConnection cn = new NpgsqlConnection("Host=localhost;Username=postgres;Password=123;Database=animal_capture;");
+
         public static List<Report> GenereteReport(DateTime start, DateTime finish)
         {
             reports = new List<Report>();
@@ -20,7 +24,9 @@ namespace GrpcServer_PI_21_01.Data
                 int summ = 0;
                 foreach (var act in allSity)
                 {
-                    summ += act.Contracts.Cost;
+                    int contractId = act.Contracts.IdContract;
+                    int localityId = loc.IdLocation;
+                    summ += (int)Location_Contract.GetAnimalCost(localityId, contractId, cn).Price;
                 }
                 if (summ != 0)
                     reports.Add( new Report(start, finish, loc, allSity.Count(), allSity.Sum(x => x.Sum), summ));

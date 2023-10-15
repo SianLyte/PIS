@@ -74,12 +74,10 @@ namespace GrpcClient_PI_21_01
             return new ContractReply
             {
                 ActionDate = Timestamp.FromDateTime(contr.ActionDate.ToUtc()),
-                Cost = contr.Cost,
                 Costumer = contr.Costumer.ToReply(),
                 DateConclusion = Timestamp.FromDateTime(contr.DateConclusion.ToUtc()),
                 Executer = contr.Executer.ToReply(),
-                IdContract = contr.IdContract,
-                LocationCost = contr.LocationCost.ToReply(),
+                IdContract = contr.IdContract
             };
         }
 
@@ -97,14 +95,13 @@ namespace GrpcClient_PI_21_01
             };
         }
 
+
         public static Contract FromReply(this ContractReply reply)
         {
             return new Contract(
                 reply.IdContract,
                 reply.DateConclusion.ToDateTime(),
                 reply.ActionDate.ToDateTime(),
-                reply.LocationCost.FromReply(),
-                reply.Cost,
                 reply.Executer.FromReply(),
                 reply.Costumer.FromReply());
         }

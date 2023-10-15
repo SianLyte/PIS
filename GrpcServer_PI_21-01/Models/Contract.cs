@@ -12,21 +12,16 @@ namespace GrpcServer_PI_21_01.Models
         public int IdContract { get; set; }
         public DateTime DateConclusion { get; set; }
         public DateTime ActionDate { get; set; }
-        public Location LocationCost { get; set; }
-        public int Cost { get; set; }
         public Organization Executer { get; set; }
         public Organization Costumer { get; set; }
 
         public Contract(int idContract, 
             DateTime dateConclusion, DateTime actionDate, 
-            Location location, int cost,
             Organization executer, Organization costumer)
         {
             IdContract = idContract;
             DateConclusion = dateConclusion;
             ActionDate = actionDate;
-            LocationCost = location;
-            Cost = cost;
             Executer = executer;
             Costumer = costumer;
         }
@@ -48,11 +43,11 @@ namespace GrpcServer_PI_21_01.Models
                 arr[5] = (reader[4].ToString()); //org
             }
             reader.Close();
-            Models.Location location = Location.GetById(int.Parse(arr[2]), cn);
+            //Models.Location location = Location.GetById(int.Parse(arr[2]), cn);
             Organization executer = Organization.GetById(int.Parse(arr[4]), cn);
             Organization costumer = Organization.GetById(int.Parse(arr[5]), cn);
 
-            return new Contract(id, DateTime.Parse(arr[0]), DateTime.Parse(arr[1]), location, int.Parse(arr[3]), executer, costumer);
+            return new Contract(id, DateTime.Parse(arr[0]), DateTime.Parse(arr[1]), executer, costumer);
         }
 
     }

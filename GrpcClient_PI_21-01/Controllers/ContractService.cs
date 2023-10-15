@@ -79,8 +79,6 @@ namespace GrpcClient_PI_21_01.Controllers
                 reply.IdContract,
                 reply.DateConclusion.ToDateTime(),
                 reply.ActionDate.ToDateTime(),
-                LocationService.GetLocationFromReply(reply.LocationCost),
-                reply.Cost,
                 OrgService.GetOrganizationFromReply(reply.Costumer),
                 OrgService.GetOrganizationFromReply(reply.Executer)
                 );

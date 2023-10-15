@@ -37,7 +37,6 @@ namespace GrpcClient_PI_21_01
                         DateTime.MinValue, "",
                         new App(DateTime.MinValue, -1, "", "", "", "", "", ""),
                         new Contract(-1, DateTime.MinValue, DateTime.MinValue,
-                        new Location(-1, ""), 0,
                         new Organization(-1, "", "", "", "", "", ""),
                         new Organization(-1, "", "", "", "", "", "")));
     }

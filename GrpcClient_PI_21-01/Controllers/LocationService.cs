@@ -25,6 +25,20 @@ namespace GrpcClient_PI_21_01.Controllers
             return locations;
         }
 
+        public static async Task<List<Location>> GetLocation_Contract_Costs()
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var serverData = client.GetLocations(new Google.Protobuf.WellKnownTypes.Empty());
+            var responseStream = serverData.ResponseStream;
+            var locations = new List<Location>();
+            await foreach (var response in responseStream.ReadAllAsync())
+            {
+                locations.Add(response.FromReply());
+            }
+            return locations;
+        }
+
         public static async Task<bool> AddLocation(Location loc)
         {
             loc.IdLocation = -1;
