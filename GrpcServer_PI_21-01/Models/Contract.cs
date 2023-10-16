@@ -31,23 +31,22 @@ namespace GrpcServer_PI_21_01.Models
             NpgsqlCommand cmd = new($"SELECT * FROM municipal_contract WHERE id = {id}");
             cmd.Connection = cn;
             var reader = cmd.ExecuteReader();
-            string[] arr = { "0", "0", "0", "0", "0", "0" };
+            string[] arr = { "0", "0", "0", "0", "0" };
 
             while (reader.Read())
             {
-                arr[0] = (reader[1].ToString());
-                arr[1] = (reader[2].ToString());
-                arr[2] = ((reader[6].ToString())); //location
-                arr[3] = (reader[5].ToString());
-                arr[4] = (reader[3].ToString()); //org
-                arr[5] = (reader[4].ToString()); //org
+                arr[0] = (reader[0].ToString()); //id
+                arr[1] = (reader[1].ToString()); //data
+                arr[2] = ((reader[2].ToString())); //data
+                arr[3] = (reader[3].ToString()); //org
+                arr[4] = (reader[4].ToString()); //org
             }
             reader.Close();
             //Models.Location location = Location.GetById(int.Parse(arr[2]), cn);
-            Organization executer = Organization.GetById(int.Parse(arr[4]), cn);
-            Organization costumer = Organization.GetById(int.Parse(arr[5]), cn);
+            Organization executer = Organization.GetById(int.Parse(arr[3]), cn);
+            Organization costumer = Organization.GetById(int.Parse(arr[4]), cn);
 
-            return new Contract(id, DateTime.Parse(arr[0]), DateTime.Parse(arr[1]), executer, costumer);
+            return new Contract(id, DateTime.Parse(arr[1]), DateTime.Parse(arr[2]), executer, costumer);
         }
 
     }

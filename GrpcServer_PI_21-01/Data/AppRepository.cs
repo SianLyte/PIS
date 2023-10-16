@@ -12,7 +12,7 @@ namespace GrpcServer_PI_21_01.Data
 
     internal class AppRepository
     {
-        static readonly NpgsqlConnection cn = new NpgsqlConnection("Host=localhost;Username=postgres;Password=123;Database=animal_capture;");
+        static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
         // удалить, когда привяжем БД
         //private readonly static List<App> Applications = new()

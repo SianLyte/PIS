@@ -11,7 +11,7 @@ namespace GrpcServer_PI_21_01.Data
 {
     class LocationRepository
     {
-        static readonly NpgsqlConnection cn = new NpgsqlConnection("Host=localhost;Username=postgres;Password=123;Database=animal_capture;");
+        static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
         // это удалить когда БД будет привязана
         //private readonly static List<Location> locationCosts = new()

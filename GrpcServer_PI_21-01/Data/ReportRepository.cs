@@ -12,7 +12,7 @@ namespace GrpcServer_PI_21_01.Data
     {
         private static List<Report> reports = new();
 
-        static readonly NpgsqlConnection cn = new NpgsqlConnection("Host=localhost;Username=postgres;Password=123;Database=animal_capture;");
+        static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
         public static List<Report> GenereteReport(DateTime start, DateTime finish)
         {

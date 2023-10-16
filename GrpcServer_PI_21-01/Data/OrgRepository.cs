@@ -11,7 +11,7 @@ namespace GrpcServer_PI_21_01.Data
 {
     internal class OrgRepository
     {
-        static readonly NpgsqlConnection cn = new NpgsqlConnection("Host=localhost;Username=postgres;Password=123;Database=animal_capture;");
+        static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
         // это удалить после привязки БД
         //private readonly static List<Organization> OrganizationsMas = new()

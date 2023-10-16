@@ -7,9 +7,10 @@ namespace GrpcClient_PI_21_01.Controllers
         private static async Task<List<Report>> GetReports(DateTime start, DateTime finish)
         {
             var reports = new List<Report>();
+            var acts = await ActService.GetActs();
             foreach (var loc in await LocationService.GetLocations())
             {
-                var allSity = (await ActService.GetActs())
+                var allSity = acts
                     .Where(x => x.Application.locality == loc.City & x.Date >= start & x.Date <= finish);
                 int summ = 0;
                 foreach (var act in allSity)
