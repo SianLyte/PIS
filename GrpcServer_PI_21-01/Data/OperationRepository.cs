@@ -34,7 +34,7 @@ namespace GrpcServer_PI_21_01.Data
         {
             var cmdString = $"INSERT INTO operation " +
                 $"(operation.Action, operation.ModifiedObjectId, operation.ModifiedTableName) " +
-                $"VALUES ({op.Action}, {op.ModifiedObjectId}, {op.ModifiedTableName}) RETURNING operationId";
+                $"VALUES ({op.Action}, {op.ModifiedObjectId}, '{op.ModifiedTableName}') RETURNING operationId";
             using NpgsqlCommand cmd = new(cmdString) { Connection = cn };
             try
             {
