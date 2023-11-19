@@ -23,6 +23,19 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(result);
         }
 
+        public static void Log(ActionType actType, string tableName, int modifId, UserReply actor)
+        {
+            var operation = new OperationReply()
+            {
+                Action = actType,
+                ModifiedObjectId = modifId,
+                ModifiedTableName = tableName,
+                OperationId = -1,
+                User = actor,
+            };
+            OperationRepository.AddOperation(operation);
+        }
+
         #region Contracts
         public override Task<ContractReply> GetContract(IdRequest request, ServerCallContext context)
         {
@@ -170,12 +183,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var act = request.FromReply();
             var successful = ActRepository.AddAct(act);
+            Log(ActionType.ActionAdd, "Act Capture", act.ActNumber, request.Actor);
             return CRUD(act.ActNumber, successful);
         }
 
         public override Task<OperationResult> RemoveAct(IdRequest request, ServerCallContext ctx)
         {
             var successful = ActRepository.RemoveAct(request.Id);
+            Log(ActionType.ActionDelete, "Act Capture", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
 
@@ -183,6 +198,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var act = request.FromReply();
             var successful = ActRepository.UpdateAct(act);
+            Log(ActionType.ActionUpdate, "Act Capture", act.ActNumber, request.Actor);
             return CRUD(act.ActNumber, successful);
         }
         #endregion

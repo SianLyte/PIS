@@ -47,6 +47,7 @@ service DataRetriever {
 
 message IdRequest {
   int32 id = 1;
+  UserReply actor = 2;
 }
 
 message OperationResult {
@@ -92,6 +93,7 @@ message ActReply {
 	string targetCapture = 6;
 	ApplicationReply app = 7;
 	ContractReply contract = 8;
+	UserReply actor = 9;
 }
 
 message ApplicationReply {
@@ -119,4 +121,28 @@ message AnimalCardReply {
 	string identificationLabel = 11;
 	LocationReply locality = 12;
 	ActReply captureAct = 13;
+}
+
+message UserReply {
+	int32 userId = 1;
+	string name = 2;
+	string surname = 3;
+	string patronymic = 4;
+	OrganizationReply organization = 5;
+	string privelegeLevel = 6;
+	string login = 7;
+}
+
+enum ActionType {
+	ACTION_ADD = 0;
+	ACTION_DELETE = 1;
+	ACTION_UPDATE = 2;
+}
+
+message OperationReply {
+	int32 operationId = 1;
+	UserReply user = 2;
+	int32 modifiedObjectId = 3;
+	string modifiedTableName = 4;
+	ActionType action = 5;
 }
