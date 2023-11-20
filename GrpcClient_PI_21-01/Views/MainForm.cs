@@ -34,7 +34,7 @@ namespace GrpcClient_PI_21_01
             await SetDataGridApp();
             await SetDataGridOrg();
         }
-        
+
         private async Task CreateData()
         {
             ContractTable.Rows.Clear();
@@ -76,7 +76,7 @@ namespace GrpcClient_PI_21_01
 
 
 
-
+                // Типо так лучше работет? :)
 
 
 
@@ -110,7 +110,7 @@ namespace GrpcClient_PI_21_01
 
         private async void AddButton_Click(object sender, EventArgs e)
         {
-            if (await CheckPrivilege(NameMdels.Act)) 
+            if (await CheckPrivilege(NameMdels.Act))
             {
                 var editWindow = new ActEdit();
                 editWindow.ShowDialog();
@@ -375,6 +375,22 @@ namespace GrpcClient_PI_21_01
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void History_button_Click(object sender, EventArgs e)
+        {
+            List<string> testData = new List<string>() { "Фамилия", "Имя", "Отчество.", "Телефон",
+                                    "Электронная почта", "Организация", "Наименование структурного подразделения",
+                                    "Должность", "Рабочий телефон", "Рабочий адрес электронной почты подразделения",
+                                    "Логин", "Дата и время", "Идентификационный номер экземпляра объекта.", "Описание экземпляра объекта после совершения действия",
+                                    "Идентификационный номер загруженного файла"}; //Тестовые данные
+            HistoryForm historyForm = new HistoryForm(testData);
+            historyForm.ShowDialog();
+        }
+
+        private void closeMainForm_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
