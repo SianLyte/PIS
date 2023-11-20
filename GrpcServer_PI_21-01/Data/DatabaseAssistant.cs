@@ -2,6 +2,9 @@
 {
     public class DatabaseAssistant
     {
-        public const string ConnectionString = "Host=localhost;Username=postgres;Password=P@ssw0rd;Database=animal_capture;";
+        public const string ConnectionString = "Host=localhost;Username=postgres;Password=" +
+            //"P@ssw0rd" +
+            "123" +
+            ";Database=animal_capture;";
     }
 }
