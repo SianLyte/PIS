@@ -24,6 +24,7 @@ namespace GrpcClient_PI_21_01.Models
         App,
         Contract,
         Org,
-        Report
+        Report,
+        History,
     }
 }

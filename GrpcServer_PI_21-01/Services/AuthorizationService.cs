@@ -23,12 +23,22 @@ namespace GrpcServer_PI_21_01.Services
             var idUser = user?.IdUser;
             var privelege = user?.PrivelegeLevel;
 
-            return Task.FromResult(new LogInResult()
+            var result = new LogInResult()
             {
                 Successful = loggedIn,
-                IdUser = idUser is null ? -1 : idUser.Value,
-                Privelege = privelege,
-            });
+            };
+
+            if (loggedIn)
+            {
+                result.UserId = idUser is null ? -1 : idUser.Value;
+                result.Name = user?.Name;
+                result.Surname = user?.Surname;
+                result.Patronymic = user?.Patronymic;
+                result.Organization = user?.Organization.ToReply();
+                result.PrivelegeLevel = privelege;
+            }
+
+            return Task.FromResult(result);
         }
     }
 }

@@ -15,7 +15,8 @@ namespace GrpcClient_PI_21_01.Controllers
             var reply = await client.LogInAsync(new Credentials() { Login = login, Password = password });
             if (reply.Successful)
             {
-                return new User(reply.IdUser, reply.Privelege);
+                return new User(reply.UserId, login, reply.PrivelegeLevel,
+                    reply.Name, reply.Surname, reply.Patronymic, reply.Organization.FromReply());
             }
             return null;
         }

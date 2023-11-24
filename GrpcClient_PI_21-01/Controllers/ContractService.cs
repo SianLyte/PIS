@@ -88,7 +88,7 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var contracts = await client.GetContractsAsync(new Google.Protobuf.WellKnownTypes.Empty());
+            var contracts = await client.GetContractsAsync(UserService.CurrentUser?.ToReply());
             return contracts.Contracts.Select(cr => GetContractFromReply(cr));
         } 
         

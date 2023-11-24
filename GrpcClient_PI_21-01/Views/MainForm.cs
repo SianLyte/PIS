@@ -77,7 +77,7 @@ namespace GrpcClient_PI_21_01
 
 
                 // Типо так лучше работет? :)
-
+                // Ахахахаа, а как так вышло
 
 
 
@@ -377,15 +377,24 @@ namespace GrpcClient_PI_21_01
 
         }
 
-        private void History_button_Click(object sender, EventArgs e)
+        private async void History_button_Click(object sender, EventArgs e)
         {
-            List<string> testData = new List<string>() { "Фамилия", "Имя", "Отчество.", "Телефон",
+            if (await CheckPrivilege(NameMdels.History))
+            {
+                // var data = await OperationService.GetOperations();
+                // var historyForm = new HistoryForm(data);
+
+                // это переписать так, чтобы можно было заменить кодом сверху
+                var data = new List<string>() { "Фамилия", "Имя", "Отчество.", "Телефон",
                                     "Электронная почта", "Организация", "Наименование структурного подразделения",
                                     "Должность", "Рабочий телефон", "Рабочий адрес электронной почты подразделения",
                                     "Логин", "Дата и время", "Идентификационный номер экземпляра объекта.", "Описание экземпляра объекта после совершения действия",
-                                    "Идентификационный номер загруженного файла"}; //Тестовые данные
-            HistoryForm historyForm = new HistoryForm(testData);
-            historyForm.ShowDialog();
+                                    "Идентификационный номер загруженного файла"};
+                var historyForm = new HistoryForm(data);
+
+                historyForm.ShowDialog();
+            }
+            else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций");
         }
 
         private void closeMainForm_Click(object sender, EventArgs e)

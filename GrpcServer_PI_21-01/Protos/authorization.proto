@@ -3,6 +3,7 @@
 option csharp_namespace = "GrpcServer_PI_21_01";
 
 import "google/protobuf/wrappers.proto";
+import "Protos/data.proto";
 package authorization;
 
 service Authorization {
@@ -16,6 +17,12 @@ message Credentials {
 
 message LogInResult {
 	bool successful = 1;
-	int32 idUser = 2;
-	google.protobuf.StringValue privelege = 3;
+	int32 userId = 2;
+	string name = 3;
+	string surname = 4;
+	string patronymic = 5;
+	data.OrganizationReply organization = 6;
+	string privelegeLevel = 7;
+	//int32 idUser = 2;
+	//google.protobuf.StringValue privelege = 3;
 }

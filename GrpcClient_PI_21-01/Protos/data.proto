@@ -9,44 +9,47 @@ package data;
 
 service DataRetriever {
   rpc GetContract (IdRequest) returns (ContractReply);
-  rpc GetContracts (google.protobuf.Empty) returns (ContractsReply);
+  rpc GetContracts (UserReply) returns (ContractsReply);
   rpc AddContract (ContractReply) returns (OperationResult);
   rpc RemoveContract (IdRequest) returns (OperationResult);
   rpc UpdateContract (ContractReply) returns (OperationResult);
 
   rpc GetLocation (IdRequest) returns (LocationReply);
-  rpc GetLocations (google.protobuf.Empty) returns (stream LocationReply);
+  rpc GetLocations (UserReply) returns (stream LocationReply);
   rpc AddLocation (LocationReply) returns (OperationResult);
   rpc RemoveLocation (IdRequest) returns (OperationResult);
   rpc UpdateLocation (LocationReply) returns (OperationResult);
 
   rpc GetOrganization (IdRequest) returns (OrganizationReply);
-  rpc GetOrganizations (google.protobuf.Empty) returns (stream OrganizationReply);
+  rpc GetOrganizations (UserReply) returns (stream OrganizationReply);
   rpc AddOrganization (OrganizationReply) returns (OperationResult);
   rpc RemoveOrganization (IdRequest) returns (OperationResult);
   rpc UpdateOrganization (OrganizationReply) returns (OperationResult);
 
   rpc GetAct (IdRequest) returns (ActReply);
-  rpc GetActs (google.protobuf.Empty) returns (stream ActReply);
+  rpc GetActs (UserReply) returns (stream ActReply);
   rpc AddAct (ActReply) returns (OperationResult);
   rpc RemoveAct (IdRequest) returns (OperationResult);
   rpc UpdateAct (ActReply) returns (OperationResult);
 
   rpc GetApp (IdRequest) returns (ApplicationReply);
-  rpc GetApps (google.protobuf.Empty) returns (stream ApplicationReply);
+  rpc GetApps (UserReply) returns (stream ApplicationReply);
   rpc AddApp (ApplicationReply) returns (OperationResult);
   rpc RemoveApp (IdRequest) returns (OperationResult);
   rpc UpdateApp (ApplicationReply) returns (OperationResult);
 
   rpc GetAnimalCard (IdRequest) returns (AnimalCardReply);
-  rpc GetAnimalCards (google.protobuf.Empty) returns (stream AnimalCardReply);
+  rpc GetAnimalCards (UserReply) returns (stream AnimalCardReply);
   rpc RemoveAnimalCard (IdRequest) returns (OperationResult);
   rpc AddAnimalCard (AnimalCardReply) returns (OperationResult);
   rpc UpdateAnimalCard (AnimalCardReply) returns (OperationResult);
+
+  rpc GetOperations (UserReply) returns (stream OperationReply);
 }
 
 message IdRequest {
   int32 id = 1;
+  UserReply actor = 2;
 }
 
 message OperationResult {
@@ -62,6 +65,7 @@ message ContractReply {
   int32 cost = 5;
   OrganizationReply executer = 6;
   OrganizationReply costumer = 7;
+  UserReply actor = 8;
 }
 
 message ContractsReply {
@@ -71,6 +75,7 @@ message ContractsReply {
 message LocationReply {
   int32 idLocation = 1;
   string city = 2;
+  UserReply actor = 3;
 }
 
 message OrganizationReply {
@@ -81,6 +86,7 @@ message OrganizationReply {
 	string registrationAddress = 5;
 	string type = 6;
 	string status = 7;
+	UserReply actor = 8;
 }
 
 message ActReply {
@@ -92,6 +98,7 @@ message ActReply {
 	string targetCapture = 6;
 	ApplicationReply app = 7;
 	ContractReply contract = 8;
+	UserReply actor = 9;
 }
 
 message ApplicationReply {
@@ -103,6 +110,7 @@ message ApplicationReply {
 	string urgencyOfExecution = 6;
 	string animalDescription = 7;
 	string applicantCategory = 8;
+	UserReply actor = 9;
 }
 
 message AnimalCardReply {
@@ -119,4 +127,30 @@ message AnimalCardReply {
 	string identificationLabel = 11;
 	LocationReply locality = 12;
 	ActReply captureAct = 13;
+	UserReply actor = 14;
+}
+
+message UserReply {
+	int32 userId = 1;
+	string name = 2;
+	string surname = 3;
+	string patronymic = 4;
+	OrganizationReply organization = 5;
+	string privelegeLevel = 6;
+	string login = 7;
+}
+
+enum ActionType {
+	ACTION_ADD = 0;
+	ACTION_DELETE = 1;
+	ACTION_UPDATE = 2;
+}
+
+message OperationReply {
+	int32 operationId = 1;
+	UserReply user = 2;
+	int32 modifiedObjectId = 3;
+	string modifiedTableName = 4;
+	ActionType action = 5;
+	google.protobuf.Timestamp date = 6;
 }

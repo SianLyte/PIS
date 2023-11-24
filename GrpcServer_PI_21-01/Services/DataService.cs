@@ -32,6 +32,7 @@ namespace GrpcServer_PI_21_01.Services
                 ModifiedTableName = tableName,
                 OperationId = -1,
                 User = actor,
+                Date = DateTime.Now.ToTimestamp(),
             };
             OperationRepository.AddOperation(operation);
         }
@@ -48,10 +49,16 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(contr.ToReply());
         }
 
-        public override Task<ContractsReply> GetContracts(Empty empty, ServerCallContext context)
+        public override Task<ContractsReply> GetContracts(UserReply user, ServerCallContext context)
         {
-            var contracts = ContractRepository.GetContracts()
-                .Select(c => c.ToReply());
+            IEnumerable<ContractReply> contracts;
+            if (user.PrivelegeLevel == "Admin")
+                contracts = ContractRepository.GetContracts()
+                    .Select(c => c.ToReply());
+            else contracts = ContractRepository.GetContracts()
+                    .Where(c => c.Costumer.idOrg == user.Organization.IdOrganization
+                    || c.Executer.idOrg == user.Organization.IdOrganization)
+                    .Select(c => c.ToReply());
 
             var reply = new ContractsReply();
             reply.Contracts.AddRange(contracts);
@@ -62,6 +69,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var contract = request.FromReply();
             var successful = ContractRepository.AddContract(contract);
+            Log(ActionType.ActionAdd, "Contract", contract.IdContract, request.Actor);
             return CRUD(contract.IdContract, successful);
         }
 
@@ -69,12 +77,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var contract = request.FromReply();
             var successful = ContractRepository.UpdateContract(contract);
+            Log(ActionType.ActionUpdate, "Contract", contract.IdContract, request.Actor);
             return CRUD(contract.IdContract, successful);
         }
 
         public override Task<OperationResult> RemoveContract(IdRequest id, ServerCallContext ctx)
         {
             var successful = ContractRepository.DeleteContract(id.Id);
+            Log(ActionType.ActionDelete, "Contract", id.Id, id.Actor);
             return CRUD(id.Id, successful);
         }
         #endregion
@@ -90,7 +100,7 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(loc.ToReply());
         }
 
-        public override async Task GetLocations(Empty request,
+        public override async Task GetLocations(UserReply user,
             IServerStreamWriter<LocationReply> responseStream,
             ServerCallContext context)
         {
@@ -104,12 +114,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var location = request.FromReply();
             var successful = LocationRepository.AddLocation(location);
+            Log(ActionType.ActionAdd, "Location", location.IdLocation, request.Actor);
             return CRUD(location.IdLocation, successful);
         }
 
         public override Task<OperationResult> RemoveLocation(IdRequest request, ServerCallContext ctx)
         {
             var successful = LocationRepository.RemoveLocation(request.Id);
+            Log(ActionType.ActionDelete, "Location", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
 
@@ -117,6 +129,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var location = request.FromReply();
             var successful = LocationRepository.UpdateLocation(location);
+            Log(ActionType.ActionUpdate, "Location", location.IdLocation, request.Actor);
             return CRUD(location.IdLocation, successful);
         }
         #endregion
@@ -131,7 +144,7 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(org.ToReply());
         }
 
-        public override async Task GetOrganizations(Empty request,
+        public override async Task GetOrganizations(UserReply user,
             IServerStreamWriter<OrganizationReply> responseStream,
             ServerCallContext context)
         {
@@ -143,6 +156,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var org = reply.FromReply();
             var successful = OrgRepository.AddOrganization(org);
+            Log(ActionType.ActionAdd, "Organization", org.idOrg, reply.Actor);
             return CRUD(org.idOrg, successful);
         }
 
@@ -150,12 +164,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var org = reply.FromReply();
             var successful = OrgRepository.UpdateOrganization(org);
+            Log(ActionType.ActionUpdate, "Organization", org.idOrg, reply.Actor);
             return CRUD(org.idOrg, successful);
         }
 
         public override Task<OperationResult> RemoveOrganization(IdRequest id, ServerCallContext ctx)
         {
             var successful = OrgRepository.RemoveOrganization(id.Id);
+            Log(ActionType.ActionDelete, "Organization", id.Id, id.Actor);
             return CRUD(id.Id, successful);
         }
         #endregion
@@ -171,11 +187,13 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(act.ToReply());
         }
 
-        public override async Task GetActs(Empty e,
+        public override async Task GetActs(UserReply user,
             IServerStreamWriter<ActReply> responseStream,
             ServerCallContext ctx)
         {
-            foreach (var act in ActRepository.GetActs())
+            foreach (var act in ActRepository.GetActs()
+                .Where(a => user.PrivelegeLevel == "Admin"
+                || a.Organization.idOrg == user.Organization.IdOrganization))
                 await responseStream.WriteAsync(act.ToReply());
         }
 
@@ -214,11 +232,14 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(app.ToReply());
         }
 
-        public override async Task GetApps(Empty e,
+        public override async Task GetApps(UserReply user,
             IServerStreamWriter<ApplicationReply> responseStream,
             ServerCallContext ctx)
         {
             foreach (var app in AppRepository.GetApplications())
+                // у заявки на отлов нет организации, хотя по суди должна быть
+                // пока не меняю, но потом из этого могут вырасти проблемы
+                // например, сейчас не могу отфильтровать заявки для пользователя
                 await responseStream.WriteAsync(app.ToReply());
         }
 
@@ -226,6 +247,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var app = reply.FromReply();
             var successful = AppRepository.AddApplication(app);
+            Log(ActionType.ActionAdd, "Application", app.number, reply.Actor);
             return CRUD(app.number, successful);
         }
 
@@ -233,12 +255,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var app = reply.FromReply();
             var successful = AppRepository.UpdateApplication(app);
+            Log(ActionType.ActionUpdate, "Application", app.number, reply.Actor);
             return CRUD(app.number, successful);
         }
 
         public override Task<OperationResult> RemoveApp(IdRequest request, ServerCallContext ctx)
         {
             var successful = AppRepository.RemoveApplication(request.Id);
+            Log(ActionType.ActionDelete, "Application", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
         #endregion
@@ -254,11 +278,13 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(animalCard.ToReply());
         }
 
-        public override async Task GetAnimalCards(Empty e,
+        public override async Task GetAnimalCards(UserReply user,
             IServerStreamWriter<AnimalCardReply> responseStream,
             ServerCallContext ctx)
         {
-            foreach (var animalCard in AnimalRepository.GetAnimalCards())
+            foreach (var animalCard in AnimalRepository.GetAnimalCards()
+                .Where(ac => user.PrivelegeLevel == "Admin"
+                || ac.ActCapture.Organization.idOrg == user.Organization.IdOrganization))
                 await responseStream.WriteAsync(animalCard.ToReply());
         }
 
@@ -266,6 +292,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var animalCard = request.FromReply();
             var successful = AnimalRepository.AddAnimalCard(animalCard);
+            Log(ActionType.ActionAdd, "Animal Card", animalCard.IdAnimalCard, request.Actor);
             return CRUD(animalCard.IdAnimalCard, successful);
         }
 
@@ -273,13 +300,24 @@ namespace GrpcServer_PI_21_01.Services
         {
             var animalCard = request.FromReply();
             var successful = AnimalRepository.UpdateAnimalCard(animalCard);
+            Log(ActionType.ActionUpdate, "Animal Card", animalCard.IdAnimalCard, request.Actor);
             return CRUD(animalCard.IdAnimalCard, successful);
         }
 
         public override Task<OperationResult> RemoveAnimalCard(IdRequest request, ServerCallContext ctx)
         {
             var successful = AnimalRepository.RemoveAnimalCard(request.Id);
+            Log(ActionType.ActionDelete, "Animal Card", request.Id, request.Actor);
             return CRUD(request.Id, successful);
+        }
+        #endregion
+        #region Operations
+        public override async Task GetOperations(UserReply user,
+            IServerStreamWriter<OperationReply> responseStream,
+            ServerCallContext ctx)
+        {
+            foreach (var op in OperationRepository.GetOperations())
+                await responseStream.WriteAsync(op);
         }
         #endregion
     }

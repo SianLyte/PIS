@@ -78,7 +78,7 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var serverData = client.GetOrganizations(new Google.Protobuf.WellKnownTypes.Empty());
+            var serverData = client.GetOrganizations(UserService.CurrentUser?.ToReply());
             var responseStream = serverData.ResponseStream;
             var orgs = new List<Organization>();
             await foreach (var response in responseStream.ReadAllAsync())

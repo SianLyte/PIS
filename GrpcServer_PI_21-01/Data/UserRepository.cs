@@ -53,7 +53,7 @@ namespace GrpcServer_PI_21_01.Data
         public static List<User> GetUsers()
         {
             var users = new List<User>();
-            using var cmd = new NpgsqlCommand($"SELECT * FROM user") { Connection = cn };
+            using var cmd = new NpgsqlCommand($"SELECT * FROM userr") { Connection = cn };
             cn.Open();
             var reader = cmd.ExecuteReader();
             while (reader.Read())

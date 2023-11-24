@@ -11,16 +11,18 @@ namespace GrpcServer_PI_21_01.Data
     {
         private readonly static Dictionary<string, Dictionary<NameMdels, bool>> rols = new()
         {
+            // этот ужас желательно исправить, но мне лень
             {
                 "Оператор по отлову",
                 new Dictionary<NameMdels, bool>()
-                                                                    {
-                                                                        {NameMdels.Act, true},
-                                                                        {NameMdels.App, false},
-                                                                        {NameMdels.Contract, false},
-                                                                        {NameMdels.Org, false},
-                                                                        {NameMdels.Report, false}
-                                                                    }
+                                                                {
+                                                                    {NameMdels.Act, true},
+                                                                    {NameMdels.App, false},
+                                                                    {NameMdels.Contract, false},
+                                                                    {NameMdels.Org, false},
+                                                                    {NameMdels.Report, false},
+                                                                    {NameMdels.History, false },
+                                                                }
             },
             {
                 "Оператор вет. службы",
@@ -30,7 +32,8 @@ namespace GrpcServer_PI_21_01.Data
                                                                     {NameMdels.App, false},
                                                                     {NameMdels.Contract, false},
                                                                     {NameMdels.Org, true},
-                                                                    {NameMdels.Report, false}
+                                                                    {NameMdels.Report, false},
+                                                                    {NameMdels.History, false },
                                                                 }
             },
             {
@@ -42,6 +45,7 @@ namespace GrpcServer_PI_21_01.Data
                                                                     {NameMdels.Contract, true},
                                                                     {NameMdels.Org, true},
                                                                     {NameMdels.Report, true},
+                                                                    {NameMdels.History, false },
                                                                 }
             },
             {
@@ -52,7 +56,8 @@ namespace GrpcServer_PI_21_01.Data
                                                                     {NameMdels.App, false},
                                                                     {NameMdels.Contract, false},
                                                                     {NameMdels.Org, false},
-                                                                    {NameMdels.Report, false}
+                                                                    {NameMdels.Report, false},
+                                                                    {NameMdels.History, false },
                                                                 }
             },
             {
@@ -63,7 +68,8 @@ namespace GrpcServer_PI_21_01.Data
                                                                     {NameMdels.App, false},
                                                                     {NameMdels.Contract, false},
                                                                     {NameMdels.Org, false},
-                                                                    {NameMdels.Report, false}
+                                                                    {NameMdels.Report, false},
+                                                                    {NameMdels.History, false },
                                                                 }
             },
             {
@@ -74,7 +80,8 @@ namespace GrpcServer_PI_21_01.Data
                                                                     {NameMdels.App, false},
                                                                     {NameMdels.Contract, false},
                                                                     {NameMdels.Org, false},
-                                                                    {NameMdels.Report, false}
+                                                                    {NameMdels.Report, false},
+                                                                    {NameMdels.History, false },
                                                                 }
             },
             {
@@ -85,7 +92,8 @@ namespace GrpcServer_PI_21_01.Data
                                                                     {NameMdels.App, false},
                                                                     {NameMdels.Contract, false},
                                                                     {NameMdels.Org, false},
-                                                                    {NameMdels.Report, false}
+                                                                    {NameMdels.Report, false},
+                                                                    {NameMdels.History, false },
                                                                 }
             },
             {
@@ -96,7 +104,8 @@ namespace GrpcServer_PI_21_01.Data
                                                                     {NameMdels.App, true},
                                                                     {NameMdels.Contract, true},
                                                                     {NameMdels.Org, true},
-                                                                    {NameMdels.Report, true}
+                                                                    {NameMdels.Report, true},
+                                                                    {NameMdels.History, true },
                                                                 }
             }
         };

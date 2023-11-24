@@ -21,11 +21,36 @@ namespace GrpcClient_PI_21_01.Models
         //    Role = role;
         //}
         public string PrivelegeLevel { get; }
+        public string Login { get; }
+        public Organization Organization { get; }
+        public string Name { get; }
+        public string Surname { get; }
+        public string Patronymic { get; }
 
-        public User(int idUser, string privelegeLevel)
+        public User(int idUser, string login, string privelegeLevel,
+            string name, string surname, string patronymic, Organization org)
         {
             IdUser = idUser;
             PrivelegeLevel = privelegeLevel;
+            Login = login;
+            Organization = org;
+            Name = name;
+            Surname = surname;
+            Patronymic = patronymic;
+        }
+
+        public UserReply ToReply()
+        {
+            return new UserReply()
+            {
+                Login = Login,
+                Name = Name,
+                Surname = Surname,
+                Patronymic = Patronymic,
+                Organization = Organization.ToReply(),
+                PrivelegeLevel = PrivelegeLevel,
+                UserId = IdUser,
+            };
         }
     }
 }
