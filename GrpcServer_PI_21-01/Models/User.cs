@@ -12,13 +12,13 @@ namespace GrpcServer_PI_21_01.Models
         public int IdUser { get; set; }
         public string Login {get; set;}
         public string Password { get; set; }
-        public string PrivelegeLevel { get; }
+        public Roles PrivelegeLevel { get; }
         public string Name { get; }
         public string Surname { get; }
         public string Patronymic { get; }
         public Organization Organization { get; }
 
-        public User(int idUser, string login, string password, string privelegeLevel,
+        public User(int idUser, string login, string password, Roles privelegeLevel,
             string name, string surname, string patronymic, Organization org)
         {
             IdUser = idUser;
@@ -30,6 +30,7 @@ namespace GrpcServer_PI_21_01.Models
             Patronymic = patronymic;
             Organization = org;
         }
+
 
         public UserReply ToReply()
         {

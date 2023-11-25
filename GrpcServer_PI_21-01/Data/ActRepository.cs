@@ -58,7 +58,7 @@ namespace GrpcServer_PI_21_01.Data
             using NpgsqlCommand cmd = new($"INSERT INTO act " +
                 $"(dog_count, cat_count, organization_id, created_at," +
                 $" goal, catch_request_id, municipal_contract_id) " +
-                $"VALUES ({A.CountDogs}, {A.CountCats}, {A.Organization.idOrg}, '{A.Date}', '{A.TargetCapture}'" +
+                $"VALUES ({A.CountDogs}, {A.CountCats}, {A.Organization.idOrg}, '{A.Date}', '{A.TargetCapture}'," +
                 $"{A.Application.number}, {A.Contracts.IdContract}) RETURNING id")
             { Connection = cn };
             {

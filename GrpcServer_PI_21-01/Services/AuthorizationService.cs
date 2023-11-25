@@ -35,7 +35,7 @@ namespace GrpcServer_PI_21_01.Services
                 result.Surname = user?.Surname;
                 result.Patronymic = user?.Patronymic;
                 result.Organization = user?.Organization.ToReply();
-                result.PrivelegeLevel = privelege;
+                result.PrivelegeLevel = privelege.ToString();
             }
 
             return Task.FromResult(result);

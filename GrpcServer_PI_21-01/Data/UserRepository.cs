@@ -38,7 +38,7 @@ namespace GrpcServer_PI_21_01.Data
 
         public static User GetUserById(int userId)
         {
-            using var cmd = new NpgsqlCommand($"SELECT * FROM user WHERE " +
+            using var cmd = new NpgsqlCommand($"SELECT * FROM userr WHERE " +
                 $"user.UserId = {userId}")
             { Connection = cn };
             cn.Open();
@@ -52,19 +52,43 @@ namespace GrpcServer_PI_21_01.Data
 
         public static List<User> GetUsers()
         {
-            var users = new List<User>();
-            using var cmd = new NpgsqlCommand($"SELECT * FROM userr") { Connection = cn };
-            cn.Open();
-            var reader = cmd.ExecuteReader();
-            while (reader.Read())
+            List<User> users = new();
+            List<string?[]> usersEmpty = new();
+
+            using (NpgsqlCommand cmd = new("SELECT * FROM userr") { Connection = cn })
             {
-                var userId = reader.GetInt32(reader.GetOrdinal("UserId"));
+                cn.Open();
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    usersEmpty.Add(new string[8] {
+                    reader[0].ToString(), //id
+                    reader[1].ToString(), //name
+                    reader[2].ToString(), //surname
+                    reader[3].ToString(), //patron
+                    reader[4].ToString(), //role
+                    reader[5].ToString(), //login
+                    reader[6].ToString(), //password
+                    reader[7].ToString() //orgId
+                    });
+                }
+                reader.Close();
 
-                var user = ExtractUserFromReaderInstance(userId, reader);
-                users.Add(user);
-            }
-            cn.Close();
+                for (int i = 0; i < usersEmpty.Count; i++)
+                {
+                    var userEmpty = usersEmpty[i];
+                    Organization org = Organization.GetById(int.Parse(userEmpty[7]), cn);
 
+                    User user = new User(int.Parse(userEmpty[0]),
+                        userEmpty[5],
+                        userEmpty[6],
+                        Role.ToString(userEmpty[4]),
+                        userEmpty[1], userEmpty[2],
+                        userEmpty[3], org);
+                    users.Add(user);
+                }
+                cn.Close();
+            };
             return users;
         }
 
@@ -78,7 +102,7 @@ namespace GrpcServer_PI_21_01.Data
             var password = reader.GetString(reader.GetOrdinal("Password"));
             var org = Organization.GetById(reader.GetInt32(reader.GetOrdinal("OrganizationId")), cn);
 
-            var user = new User(userId, login, password, privelegeLevel, name, surname, patronymic, org);
+            var user = new User(userId, login, password, Role.ToString(privelegeLevel), name, surname, patronymic, org);
             return user;
         }
     }

@@ -32,17 +32,19 @@ namespace GrpcServer_PI_21_01.Data
 
         public static bool AddOperation(OperationReply op)
         {
+
             var cmdString = $"INSERT INTO operation " +
-                $"(operation.ActionType, operation.ModifiedObjectId, operation.ModifiedTableName) " +
-                $"VALUES ({op.Action}, {op.ModifiedObjectId}, '{op.ModifiedTableName}') RETURNING operationId";
+                $"(actiontype, modifiedobjectid, modifiedtablename) " +
+                $"VALUES ('{op.Action.ToString()}', {op.ModifiedObjectId}, '{op.ModifiedTableName}') RETURNING operationid";
             using NpgsqlCommand cmd = new(cmdString) { Connection = cn };
             try
             {
                 cn.Open();
-                var id = cmd.ExecuteNonQuery();
+                var id = (int)cmd.ExecuteScalar();
                 op.OperationId = id;
-                return true;
+                
                 cn.Close();
+                return true;
             }
             catch { return false; }
         }

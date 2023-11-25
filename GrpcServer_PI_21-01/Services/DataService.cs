@@ -32,7 +32,7 @@ namespace GrpcServer_PI_21_01.Services
                 ModifiedTableName = tableName,
                 OperationId = -1,
                 User = actor,
-                Date = DateTime.Now.ToTimestamp(),
+                Date = DateTime.Now.ToUtc().ToTimestamp(),
             };
             OperationRepository.AddOperation(operation);
         }
@@ -69,7 +69,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var contract = request.FromReply();
             var successful = ContractRepository.AddContract(contract);
-            Log(ActionType.ActionAdd, "Contract", contract.IdContract, request.Actor);
+            Log(ActionType.ACTION_ADD, "Contract", contract.IdContract, request.Actor);
             return CRUD(contract.IdContract, successful);
         }
 
@@ -77,14 +77,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var contract = request.FromReply();
             var successful = ContractRepository.UpdateContract(contract);
-            Log(ActionType.ActionUpdate, "Contract", contract.IdContract, request.Actor);
+            Log(ActionType.ACTION_UPDATE, "Contract", contract.IdContract, request.Actor);
             return CRUD(contract.IdContract, successful);
         }
 
         public override Task<OperationResult> RemoveContract(IdRequest id, ServerCallContext ctx)
         {
             var successful = ContractRepository.DeleteContract(id.Id);
-            Log(ActionType.ActionDelete, "Contract", id.Id, id.Actor);
+            Log(ActionType.ACTION_DELETE, "Contract", id.Id, id.Actor);
             return CRUD(id.Id, successful);
         }
         #endregion
@@ -114,14 +114,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var location = request.FromReply();
             var successful = LocationRepository.AddLocation(location);
-            Log(ActionType.ActionAdd, "Location", location.IdLocation, request.Actor);
+            Log(ActionType.ACTION_ADD, "Location", location.IdLocation, request.Actor);
             return CRUD(location.IdLocation, successful);
         }
 
         public override Task<OperationResult> RemoveLocation(IdRequest request, ServerCallContext ctx)
         {
             var successful = LocationRepository.RemoveLocation(request.Id);
-            Log(ActionType.ActionDelete, "Location", request.Id, request.Actor);
+            Log(ActionType.ACTION_DELETE, "Location", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
 
@@ -129,7 +129,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var location = request.FromReply();
             var successful = LocationRepository.UpdateLocation(location);
-            Log(ActionType.ActionUpdate, "Location", location.IdLocation, request.Actor);
+            Log(ActionType.ACTION_UPDATE, "Location", location.IdLocation, request.Actor);
             return CRUD(location.IdLocation, successful);
         }
         #endregion
@@ -156,7 +156,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var org = reply.FromReply();
             var successful = OrgRepository.AddOrganization(org);
-            Log(ActionType.ActionAdd, "Organization", org.idOrg, reply.Actor);
+            Log(ActionType.ACTION_ADD, "Organization", org.idOrg, reply.Actor);
             return CRUD(org.idOrg, successful);
         }
 
@@ -164,14 +164,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var org = reply.FromReply();
             var successful = OrgRepository.UpdateOrganization(org);
-            Log(ActionType.ActionUpdate, "Organization", org.idOrg, reply.Actor);
+            Log(ActionType.ACTION_UPDATE, "Organization", org.idOrg, reply.Actor);
             return CRUD(org.idOrg, successful);
         }
 
         public override Task<OperationResult> RemoveOrganization(IdRequest id, ServerCallContext ctx)
         {
             var successful = OrgRepository.RemoveOrganization(id.Id);
-            Log(ActionType.ActionDelete, "Organization", id.Id, id.Actor);
+            Log(ActionType.ACTION_DELETE, "Organization", id.Id, id.Actor);
             return CRUD(id.Id, successful);
         }
         #endregion
@@ -201,14 +201,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var act = request.FromReply();
             var successful = ActRepository.AddAct(act);
-            Log(ActionType.ActionAdd, "Act Capture", act.ActNumber, request.Actor);
+            Log(ActionType.ACTION_ADD, "Act Capture", act.ActNumber, request.Actor);
             return CRUD(act.ActNumber, successful);
         }
 
         public override Task<OperationResult> RemoveAct(IdRequest request, ServerCallContext ctx)
         {
             var successful = ActRepository.RemoveAct(request.Id);
-            Log(ActionType.ActionDelete, "Act Capture", request.Id, request.Actor);
+            Log(ActionType.ACTION_DELETE, "Act Capture", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
 
@@ -216,7 +216,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var act = request.FromReply();
             var successful = ActRepository.UpdateAct(act);
-            Log(ActionType.ActionUpdate, "Act Capture", act.ActNumber, request.Actor);
+            Log(ActionType.ACTION_UPDATE, "Act Capture", act.ActNumber, request.Actor);
             return CRUD(act.ActNumber, successful);
         }
         #endregion
@@ -247,7 +247,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var app = reply.FromReply();
             var successful = AppRepository.AddApplication(app);
-            Log(ActionType.ActionAdd, "Application", app.number, reply.Actor);
+            Log(ActionType.ACTION_ADD, "Application", app.number, reply.Actor);
             return CRUD(app.number, successful);
         }
 
@@ -255,14 +255,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var app = reply.FromReply();
             var successful = AppRepository.UpdateApplication(app);
-            Log(ActionType.ActionUpdate, "Application", app.number, reply.Actor);
+            Log(ActionType.ACTION_UPDATE, "Application", app.number, reply.Actor);
             return CRUD(app.number, successful);
         }
 
         public override Task<OperationResult> RemoveApp(IdRequest request, ServerCallContext ctx)
         {
             var successful = AppRepository.RemoveApplication(request.Id);
-            Log(ActionType.ActionDelete, "Application", request.Id, request.Actor);
+            Log(ActionType.ACTION_DELETE, "Application", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
         #endregion
@@ -292,7 +292,7 @@ namespace GrpcServer_PI_21_01.Services
         {
             var animalCard = request.FromReply();
             var successful = AnimalRepository.AddAnimalCard(animalCard);
-            Log(ActionType.ActionAdd, "Animal Card", animalCard.IdAnimalCard, request.Actor);
+            Log(ActionType.ACTION_ADD, "Animal Card", animalCard.IdAnimalCard, request.Actor);
             return CRUD(animalCard.IdAnimalCard, successful);
         }
 
@@ -300,14 +300,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var animalCard = request.FromReply();
             var successful = AnimalRepository.UpdateAnimalCard(animalCard);
-            Log(ActionType.ActionUpdate, "Animal Card", animalCard.IdAnimalCard, request.Actor);
+            Log(ActionType.ACTION_UPDATE, "Animal Card", animalCard.IdAnimalCard, request.Actor);
             return CRUD(animalCard.IdAnimalCard, successful);
         }
 
         public override Task<OperationResult> RemoveAnimalCard(IdRequest request, ServerCallContext ctx)
         {
             var successful = AnimalRepository.RemoveAnimalCard(request.Id);
-            Log(ActionType.ActionDelete, "Animal Card", request.Id, request.Actor);
+            Log(ActionType.ACTION_DELETE, "Animal Card", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
         #endregion

@@ -13,7 +13,7 @@ namespace GrpcServer_PI_21_01.Data
         {
             // этот ужас желательно исправить, но мне лень
             {
-                "Оператор по отлову",
+                Roles.Operator_Po_Otlovy.ToString(),
                 new Dictionary<NameMdels, bool>()
                                                                 {
                                                                     {NameMdels.Act, true},
@@ -25,7 +25,7 @@ namespace GrpcServer_PI_21_01.Data
                                                                 }
             },
             {
-                "Оператор вет. службы",
+                Roles.Operator_Veterinary_Service.ToString(),
                 new Dictionary<NameMdels, bool>()
                                                                 {
                                                                     {NameMdels.Act, false},
@@ -37,7 +37,7 @@ namespace GrpcServer_PI_21_01.Data
                                                                 }
             },
             {
-                "Оператор ОМСУ",
+                Roles.Operator_OMSY.ToString(),
                 new Dictionary<NameMdels, bool>()
                                                                 {
                                                                     {NameMdels.Act, false},
@@ -97,7 +97,7 @@ namespace GrpcServer_PI_21_01.Data
                                                                 }
             },
             {
-                "Admin",
+                Roles.Admin.ToString(),
                 new Dictionary<NameMdels, bool>()
                                                                 {
                                                                     {NameMdels.Act, true},

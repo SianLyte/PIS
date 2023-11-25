@@ -17,7 +17,7 @@ namespace GrpcClient_PI_21_01.Views
     {
         private readonly bool actToEdit;
         private readonly int actId;
-        
+
         public ActEdit()
         {
             InitializeComponent();
@@ -67,13 +67,19 @@ namespace GrpcClient_PI_21_01.Views
             comboBoxOrganization.DisplayMember = "name";
             comboBoxOrganization.ValueMember = "idOrg";
 
-            comboBoxContract.DataSource = new BindingSource(contracts, null);
-            comboBoxContract.DisplayMember = "IdContract";
-            comboBoxContract.ValueMember = "IdContract";
-
             comboBoxApp.DataSource = new BindingSource(applications, null);
             comboBoxApp.DisplayMember = "number";
             comboBoxApp.ValueMember = "number";
+
+            
+            if (contracts.Count() != 0)
+            {
+                comboBoxContract.DataSource = new BindingSource(contracts, null);
+                comboBoxContract.DisplayMember = "IdContract";
+                comboBoxContract.ValueMember = "IdContract";
+            }
+
+            
         }
 
         private async void OK_Click(object sender, EventArgs e)
@@ -168,6 +174,11 @@ namespace GrpcClient_PI_21_01.Views
                 return false;
             }
             return true;
+        }
+
+        private void comboBoxApp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
