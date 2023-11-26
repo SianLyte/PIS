@@ -2,9 +2,21 @@
 {
     public class DatabaseAssistant
     {
-        public const string ConnectionString = "Host=localhost;Username=postgres;Password=" +
-            //"P@ssw0rd" +
-            "123" +
+        static DatabaseAssistant()
+        {
+            string password = "123";
+            if (OperatingSystem.IsWindows())
+            {
+                var name = Environment.UserName;
+                if (name == "tikho")
+                    password = "P@ssw0rd";
+            }
+            ConnectionString = "Host=localhost;Username=postgres;Password=" + password + ";Database=animal_capture;";
+        }
+
+        public static string ConnectionString = "Host=localhost;Username=postgres;Password=" +
+            "P@ssw0rd" +
+            //"123" +
             ";Database=animal_capture;";
     }
 }
