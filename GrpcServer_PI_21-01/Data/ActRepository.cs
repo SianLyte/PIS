@@ -141,5 +141,30 @@ namespace GrpcServer_PI_21_01.Data
             return acts;
         }
 
+        public static ActAppReply? GetActApp(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static List<ActAppReply> GetActApps()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool AddActApp(ActAppReply actApp)
+        {
+            // не забудь присвоить Id переменной actApp после этого метода
+            throw new NotImplementedException();
+        }
+
+        public static bool UpdateActApp(ActAppReply actApp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool RemoveActAppp(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

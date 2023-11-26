@@ -45,6 +45,12 @@ service DataRetriever {
   rpc UpdateAnimalCard (AnimalCardReply) returns (OperationResult);
 
   rpc GetOperations (UserReply) returns (stream OperationReply);
+
+  rpc GetActApp (IdRequest) returns (ActAppReply);
+  rpc GetActApps (UserReply) returns (stream ActAppReply);
+  rpc AddActApps (ActAppReply) returns (OperationResult);
+  rpc UpdateActApps (ActAppReply) returns (OperationResult);
+  rpc RemoveActApps (IdRequest) returns (OperationResult);
 }
 
 message IdRequest {
@@ -153,4 +159,11 @@ message OperationReply {
 	string modifiedTableName = 4;
 	ActionType action = 5;
 	google.protobuf.Timestamp date = 6;
+}
+
+message ActAppReply {
+	int32 id = 1;
+	ActReply act = 2;
+	ApplicationReply app = 3;
+	UserReply actor = 4;
 }

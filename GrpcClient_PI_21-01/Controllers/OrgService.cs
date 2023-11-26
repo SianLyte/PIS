@@ -92,7 +92,11 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var org = await client.GetOrganizationAsync(new IdRequest() { Id = orgId});
+            var org = await client.GetOrganizationAsync(new IdRequest()
+            {
+                Id = orgId,
+                Actor = UserService.CurrentUser?.ToReply()
+            });
             return org.FromReply();
         }
 
@@ -100,7 +104,11 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var response = await client.RemoveOrganizationAsync(new IdRequest() { Id = orgId });
+            var response = await client.RemoveOrganizationAsync(new IdRequest()
+            {
+                Id = orgId,
+                Actor = UserService.CurrentUser?.ToReply()
+            });
             return response.Successful;
         }
 

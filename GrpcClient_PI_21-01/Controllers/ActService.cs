@@ -110,7 +110,11 @@ namespace GrpcClient_PI_21_01
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var actReply = await client.GetActAsync(new IdRequest() { Id = id });
+            var actReply = await client.GetActAsync(new IdRequest()
+            {
+                Id = id,
+                Actor = UserService.CurrentUser?.ToReply()
+            });
             return GetActFromReply(actReply);
         }
 
@@ -138,8 +142,68 @@ namespace GrpcClient_PI_21_01
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var response = await client.RemoveActAsync(new IdRequest() { Id = actId });
+            var response = await client.RemoveActAsync(new IdRequest()
+            {
+                Id = actId,
+                Actor = UserService.CurrentUser?.ToReply()
+            });
             return response.Successful;
+        }
+
+        public static async Task<bool> AddActApp(ActAppReply actApp)
+        {
+            actApp.Id = -1;
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var response = await client.AddActAppsAsync(actApp);
+            actApp.Id = response.ModifiedId ?? -1;
+            return response.Successful;
+        }
+
+        public static async Task<bool> UpdateActApp(ActAppReply actApp)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var response = await client.UpdateActAppsAsync(actApp);
+            return response.Successful;
+        }
+
+        public static async Task<bool> RemoveActApp(int id)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var response = await client.RemoveActAppsAsync(new IdRequest()
+            {
+                Id = id,
+                Actor = UserService.CurrentUser?.ToReply()
+            });
+            return response.Successful;
+        }
+
+        public static async Task<ActAppReply> GetActApp(int id)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var actApp = await client.GetActAppAsync(new IdRequest()
+            {
+                Id = id,
+                Actor = UserService.CurrentUser?.ToReply()
+            });
+            return actApp;
+        }
+
+        public static async Task<List<ActAppReply>> GetActApps()
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var serverData = client.GetActApps(UserService.CurrentUser?.ToReply());
+            var responseStream = serverData.ResponseStream;
+            var actApps = new List<ActAppReply>();
+            await foreach (var response in responseStream.ReadAllAsync())
+            {
+                actApps.Add(response);
+            }
+            return actApps;
         }
     }
 }
