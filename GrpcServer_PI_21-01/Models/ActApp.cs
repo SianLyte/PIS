@@ -25,6 +25,7 @@ namespace GrpcServer_PI_21_01
         {
             NpgsqlCommand cmd = new($"SELECT * FROM act_catch_request WHERE act_id = {actId}");
             cmd.Connection = cn;
+            cn.Open();
             var reader = cmd.ExecuteReader();
             string[] arr = { "0", "0", "0" };
             while (reader.Read())
@@ -34,6 +35,7 @@ namespace GrpcServer_PI_21_01
                 arr[2] = reader[2].ToString(); //app_id
             }
             reader.Close();
+            cn.Close();
             return new ActApp(int.Parse(arr[0]), Act.GetById(int.Parse(arr[1]), cn), App.GetById(int.Parse(arr[2]), cn));
         }
 

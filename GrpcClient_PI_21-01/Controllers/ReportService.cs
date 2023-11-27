@@ -16,7 +16,7 @@ namespace GrpcClient_PI_21_01.Controllers
             {
                 Actor = UserService.CurrentUser?.ToReply(),
                 BeginDate = start.ToUtc().ToTimestamp(),
-                EndDate = start.ToUtc().ToTimestamp(),
+                EndDate = finish.ToUtc().ToTimestamp(),
             });
             var responseStream = serverData.ResponseStream;
             await foreach (var response in responseStream.ReadAllAsync())

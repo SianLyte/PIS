@@ -73,7 +73,7 @@ namespace GrpcServer_PI_21_01.Data
                     });
                 }
                 reader.Close();
-
+                cn.Close();
                 for (int i = 0; i < usersEmpty.Count; i++)
                 {
                     var userEmpty = usersEmpty[i];
@@ -87,7 +87,7 @@ namespace GrpcServer_PI_21_01.Data
                         userEmpty[3], org);
                     users.Add(user);
                 }
-                cn.Close();
+                
             };
             return users;
         }

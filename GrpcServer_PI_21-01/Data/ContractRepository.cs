@@ -115,7 +115,7 @@ namespace GrpcServer_PI_21_01.Data
                     });
                 }
                 reader.Close();
-
+                cn.Close();
                 for (int i = 0; i < contractsEmpty.Count; i++)
                 {
                     var a = contractsEmpty[i];
@@ -127,7 +127,6 @@ namespace GrpcServer_PI_21_01.Data
                         Organization.GetById(int.Parse(a[4]), cn));
                     contracts.Add(contract);
                 }
-                cn.Close();
             }
             return contracts;
         }

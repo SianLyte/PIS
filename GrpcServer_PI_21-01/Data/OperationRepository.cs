@@ -27,7 +27,7 @@ namespace GrpcServer_PI_21_01.Data
                                          });
                 }
                 reader.Close();
-
+                cn.Close();
                 for (int i = 0; i < operationsEmpty.Count; i++)
                 {
                     var operationEmpty = operationsEmpty[i];
@@ -38,7 +38,7 @@ namespace GrpcServer_PI_21_01.Data
                         User.GetById(int.Parse(operationEmpty[4]), cn)); 
                     operations.Add(operation);
                 }
-                cn.Close();
+                
             };
             return operations;
         }

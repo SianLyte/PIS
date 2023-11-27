@@ -33,6 +33,7 @@ namespace GrpcServer_PI_21_01.Models
 
             NpgsqlCommand cmd = new($"SELECT * FROM organization WHERE id = {id}") { Connection = cn };
             string[] arr = { "0", "0", "0", "0", "0", "0", "0" };
+            cn.Open();
 
             var reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -45,6 +46,7 @@ namespace GrpcServer_PI_21_01.Models
                 arr[5] = reader[6].ToString();
             }
             reader.Close();
+            cn.Close();
             return new Organization(id, arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
         }
     }

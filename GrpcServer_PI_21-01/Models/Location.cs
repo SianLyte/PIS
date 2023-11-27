@@ -22,12 +22,14 @@ namespace GrpcServer_PI_21_01.Models
         {
             NpgsqlCommand cmd = new($"SELECT * FROM city WHERE id = {id}");
             cmd.Connection = cn;
+            cn.Open();
             var reader = cmd.ExecuteReader();
             string[] arr = { "0" };
 
             while (reader.Read())
                 arr[0] = reader[1].ToString();
             reader.Close();
+            cn.Close();
             return new Models.Location(id, arr[0]);
         }
     }

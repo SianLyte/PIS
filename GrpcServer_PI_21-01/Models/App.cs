@@ -38,6 +38,7 @@ namespace GrpcServer_PI_21_01.Models
         {
             NpgsqlCommand cmd = new($"SELECT * FROM catch_request WHERE id = {id}");
             cmd.Connection = cn;
+            cn.Open();
             var reader = cmd.ExecuteReader();
             string[] arr = { "0", "0", "0", "0", "0", "0", "0" };
             while (reader.Read())
@@ -51,6 +52,7 @@ namespace GrpcServer_PI_21_01.Models
                 arr[6] = reader[6].ToString();
             }
             reader.Close();
+            cn.Close();
             return new App(DateTime.Parse(arr[0]), id, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
         }
     }

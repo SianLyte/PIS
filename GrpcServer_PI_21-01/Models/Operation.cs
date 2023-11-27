@@ -29,6 +29,7 @@ namespace GrpcServer_PI_21_01.Models
             
             NpgsqlCommand cmd = new($"SELECT * FROM operation WHERE id = {id}") { Connection = cn };
             cmd.Connection = cn;
+            cn.Open();
             var reader = cmd.ExecuteReader();
             string[] arr = { "0", "0", "0", "0", "0", "0", "0" };
             while (reader.Read())
@@ -39,6 +40,7 @@ namespace GrpcServer_PI_21_01.Models
                 arr[3] = reader[4].ToString(); //userid
             }
             reader.Close();
+            cn.Close();
             return new Operation(id, arr[0], arr[1], arr[2], User.GetById(int.Parse(arr[3]), cn));
         }
     }

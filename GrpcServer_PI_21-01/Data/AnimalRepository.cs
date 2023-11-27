@@ -135,7 +135,7 @@ namespace GrpcServer_PI_21_01.Data
                     });
                 }
                 reader.Close();
-
+                cn.Close();
                 for (int i = 0; i < cardsEmpty.Count; i++)
                 {
                     var c = cardsEmpty[i];
@@ -153,7 +153,6 @@ namespace GrpcServer_PI_21_01.Data
                         null);
                     cards.Add(card);
                 }
-                cn.Close();
             }
                 // должно забирать все карточки животного из БД (желательно сделать кэширование:
                 // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов

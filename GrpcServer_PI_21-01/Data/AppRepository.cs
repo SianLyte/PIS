@@ -135,14 +135,13 @@ namespace GrpcServer_PI_21_01.Data
                     });
                 }
                 reader.Close();
-
+                cn.Close();
                 for (int i = 0; i < appsEmpty.Count; i++)
                 {
                     var a = appsEmpty[i];
                     App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), a[7], a[2], a[3], a[4], a[5], a[6]);
                     apps.Add(app);
                 }
-                cn.Close();
             }
             return apps;
         }

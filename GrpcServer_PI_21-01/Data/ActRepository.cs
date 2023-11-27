@@ -101,7 +101,7 @@ namespace GrpcServer_PI_21_01.Data
                     reader[6].ToString() });
                 }
                 reader.Close();
-
+                cn.Close();
                 for (int i = 0; i < actsEmpty.Count; i++)
                 {
                     var actEmpty = actsEmpty[i];
@@ -116,7 +116,6 @@ namespace GrpcServer_PI_21_01.Data
                         contr);
                     acts.Add(act);
                 }
-                cn.Close();
             };
             return acts;
         }
@@ -144,7 +143,7 @@ namespace GrpcServer_PI_21_01.Data
                     });
                 }
                 reader.Close();
-
+                cn.Close();
                 for (int i = 0; i < actsEmpty.Count; i++)
                 {
                     var actEmpty = actsEmpty[i];
@@ -152,7 +151,6 @@ namespace GrpcServer_PI_21_01.Data
                     Act act = Act.GetById(int.Parse(actEmpty[2]), cn);
                     actsApps.Add(new ActApp(int.Parse(actEmpty[0]), act, app));
                 }
-                cn.Close();
             };
             return actsApps;
         }

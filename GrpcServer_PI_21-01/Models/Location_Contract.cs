@@ -25,16 +25,18 @@ namespace GrpcServer_PI_21_01.Models
         {
             NpgsqlCommand cmd = new($"SELECT * FROM city_contract WHERE contract_id = {ContractId} AND city_id = {localityId}") { Connection = cn };
             string[] arr = { "0", "0", "0", "0"};
-
+            cmd.Connection = cn;
+            cn.Open();
             var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                arr[0] = reader[1].ToString(); //id
-                arr[1] = reader[2].ToString(); //cost
-                arr[2] = reader[3].ToString(); //contract id
-                arr[3] = reader[4].ToString(); //city id
+                arr[0] = reader[0].ToString(); //id
+                arr[1] = reader[1].ToString(); //cost
+                arr[2] = reader[2].ToString(); //contract id
+                arr[3] = reader[3].ToString(); //city id
             }
             reader.Close();
+            cn.Close();
             return new Location_Contract(
                 int.Parse(arr[0]),
                 Location.GetById(int.Parse(arr[3]), cn),

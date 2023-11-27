@@ -43,6 +43,7 @@ namespace GrpcServer_PI_21_01
         {
             NpgsqlCommand cmd = new($"SELECT * FROM act WHERE id = {id}");
             cmd.Connection = cn;
+            cn.Open();
             var reader = cmd.ExecuteReader();
             string[] arr = { "0", "0", "0", "0", "0", "0" };
             while (reader.Read())
@@ -53,11 +54,12 @@ namespace GrpcServer_PI_21_01
                 arr[3] = reader[4].ToString(); //"date"
                 arr[4] = reader[5].ToString();
                 //arr[5] = reader[6].ToString(); //app
-                arr[5] = reader[7].ToString(); //contract
+                arr[5] = reader[6].ToString(); //contract
             }
             reader.Close();
+            cn.Close();
             return new Act(id, int.Parse(arr[0]), int.Parse(arr[1]), Organization.GetById(int.Parse(arr[2]), cn),
-                DateTime.Parse(arr[3]), arr[4], Contract.GetById(int.Parse(arr[6]), cn));
+                DateTime.Parse(arr[3]), arr[4], Contract.GetById(int.Parse(arr[5]), cn));
         }
 
     }

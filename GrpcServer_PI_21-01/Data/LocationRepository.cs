@@ -40,14 +40,14 @@ namespace GrpcServer_PI_21_01.Data
                     });
                 }
                 r.Close();
-
+                cn.Close();
                 for (int i = 0; i < locsEmpty.Count; i++)
                 {
                     var a = locsEmpty[i];
                     Location loc = new(int.Parse(a[0]), a[1]);
                     locs.Add(loc);
                 }
-                cn.Close();
+                
             }
             return locs;
         }
