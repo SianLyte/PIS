@@ -108,27 +108,98 @@ namespace GrpcServer_PI_21_01.Data
         public static bool AddLocationContract(Location_Contract lc)
         {
             // не забудь присовить переменной lc id после добавления в бд
-            throw new NotImplementedException();
+            using NpgsqlCommand cmd = new($"INSERT INTO city_contract " +
+                $"(cost, contract_id, city_id)" +
+                $"VALUES ({lc.Price}, {lc.Contract.IdContract}, {lc.Locality.IdLocation}) RETURNING id")
+            { Connection = cn };
+            {
+                cn.Open();
+                int returnValue = (int)cmd.ExecuteScalar();
+                lc.Id = returnValue;
+                //cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+            return true;
         }
 
         public static bool UpdateLocationContract(Location_Contract lc)
         {
-            throw new NotImplementedException();
+            using NpgsqlCommand cmd = new($"UPDATE city_contract SET " +
+                $"cost = {lc.Price}," +
+                $"contract_id = {lc.Contract.IdContract}," +
+                $"city_id = {lc.Locality.IdLocation}" +
+                $" WHERE id = {lc.Id}")
+            { Connection = cn };
+            {
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+            return true;
         }
 
         public static bool RemoveLocationContract(int id)
         {
-            throw new NotImplementedException();
+            using NpgsqlCommand cmd = new($"DELETE FROM city_contract WHERE id = {id}") { Connection = cn };
+            {
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+            //throw new NotImplementedException();
+            return true;
         }
 
         public static Location_Contract GetLocationContract(int id)
         {
-            throw new NotImplementedException();
+            string[] arr = { "0", "0", "0" };
+
+            using (NpgsqlCommand cmd = new($"SELECT * FROM city_contract WHERE id = {id}") { Connection = cn })
+            {
+                cn.Open();
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    arr[0] = reader[1].ToString(); //cost
+                    arr[1] = reader[2].ToString(); //cotractid
+                    arr[2] = reader[3].ToString(); //locid
+                }
+                reader.Close();
+                cn.Close();
+                return new Location_Contract(int.Parse(arr[0]), Location.GetById(int.Parse(arr[2]), cn), decimal.Parse(arr[0]), Models.Contract.GetById(int.Parse(arr[1]), cn));
+            };
         }
 
         public static List<Location_Contract> GetLocationContracts()
         {
-            throw new NotImplementedException();
+            List<Location_Contract> lcs = new();
+            List<string?[]> lcsEmpty = new();
+
+            using (NpgsqlCommand cmd = new("SELECT * FROM city_contract") { Connection = cn })
+            {
+                cn.Open();
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lcsEmpty.Add(new string[4] {
+                    reader[0].ToString(),
+                    reader[1].ToString(),
+                    reader[2].ToString(),
+                    reader[3].ToString()});
+                }
+                reader.Close();
+                cn.Close();
+                for (int i = 0; i < lcsEmpty.Count; i++)
+                {
+                    var lcEmpty = lcsEmpty[i];
+                    Models.Contract contract = Models.Contract.GetById(int.Parse(lcEmpty[2]), cn);
+                    Location location = Location.GetById(int.Parse(lcEmpty[3]), cn);
+
+                    Location_Contract lc = new Location_Contract(int.Parse(lcEmpty[0]), location, decimal.Parse(lcEmpty[1]), contract);
+                    lcs.Add(lc);
+                }
+            };
+            return lcs;
         }
     }
 }
