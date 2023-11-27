@@ -28,26 +28,29 @@ namespace GrpcServer_PI_21_01.Models
             this.status = status;
         }
 
-        public static Organization GetById(int id, NpgsqlConnection cn)
+        public static Organization GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)
         {
 
             NpgsqlCommand cmd = new($"SELECT * FROM organization WHERE id = {id}") { Connection = cn };
             string[] arr = { "0", "0", "0", "0", "0", "0", "0" };
-            cn.Open();
+            if (!connectionAlreadyOpen)
+                cn.Open();
 
             var reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                arr[0] = reader[1].ToString();
-                arr[1] = reader[2].ToString();
-                arr[2] = reader[3].ToString();
-                arr[3] = reader[4].ToString();
-                arr[4] = reader[5].ToString();
-                arr[5] = reader[6].ToString();
-            }
+            if (!reader.Read()) throw new Exception("Unknown ID for organization: " + id);
+
+            var name = reader.GetString(reader.GetOrdinal("namee"));
+            var inn = reader.GetString(reader.GetOrdinal("inn"));
+            var kpp = reader.GetString(reader.GetOrdinal("kpp"));
+            var registrationAdress = reader.GetString(reader.GetOrdinal("registration"));
+            var type = reader.GetString(reader.GetOrdinal("typee"));
+            var status = reader.GetString(reader.GetOrdinal("status"));
+
             reader.Close();
-            cn.Close();
-            return new Organization(id, arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+            if (!connectionAlreadyOpen)
+                cn.Close();
+
+            return new Organization(id, name, inn, kpp, registrationAdress, type, status);
         }
     }
 }

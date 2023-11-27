@@ -39,27 +39,31 @@ namespace GrpcServer_PI_21_01
             return this.ActNumber == obj1.ActNumber;
         }
 
-        public static Act GetById(int id, NpgsqlConnection cn)
+        public static Act GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)
         {
             NpgsqlCommand cmd = new($"SELECT * FROM act WHERE id = {id}");
             cmd.Connection = cn;
-            cn.Open();
+            if (!connectionAlreadyOpen)
+                cn.Open();
+
             var reader = cmd.ExecuteReader();
-            string[] arr = { "0", "0", "0", "0", "0", "0" };
-            while (reader.Read())
-            {
-                arr[0] = reader[1].ToString();
-                arr[1] = reader[2].ToString();
-                arr[2] = reader[3].ToString(); //"org"
-                arr[3] = reader[4].ToString(); //"date"
-                arr[4] = reader[5].ToString();
-                //arr[5] = reader[6].ToString(); //app
-                arr[5] = reader[6].ToString(); //contract
-            }
+            if (!reader.Read()) throw new Exception("Unknown ID for act: " + id);
+
+            var dogCount = reader.GetInt32(reader.GetOrdinal("dog_count"));
+            var catCount = reader.GetInt32(reader.GetOrdinal("cat_count"));
+            var orgId = reader.GetInt32(reader.GetOrdinal("organization_id"));
+            var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+            var goal = reader.GetString(reader.GetOrdinal("goal"));
+            var contrId = reader.GetInt32(reader.GetOrdinal("municipal_contract_id"));
+
             reader.Close();
-            cn.Close();
-            return new Act(id, int.Parse(arr[0]), int.Parse(arr[1]), Organization.GetById(int.Parse(arr[2]), cn),
-                DateTime.Parse(arr[3]), arr[4], Contract.GetById(int.Parse(arr[5]), cn));
+            if (!connectionAlreadyOpen)
+                cn.Close();
+
+            return new Act(id, dogCount, catCount,
+                Organization.GetById(orgId, cn, connectionAlreadyOpen),
+                createdAt, goal,
+                Contract.GetById(contrId, cn, connectionAlreadyOpen));
         }
 
     }

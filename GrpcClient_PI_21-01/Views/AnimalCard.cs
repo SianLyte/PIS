@@ -45,7 +45,16 @@ namespace GrpcClient_PI_21_01.Views
                 //var animalCard = AnimalRepository.animalCards[index];
                 var animalCards = await AnimalCardService.GetAnimalCards();
                 var animalCard = animalCards
-                    .First(ac => ac.ActCapture.ActNumber == actId && ac.Category == GITLER.Text);
+                    .FirstOrDefault(ac => ac.ActCapture.ActNumber == actId && ac.Category.ToLower() == GITLER.Text.ToLower());
+                if (animalCard is null)
+                {
+                    MessageBox.Show("The form could not load:\n" +
+                        "no act captures were found with id=" + actId + " or/and " +
+                        "no act captures were found with category=" + GITLER.Text,
+                        "Internal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
+                    return;
+                }
                 textBoxKategori.Text = animalCard.Category;
                 textBoxGender.Text = animalCard.Gender;
                 textBoxPoroda.Text = animalCard.Breed;

@@ -110,55 +110,45 @@ namespace GrpcServer_PI_21_01.Data
         public static List<AnimalCard> GetAnimalCards()
         {
             List<AnimalCard> cards = new();
-            List<string?[]> cardsEmpty = new();
 
             using (NpgsqlCommand cmd = new("SELECT * FROM animal_card") { Connection = cn })
             {
                 cn.Open();
-                NpgsqlDataReader reader = cmd.ExecuteReader();
+                var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cardsEmpty.Add(new string[13] {
-                    reader[0].ToString(),
-                    reader[1].ToString(),
-                    reader[2].ToString(),
-                    reader[3].ToString(),
-                    reader[4].ToString(),
-                    reader[5].ToString(),
-                    reader[6].ToString(),
-                    reader[7].ToString(),
-                    reader[8].ToString(),
-                    reader[9].ToString(),
-                    reader[10].ToString(),
-                    reader[11].ToString(),
-                    reader[12].ToString()
-                    });
+                    var id = reader.GetInt32(reader.GetOrdinal("id"));
+                    var category = reader.GetString(reader.GetOrdinal("category"));
+                    var gender = reader.GetString(reader.GetOrdinal("sex"));
+                    var breed = reader.GetString(reader.GetOrdinal("breed"));
+                    var size = reader.GetString(reader.GetOrdinal("sizee")); // в бд поменять varchar(30) на integer
+                    var wool = reader.GetString(reader.GetOrdinal("wool"));
+                    var signs = reader.GetString(reader.GetOrdinal("signs"));
+                    var identificationMark = reader.GetString(reader.GetOrdinal("id_metka"));
+                    var cityid = reader.GetInt32(reader.GetOrdinal("city_id"));
+                    var color = reader.GetString(reader.GetOrdinal("color"));
+                    var ears = reader.GetString(reader.GetOrdinal("ears"));
+                    var tail = reader.GetString(reader.GetOrdinal("tail"));
+                    var actId = reader.GetInt32(reader.GetOrdinal("act_id"));
+
+                    var processedId = -1;
+                    reader.ReaderClosed += (o, e) =>
+                    {
+                        if (processedId == id) return;
+                        processedId = id;
+
+                        var animalCard = new AnimalCard(id, category, gender, breed, int.Parse(size), // убрать int.Parse, когда поменяем в бд
+                            wool, color, ears, tail, signs, identificationMark,
+                            Location.GetById(cityid, cn, true),
+                            Act.GetById(actId, cn, true), null);
+
+                        cards.Add(animalCard);
+                    };
                 }
                 reader.Close();
                 cn.Close();
-                for (int i = 0; i < cardsEmpty.Count; i++)
-                {
-                    var c = cardsEmpty[i];
-                    foreach (var part in c) Console.WriteLine(part);
-
-                    AnimalCard card = new AnimalCard(
-                        int.Parse(c[0]),
-                        c[1], c[2], c[3],
-                        int.Parse(c[4]), c[5], c[6], c[7],
-                        c[8],
-                        c[9],
-                        c[10],
-                        Location.GetById(int.Parse(c[11]), cn),
-                        Act.GetById(int.Parse(c[12]), cn),
-                        null);
-                    cards.Add(card);
-                }
             }
-                // должно забирать все карточки животного из БД (желательно сделать кэширование:
-                // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов
-                // этого метода в течение 5 секунд возвращает кэшированное значение)
-                // P.S. кэширование должно очищаться после выполнения других действий CRUD кроме Read
-                return cards;
+            return cards;
         }
     }
 }
