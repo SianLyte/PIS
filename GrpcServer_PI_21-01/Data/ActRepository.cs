@@ -164,8 +164,8 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < actsEmpty.Count; i++)
                 {
                     var actEmpty = actsEmpty[i];
-                    App app = App.GetById(int.Parse(actEmpty[1].ToString()), cn);
-                    Act act = Act.GetById(int.Parse(actEmpty[2]), cn);
+                    App app = App.GetById(int.Parse(actEmpty[2].ToString()), cn);
+                    Act act = Act.GetById(int.Parse(actEmpty[1]), cn);
                     actsApps.Add(new ActApp(int.Parse(actEmpty[0]), act, app));
                 }
             };
