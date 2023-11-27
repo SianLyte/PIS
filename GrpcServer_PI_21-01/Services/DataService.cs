@@ -317,7 +317,7 @@ namespace GrpcServer_PI_21_01.Services
             ServerCallContext ctx)
         {
             foreach (var op in OperationRepository.GetOperations())
-                await responseStream.WriteAsync(op);
+                await responseStream.WriteAsync(op.ToReply());
         }
         #endregion
         #region ActApps
@@ -368,6 +368,17 @@ namespace GrpcServer_PI_21_01.Services
         public static DateTime ToUtc(this DateTime date)
         {
             return DateTime.SpecifyKind(date, DateTimeKind.Utc);
+        }
+
+        public static OperationReply ToReply(this Operation operation)
+        {
+            return new OperationReply
+            {
+               OperationId = operation.IdOperation,
+               Action = ActionType.ActionAdd, 
+                ModifiedObjectId = int.Parse(operation.modifiedObjectId), 
+                ModifiedTableName = operation.modifiedTableName, User = operation.user.ToReply()      
+            };
         }
 
         public static AnimalCardReply ToReply(this AnimalCard card)

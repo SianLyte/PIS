@@ -40,7 +40,7 @@ namespace GrpcServer_PI_21_01.Models
         History
     }
 
-    enum Roles
+    public enum Roles
     {
         Operator_Po_Otlovy,
         Curator_Veterinary_Service,
