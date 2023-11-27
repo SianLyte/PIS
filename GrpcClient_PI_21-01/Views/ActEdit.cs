@@ -235,7 +235,7 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (actToEdit)
             {
-
+                dataGridView1.Rows.Add("" + _apps[_apps.Count-1]);
             }
             else
             {
