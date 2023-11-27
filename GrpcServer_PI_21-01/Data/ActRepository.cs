@@ -122,7 +122,24 @@ namespace GrpcServer_PI_21_01.Data
 
         public static ActApp GetActApp(int id)
         {
-            throw new NotImplementedException();
+            string[] arr = { "0", "0", "0" };
+
+            using (NpgsqlCommand cmd = new($"SELECT * FROM act_catch_request WHERE id = {id}") { Connection = cn })
+            {
+                cn.Open();
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    arr[0] = reader[0].ToString();
+                    arr[1] = reader[1].ToString();
+                    arr[2] = reader[2].ToString();
+                }
+                reader.Close();
+                cn.Close();
+                return new ActApp(int.Parse(arr[0]), Act.GetById(int.Parse(arr[1]), cn), App.GetById(int.Parse(arr[2]), cn));
+
+            };
+
         }
 
         public static List<ActApp> GetActApps()
