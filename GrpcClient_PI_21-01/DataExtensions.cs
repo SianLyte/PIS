@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using GrpcClient_PI_21_01.Models;
+using GrpcClient_PI_21_01.Controllers;
 
 namespace GrpcClient_PI_21_01
 {
@@ -27,6 +28,7 @@ namespace GrpcClient_PI_21_01
                 Locality = card.Locality.ToReply(),
                 SpecialSigns = card.SpicialSigns,
                 Tail = card.Tail,
+                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
 
@@ -36,6 +38,7 @@ namespace GrpcClient_PI_21_01
             {
                 City = loc.City,
                 IdLocation = loc.IdLocation,
+                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
 
@@ -51,6 +54,7 @@ namespace GrpcClient_PI_21_01
                 Date = Timestamp.FromDateTime(act.Date.ToUtc()),
                 Organization = act.Organization.ToReply(),
                 TargetCapture = act.TargetCapture,
+                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
 
@@ -66,6 +70,7 @@ namespace GrpcClient_PI_21_01
                 Number = app.number,
                 Territory = app.territory,
                 UrgencyOfExecution = app.urgencyOfExecution,
+                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
 
@@ -77,7 +82,8 @@ namespace GrpcClient_PI_21_01
                 Costumer = contr.Costumer.ToReply(),
                 DateConclusion = Timestamp.FromDateTime(contr.DateConclusion.ToUtc()),
                 Executer = contr.Executer.ToReply(),
-                IdContract = contr.IdContract
+                IdContract = contr.IdContract,
+                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
 
@@ -92,6 +98,7 @@ namespace GrpcClient_PI_21_01
                 Name = org.name,
                 RegistrationAddress = org.registrationAdress,
                 Type = org.type,
+                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
 
