@@ -138,38 +138,9 @@ namespace GrpcServer_PI_21_01.Data
                 cn.Close();
                 return new ActApp(int.Parse(arr[0]), Act.GetById(int.Parse(arr[1]), cn), App.GetById(int.Parse(arr[2]), cn));
 
-            };
-
-        }
-
-        public static List<ActApp> GetActApps()
+        public static List<ActAppReply> GetActApps()
         {
-            List<ActApp> actsApps = new();
-            List<string?[]> actsEmpty = new();
-
-            using (NpgsqlCommand cmd = new("SELECT * FROM act_catch_request") { Connection = cn })
-            {
-                cn.Open();
-                NpgsqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    actsEmpty.Add(new string[3] {
-                        reader[0].ToString(), //id
-                        reader[1].ToString(), //act_id
-                        reader[2].ToString()  //app_id
-                    });
-                }
-                reader.Close();
-                cn.Close();
-                for (int i = 0; i < actsEmpty.Count; i++)
-                {
-                    var actEmpty = actsEmpty[i];
-                    App app = App.GetById(int.Parse(actEmpty[1].ToString()), cn);
-                    Act act = Act.GetById(int.Parse(actEmpty[2]), cn);
-                    actsApps.Add(new ActApp(int.Parse(actEmpty[0]), act, app));
-                }
-            };
-            return actsApps;
+            throw new NotImplementedException();
         }
 
         public static bool AddActApp(ActApp actApp)

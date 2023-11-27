@@ -53,13 +53,13 @@ namespace GrpcServer_PI_21_01
                 arr[2] = reader[3].ToString(); //"org"
                 arr[3] = reader[4].ToString(); //"date"
                 arr[4] = reader[5].ToString();
-                //arr[5] = reader[6].ToString(); //app
-                arr[5] = reader[6].ToString(); //contract
+                arr[5] = reader[6].ToString(); //app
+                arr[6] = reader[7].ToString(); //contract
             }
             reader.Close();
             cn.Close();
             return new Act(id, int.Parse(arr[0]), int.Parse(arr[1]), Organization.GetById(int.Parse(arr[2]), cn),
-                DateTime.Parse(arr[3]), arr[4], Contract.GetById(int.Parse(arr[5]), cn));
+                DateTime.Parse(arr[3]), arr[4], App.GetById(int.Parse(arr[5]), cn), Contract.GetById(int.Parse(arr[6]), cn));
         }
 
     }
