@@ -48,7 +48,7 @@ namespace GrpcServer_PI_21_01.Models
 
         public static User GetById(int id, NpgsqlConnection cn)
         {
-            NpgsqlCommand cmd = new($"SELECT * FROM userr WHERE id = {id}");
+            NpgsqlCommand cmd = new($"SELECT * FROM userr WHERE userid = {id}");
             cmd.Connection = cn;
             cn.Open();
             var reader = cmd.ExecuteReader();
