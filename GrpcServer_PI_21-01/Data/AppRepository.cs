@@ -60,8 +60,10 @@ namespace GrpcServer_PI_21_01.Data
             { Connection = cn };
             {
                 cn.Open();
-                int returnValue = (int)cmd.ExecuteScalar();
-                app.number = returnValue;
+                var returnValue = cmd.ExecuteScalar();
+                if (returnValue is not int id)
+                    return false;
+                app.number = id;
                 //cmd.ExecuteNonQuery();
                 cn.Close();
             }

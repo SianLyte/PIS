@@ -23,7 +23,7 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(result);
         }
 
-        public static void Log(ActionType actType, string tableName, int modifId, UserReply actor)
+        public void Log(ActionType actType, string tableName, int modifId, UserReply actor)
         {
             var operation = new OperationReply()
             {
@@ -34,7 +34,14 @@ namespace GrpcServer_PI_21_01.Services
                 User = actor,
                 Date = DateTime.Now.ToUtc().ToTimestamp(),
             };
-            OperationRepository.AddOperation(operation);
+            var logged = OperationRepository.AddOperation(operation);
+            if (!logged)
+            {
+                _logger.LogError("Error has occured during operation log. Please debug this log:" +
+                    "\n{Username} has made changes to {tableName} table at index {modifId}." +
+                    " Action type: {actType}.",
+                    string.Join(" ", actor.Surname, actor.Name, actor.Patronymic), tableName, modifId, actType);
+            }
         }
 
         #region Contracts

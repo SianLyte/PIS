@@ -61,13 +61,15 @@ namespace GrpcServer_PI_21_01.Data
 
 
             var cmdString = $"INSERT INTO operation " +
-                $"(actiontype, modifiedobjectid, modifiedtablename) " +
-                $"VALUES ('{action}', {op.ModifiedObjectId}, '{op.ModifiedTableName}') RETURNING operationid";
+                $"(actiontype, modifiedobjectid, modifiedtablename, userid) " +
+                $"VALUES ('{action}', {op.ModifiedObjectId}, '{op.ModifiedTableName}', {op.User.UserId}) RETURNING operationid";
             using NpgsqlCommand cmd = new(cmdString) { Connection = cn };
             try
             {
                 cn.Open();
-                var id = (int)cmd.ExecuteScalar();
+                var returnedVal = cmd.ExecuteScalar();
+                if (returnedVal is not int id)
+                    return false;
                 op.OperationId = id;
                 
                 cn.Close();
