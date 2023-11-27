@@ -39,6 +39,13 @@
             dateTimePickerAct=new DateTimePicker();
             label1=new Label();
             DataGridViewActs=new DataGridView();
+            Id=new DataGridViewTextBoxColumn();
+            CountDogs=new DataGridViewTextBoxColumn();
+            CountCats=new DataGridViewTextBoxColumn();
+            Organization=new DataGridViewTextBoxColumn();
+            Date=new DataGridViewTextBoxColumn();
+            Target=new DataGridViewTextBoxColumn();
+            Kontracts=new DataGridViewTextBoxColumn();
             pictureBox1=new PictureBox();
             tabPage2=new TabPage();
             checkBox1=new CheckBox();
@@ -80,14 +87,6 @@
             OrgDelete=new Button();
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
-            closeMainForm=new Button();
-            Id=new DataGridViewTextBoxColumn();
-            CountDogs=new DataGridViewTextBoxColumn();
-            CountCats=new DataGridViewTextBoxColumn();
-            Organization=new DataGridViewTextBoxColumn();
-            Date=new DataGridViewTextBoxColumn();
-            Target=new DataGridViewTextBoxColumn();
-            Kontracts=new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
@@ -240,6 +239,55 @@
             DataGridViewActs.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
             DataGridViewActs.Size=new Size(1329, 580);
             DataGridViewActs.TabIndex=0;
+            // 
+            // Id
+            // 
+            Id.HeaderText="№ Акта";
+            Id.MinimumWidth=8;
+            Id.Name="Id";
+            Id.ReadOnly=true;
+            // 
+            // CountDogs
+            // 
+            CountDogs.HeaderText="Количество собак";
+            CountDogs.MinimumWidth=8;
+            CountDogs.Name="CountDogs";
+            CountDogs.ReadOnly=true;
+            // 
+            // CountCats
+            // 
+            CountCats.HeaderText="Количество кошек";
+            CountCats.MinimumWidth=8;
+            CountCats.Name="CountCats";
+            CountCats.ReadOnly=true;
+            // 
+            // Organization
+            // 
+            Organization.HeaderText="Организация";
+            Organization.MinimumWidth=8;
+            Organization.Name="Organization";
+            Organization.ReadOnly=true;
+            // 
+            // Date
+            // 
+            Date.HeaderText="Дата";
+            Date.MinimumWidth=8;
+            Date.Name="Date";
+            Date.ReadOnly=true;
+            // 
+            // Target
+            // 
+            Target.HeaderText="Цель отлова";
+            Target.MinimumWidth=8;
+            Target.Name="Target";
+            Target.ReadOnly=true;
+            // 
+            // Kontracts
+            // 
+            Kontracts.HeaderText="Контракты";
+            Kontracts.MinimumWidth=8;
+            Kontracts.Name="Kontracts";
+            Kontracts.ReadOnly=true;
             // 
             // pictureBox1
             // 
@@ -715,72 +763,13 @@
             label7.TabIndex=16;
             label7.Text="до:";
             // 
-            // closeMainForm
-            // 
-            closeMainForm.Location=new Point(1316, 0);
-            closeMainForm.Name="closeMainForm";
-            closeMainForm.Size=new Size(94, 29);
-            closeMainForm.TabIndex=1;
-            closeMainForm.Text="Close";
-            closeMainForm.UseVisualStyleBackColor=true;
-            closeMainForm.Click+=closeMainForm_Click;
-            // 
-            // Id
-            // 
-            Id.HeaderText="№ Акта";
-            Id.MinimumWidth=8;
-            Id.Name="Id";
-            Id.ReadOnly=true;
-            // 
-            // CountDogs
-            // 
-            CountDogs.HeaderText="Количество собак";
-            CountDogs.MinimumWidth=8;
-            CountDogs.Name="CountDogs";
-            CountDogs.ReadOnly=true;
-            // 
-            // CountCats
-            // 
-            CountCats.HeaderText="Количество кошек";
-            CountCats.MinimumWidth=8;
-            CountCats.Name="CountCats";
-            CountCats.ReadOnly=true;
-            // 
-            // Organization
-            // 
-            Organization.HeaderText="Организация";
-            Organization.MinimumWidth=8;
-            Organization.Name="Organization";
-            Organization.ReadOnly=true;
-            // 
-            // Date
-            // 
-            Date.HeaderText="Дата";
-            Date.MinimumWidth=8;
-            Date.Name="Date";
-            Date.ReadOnly=true;
-            // 
-            // Target
-            // 
-            Target.HeaderText="Цель отлова";
-            Target.MinimumWidth=8;
-            Target.Name="Target";
-            Target.ReadOnly=true;
-            // 
-            // Kontracts
-            // 
-            Kontracts.HeaderText="Контракты";
-            Kontracts.MinimumWidth=8;
-            Kontracts.Name="Kontracts";
-            Kontracts.ReadOnly=true;
-            // 
             // MainForm
             // 
             AutoScaleMode=AutoScaleMode.Inherit;
             BackColor=Color.Wheat;
             ClientSize=new Size(1408, 788);
-            Controls.Add(closeMainForm);
             Controls.Add(tabControl1);
+            Cursor=Cursors.PanNW;
             Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             ForeColor=Color.Black;
             FormBorderStyle=FormBorderStyle.FixedToolWindow;
@@ -789,7 +778,6 @@
             StartPosition=FormStartPosition.CenterScreen;
             Tag="";
             Text="Заявки на отлов";
-            TransparencyKey=Color.Black;
             Load+=MainForm_Load;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
@@ -864,7 +852,6 @@
         private PictureBox pictureBox2;
         private Button History_button;
         private Button historyButton;
-        private Button closeMainForm;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn CountDogs;
         private DataGridViewTextBoxColumn CountCats;
