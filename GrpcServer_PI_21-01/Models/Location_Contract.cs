@@ -1,9 +1,5 @@
 ﻿using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GrpcServer_PI_21_01.Services;
 
 namespace GrpcServer_PI_21_01.Models
 {
@@ -42,6 +38,17 @@ namespace GrpcServer_PI_21_01.Models
                 Location.GetById(int.Parse(arr[3]), cn),
                 decimal.Parse(arr[1]),
                 Contract.GetById(int.Parse(arr[2]), cn));
+        }
+
+        public LocationContractReply ToReply()
+        {
+            return new LocationContractReply()
+            {
+                Id = Id,
+                Location = Locality.ToReply(),
+                Contract = Contract.ToReply(),
+                Price = (double)Price,
+            };
         }
     }
 }

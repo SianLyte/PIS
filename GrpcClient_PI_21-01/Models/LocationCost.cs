@@ -19,5 +19,16 @@ namespace GrpcClient_PI_21_01.Models
             Price = price;
             Contract = contract;
         }
+
+        public LocationContractReply ToReply()
+        {
+            return new LocationContractReply()
+            {
+                Id = Id,
+                Location = Locality.ToReply(),
+                Contract = Contract.ToReply(),
+                Price = (double)Price,
+            };
+        }
     }
 }

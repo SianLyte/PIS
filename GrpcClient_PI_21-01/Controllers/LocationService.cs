@@ -25,18 +25,30 @@ namespace GrpcClient_PI_21_01.Controllers
             return locations;
         }
 
-        public static async Task<List<Location>> GetLocation_Contract_Costs()
+        public static async Task<List<Location_Contract>> GetLocationContracts()
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var serverData = client.GetLocations(UserService.CurrentUser?.ToReply());
+            var serverData = client.GetLocationContracts(UserService.CurrentUser?.ToReply());
             var responseStream = serverData.ResponseStream;
-            var locations = new List<Location>();
+            var locationContractsList = new List<Location_Contract>();
             await foreach (var response in responseStream.ReadAllAsync())
             {
-                locations.Add(response.FromReply());
+                locationContractsList.Add(response.FromReply());
             }
-            return locations;
+            return locationContractsList;
+        }
+
+        public static async Task<Location_Contract> GetLocationContract(int id)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var response = await client.GetLocationContractAsync(new IdRequest()
+            {
+                Id = id,
+                Actor = UserService.CurrentUser?.ToReply(),
+            });
+            return response.FromReply();
         }
 
         public static async Task<bool> AddLocation(Location loc)
@@ -47,6 +59,38 @@ namespace GrpcClient_PI_21_01.Controllers
             var client = new DataRetriever.DataRetrieverClient(channel);
             var response = await client.AddLocationAsync(reply);
             loc.IdLocation = response.ModifiedId ?? -1;
+            return response.Successful;
+        }
+
+        public static async Task<bool> AddLocationContract(Location_Contract lc)
+        {
+            lc.Id = -1;
+            var reply = lc.ToReply();
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var response = await client.AddLocationContractAsync(reply);
+            lc.Id = response.ModifiedId ?? -1;
+            return response.Successful;
+        }
+
+        public static async Task<bool> UpdateLocationContract(Location_Contract lc)
+        {
+            var reply = lc.ToReply();
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var response = await client.UpdateLocationContractAsync(reply);
+            return response.Successful;
+        }
+
+        public static async Task<bool> RemoveLocationContract(int id)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var response = await client.RemoveLocationContractAsync(new IdRequest()
+            {
+                Id = id,
+                Actor = UserService.CurrentUser?.ToReply()
+            });
             return response.Successful;
         }
     }

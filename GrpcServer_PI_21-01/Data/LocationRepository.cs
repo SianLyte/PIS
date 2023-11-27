@@ -104,5 +104,31 @@ namespace GrpcServer_PI_21_01.Data
             // возвращаем true, если обновление произошло успешно,
             // вовзращаем false, если что-то пошло не так (например, местности с таким Id не существует в БД)
         }
+
+        public static bool AddLocationContract(Location_Contract lc)
+        {
+            // не забудь присовить переменной lc id после добавления в бд
+            throw new NotImplementedException();
+        }
+
+        public static bool UpdateLocationContract(Location_Contract lc)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool RemoveLocationContract(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Location_Contract GetLocationContract(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static List<Location_Contract> GetLocationContracts()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

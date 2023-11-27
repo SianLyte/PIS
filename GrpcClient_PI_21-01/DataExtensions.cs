@@ -169,5 +169,10 @@ namespace GrpcClient_PI_21_01
                 reply.CaptureAct.FromReply(),
                 null);
         }
+
+        public static Location_Contract FromReply(this LocationContractReply r)
+        {
+            return new Location_Contract(r.Id, r.Location.FromReply(), (decimal)r.Price, r.Contract.FromReply());
+        }
     }
 }

@@ -361,6 +361,46 @@ namespace GrpcServer_PI_21_01.Services
             return CRUD(request.Id, successful);
         }
         #endregion
+        #region LocationContracts
+        public override Task<LocationContractReply> GetLocationContract(IdRequest request, ServerCallContext context)
+        {
+            Location_Contract lc = LocationRepository.GetLocationContract(request.Id);
+
+            if (lc is null)
+                throw new RpcException(new Status(StatusCode.NotFound, "Item does not exist"));
+
+            return Task.FromResult(lc.ToReply());
+        }
+
+        public override async Task GetLocationContracts(UserReply request,
+            IServerStreamWriter<LocationContractReply> responseStream,
+            ServerCallContext context)
+        {
+            foreach (var locationContract in LocationRepository.GetLocationContracts())
+                await responseStream.WriteAsync(locationContract.ToReply());
+        }
+
+        public override Task<OperationResult> AddLocationContract(LocationContractReply request, ServerCallContext context)
+        {
+            var successful = LocationRepository.AddLocationContract(request.FromReply());
+            Log(ActionType.ActionAdd, "Location Contract", request.Id, request.Actor);
+            return CRUD(request.Id, successful);
+        }
+
+        public override Task<OperationResult> UpdateLocationContract(LocationContractReply request, ServerCallContext context)
+        {
+            var successful = LocationRepository.UpdateLocationContract(request.FromReply());
+            Log(ActionType.ActionUpdate, "Location Contract", request.Id, request.Actor);
+            return CRUD(request.Id, successful);
+        }
+
+        public override Task<OperationResult> RemoveLocationContract(IdRequest request, ServerCallContext context)
+        {
+            var successful = LocationRepository.RemoveLocationContract(request.Id);
+            Log(ActionType.ActionDelete, "Location Contract", request.Id, request.Actor);
+            return CRUD(request.Id, successful);
+        }
+        #endregion
     }
 
     public static class DataExtensions
@@ -554,6 +594,11 @@ namespace GrpcServer_PI_21_01.Services
                 reply.Locality.FromReply(),
                 reply.CaptureAct.FromReply(),
                 null);
+        }
+
+        public static Location_Contract FromReply(this LocationContractReply r)
+        {
+            return new Location_Contract(r.Id, r.Location.FromReply(), (decimal)r.Price, r.Contract.FromReply());
         }
     }
 }

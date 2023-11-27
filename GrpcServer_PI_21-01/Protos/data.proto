@@ -51,6 +51,12 @@ service DataRetriever {
   rpc AddActApps (ActAppReply) returns (OperationResult);
   rpc UpdateActApps (ActAppReply) returns (OperationResult);
   rpc RemoveActApps (IdRequest) returns (OperationResult);
+
+  rpc GetLocationContract (IdRequest) returns (LocationContractReply);
+  rpc GetLocationContracts (UserReply) returns (stream LocationContractReply);
+  rpc AddLocationContract (LocationContractReply) returns (OperationResult);
+  rpc UpdateLocationContract (LocationContractReply) returns (OperationResult);
+  rpc RemoveLocationContract (IdRequest) returns (OperationResult);
 }
 
 message IdRequest {
@@ -166,4 +172,12 @@ message ActAppReply {
 	ActReply act = 2;
 	ApplicationReply app = 3;
 	UserReply actor = 4;
+}
+
+message LocationContractReply {
+	int32 id = 1;
+	LocationReply location = 2;
+	ContractReply contract = 3;
+	double price = 4;
+	UserReply actor = 5;
 }
