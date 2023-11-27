@@ -72,6 +72,11 @@ namespace GrpcServer_PI_21_01.Services
             Log(ActionType.ActionAdd, "Contract", contract.IdContract, request.Actor);
             return CRUD(contract.IdContract, successful);
         }
+        //public override Task<OperationResult> AddLocationContract(LocationContractReply request, ServerCallContext ctx)
+        //{
+        //    var locationcontract = request.FromReply();
+
+        //}
 
         public override Task<OperationResult> UpdateContract(ContractReply request, ServerCallContext ctx)
         {
