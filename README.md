@@ -1,7 +1,8 @@
 # PIS
 
 Cхема базы данных:
-![image](https://github.com/SianLyte/PIS/assets/99135470/e7924c2c-1c09-4c48-804b-d993cc5e2872)
+![image](https://github.com/SianLyte/PIS/assets/99135470/67001215-442b-4145-89b6-40a242f922eb)
+
 
 
 Диаграмма развертывания:
