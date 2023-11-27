@@ -34,8 +34,30 @@ namespace GrpcClient_PI_21_01
                 this.Close();
             }
             else
+            {
                 MessageBox.Show("Неверный логин или пароль ", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Enter.Enabled = true;
+            }
 
+        }
+
+        private void CredentialKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (sender is TextBox credentialBox)
+                {
+                    if (credentialBox == loginTextBox)
+                        passwordTextBox.Select();
+                    else
+                    {
+                        Enter.Enabled = false;
+                        LogInButton(Enter, e);
+                    }
+                }
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }
