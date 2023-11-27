@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GrpcClient_PI_21_01";
+
+import "Protos/data.proto";
+import "google/protobuf/timestamp.proto";
+package report;
+
+service ReportGenerator {
+	rpc Generate_ActCaptureReport (FilterReply) returns (stream Report_ActCapture);
+}
+
+message FilterReply {
+	data.UserReply actor = 1;
+	google.protobuf.Timestamp beginDate = 2;
+	google.protobuf.Timestamp endDate = 3;
+}
+
+message Report_ActCapture {
+	google.protobuf.Timestamp start = 1;
+	google.protobuf.Timestamp end = 2;
+	data.LocationReply locality = 3;
+	int32 closedAppCount = 4;
+	int32 capturedAnimalsCount = 5;
+	double summary = 6;
+}

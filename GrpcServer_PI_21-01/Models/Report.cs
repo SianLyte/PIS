@@ -13,9 +13,9 @@ namespace GrpcServer_PI_21_01.Models
         public Location Loc { get; set; }
         public int CountAnumals { get; set; }
         public int Close { get; set; }
-        public int Sum { get; set; }
+        public double Sum { get; set; }
 
-        public Report(DateTime dateStart, DateTime dateFinish, Location loc, int close, int countAnumals, int sum)
+        public Report(DateTime dateStart, DateTime dateFinish, Location loc, int close, int countAnumals, double sum)
         {
             DateStart = dateStart;
             DateFinish = dateFinish;

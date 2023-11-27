@@ -37,12 +37,12 @@ namespace GrpcServer_PI_21_01.Data
                         apps.Add(actapp.Application);
                     }
                 }
-                int summ = 0;
+                double summ = 0;
                 foreach (var act in acts)
                 {
                     int contractId = act.Contracts.IdContract;
                     int localityId = loc.IdLocation;
-                    summ += (int)Location_Contract.GetAnimalCost(localityId, contractId, cn).Price;
+                    summ += (double)Location_Contract.GetAnimalCost(localityId, contractId, cn).Price;
                 }
                 if (summ != 0)
                     reports.Add(new Report(start, finish, loc, apps.Count(), acts.Sum(x => x.Sum), summ));

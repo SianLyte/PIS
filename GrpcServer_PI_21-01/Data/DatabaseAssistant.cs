@@ -14,9 +14,9 @@
             ConnectionString = "Host=localhost;Username=postgres;Password=" + password + ";Database=animal_capture;";
         }
 
-        public static string ConnectionString = "Host=localhost;Username=postgres;Password=" +
-            "P@ssw0rd" +
-            //"123" +
+        public static readonly string ConnectionString = "Host=localhost;Username=postgres;Password=" +
+            //"P@ssw0rd" +
+            "123" +
             ";Database=animal_capture;";
     }
 }

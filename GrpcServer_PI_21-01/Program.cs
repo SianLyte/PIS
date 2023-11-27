@@ -16,6 +16,7 @@ app.MapGrpcService<GreeterService>();
 app.MapGrpcService<DataService>();
 app.MapGrpcService<AuthorizationService>();
 app.MapGrpcService<PrevilegeService>();
+app.MapGrpcService<ReportService>();
 app.MapGet("/", () => "The H");
 //app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
