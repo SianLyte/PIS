@@ -51,6 +51,22 @@ namespace GrpcClient_PI_21_01.Views
                 await FullComboBox();
                 executerCombo.Text = cont.Executer.name;
                 customerCombo.Text = cont.Costumer.name;
+                var lcs = (await LocationService.GetLocationContracts())
+                    .Where(lc => lc.Contract.IdContract == ContId);
+                var allLocations = await LocationService.GetLocations();
+                foreach (var lc in lcs)
+                {
+                    var location = allLocations.FirstOrDefault(loc => loc.IdLocation == lc.Locality.IdLocation);
+                    if (location != null)
+                    {
+                        _locations.Add(location);
+                    }
+                }
+                CreateData();
+                foreach (var loc in _locations)
+                {
+                    dataGridView1.Rows.Add(loc.City);
+                }
             }
             else
                 await FullComboBox();
@@ -168,7 +184,7 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (ContToEdit)
             {
-
+                dataGridView1.Rows.Add(_locations[_locations.Count-1].City);
             }
             else
             {

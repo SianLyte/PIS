@@ -53,6 +53,16 @@ namespace GrpcClient_PI_21_01.Views
                 comboBoxOrganization.Text = act.Organization.name;
                 comboBoxContract.Text = act.Contracts.IdContract.ToString();
                 //comboBoxApp.Text = act.Application.number.ToString();
+                var actApps = (await ActService.GetActApps())
+                    .Where(aa => aa.Act.ActNumber == actId);
+                _apps = actApps.Select(async aa => await Task.FromResult(aa.App.Number))
+                    .Select(task => task.Result)
+                    .ToList();
+                CreateData();
+                foreach (var app in _apps)
+                {
+                    dataGridView1.Rows.Add(app);
+                }
             }
             else
             {
