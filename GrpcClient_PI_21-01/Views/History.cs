@@ -52,7 +52,7 @@ namespace GrpcClient_PI_21_01.Views
 
         private void ParceData(List<OperationReply> data)
         {
-            MessageBox.Show(data[_i].ModifiedTableName);
+            MessageBox.Show(data[_i].ToString());
             //surnameTextBox.Text = data[0].ToString();
             //nameTextBox.Text = data[1].ToString();
             //patronymicTextBox.Text = data[2].ToString();
