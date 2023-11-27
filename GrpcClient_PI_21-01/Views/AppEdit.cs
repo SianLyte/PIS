@@ -36,7 +36,7 @@ namespace GrpcClient_PI_21_01.Views
             //App app = AppRepository.Applicatiions[NumAppId];
 
             var app = await AppService.GetApplication(appNum);
-            date.Text = app.date.ToString();
+            dateTime.Value = app.date;
             loc.Text = app.locality;
             territory.Text = app.territory;
             animalHabbiat.Text = app.animalHabiat;
@@ -47,11 +47,12 @@ namespace GrpcClient_PI_21_01.Views
 
         private async void OkAppEdit_Click(object sender, EventArgs e)
         {
-            var app = new App(DateTime.Parse(date.Text), appNum,
-                loc.Text, territory.Text, animalHabbiat.Text, urgency.Text,
-                descrip.Text, categoryApp.Text);
-            await AppService.UpdateApplication(app);
-            this.Close();
+                var app = new App(DateTime.Parse(dateTime.Text), appNum,
+                    loc.Text, territory.Text, animalHabbiat.Text, urgency.Text,
+                    descrip.Text, categoryApp.Text);
+                await AppService.UpdateApplication(app);
+                this.Close();
+         
         }
 
         private void Cancel_Click(object sender, EventArgs e)

@@ -4,7 +4,7 @@
     {
         static DatabaseAssistant()
         {
-            string password = "123";
+            string password = "1";
             if (OperatingSystem.IsWindows())
             {
                 var name = Environment.UserName;
