@@ -47,7 +47,7 @@ namespace GrpcClient_PI_21_01.Models
                 Name = Name,
                 Surname = Surname,
                 Patronymic = Patronymic,
-                Organization = Organization.ToReply(),
+                Organization = Organization.ToReplyWithoutActor(),
                 PrivelegeLevel = PrivelegeLevel,
                 UserId = IdUser,
             };

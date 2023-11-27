@@ -89,6 +89,13 @@ namespace GrpcClient_PI_21_01
 
         public static OrganizationReply ToReply(this Organization org)
         {
+            var reply = org.ToReplyWithoutActor();
+            reply.Actor = UserService.CurrentUser?.ToReply();
+            return reply;
+        }
+
+        public static OrganizationReply ToReplyWithoutActor(this Organization org)
+        {
             return new OrganizationReply()
             {
                 IdOrganization = org.idOrg,
@@ -98,10 +105,8 @@ namespace GrpcClient_PI_21_01
                 Name = org.name,
                 RegistrationAddress = org.registrationAdress,
                 Type = org.type,
-                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
-
 
         public static Contract FromReply(this ContractReply reply)
         {
