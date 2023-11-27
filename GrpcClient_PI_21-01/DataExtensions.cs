@@ -45,7 +45,7 @@ namespace GrpcClient_PI_21_01
             {
                 Contract = act.Contracts.ToReply(),
                 ActNumber = act.ActNumber,
-                App = act.Application.ToReply(),
+                //App = act.Application.ToReply(),
                 CountCats = act.CountCats,
                 CountDogs = act.CountDogs,
                 Date = Timestamp.FromDateTime(act.Date.ToUtc()),
@@ -134,7 +134,7 @@ namespace GrpcClient_PI_21_01
                 reply.Organization.FromReply(),
                 reply.Date.ToDateTime(),
                 reply.TargetCapture,
-                reply.App.FromReply(),
+                //reply.App.FromReply(),
                 reply.Contract.FromReply());
         }
 

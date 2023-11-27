@@ -16,10 +16,9 @@ namespace GrpcClient_PI_21_01
         public Organization Organization { get; set; }
         public DateTime Date { get; set; }
         public string TargetCapture { get; set; }
-        public App Application { get; set; }
         public Contract Contracts { get; set; }
 
-        public Act(int actNumber, int countDogs, int countCats, Organization organization, DateTime date, string targetCapture, App application, Contract contracts)
+        public Act(int actNumber, int countDogs, int countCats, Organization organization, DateTime date, string targetCapture, Contract contracts)
         {
             ActNumber = actNumber;
             CountDogs = countDogs;
@@ -28,14 +27,12 @@ namespace GrpcClient_PI_21_01
             Organization = organization;
             Date = date;
             TargetCapture = targetCapture;
-            Application = application;
             Contracts = contracts;
         }
 
         public static Act Empty = new(-1, 0, 0,
                         new Organization(-1, "", "", "", "", "", ""),
                         DateTime.MinValue, "",
-                        new App(DateTime.MinValue, -1, "", "", "", "", "", ""),
                         new Contract(-1, DateTime.MinValue, DateTime.MinValue,
                         new Organization(-1, "", "", "", "", "", ""),
                         new Organization(-1, "", "", "", "", "", "")));

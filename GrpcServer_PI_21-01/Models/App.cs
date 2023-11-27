@@ -28,6 +28,11 @@ namespace GrpcServer_PI_21_01.Models
             this.animaldescription = animaldescription;
             this.applicantCategory = applicantCategory;
         }
+        public override bool Equals(object? obj)
+        {
+            App obj1 = obj as App;
+            return this.number == obj1.number;
+        }
 
         public static App GetById(int id, NpgsqlConnection cn)
         {
