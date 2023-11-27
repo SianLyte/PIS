@@ -17,10 +17,10 @@ namespace GrpcServer_PI_21_01
         public Organization Organization { get; set; }
         public DateTime Date { get; set; }
         public string TargetCapture { get; set; }
-        public App Application { get; set; }
+        //public App Application { get; set; }
         public Contract Contracts { get; set; }
 
-        public Act(int actNumber, int countDogs, int countCats, Organization organization, DateTime date, string targetCapture, App application, Contract contracts)
+        public Act(int actNumber, int countDogs, int countCats, Organization organization, DateTime date, string targetCapture, Contract contracts)
         {
             ActNumber = actNumber;
             CountDogs = countDogs;
@@ -29,8 +29,14 @@ namespace GrpcServer_PI_21_01
             Organization = organization;
             Date = date;
             TargetCapture = targetCapture;
-            Application = application;
+            //Application = application;
             Contracts = contracts;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            Act obj1 = obj as Act;
+            return this.ActNumber == obj1.ActNumber;
         }
 
         public static Act GetById(int id, NpgsqlConnection cn)
@@ -38,7 +44,7 @@ namespace GrpcServer_PI_21_01
             NpgsqlCommand cmd = new($"SELECT * FROM act WHERE id = {id}");
             cmd.Connection = cn;
             var reader = cmd.ExecuteReader();
-            string[] arr = { "0", "0", "0", "0", "0", "0", "0" };
+            string[] arr = { "0", "0", "0", "0", "0", "0" };
             while (reader.Read())
             {
                 arr[0] = reader[1].ToString();
@@ -46,12 +52,12 @@ namespace GrpcServer_PI_21_01
                 arr[2] = reader[3].ToString(); //"org"
                 arr[3] = reader[4].ToString(); //"date"
                 arr[4] = reader[5].ToString();
-                arr[5] = reader[6].ToString(); //app
-                arr[6] = reader[7].ToString(); //contract
+                //arr[5] = reader[6].ToString(); //app
+                arr[5] = reader[7].ToString(); //contract
             }
             reader.Close();
             return new Act(id, int.Parse(arr[0]), int.Parse(arr[1]), Organization.GetById(int.Parse(arr[2]), cn),
-                DateTime.Parse(arr[3]), arr[4], App.GetById(int.Parse(arr[5]), cn), Contract.GetById(int.Parse(arr[6]), cn));
+                DateTime.Parse(arr[3]), arr[4], Contract.GetById(int.Parse(arr[6]), cn));
         }
 
     }

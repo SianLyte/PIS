@@ -323,25 +323,26 @@ namespace GrpcServer_PI_21_01.Services
         #region ActApps
         public override Task<ActAppReply> GetActApp(IdRequest request, ServerCallContext context)
         {
-            ActAppReply? r = ActRepository.GetActApp(request.Id);
+            ActApp r = ActRepository.GetActApp(request.Id);
 
             if (r is null)
                 throw new RpcException(new Status(StatusCode.NotFound, "Item does not exist"));
 
-            return Task.FromResult(r);
+            return Task.FromResult(r.ToReply());
         }
 
         public override async Task GetActApps(UserReply request,
             IServerStreamWriter<ActAppReply> responseStream,
             ServerCallContext context)
         {
+
             foreach (var actApp in ActRepository.GetActApps())
-                await responseStream.WriteAsync(actApp);
+                await responseStream.WriteAsync(actApp.ToReply());
         }
 
         public override Task<OperationResult> AddActApps(ActAppReply request, ServerCallContext context)
         {
-            var successful = ActRepository.AddActApp(request);
+            var successful = ActRepository.AddActApp(request.FromReply());
             Log(ActionType.ActionAdd, "Act Application", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
@@ -355,7 +356,7 @@ namespace GrpcServer_PI_21_01.Services
 
         public override Task<OperationResult> UpdateActApps(ActAppReply request, ServerCallContext context)
         {
-            var successful = ActRepository.UpdateActApp(request);
+            var successful = ActRepository.UpdateActApp(request.FromReply());
             Log(ActionType.ActionUpdate, "Act Application", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
@@ -404,12 +405,21 @@ namespace GrpcServer_PI_21_01.Services
             {
                 Contract = act.Contracts.ToReply(),
                 ActNumber = act.ActNumber,
-                App = act.Application.ToReply(),
                 CountCats = act.CountCats,
                 CountDogs = act.CountDogs,
                 Date = Timestamp.FromDateTime(act.Date.ToUtc()),
                 Organization = act.Organization.ToReply(),
                 TargetCapture = act.TargetCapture,
+            };
+        }
+
+        public static ActAppReply ToReply(this ActApp actapp)
+        {
+            return new ActAppReply()
+            {
+                Id = actapp.ActAppNumber,
+                Act = actapp.Act.ToReply(),
+                App = actapp.Application.ToReply()
             };
         }
 
@@ -492,8 +502,15 @@ namespace GrpcServer_PI_21_01.Services
                 reply.Organization.FromReply(),
                 reply.Date.ToDateTime(),
                 reply.TargetCapture,
-                reply.App.FromReply(),
                 reply.Contract.FromReply());
+        }
+
+        public static ActApp FromReply(this ActAppReply reply)
+        {
+            return new ActApp(
+                reply.Id,
+                reply.Act.FromReply(),
+                reply.App.FromReply());
         }
 
         public static App FromReply(this ApplicationReply reply)

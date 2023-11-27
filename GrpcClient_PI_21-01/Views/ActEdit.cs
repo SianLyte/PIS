@@ -49,7 +49,7 @@ namespace GrpcClient_PI_21_01.Views
                 await FullComboBox();
                 comboBoxOrganization.Text = act.Organization.name;
                 comboBoxContract.Text = act.Contracts.IdContract.ToString();
-                comboBoxApp.Text = act.Application.number.ToString();
+                //comboBoxApp.Text = act.Application.number.ToString();
             }
             else
             {
@@ -88,7 +88,7 @@ namespace GrpcClient_PI_21_01.Views
             {
                 var act = new Act(actId, (int)numericUpDownDog.Value, (int)numericUpDownCat.Value,
                         comboBoxOrganization.SelectedItem as Organization,
-                        dateAct.Value, textBoxTarget.Text, comboBoxApp.SelectedItem as App,
+                        dateAct.Value, textBoxTarget.Text,
                         comboBoxContract.SelectedItem as Contract);
                 if (actToEdit)
                 {

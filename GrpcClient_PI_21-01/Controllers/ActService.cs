@@ -74,7 +74,6 @@ namespace GrpcClient_PI_21_01
                     act.Organization.name,
                     act.Date.ToShortDateString(),
                     act.TargetCapture,
-                    act.Application.number.ToString(),
                     act.Contracts.IdContract.ToString()
             };
         }
@@ -88,7 +87,6 @@ namespace GrpcClient_PI_21_01
                 OrgService.GetOrganizationFromReply(reply.Organization),
                 reply.Date.ToDateTime(),
                 reply.TargetCapture,
-                AppService.GetApplicationFromReply(reply.App),
                 ContractService.GetContractFromReply(reply.Contract));
         }
 
