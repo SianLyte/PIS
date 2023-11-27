@@ -362,4 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /GrpcServer_PI_21-01/Data/DatabaseAssistant.cs
+<<<<<<< HEAD
+=======
+/.gitignore
+>>>>>>> test
 /GrpcServer_PI_21-01/Data/DatabaseAssistant.cs
