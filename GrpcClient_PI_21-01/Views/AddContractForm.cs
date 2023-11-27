@@ -127,7 +127,20 @@ namespace GrpcClient_PI_21_01.Views
                     dateConclusion.Value, dateAction.Value,
                     executerCombo.SelectedItem as Organization,
                     customerCombo.SelectedItem as Organization);
-                await ContractService.AddContract(contr);
+                var successful = await ContractService.AddContract(contr);
+                if (!successful)
+                {
+                    this.DialogResult = DialogResult.Cancel;
+                    MessageBox.Show("Internal error while adding animal card. Please try again later");
+                    return;
+                }
+                //var successful = await LocationService.
+                if (!successful)
+                {
+                    this.DialogResult = DialogResult.Cancel;
+                    MessageBox.Show("Internal error while adding animal card. Please try again later");
+                    return;
+                }
                 this.Close();
             }
         }

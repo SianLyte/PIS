@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace GrpcClient_PI_21_01.Views
 {
@@ -17,6 +18,7 @@ namespace GrpcClient_PI_21_01.Views
     {
         private readonly bool actToEdit;
         private readonly int actId;
+        private List<int> _apps = new List<int>();
 
         public ActEdit()
         {
@@ -39,6 +41,7 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (actToEdit)
             {
+                
                 //var index = ActRepository.acts.FindIndex(x => x.ActNumber == actId);
                 //Act act = ActRepository.acts[index];
                 var act = await ActService.GetAct(actId);
@@ -71,7 +74,7 @@ namespace GrpcClient_PI_21_01.Views
             comboBoxApp.DisplayMember = "number";
             comboBoxApp.ValueMember = "number";
 
-            
+
             if (contracts.Count() != 0)
             {
                 comboBoxContract.DataSource = new BindingSource(contracts, null);
@@ -79,7 +82,7 @@ namespace GrpcClient_PI_21_01.Views
                 comboBoxContract.ValueMember = "IdContract";
             }
 
-            
+
         }
 
         private async void OK_Click(object sender, EventArgs e)
@@ -153,6 +156,21 @@ namespace GrpcClient_PI_21_01.Views
                                 return;
                             }
                         }
+                        foreach(var app in _apps)
+                        {
+                            var appReply = (await AppService.GetApplication(app)).ToReply();
+                            successful = await ActService.AddActApp(new ActAppReply() 
+                            { 
+                                App = appReply,
+                                Act = act.ToReply()
+                            });
+                            if (!successful)
+                            {
+                                this.DialogResult = DialogResult.Cancel;
+                                MessageBox.Show("Internal error while adding animal card. Please try again later");
+                                return;
+                            }
+                        }
                         this.DialogResult = DialogResult.OK;
 
                     }
@@ -179,6 +197,40 @@ namespace GrpcClient_PI_21_01.Views
         private void comboBoxApp_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void addApp_Click(object sender, EventArgs e)
+        {
+            if (_apps.Count == 0) { CreateData(); }
+            int selectedApp = int.Parse(comboBoxApp.SelectedValue.ToString());
+
+            if (ConteinceSelectedId(selectedApp)) { MessageBox.Show("Этот акт выбран"); }
+            else
+            {
+                _apps.Add(selectedApp);
+                InitialisationData();
+            }
+        }
+        private bool ConteinceSelectedId(int selectedApp)
+        {
+            foreach (var item in _apps) { if (item == selectedApp) return true; }
+            return false;
+        }
+        private void CreateData()
+        {
+            dataGridView1.ColumnCount = 1;
+            dataGridView1.RowCount = 0;
+        }
+        private void InitialisationData()
+        {
+            if (actToEdit)
+            {
+
+            }
+            else
+            {
+                dataGridView1.Rows.Add("" + _apps[_apps.Count-1]);
+            }
         }
     }
 }
