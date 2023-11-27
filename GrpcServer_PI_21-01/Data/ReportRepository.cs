@@ -18,11 +18,27 @@ namespace GrpcServer_PI_21_01.Data
         {
             reports = new List<Report>();
             foreach (var loc in LocationRepository.GetLocations())
-            { 
-                var allSity = ActRepository.GetActs()
-                    .Where(x => x.Application.locality == loc.City & x.Date >= start & x.Date <= finish);
-                int summ = 0;
-                foreach (var act in allSity)
+
+            {
+                //все заявки_акты за определнный период в конкретном городе
+                var allActApps = ActRepository.GetActApps().Where(actapp => actapp.Act.Date >= start & actapp.Act.Date <= finish & actapp.Application.locality == loc.City);
+                //массив уникальных актов
+                List<Act> acts = new(); 
+                //массив уникальных 
+                List<App> apps = new();
+                foreach (var actapp in allActApps)
+                {
+                    if (!acts.Contains(actapp.Act))
+                    {
+                        acts.Add(actapp.Act);
+                    }
+                    if (!apps.Contains(actapp.Application))
+                    {
+                        apps.Add(actapp.Application);
+                    }
+                }
+                double summ = 0;
+                foreach (var act in acts)
                 {
                     int contractId = act.Contracts.IdContract;
                     int localityId = loc.IdLocation;

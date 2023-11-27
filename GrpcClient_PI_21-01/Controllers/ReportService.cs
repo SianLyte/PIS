@@ -9,22 +9,18 @@ namespace GrpcClient_PI_21_01.Controllers
     {
         private static async Task<List<Report_ActCapture>> GetReports(DateTime start, DateTime finish)
         {
-            var reports = new List<Report>();
-            var acts = await ActService.GetActs();
-            foreach (var loc in await LocationService.GetLocations())
+            var reports = new List<Report_ActCapture>();
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+            var serverData = client.Generate_ActCaptureReport(new FilterReply()
             {
-                // надо фиксануть в бд заявки, в ней должны быть int LocationId, а не string locality
-                var allSity = acts
-                    .Where(x => x.Application.locality == loc.City & x.Date >= start & x.Date <= finish);
-                int summ = 0;
-                foreach (var act in allSity)
-                {
-                    //summ += act.Contracts.Cost;
-                    summ += 5;
-                }
-                if (summ != 0)
-                    reports.Add(new Report(start, finish, loc, allSity.Count(), allSity.Sum(x => x.Sum), summ));
-            }
+                Actor = UserService.CurrentUser?.ToReply(),
+                BeginDate = start.ToUtc().ToTimestamp(),
+                EndDate = finish.ToUtc().ToTimestamp(),
+            });
+            var responseStream = serverData.ResponseStream;
+            await foreach (var response in responseStream.ReadAllAsync())
+                reports.Add(response);
             return reports;
 
         }
