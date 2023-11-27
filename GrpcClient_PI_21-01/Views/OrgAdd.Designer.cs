@@ -29,213 +29,214 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrgAdd));
-            this.CancelOrgEdit = new System.Windows.Forms.Button();
-            this.OKorgAdd = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Status = new System.Windows.Forms.TextBox();
-            this.Type = new System.Windows.Forms.TextBox();
-            this.KPP = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.INN = new System.Windows.Forms.TextBox();
-            this.AdressReg = new System.Windows.Forms.ComboBox();
-            this.name = new System.Windows.Forms.ComboBox();
-            this.SuspendLayout();
+            CancelOrgEdit=new Button();
+            OKorgAdd=new Button();
+            label5=new Label();
+            label4=new Label();
+            label3=new Label();
+            label2=new Label();
+            label1=new Label();
+            Status=new TextBox();
+            Type=new TextBox();
+            KPP=new TextBox();
+            label6=new Label();
+            INN=new TextBox();
+            AdressReg=new ComboBox();
+            name=new ComboBox();
+            SuspendLayout();
             // 
             // CancelOrgEdit
             // 
-            this.CancelOrgEdit.BackColor = System.Drawing.Color.Cornsilk;
-            this.CancelOrgEdit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.CancelOrgEdit.Location = new System.Drawing.Point(402, 501);
-            this.CancelOrgEdit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.CancelOrgEdit.Name = "CancelOrgEdit";
-            this.CancelOrgEdit.Size = new System.Drawing.Size(195, 74);
-            this.CancelOrgEdit.TabIndex = 23;
-            this.CancelOrgEdit.Text = "Отмена";
-            this.CancelOrgEdit.UseVisualStyleBackColor = false;
-            this.CancelOrgEdit.Click += new System.EventHandler(this.CancelOrgEdit_Click);
+            CancelOrgEdit.BackColor=Color.Cornsilk;
+            CancelOrgEdit.FlatStyle=FlatStyle.Popup;
+            CancelOrgEdit.Location=new Point(402, 501);
+            CancelOrgEdit.Margin=new Padding(4, 5, 4, 5);
+            CancelOrgEdit.Name="CancelOrgEdit";
+            CancelOrgEdit.Size=new Size(195, 74);
+            CancelOrgEdit.TabIndex=23;
+            CancelOrgEdit.Text="Отмена";
+            CancelOrgEdit.UseVisualStyleBackColor=false;
+            CancelOrgEdit.Click+=CancelOrgEdit_Click;
             // 
             // OKorgAdd
             // 
-            this.OKorgAdd.BackColor = System.Drawing.Color.Cornsilk;
-            this.OKorgAdd.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.OKorgAdd.Location = new System.Drawing.Point(114, 501);
-            this.OKorgAdd.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.OKorgAdd.Name = "OKorgAdd";
-            this.OKorgAdd.Size = new System.Drawing.Size(195, 74);
-            this.OKorgAdd.TabIndex = 22;
-            this.OKorgAdd.Text = "OK";
-            this.OKorgAdd.UseVisualStyleBackColor = false;
-            this.OKorgAdd.Click += new System.EventHandler(this.OKorgAdd_Click);
+            OKorgAdd.BackColor=Color.Cornsilk;
+            OKorgAdd.FlatStyle=FlatStyle.Popup;
+            OKorgAdd.Location=new Point(114, 501);
+            OKorgAdd.Margin=new Padding(4, 5, 4, 5);
+            OKorgAdd.Name="OKorgAdd";
+            OKorgAdd.Size=new Size(195, 74);
+            OKorgAdd.TabIndex=22;
+            OKorgAdd.Text="OK";
+            OKorgAdd.UseVisualStyleBackColor=false;
+            OKorgAdd.Click+=OKorgAdd_Click;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(42, 401);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(103, 35);
-            this.label5.TabIndex = 21;
-            this.label5.Text = "Статус";
+            label5.AutoSize=true;
+            label5.Location=new Point(42, 401);
+            label5.Margin=new Padding(4, 0, 4, 0);
+            label5.Name="label5";
+            label5.Size=new Size(88, 30);
+            label5.TabIndex=21;
+            label5.Text="Статус";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(55, 323);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 35);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "Тип";
+            label4.AutoSize=true;
+            label4.Location=new Point(55, 323);
+            label4.Margin=new Padding(4, 0, 4, 0);
+            label4.Name="label4";
+            label4.Size=new Size(45, 30);
+            label4.TabIndex=20;
+            label4.Text="Тип";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(42, 253);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(220, 35);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Адрес регистрации";
+            label3.AutoSize=true;
+            label3.Location=new Point(42, 253);
+            label3.Margin=new Padding(4, 0, 4, 0);
+            label3.Name="label3";
+            label3.Size=new Size(188, 30);
+            label3.TabIndex=19;
+            label3.Text="Адрес регистрации";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(42, 181);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 35);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "КПП";
+            label2.AutoSize=true;
+            label2.Location=new Point(42, 181);
+            label2.Margin=new Padding(4, 0, 4, 0);
+            label2.Name="label2";
+            label2.Size=new Size(55, 30);
+            label2.TabIndex=18;
+            label2.Text="КПП";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(42, 37);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 35);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Наименование";
+            label1.AutoSize=true;
+            label1.Location=new Point(42, 37);
+            label1.Margin=new Padding(4, 0, 4, 0);
+            label1.Name="label1";
+            label1.Size=new Size(139, 30);
+            label1.TabIndex=17;
+            label1.Text="Наименование";
             // 
             // Status
             // 
-            this.Status.BackColor = System.Drawing.Color.OldLace;
-            this.Status.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Status.Location = new System.Drawing.Point(298, 391);
-            this.Status.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Status.Name = "Status";
-            this.Status.Size = new System.Drawing.Size(349, 36);
-            this.Status.TabIndex = 16;
+            Status.BackColor=Color.OldLace;
+            Status.BorderStyle=BorderStyle.None;
+            Status.Location=new Point(298, 391);
+            Status.Margin=new Padding(4, 5, 4, 5);
+            Status.Name="Status";
+            Status.Size=new Size(349, 30);
+            Status.TabIndex=16;
             // 
             // Type
             // 
-            this.Type.BackColor = System.Drawing.Color.OldLace;
-            this.Type.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Type.Location = new System.Drawing.Point(298, 315);
-            this.Type.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Type.Name = "Type";
-            this.Type.Size = new System.Drawing.Size(349, 36);
-            this.Type.TabIndex = 15;
+            Type.BackColor=Color.OldLace;
+            Type.BorderStyle=BorderStyle.None;
+            Type.Location=new Point(298, 315);
+            Type.Margin=new Padding(4, 5, 4, 5);
+            Type.Name="Type";
+            Type.Size=new Size(349, 30);
+            Type.TabIndex=15;
             // 
             // KPP
             // 
-            this.KPP.BackColor = System.Drawing.Color.OldLace;
-            this.KPP.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.KPP.Location = new System.Drawing.Point(298, 175);
-            this.KPP.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.KPP.Name = "KPP";
-            this.KPP.Size = new System.Drawing.Size(349, 36);
-            this.KPP.TabIndex = 13;
+            KPP.BackColor=Color.OldLace;
+            KPP.BorderStyle=BorderStyle.None;
+            KPP.Location=new Point(298, 175);
+            KPP.Margin=new Padding(4, 5, 4, 5);
+            KPP.Name="KPP";
+            KPP.Size=new Size(349, 30);
+            KPP.TabIndex=13;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(42, 112);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(66, 35);
-            this.label6.TabIndex = 25;
-            this.label6.Text = "ИНН";
+            label6.AutoSize=true;
+            label6.Location=new Point(42, 112);
+            label6.Margin=new Padding(4, 0, 4, 0);
+            label6.Name="label6";
+            label6.Size=new Size(57, 30);
+            label6.TabIndex=25;
+            label6.Text="ИНН";
             // 
             // INN
             // 
-            this.INN.BackColor = System.Drawing.Color.OldLace;
-            this.INN.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.INN.Location = new System.Drawing.Point(298, 104);
-            this.INN.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.INN.Name = "INN";
-            this.INN.Size = new System.Drawing.Size(349, 36);
-            this.INN.TabIndex = 24;
+            INN.BackColor=Color.OldLace;
+            INN.BorderStyle=BorderStyle.None;
+            INN.Location=new Point(298, 104);
+            INN.Margin=new Padding(4, 5, 4, 5);
+            INN.Name="INN";
+            INN.Size=new Size(349, 30);
+            INN.TabIndex=24;
             // 
             // AdressReg
             // 
-            this.AdressReg.BackColor = System.Drawing.Color.OldLace;
-            this.AdressReg.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.AdressReg.FormattingEnabled = true;
-            this.AdressReg.Location = new System.Drawing.Point(298, 253);
-            this.AdressReg.Name = "AdressReg";
-            this.AdressReg.Size = new System.Drawing.Size(349, 43);
-            this.AdressReg.TabIndex = 26;
+            AdressReg.BackColor=Color.OldLace;
+            AdressReg.DrawMode=DrawMode.OwnerDrawVariable;
+            AdressReg.FlatStyle=FlatStyle.Popup;
+            AdressReg.FormattingEnabled=true;
+            AdressReg.Location=new Point(298, 253);
+            AdressReg.Name="AdressReg";
+            AdressReg.Size=new Size(349, 38);
+            AdressReg.TabIndex=26;
             // 
             // name
             // 
-            this.name.BackColor = System.Drawing.Color.OldLace;
-            this.name.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.name.FormattingEnabled = true;
-            this.name.Location = new System.Drawing.Point(298, 37);
-            this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(349, 43);
-            this.name.TabIndex = 27;
+            name.BackColor=Color.OldLace;
+            name.DrawMode=DrawMode.OwnerDrawVariable;
+            name.FlatStyle=FlatStyle.Popup;
+            name.FormattingEnabled=true;
+            name.Location=new Point(298, 37);
+            name.Name="name";
+            name.Size=new Size(349, 38);
+            name.TabIndex=27;
             // 
             // OrgAdd
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 35F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Wheat;
-            this.ClientSize = new System.Drawing.Size(735, 641);
-            this.Controls.Add(this.name);
-            this.Controls.Add(this.AdressReg);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.INN);
-            this.Controls.Add(this.CancelOrgEdit);
-            this.Controls.Add(this.OKorgAdd);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.Status);
-            this.Controls.Add(this.Type);
-            this.Controls.Add(this.KPP);
-            this.Font = new System.Drawing.Font("Segoe Print", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "OrgAdd";
-            this.Text = "Добавление организации";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions=new SizeF(11F, 30F);
+            AutoScaleMode=AutoScaleMode.Font;
+            BackColor=Color.Wheat;
+            ClientSize=new Size(735, 641);
+            Controls.Add(name);
+            Controls.Add(AdressReg);
+            Controls.Add(label6);
+            Controls.Add(INN);
+            Controls.Add(CancelOrgEdit);
+            Controls.Add(OKorgAdd);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(Status);
+            Controls.Add(Type);
+            Controls.Add(KPP);
+            Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            Icon=(Icon)resources.GetObject("$this.Icon");
+            Margin=new Padding(4, 5, 4, 5);
+            Name="OrgAdd";
+            Text="Добавление организации";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Button CancelOrgEdit;
-        private System.Windows.Forms.Button OKorgAdd;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox Status;
-        private System.Windows.Forms.TextBox Type;
-        private System.Windows.Forms.TextBox KPP;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox INN;
-        private System.Windows.Forms.ComboBox AdressReg;
-        private System.Windows.Forms.ComboBox name;
+        private Button CancelOrgEdit;
+        private Button OKorgAdd;
+        private Label label5;
+        private Label label4;
+        private Label label3;
+        private Label label2;
+        private Label label1;
+        private TextBox Status;
+        private TextBox Type;
+        private TextBox KPP;
+        private Label label6;
+        private TextBox INN;
+        private ComboBox AdressReg;
+        private ComboBox name;
     }
 }

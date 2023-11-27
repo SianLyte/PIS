@@ -23,7 +23,7 @@ namespace GrpcClient_PI_21_01.Views
 
         private async void OkAppAdd_Click(object sender, EventArgs e)
         {
-            var app = new App(DateTime.Parse(date.Text),
+            var app = new App(DateTime.Parse(dateTimePicker.Text),
                 -1,
                 loc.Text, territory.Text, animalHabbiat.Text, urgency.Text,
                 descrip.Text, categoryApp.Text);

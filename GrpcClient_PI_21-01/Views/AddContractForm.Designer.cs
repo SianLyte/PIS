@@ -271,7 +271,7 @@
             AutoScaleDimensions=new SizeF(11F, 30F);
             AutoScaleMode=AutoScaleMode.Font;
             BackColor=Color.Wheat;
-            ClientSize=new Size(623, 620);
+            ClientSize=new Size(801, 620);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(CostText);
