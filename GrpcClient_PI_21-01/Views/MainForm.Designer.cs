@@ -589,7 +589,6 @@
             filterAppDate2.Size=new Size(265, 37);
             filterAppDate2.TabIndex=20;
             filterAppDate2.Value=new DateTime(2023, 1, 1, 0, 0, 0, 0);
-            filterAppDate2.ValueChanged+=filterAppDate2_ValueChanged;
             // 
             // label6
             // 

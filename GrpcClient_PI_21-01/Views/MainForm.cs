@@ -20,6 +20,10 @@ namespace GrpcClient_PI_21_01
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            filterAppDate2.Value = DateTime.Now;
+            filterAppDate2.ValueChanged += filterAppDate_ValueChanged;
+
             Task.Run(Setup);
         }
         readonly DataSet dsApplication = new();
@@ -186,6 +190,7 @@ namespace GrpcClient_PI_21_01
             }
             dataGridViewOrg.DataSource = dsOrganization.Tables[0];
         }
+
         private async Task SetDataGridApp()
         {
             /*-Applications-------------------------*/
