@@ -161,6 +161,7 @@ namespace GrpcClient_PI_21_01
 
         public static async Task<bool> UpdateActApp(ActAppReply actApp)
         {
+            actApp.Actor = UserService.CurrentUser?.ToReply();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
             var response = await client.UpdateActAppsAsync(actApp);
