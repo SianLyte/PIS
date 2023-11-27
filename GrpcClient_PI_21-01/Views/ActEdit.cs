@@ -61,7 +61,7 @@ namespace GrpcClient_PI_21_01.Views
                 CreateData();
                 foreach (var app in _apps)
                 {
-                    dataGridView1.Rows.Add(app);
+                    dataGridView1.Rows.Add(app.ToString());
                 }
             }
             else
