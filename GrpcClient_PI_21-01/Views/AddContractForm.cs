@@ -19,6 +19,9 @@ namespace GrpcClient_PI_21_01.Views
     {
         public bool ContToEdit;
         public int ContId;
+        private List<Models.Location> _locations = new List<Models.Location>();
+
+
         public AddContractForm()
         {
             InitializeComponent();
@@ -39,6 +42,7 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (ContToEdit)
             {
+                //CreateData();
                 //var index = ContractRepository.contract.FindIndex(x => x.IdContract == ContId);
                 //Contract cont = ContractRepository.contract[index];
                 var cont = await ContractService.GetContract(ContId);
@@ -50,6 +54,12 @@ namespace GrpcClient_PI_21_01.Views
             }
             else
                 await FullComboBox();
+        }
+
+        private void CreateData()
+        {
+            dataGridView1.ColumnCount = 1;
+            dataGridView1.RowCount = 0;
         }
 
         public async Task FullComboBox()
@@ -117,12 +127,56 @@ namespace GrpcClient_PI_21_01.Views
                     dateConclusion.Value, dateAction.Value,
                     executerCombo.SelectedItem as Organization,
                     customerCombo.SelectedItem as Organization);
-                await ContractService.AddContract(contr);
+                var successful = await ContractService.AddContract(contr);
+                if (!successful)
+                {
+                    this.DialogResult = DialogResult.Cancel;
+                    MessageBox.Show("Internal error while adding animal card. Please try again later");
+                    return;
+                }
+                //var successful = await LocationService.
+                if (!successful)
+                {
+                    this.DialogResult = DialogResult.Cancel;
+                    MessageBox.Show("Internal error while adding animal card. Please try again later");
+                    return;
+                }
                 this.Close();
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
+        {
+            if (_locations.Count == 0) { CreateData(); }
+            Location selectedLoc = new Location(int.Parse(cityCombo.SelectedValue.ToString()) - 1, cityCombo.Text);
+
+            if (ConteinceSelectedId(selectedLoc)) { MessageBox.Show("Этот город выбран"); }
+            else
+            {
+                _locations.Add(selectedLoc);
+                InitialisationData();
+            }
+        }
+
+        private bool ConteinceSelectedId(Location selectedLoc)
+        {
+            foreach (var item in _locations) { if (item.IdLocation == selectedLoc.IdLocation) return true; }
+            return false;
+        }
+
+        private void InitialisationData()
+        {
+            if (ContToEdit)
+            {
+
+            }
+            else
+            {
+                dataGridView1.Rows.Add(_locations[_locations.Count-1].City);
+            }
+        }
+
+        private void newCity_Click(object sender, EventArgs e)
         {
             var locationAdd = new LocationAdd();
             locationAdd.Show();

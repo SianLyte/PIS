@@ -29,231 +29,295 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddContractForm));
-            this.label6 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dateConclusion = new System.Windows.Forms.DateTimePicker();
-            this.dateAction = new System.Windows.Forms.DateTimePicker();
-            this.CancelcontEdit = new System.Windows.Forms.Button();
-            this.OKcontAdd = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.customerCombo = new System.Windows.Forms.ComboBox();
-            this.executerCombo = new System.Windows.Forms.ComboBox();
-            this.CostText = new System.Windows.Forms.TextBox();
-            this.cityCombo = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            label6=new Label();
+            label2=new Label();
+            label1=new Label();
+            dateConclusion=new DateTimePicker();
+            dateAction=new DateTimePicker();
+            CancelcontEdit=new Button();
+            OKcontAdd=new Button();
+            label3=new Label();
+            label4=new Label();
+            label5=new Label();
+            customerCombo=new ComboBox();
+            executerCombo=new ComboBox();
+            CostText=new TextBox();
+            cityCombo=new ComboBox();
+            button1=new Button();
+            dataGridView1=new DataGridView();
+            newCity=new Button();
+            groupBox1=new GroupBox();
+            groupBox2=new GroupBox();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            SuspendLayout();
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 88);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(188, 35);
-            this.label6.TabIndex = 31;
-            this.label6.Text = "Дата действия:";
+            label6.AutoSize=true;
+            label6.Location=new Point(20, 88);
+            label6.Margin=new Padding(4, 0, 4, 0);
+            label6.Name="label6";
+            label6.Size=new Size(160, 30);
+            label6.TabIndex=31;
+            label6.Text="Дата действия:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 149);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 35);
-            this.label2.TabIndex = 29;
-            this.label2.Text = "Город:";
+            label2.AutoSize=true;
+            label2.Location=new Point(20, 176);
+            label2.Margin=new Padding(4, 0, 4, 0);
+            label2.Name="label2";
+            label2.Size=new Size(70, 30);
+            label2.TabIndex=29;
+            label2.Text="Город:";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 26);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(211, 35);
-            this.label1.TabIndex = 28;
-            this.label1.Text = "Дата заключения:";
+            label1.AutoSize=true;
+            label1.Location=new Point(20, 26);
+            label1.Margin=new Padding(4, 0, 4, 0);
+            label1.Name="label1";
+            label1.Size=new Size(178, 30);
+            label1.TabIndex=28;
+            label1.Text="Дата заключения:";
             // 
             // dateConclusion
             // 
-            this.dateConclusion.CalendarMonthBackground = System.Drawing.Color.Cornsilk;
-            this.dateConclusion.CalendarTitleBackColor = System.Drawing.Color.Cornsilk;
-            this.dateConclusion.Location = new System.Drawing.Point(233, 26);
-            this.dateConclusion.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.dateConclusion.Name = "dateConclusion";
-            this.dateConclusion.Size = new System.Drawing.Size(322, 43);
-            this.dateConclusion.TabIndex = 32;
+            dateConclusion.CalendarMonthBackground=Color.Cornsilk;
+            dateConclusion.CalendarTitleBackColor=Color.Cornsilk;
+            dateConclusion.Location=new Point(233, 26);
+            dateConclusion.Margin=new Padding(4, 7, 4, 7);
+            dateConclusion.Name="dateConclusion";
+            dateConclusion.Size=new Size(322, 37);
+            dateConclusion.TabIndex=32;
             // 
             // dateAction
             // 
-            this.dateAction.CalendarMonthBackground = System.Drawing.Color.Cornsilk;
-            this.dateAction.CalendarTitleBackColor = System.Drawing.Color.Cornsilk;
-            this.dateAction.Location = new System.Drawing.Point(233, 88);
-            this.dateAction.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.dateAction.Name = "dateAction";
-            this.dateAction.Size = new System.Drawing.Size(322, 43);
-            this.dateAction.TabIndex = 33;
+            dateAction.CalendarMonthBackground=Color.Cornsilk;
+            dateAction.CalendarTitleBackColor=Color.Cornsilk;
+            dateAction.Location=new Point(233, 88);
+            dateAction.Margin=new Padding(4, 7, 4, 7);
+            dateAction.Name="dateAction";
+            dateAction.Size=new Size(322, 37);
+            dateAction.TabIndex=33;
             // 
             // CancelcontEdit
             // 
-            this.CancelcontEdit.BackColor = System.Drawing.Color.Cornsilk;
-            this.CancelcontEdit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.CancelcontEdit.Location = new System.Drawing.Point(363, 410);
-            this.CancelcontEdit.Margin = new System.Windows.Forms.Padding(4);
-            this.CancelcontEdit.Name = "CancelcontEdit";
-            this.CancelcontEdit.Size = new System.Drawing.Size(195, 74);
-            this.CancelcontEdit.TabIndex = 37;
-            this.CancelcontEdit.Text = "Отмена";
-            this.CancelcontEdit.UseVisualStyleBackColor = false;
-            this.CancelcontEdit.Click += new System.EventHandler(this.CancelcontEdit_Click);
+            CancelcontEdit.BackColor=Color.Cornsilk;
+            CancelcontEdit.FlatStyle=FlatStyle.Popup;
+            CancelcontEdit.Location=new Point(363, 477);
+            CancelcontEdit.Margin=new Padding(4);
+            CancelcontEdit.Name="CancelcontEdit";
+            CancelcontEdit.Size=new Size(195, 74);
+            CancelcontEdit.TabIndex=37;
+            CancelcontEdit.Text="Отмена";
+            CancelcontEdit.UseVisualStyleBackColor=false;
+            CancelcontEdit.Click+=CancelcontEdit_Click;
             // 
             // OKcontAdd
             // 
-            this.OKcontAdd.BackColor = System.Drawing.Color.Cornsilk;
-            this.OKcontAdd.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.OKcontAdd.Location = new System.Drawing.Point(157, 410);
-            this.OKcontAdd.Margin = new System.Windows.Forms.Padding(4);
-            this.OKcontAdd.Name = "OKcontAdd";
-            this.OKcontAdd.Size = new System.Drawing.Size(195, 74);
-            this.OKcontAdd.TabIndex = 36;
-            this.OKcontAdd.Text = "OK";
-            this.OKcontAdd.UseVisualStyleBackColor = false;
-            this.OKcontAdd.Click += new System.EventHandler(this.OKcontAdd_Click);
+            OKcontAdd.BackColor=Color.Cornsilk;
+            OKcontAdd.FlatStyle=FlatStyle.Popup;
+            OKcontAdd.Location=new Point(157, 477);
+            OKcontAdd.Margin=new Padding(4);
+            OKcontAdd.Name="OKcontAdd";
+            OKcontAdd.Size=new Size(195, 74);
+            OKcontAdd.TabIndex=36;
+            OKcontAdd.Text="OK";
+            OKcontAdd.UseVisualStyleBackColor=false;
+            OKcontAdd.Click+=OKcontAdd_Click;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 214);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 35);
-            this.label3.TabIndex = 38;
-            this.label3.Text = "Цена:";
+            label3.AutoSize=true;
+            label3.Location=new Point(20, 281);
+            label3.Margin=new Padding(4, 0, 4, 0);
+            label3.Name="label3";
+            label3.Size=new Size(62, 30);
+            label3.TabIndex=38;
+            label3.Text="Цена:";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 280);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(114, 35);
-            this.label4.TabIndex = 39;
-            this.label4.Text = "Заказчик:";
+            label4.AutoSize=true;
+            label4.Location=new Point(20, 347);
+            label4.Margin=new Padding(4, 0, 4, 0);
+            label4.Name="label4";
+            label4.Size=new Size(96, 30);
+            label4.TabIndex=39;
+            label4.Text="Заказчик:";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 346);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(163, 35);
-            this.label5.TabIndex = 40;
-            this.label5.Text = "Исполнитель:";
+            label5.AutoSize=true;
+            label5.Location=new Point(20, 413);
+            label5.Margin=new Padding(4, 0, 4, 0);
+            label5.Name="label5";
+            label5.Size=new Size(139, 30);
+            label5.TabIndex=40;
+            label5.Text="Исполнитель:";
             // 
             // customerCombo
             // 
-            this.customerCombo.BackColor = System.Drawing.Color.OldLace;
-            this.customerCombo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.customerCombo.FormattingEnabled = true;
-            this.customerCombo.Location = new System.Drawing.Point(233, 346);
-            this.customerCombo.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.customerCombo.Name = "customerCombo";
-            this.customerCombo.Size = new System.Drawing.Size(322, 43);
-            this.customerCombo.TabIndex = 44;
+            customerCombo.BackColor=Color.OldLace;
+            customerCombo.FlatStyle=FlatStyle.Popup;
+            customerCombo.FormattingEnabled=true;
+            customerCombo.Location=new Point(233, 413);
+            customerCombo.Margin=new Padding(4, 7, 4, 7);
+            customerCombo.Name="customerCombo";
+            customerCombo.Size=new Size(322, 38);
+            customerCombo.TabIndex=44;
             // 
             // executerCombo
             // 
-            this.executerCombo.BackColor = System.Drawing.Color.OldLace;
-            this.executerCombo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.executerCombo.FormattingEnabled = true;
-            this.executerCombo.Location = new System.Drawing.Point(233, 280);
-            this.executerCombo.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.executerCombo.Name = "executerCombo";
-            this.executerCombo.Size = new System.Drawing.Size(322, 43);
-            this.executerCombo.TabIndex = 43;
+            executerCombo.BackColor=Color.OldLace;
+            executerCombo.FlatStyle=FlatStyle.Popup;
+            executerCombo.FormattingEnabled=true;
+            executerCombo.Location=new Point(233, 347);
+            executerCombo.Margin=new Padding(4, 7, 4, 7);
+            executerCombo.Name="executerCombo";
+            executerCombo.Size=new Size(322, 38);
+            executerCombo.TabIndex=43;
             // 
             // CostText
             // 
-            this.CostText.BackColor = System.Drawing.Color.OldLace;
-            this.CostText.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.CostText.Location = new System.Drawing.Point(233, 219);
-            this.CostText.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.CostText.Name = "CostText";
-            this.CostText.Size = new System.Drawing.Size(322, 36);
-            this.CostText.TabIndex = 45;
+            CostText.BackColor=Color.OldLace;
+            CostText.BorderStyle=BorderStyle.None;
+            CostText.Location=new Point(233, 286);
+            CostText.Margin=new Padding(4, 7, 4, 7);
+            CostText.Name="CostText";
+            CostText.Size=new Size(322, 30);
+            CostText.TabIndex=45;
             // 
             // cityCombo
             // 
-            this.cityCombo.BackColor = System.Drawing.Color.OldLace;
-            this.cityCombo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cityCombo.FormattingEnabled = true;
-            this.cityCombo.Location = new System.Drawing.Point(233, 149);
-            this.cityCombo.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.cityCombo.Name = "cityCombo";
-            this.cityCombo.Size = new System.Drawing.Size(173, 43);
-            this.cityCombo.TabIndex = 41;
+            cityCombo.BackColor=Color.OldLace;
+            cityCombo.DropDownStyle=ComboBoxStyle.DropDownList;
+            cityCombo.FlatStyle=FlatStyle.Popup;
+            cityCombo.FormattingEnabled=true;
+            cityCombo.Location=new Point(205, 40);
+            cityCombo.Margin=new Padding(4, 7, 4, 7);
+            cityCombo.Name="cityCombo";
+            cityCombo.Size=new Size(173, 38);
+            cityCombo.TabIndex=41;
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.Cornsilk;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Location = new System.Drawing.Point(417, 149);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(140, 52);
-            this.button1.TabIndex = 46;
-            this.button1.Text = "Добавить";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.BackColor=Color.Cornsilk;
+            button1.FlatStyle=FlatStyle.Popup;
+            button1.Location=new Point(264, 94);
+            button1.Margin=new Padding(4);
+            button1.Name="button1";
+            button1.Size=new Size(114, 38);
+            button1.TabIndex=46;
+            button1.Text="Добавить";
+            button1.UseVisualStyleBackColor=false;
+            button1.Click+=button1_Click;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows=false;
+            dataGridView1.AllowUserToDeleteRows=false;
+            dataGridView1.AllowUserToResizeColumns=false;
+            dataGridView1.AllowUserToResizeRows=false;
+            dataGridView1.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location=new Point(6, 40);
+            dataGridView1.MultiSelect=false;
+            dataGridView1.Name="dataGridView1";
+            dataGridView1.ReadOnly=true;
+            dataGridView1.RowHeadersVisible=false;
+            dataGridView1.RowHeadersWidth=51;
+            dataGridView1.RowTemplate.Height=29;
+            dataGridView1.Size=new Size(192, 92);
+            dataGridView1.TabIndex=48;
+            // 
+            // newCity
+            // 
+            newCity.Location=new Point(6, 49);
+            newCity.Name="newCity";
+            newCity.Size=new Size(143, 70);
+            newCity.TabIndex=49;
+            newCity.Text="Добавить город";
+            newCity.UseVisualStyleBackColor=true;
+            newCity.Click+=newCity_Click;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(newCity);
+            groupBox1.Location=new Point(640, 26);
+            groupBox1.Name="groupBox1";
+            groupBox1.Size=new Size(155, 126);
+            groupBox1.TabIndex=50;
+            groupBox1.TabStop=false;
+            groupBox1.Text="(тестировка)";
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(dataGridView1);
+            groupBox2.Controls.Add(cityCombo);
+            groupBox2.Controls.Add(button1);
+            groupBox2.Location=new Point(233, 135);
+            groupBox2.Name="groupBox2";
+            groupBox2.Size=new Size(388, 141);
+            groupBox2.TabIndex=51;
+            groupBox2.TabStop=false;
+            groupBox2.Text="Добовление города";
             // 
             // AddContractForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 35F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Wheat;
-            this.ClientSize = new System.Drawing.Size(575, 506);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.CostText);
-            this.Controls.Add(this.customerCombo);
-            this.Controls.Add(this.executerCombo);
-            this.Controls.Add(this.cityCombo);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.CancelcontEdit);
-            this.Controls.Add(this.OKcontAdd);
-            this.Controls.Add(this.dateAction);
-            this.Controls.Add(this.dateConclusion);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("Segoe Print", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.Name = "AddContractForm";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions=new SizeF(11F, 30F);
+            AutoScaleMode=AutoScaleMode.Font;
+            BackColor=Color.Wheat;
+            ClientSize=new Size(623, 620);
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox1);
+            Controls.Add(CostText);
+            Controls.Add(customerCombo);
+            Controls.Add(executerCombo);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(CancelcontEdit);
+            Controls.Add(OKcontAdd);
+            Controls.Add(dateAction);
+            Controls.Add(dateConclusion);
+            Controls.Add(label6);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            Icon=(Icon)resources.GetObject("$this.Icon");
+            Margin=new Padding(4, 7, 4, 7);
+            Name="AddContractForm";
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dateConclusion;
-        private System.Windows.Forms.DateTimePicker dateAction;
-        private System.Windows.Forms.Button CancelcontEdit;
-        private System.Windows.Forms.Button OKcontAdd;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox customerCombo;
-        private System.Windows.Forms.ComboBox executerCombo;
-        private System.Windows.Forms.TextBox CostText;
-        private System.Windows.Forms.ComboBox cityCombo;
-        private System.Windows.Forms.Button button1;
+        private Label label6;
+        private Label label2;
+        private Label label1;
+        private DateTimePicker dateConclusion;
+        private DateTimePicker dateAction;
+        private Button CancelcontEdit;
+        private Button OKcontAdd;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private ComboBox customerCombo;
+        private ComboBox executerCombo;
+        private TextBox CostText;
+        private ComboBox cityCombo;
+        private Button button1;
+        private DataGridView dataGridView1;
+        private Button newCity;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
     }
 }

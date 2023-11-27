@@ -47,8 +47,13 @@ namespace GrpcClient_PI_21_01.Views
             Isus=new Label();
             numericUpDownDog=new NumericUpDown();
             numericUpDownCat=new NumericUpDown();
+            groupBox2=new GroupBox();
+            dataGridView1=new DataGridView();
+            addApp=new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDownDog).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCat).BeginInit();
+            groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -66,7 +71,7 @@ namespace GrpcClient_PI_21_01.Views
             Cancel.BackColor=Color.Cornsilk;
             Cancel.DialogResult=DialogResult.Cancel;
             Cancel.FlatStyle=FlatStyle.Popup;
-            Cancel.Location=new Point(377, 579);
+            Cancel.Location=new Point(377, 686);
             Cancel.Margin=new Padding(6, 9, 6, 9);
             Cancel.Name="Cancel";
             Cancel.Size=new Size(162, 61);
@@ -78,7 +83,7 @@ namespace GrpcClient_PI_21_01.Views
             // 
             OK.BackColor=Color.Cornsilk;
             OK.FlatStyle=FlatStyle.Popup;
-            OK.Location=new Point(202, 579);
+            OK.Location=new Point(202, 686);
             OK.Margin=new Padding(6, 9, 6, 9);
             OK.Name="OK";
             OK.Size=new Size(162, 61);
@@ -100,7 +105,7 @@ namespace GrpcClient_PI_21_01.Views
             // label3
             // 
             label3.AutoSize=true;
-            label3.Location=new Point(26, 514);
+            label3.Location=new Point(26, 621);
             label3.Margin=new Padding(6, 0, 6, 0);
             label3.Name="label3";
             label3.Size=new Size(127, 30);
@@ -150,7 +155,7 @@ namespace GrpcClient_PI_21_01.Views
             comboBoxContract.DropDownStyle=ComboBoxStyle.DropDownList;
             comboBoxContract.FlatStyle=FlatStyle.Popup;
             comboBoxContract.FormattingEnabled=true;
-            comboBoxContract.Location=new Point(283, 506);
+            comboBoxContract.Location=new Point(283, 613);
             comboBoxContract.Margin=new Padding(6, 9, 6, 9);
             comboBoxContract.Name="comboBoxContract";
             comboBoxContract.Size=new Size(251, 38);
@@ -163,10 +168,10 @@ namespace GrpcClient_PI_21_01.Views
             comboBoxApp.DropDownStyle=ComboBoxStyle.DropDownList;
             comboBoxApp.FlatStyle=FlatStyle.Popup;
             comboBoxApp.FormattingEnabled=true;
-            comboBoxApp.Location=new Point(283, 434);
+            comboBoxApp.Location=new Point(207, 40);
             comboBoxApp.Margin=new Padding(6, 9, 6, 9);
             comboBoxApp.Name="comboBoxApp";
-            comboBoxApp.Size=new Size(251, 38);
+            comboBoxApp.Size=new Size(175, 38);
             comboBoxApp.TabIndex=15;
             comboBoxApp.SelectedIndexChanged+=comboBoxApp_SelectedIndexChanged;
             // 
@@ -238,12 +243,56 @@ namespace GrpcClient_PI_21_01.Views
             numericUpDownCat.Size=new Size(136, 37);
             numericUpDownCat.TabIndex=24;
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(dataGridView1);
+            groupBox2.Controls.Add(addApp);
+            groupBox2.Controls.Add(comboBoxApp);
+            groupBox2.Location=new Point(283, 441);
+            groupBox2.Name="groupBox2";
+            groupBox2.Size=new Size(388, 141);
+            groupBox2.TabIndex=52;
+            groupBox2.TabStop=false;
+            groupBox2.Text="Добовление заявки";
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows=false;
+            dataGridView1.AllowUserToDeleteRows=false;
+            dataGridView1.AllowUserToResizeColumns=false;
+            dataGridView1.AllowUserToResizeRows=false;
+            dataGridView1.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location=new Point(6, 40);
+            dataGridView1.MultiSelect=false;
+            dataGridView1.Name="dataGridView1";
+            dataGridView1.ReadOnly=true;
+            dataGridView1.RowHeadersVisible=false;
+            dataGridView1.RowHeadersWidth=51;
+            dataGridView1.RowTemplate.Height=29;
+            dataGridView1.Size=new Size(192, 92);
+            dataGridView1.TabIndex=48;
+            // 
+            // addApp
+            // 
+            addApp.BackColor=Color.Cornsilk;
+            addApp.FlatStyle=FlatStyle.Popup;
+            addApp.Location=new Point(264, 94);
+            addApp.Margin=new Padding(4);
+            addApp.Name="addApp";
+            addApp.Size=new Size(114, 38);
+            addApp.TabIndex=46;
+            addApp.Text="Добавить";
+            addApp.UseVisualStyleBackColor=false;
+            addApp.Click+=addApp_Click;
+            // 
             // ActEdit
             // 
             AutoScaleDimensions=new SizeF(11F, 30F);
             AutoScaleMode=AutoScaleMode.Font;
             BackColor=Color.Wheat;
-            ClientSize=new Size(555, 662);
+            ClientSize=new Size(689, 765);
+            Controls.Add(groupBox2);
             Controls.Add(numericUpDownCat);
             Controls.Add(numericUpDownDog);
             Controls.Add(Isus);
@@ -251,7 +300,6 @@ namespace GrpcClient_PI_21_01.Views
             Controls.Add(R);
             Controls.Add(textBoxTarget);
             Controls.Add(label5);
-            Controls.Add(comboBoxApp);
             Controls.Add(comboBoxContract);
             Controls.Add(comboBoxOrganization);
             Controls.Add(dateAct);
@@ -269,6 +317,8 @@ namespace GrpcClient_PI_21_01.Views
             Text="Акт";
             ((System.ComponentModel.ISupportInitialize)numericUpDownDog).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCat).EndInit();
+            groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -292,5 +342,8 @@ namespace GrpcClient_PI_21_01.Views
         private Label Isus;
         private NumericUpDown numericUpDownDog;
         private NumericUpDown numericUpDownCat;
+        private GroupBox groupBox2;
+        private DataGridView dataGridView1;
+        private Button addApp;
     }
 }

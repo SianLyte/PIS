@@ -39,14 +39,6 @@
             dateTimePickerAct=new DateTimePicker();
             label1=new Label();
             DataGridViewActs=new DataGridView();
-            Id=new DataGridViewTextBoxColumn();
-            CountDogs=new DataGridViewTextBoxColumn();
-            CountCats=new DataGridViewTextBoxColumn();
-            Organization=new DataGridViewTextBoxColumn();
-            Date=new DataGridViewTextBoxColumn();
-            Target=new DataGridViewTextBoxColumn();
-            Application=new DataGridViewTextBoxColumn();
-            Kontracts=new DataGridViewTextBoxColumn();
             pictureBox1=new PictureBox();
             tabPage2=new TabPage();
             checkBox1=new CheckBox();
@@ -89,6 +81,13 @@
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
             closeMainForm=new Button();
+            Id=new DataGridViewTextBoxColumn();
+            CountDogs=new DataGridViewTextBoxColumn();
+            CountCats=new DataGridViewTextBoxColumn();
+            Organization=new DataGridViewTextBoxColumn();
+            Date=new DataGridViewTextBoxColumn();
+            Target=new DataGridViewTextBoxColumn();
+            Kontracts=new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
@@ -230,7 +229,7 @@
             DataGridViewActs.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
             DataGridViewActs.BackgroundColor=Color.OldLace;
             DataGridViewActs.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataGridViewActs.Columns.AddRange(new DataGridViewColumn[] { Id, CountDogs, CountCats, Organization, Date, Target, Application, Kontracts });
+            DataGridViewActs.Columns.AddRange(new DataGridViewColumn[] { Id, CountDogs, CountCats, Organization, Date, Target, Kontracts });
             DataGridViewActs.Location=new Point(25, 6);
             DataGridViewActs.MultiSelect=false;
             DataGridViewActs.Name="DataGridViewActs";
@@ -241,62 +240,6 @@
             DataGridViewActs.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
             DataGridViewActs.Size=new Size(1329, 580);
             DataGridViewActs.TabIndex=0;
-            // 
-            // Id
-            // 
-            Id.HeaderText="№ Акта";
-            Id.MinimumWidth=8;
-            Id.Name="Id";
-            Id.ReadOnly=true;
-            // 
-            // CountDogs
-            // 
-            CountDogs.HeaderText="Количество собак";
-            CountDogs.MinimumWidth=8;
-            CountDogs.Name="CountDogs";
-            CountDogs.ReadOnly=true;
-            // 
-            // CountCats
-            // 
-            CountCats.HeaderText="Количество кошек";
-            CountCats.MinimumWidth=8;
-            CountCats.Name="CountCats";
-            CountCats.ReadOnly=true;
-            // 
-            // Organization
-            // 
-            Organization.HeaderText="Организация";
-            Organization.MinimumWidth=8;
-            Organization.Name="Organization";
-            Organization.ReadOnly=true;
-            // 
-            // Date
-            // 
-            Date.HeaderText="Дата";
-            Date.MinimumWidth=8;
-            Date.Name="Date";
-            Date.ReadOnly=true;
-            // 
-            // Target
-            // 
-            Target.HeaderText="Цель отлова";
-            Target.MinimumWidth=8;
-            Target.Name="Target";
-            Target.ReadOnly=true;
-            // 
-            // Application
-            // 
-            Application.HeaderText="Заявка";
-            Application.MinimumWidth=8;
-            Application.Name="Application";
-            Application.ReadOnly=true;
-            // 
-            // Kontracts
-            // 
-            Kontracts.HeaderText="Контракты";
-            Kontracts.MinimumWidth=8;
-            Kontracts.Name="Kontracts";
-            Kontracts.ReadOnly=true;
             // 
             // pictureBox1
             // 
@@ -782,6 +725,55 @@
             closeMainForm.UseVisualStyleBackColor=true;
             closeMainForm.Click+=closeMainForm_Click;
             // 
+            // Id
+            // 
+            Id.HeaderText="№ Акта";
+            Id.MinimumWidth=8;
+            Id.Name="Id";
+            Id.ReadOnly=true;
+            // 
+            // CountDogs
+            // 
+            CountDogs.HeaderText="Количество собак";
+            CountDogs.MinimumWidth=8;
+            CountDogs.Name="CountDogs";
+            CountDogs.ReadOnly=true;
+            // 
+            // CountCats
+            // 
+            CountCats.HeaderText="Количество кошек";
+            CountCats.MinimumWidth=8;
+            CountCats.Name="CountCats";
+            CountCats.ReadOnly=true;
+            // 
+            // Organization
+            // 
+            Organization.HeaderText="Организация";
+            Organization.MinimumWidth=8;
+            Organization.Name="Organization";
+            Organization.ReadOnly=true;
+            // 
+            // Date
+            // 
+            Date.HeaderText="Дата";
+            Date.MinimumWidth=8;
+            Date.Name="Date";
+            Date.ReadOnly=true;
+            // 
+            // Target
+            // 
+            Target.HeaderText="Цель отлова";
+            Target.MinimumWidth=8;
+            Target.Name="Target";
+            Target.ReadOnly=true;
+            // 
+            // Kontracts
+            // 
+            Kontracts.HeaderText="Контракты";
+            Kontracts.MinimumWidth=8;
+            Kontracts.Name="Kontracts";
+            Kontracts.ReadOnly=true;
+            // 
             // MainForm
             // 
             AutoScaleMode=AutoScaleMode.Inherit;
@@ -863,14 +855,6 @@
         private DataGridViewTextBoxColumn Column3;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewTextBoxColumn CountDogs;
-        private DataGridViewTextBoxColumn CountCats;
-        private DataGridViewTextBoxColumn Organization;
-        private DataGridViewTextBoxColumn Date;
-        private DataGridViewTextBoxColumn Target;
-        private DataGridViewTextBoxColumn Application;
-        private DataGridViewTextBoxColumn Kontracts;
         private DateTimePicker dateTimePicker1;
         private Label label7;
         private Button button1;
@@ -881,6 +865,13 @@
         private Button History_button;
         private Button historyButton;
         private Button closeMainForm;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn CountDogs;
+        private DataGridViewTextBoxColumn CountCats;
+        private DataGridViewTextBoxColumn Organization;
+        private DataGridViewTextBoxColumn Date;
+        private DataGridViewTextBoxColumn Target;
+        private DataGridViewTextBoxColumn Kontracts;
     }
 }
 
