@@ -56,7 +56,7 @@ namespace GrpcClient_PI_21_01.Views
                     return;
                 }
                 textBoxKategori.Text = animalCard.Category;
-                textBoxGender.Text = animalCard.Gender;
+                if (animalCard.Gender == "Ж") female.Checked = true;
                 textBoxPoroda.Text = animalCard.Breed;
                 numericUpDownSize.Value = animalCard.Size;
                 textBoxFurType.Text = animalCard.FurType;
@@ -76,7 +76,8 @@ namespace GrpcClient_PI_21_01.Views
         private void KillEdit()
         {
             textBoxKategori.Enabled = false;
-            textBoxGender.Enabled = false;
+            male.Enabled = false;
+            female.Enabled = false;
             numericUpDownSize.Enabled = false;
             textBoxKategori.Enabled = false;
             textBoxPoroda.Enabled = false;
@@ -100,7 +101,7 @@ namespace GrpcClient_PI_21_01.Views
                     //                        textBoxFurType.Text, textBoxColor.Text, textBoxEars.Text,
                     //                        textBoxTail.Text, textBoxSpicialSigns.Text, textBoxIdentificationLabel.Text,
                     //                        comboBoxLocation.SelectedValue.ToString(), actId.ToString(),null};
-                    var animalCard = new AnimalCard(-1, textBoxKategori.Text, textBoxGender.Text,
+                    var animalCard = new AnimalCard(-1, textBoxKategori.Text, male.Checked ? "М" : "Ж",
                         textBoxPoroda.Text, (int)numericUpDownSize.Value, textBoxFurType.Text,
                         textBoxColor.Text, textBoxEars.Text, textBoxTail.Text,
                         textBoxSpicialSigns.Text, textBoxIdentificationLabel.Text,
