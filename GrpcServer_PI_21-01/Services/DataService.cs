@@ -354,8 +354,9 @@ namespace GrpcServer_PI_21_01.Services
 
         public override Task<OperationResult> AddActApps(ActAppReply request, ServerCallContext context)
         {
-            var successful = ActRepository.AddActApp(request.FromReply());
-            Log(ActionType.ActionAdd, "Act Application", request.Id, request.Actor);
+            var actApp = request.FromReply();
+            var successful = ActRepository.AddActApp(actApp);
+            Log(ActionType.ActionAdd, "Act Application", actApp.ActAppNumber, request.Actor);
             return CRUD(request.Id, successful);
         }
 
@@ -368,8 +369,9 @@ namespace GrpcServer_PI_21_01.Services
 
         public override Task<OperationResult> UpdateActApps(ActAppReply request, ServerCallContext context)
         {
-            var successful = ActRepository.UpdateActApp(request.FromReply());
-            Log(ActionType.ActionUpdate, "Act Application", request.Id, request.Actor);
+            var actApp = request.FromReply();
+            var successful = ActRepository.UpdateActApp(actApp);
+            Log(ActionType.ActionUpdate, "Act Application", actApp.ActAppNumber, request.Actor);
             return CRUD(request.Id, successful);
         }
         #endregion

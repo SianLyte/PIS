@@ -16,5 +16,17 @@ namespace GrpcClient_PI_21_01.Models
             IdLocation = idLocation;
             City = city;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is Location loc)
+                return loc.IdLocation == IdLocation;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return IdLocation.GetHashCode();
+        }
     }
 }

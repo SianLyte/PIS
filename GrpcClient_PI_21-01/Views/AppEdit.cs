@@ -63,7 +63,7 @@ namespace GrpcClient_PI_21_01.Views
             try
             {
                 dateTime.Value = app.date;
-                locality.SelectedIndex = locality.Items.IndexOf(app.locality.City);
+                locality.SelectedIndex = locality.Items.IndexOf(app.locality);
                 territory.Text = app.territory;
                 animalHabbiat.Text = app.animalHabiat;
                 urgency.Text = app.urgencyOfExecution;
