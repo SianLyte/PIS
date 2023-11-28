@@ -11,13 +11,13 @@ namespace GrpcServer_PI_21_01.Models
     {
         public DateTime date { get; set; }
         public int number { get; set; }
-        public string locality { get; set; }
+        public Location locality { get; set; }
         public string territory { get; set; }
         public string animalHabiat { get; set; }
         public string urgencyOfExecution { get; set; }
         public string animaldescription { get; set; }
         public string applicantCategory { get; set; }
-        public App(DateTime date, int number, string locality, string territory, string animalHabiat, string urgencyOfExecution, string animaldescription, string applicantCategory)
+        public App(DateTime date, int number, Location locality, string territory, string animalHabiat, string urgencyOfExecution, string animaldescription, string applicantCategory)
         {
             this.date = date;
             this.number = number;
@@ -53,7 +53,12 @@ namespace GrpcServer_PI_21_01.Models
             }
             reader.Close();
             cn.Close();
-            return new App( DateTime.Parse(arr[0]), id, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+            return new App( DateTime.Parse(arr[0]), id, Location.GetById(int.Parse(arr[1]), cn), arr[2], arr[3], arr[4], arr[5], arr[6]);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
     }
 }

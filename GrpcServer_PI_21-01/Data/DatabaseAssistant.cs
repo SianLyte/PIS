@@ -10,13 +10,17 @@
                 var name = Environment.UserName;
                 if (name == "tikho")
                     password = "P@ssw0rd";
+                if (name == "SianLyte")
+                {
+                    password = "123";
+                }
             }
             ConnectionString = "Host=localhost;Username=postgres;Password=" + password + ";Database=animal_capture;";
         }
 
         public static string ConnectionString = "Host=localhost;Username=postgres;Password=" +
-        "P@ssw0rd" +
-        //"123" +
+        //"P@ssw0rd" +
+        "123" +
         ";Database=animal_capture;";
     }
 }

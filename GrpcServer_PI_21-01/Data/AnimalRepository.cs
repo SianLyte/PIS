@@ -121,7 +121,7 @@ namespace GrpcServer_PI_21_01.Data
                     var category = reader.GetString(reader.GetOrdinal("category"));
                     var gender = reader.GetString(reader.GetOrdinal("sex"));
                     var breed = reader.GetString(reader.GetOrdinal("breed"));
-                    var size = reader.GetString(reader.GetOrdinal("sizee")); // в бд поменять varchar(30) на integer
+                    var size = reader.GetInt32(reader.GetOrdinal("sizee")); // в бд поменять varchar(30) на integer
                     var wool = reader.GetString(reader.GetOrdinal("wool"));
                     var signs = reader.GetString(reader.GetOrdinal("signs"));
                     var identificationMark = reader.GetString(reader.GetOrdinal("id_metka"));
@@ -137,7 +137,7 @@ namespace GrpcServer_PI_21_01.Data
                         if (processedId == id) return;
                         processedId = id;
 
-                        var animalCard = new AnimalCard(id, category, gender, breed, int.Parse(size), // убрать int.Parse, когда поменяем в бд
+                        var animalCard = new AnimalCard(id, category, gender, breed, size, // убрать int.Parse, когда поменяем в бд
                             wool, color, ears, tail, signs, identificationMark,
                             Location.GetById(cityid, cn, true),
                             Act.GetById(actId, cn, true), null);

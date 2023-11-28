@@ -21,7 +21,7 @@ namespace GrpcServer_PI_21_01.Data
 
             {
                 //все заявки_акты за определнный период в конкретном городе
-                var allActApps = ActRepository.GetActApps().Where(actapp => actapp.Act.Date >= start & actapp.Act.Date <= finish & actapp.Application.locality == loc.City);
+                var allActApps = ActRepository.GetActApps().Where(actapp => actapp.Act.Date >= start & actapp.Act.Date <= finish & actapp.Application.locality.IdLocation == loc.IdLocation);
                 //массив уникальных актов
                 List<Act> acts = new(); 
                 //массив уникальных 

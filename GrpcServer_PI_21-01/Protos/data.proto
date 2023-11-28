@@ -116,7 +116,7 @@ message ActReply {
 message ApplicationReply {
 	google.protobuf.Timestamp date = 1;
 	int32 number = 2;
-	string locality = 3;
+	LocationReply locality = 3;
 	string territory = 4;
 	string animalHabitat = 5;
 	string urgencyOfExecution = 6;

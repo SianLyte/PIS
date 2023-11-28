@@ -494,7 +494,7 @@ namespace GrpcServer_PI_21_01.Services
                 AnimalHabitat = app.animalHabiat,
                 ApplicantCategory = app.applicantCategory,
                 Date = Timestamp.FromDateTime(app.date.ToUtc()),
-                Locality = app.locality,
+                Locality = app.locality.ToReply(),
                 Number = app.number,
                 Territory = app.territory,
                 UrgencyOfExecution = app.urgencyOfExecution,
@@ -581,7 +581,7 @@ namespace GrpcServer_PI_21_01.Services
             return new App(
                 reply.Date.ToDateTime(),
                 reply.Number,
-                reply.Locality,
+                reply.Locality.FromReply(),
                 reply.Territory,
                 reply.AnimalHabitat,
                 reply.UrgencyOfExecution,
