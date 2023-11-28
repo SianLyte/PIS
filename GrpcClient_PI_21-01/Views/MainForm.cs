@@ -23,6 +23,32 @@ namespace GrpcClient_PI_21_01
 
             filterAppDate2.Value = DateTime.Now;
             filterAppDate2.ValueChanged += filterAppDate_ValueChanged;
+            dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
+
+            OrgAdd.Click += OrgAdd_Click;
+            OrgEdit.Click += OrgEdit_Click;
+            OrgDelete.Click += OrgDelete_Click;
+
+            AppAdd.Click += AppAdd_Click;
+            AppEdit.Click += AppEdit_Click;
+            AppDelete.Click += AppDelete_Click;
+
+            AddActButton.Click += AddButton_Click;
+            UpdateActButton.Click += UpdateButton_Click;
+            DeleteActButton.Click += DeleteActButton_Click;
+            buttonAnimalCard.Click += buttonAnimalCard_Click;
+
+            AddButton.Click += AddButton_Click_1;
+            EditButton.Click += EditButton_Click;
+            DeleteButton.Click += DeleteButton_Click;
+            ContractTable.CellMouseDoubleClick += ContractTable_CellMouseDoubleClick;
+
+            button1.Click += button1_Click;
+
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
+
+            historyButton.Click += History_button_Click;
+            History_button.Click += History_button_Click;
 
             Task.Run(Setup);
         }
@@ -284,12 +310,13 @@ namespace GrpcClient_PI_21_01
             ContractTable.Rows.Clear();
             var cont = await ContractService.GetContracts();
             //var contract = ContractService.ShowContract(dateTimePicker3.Value.ToString(), dateTimePicker1.Value.ToString());
-            foreach (var i in cont.Where(c => c.DateConclusion >= dateTimePicker3.Value
-            && c.DateConclusion <= dateTimePicker1.Value).Select(c => ContractService.ToDataArray(c)))
+            foreach (var i in cont.Where(c => c.DateConclusion >= dateTimePicker3.Value)
+                .Select(c => ContractService.ToDataArray(c)))
             {
                 ContractTable.Rows.Add(i);
             }
         }
+
         private async void AddButton_Click_1(object sender, EventArgs e)
         {
             if (await CheckPrivilege(NameMdels.Contract))
@@ -344,16 +371,6 @@ namespace GrpcClient_PI_21_01
             dataGridViewApp.DataSource = dsApplication.Tables[0];
         }
 
-        private void filterAppDate2_ValueChanged(object sender, EventArgs e)
-        {
-            filterAppDate_ValueChanged(sender, e);
-        }
-
-        private async void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-            await ShowContract();
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             OpenReport();
@@ -377,11 +394,6 @@ namespace GrpcClient_PI_21_01
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private async void History_button_Click(object sender, EventArgs e)
         {
             if (await CheckPrivilege(NameMdels.History))
@@ -400,11 +412,6 @@ namespace GrpcClient_PI_21_01
                 historyForm.ShowDialog();
             }
             else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций");
-        }
-
-        private void closeMainForm_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

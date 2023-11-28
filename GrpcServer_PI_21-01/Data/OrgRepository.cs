@@ -33,7 +33,7 @@ namespace GrpcServer_PI_21_01.Data
                 $"inn = '{org.INN}'," +
                 $"kpp = '{org.KPP}'," +
                 $"registration = '{org.registrationAdress}'," +
-                $"typee = '{org.type}'" +
+                $"typee = '{org.type}'," +
                 $"status = '{org.status}'" +
                 $" WHERE id = {org.idOrg}") { Connection = cn };
             {
