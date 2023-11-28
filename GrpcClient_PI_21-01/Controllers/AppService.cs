@@ -60,7 +60,7 @@ namespace GrpcClient_PI_21_01.Controllers
             return new App(
                 reply.Date.ToDateTime(),
                 reply.Number,
-                reply.Locality,
+                reply.Locality.FromReply(),
                 reply.Territory,
                 reply.AnimalHabitat,
                 reply.UrgencyOfExecution,
@@ -74,7 +74,7 @@ namespace GrpcClient_PI_21_01.Controllers
             {
                     app.date.ToString(),
                     app.number.ToString(),
-                    app.locality,
+                    app.locality.City,
                     app.territory,
                     app.animalHabiat,
                     app.urgencyOfExecution,

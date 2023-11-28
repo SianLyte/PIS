@@ -74,6 +74,7 @@ namespace GrpcClient_PI_21_01
             && c.DateConclusion <= dateTimePicker1.Value).Select(c => ContractService.ToDataArray(c)))
                 ContractTable.Rows.Add(i);
         }
+
         private static async Task<bool> CheckPrivilege(NameMdels model)
         {
             if (!await PreveligeService.IsUserPrevilegedFor(model))

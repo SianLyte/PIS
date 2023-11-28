@@ -63,7 +63,7 @@ namespace GrpcClient_PI_21_01.Views
             try
             {
                 dateTime.Value = app.date;
-                locality.SelectedIndex = locality.Items.IndexOf(app.locality);
+                locality.SelectedIndex = locality.Items.IndexOf(app.locality.City);
                 territory.Text = app.territory;
                 animalHabbiat.Text = app.animalHabiat;
                 urgency.Text = app.urgencyOfExecution;
@@ -96,7 +96,7 @@ namespace GrpcClient_PI_21_01.Views
                 return;
             }
             var app = new App(DateTime.Parse(dateTime.Text), appNum,
-                loc.City, territory.Text, animalHabbiat.Text, urgency.Text,
+                loc, territory.Text, animalHabbiat.Text, urgency.Text,
                 descrip.Text, category.SelectedItem.ToString());
             var updated = await AppService.UpdateApplication(app);
             if (!updated)

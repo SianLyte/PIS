@@ -10,13 +10,13 @@ namespace GrpcClient_PI_21_01.Models
     {
         public DateTime date { get; set; }
         public int number { get; set; }
-        public string locality { get; set; }
+        public Location locality { get; set; }
         public string territory { get; set; }
         public string animalHabiat { get; set; }
         public string urgencyOfExecution { get; set; }
         public string animaldescription { get; set; }
         public string applicantCategory { get; set; }
-        public App(DateTime date, int number, string locality, string territory, string animalHabiat, string urgencyOfExecution, string animaldescription, string applicantCategory)
+        public App(DateTime date, int number, Location locality, string territory, string animalHabiat, string urgencyOfExecution, string animaldescription, string applicantCategory)
         {
             this.date = date;
             this.number = number;
