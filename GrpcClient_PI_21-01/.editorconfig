@@ -54,6 +54,9 @@ csharp_style_throw_expression = true:suggestion
 csharp_space_around_binary_operators = ignore
 csharp_indent_labels = one_less_than_current
 
+# CS8622: Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
+dotnet_diagnostic.CS8622.severity = none
+
 [*.vb]
 #### Стили именования ####
 
