@@ -164,6 +164,7 @@
             // customerCombo
             // 
             customerCombo.BackColor=Color.OldLace;
+            customerCombo.DropDownStyle=ComboBoxStyle.DropDownList;
             customerCombo.FlatStyle=FlatStyle.Popup;
             customerCombo.FormattingEnabled=true;
             customerCombo.Location=new Point(233, 481);
@@ -175,6 +176,7 @@
             // executerCombo
             // 
             executerCombo.BackColor=Color.OldLace;
+            executerCombo.DropDownStyle=ComboBoxStyle.DropDownList;
             executerCombo.FlatStyle=FlatStyle.Popup;
             executerCombo.FormattingEnabled=true;
             executerCombo.Location=new Point(233, 415);
@@ -225,7 +227,7 @@
             dataGridView1.RowTemplate.Height=29;
             dataGridView1.Size=new Size(192, 163);
             dataGridView1.TabIndex=48;
-            dataGridView1.SelectionChanged+=dataGridView1_SelectionChanged;
+            dataGridView1.MouseClick+=dataGridView1_MouseClick;
             // 
             // newCity
             // 
