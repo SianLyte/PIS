@@ -158,13 +158,17 @@ namespace GrpcClient_PI_21_01.Views
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (_locations.Count == 0) { CreateData(); }
+            if (_locations.Count == 0)
+            {
+                CreateData();
+            }
             Models.Location selectedLoc = new Models.Location(int.Parse(cityCombo.SelectedValue.ToString()) - 1, cityCombo.Text);
 
             if (ConteinceSelectedId(selectedLoc)) { MessageBox.Show("Этот город выбран", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             else
             {
                 _locations.Add(selectedLoc);
+                _idCityToCost.Add(selectedLoc.IdLocation, 0);
                 InitialisationData();
             }
         }
@@ -193,10 +197,11 @@ namespace GrpcClient_PI_21_01.Views
             locationAdd.Show();
         }
 
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
-        {
-            MessageBox.Show("yra");
-        }
+        //private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    if (CheckDataGrid())
+        //        costNumericUpDown.Value = _idCityToCost[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())];
+        //}
 
         private bool CheckDataGrid()
         {
@@ -211,8 +216,11 @@ namespace GrpcClient_PI_21_01.Views
                 //MessageBox.Show(_locations.ToString());
                 int idLoc = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
                 _locations.Remove(_locations.First(x => x.IdLocation == idLoc));
-                dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
                 costNumericUpDown.Value = 0;
+                dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+                _idCityToCost.Remove(idLoc);
+                dataGridView1.ClearSelection();
+                dataGridView1.CurrentCell  = null;
                 //MessageBox.Show(_locations.ToString());
             }
         }
@@ -229,11 +237,17 @@ namespace GrpcClient_PI_21_01.Views
                     _idCityToCost[idLoc] = cost;
             }
             else
-                if (((int)costNumericUpDown.Value) != 0)
-            {
-                MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                costNumericUpDown.Value = 0;
-            }
+                if (costNumericUpDown.Value != 0)
+                {
+                    MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    costNumericUpDown.Value = 0;
+                }
+        }
+
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (CheckDataGrid())
+                costNumericUpDown.Value = _idCityToCost[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())];
         }
     }
 }
