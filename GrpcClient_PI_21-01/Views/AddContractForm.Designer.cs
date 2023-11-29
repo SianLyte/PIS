@@ -41,17 +41,18 @@
             label5=new Label();
             customerCombo=new ComboBox();
             executerCombo=new ComboBox();
-            CostText=new TextBox();
             cityCombo=new ComboBox();
             button1=new Button();
             dataGridView1=new DataGridView();
             newCity=new Button();
             groupBox1=new GroupBox();
             groupBox2=new GroupBox();
+            costNumericUpDown=new NumericUpDown();
             deleteButton=new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)costNumericUpDown).BeginInit();
             SuspendLayout();
             // 
             // label6
@@ -133,7 +134,7 @@
             // label3
             // 
             label3.AutoSize=true;
-            label3.Location=new Point(163, 354);
+            label3.Location=new Point(7, 206);
             label3.Margin=new Padding(4, 0, 4, 0);
             label3.Name="label3";
             label3.Size=new Size(62, 30);
@@ -181,17 +182,6 @@
             executerCombo.Name="executerCombo";
             executerCombo.Size=new Size(322, 38);
             executerCombo.TabIndex=43;
-            // 
-            // CostText
-            // 
-            CostText.BackColor=Color.OldLace;
-            CostText.BorderStyle=BorderStyle.None;
-            CostText.Location=new Point(233, 354);
-            CostText.Margin=new Padding(4, 7, 4, 7);
-            CostText.Name="CostText";
-            CostText.Size=new Size(322, 30);
-            CostText.TabIndex=45;
-            CostText.TextChanged+=CostText_TextChanged;
             // 
             // cityCombo
             // 
@@ -259,16 +249,27 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(costNumericUpDown);
             groupBox2.Controls.Add(deleteButton);
             groupBox2.Controls.Add(dataGridView1);
             groupBox2.Controls.Add(cityCombo);
             groupBox2.Controls.Add(button1);
+            groupBox2.Controls.Add(label3);
             groupBox2.Location=new Point(233, 135);
             groupBox2.Name="groupBox2";
-            groupBox2.Size=new Size(388, 209);
+            groupBox2.Size=new Size(388, 258);
             groupBox2.TabIndex=51;
             groupBox2.TabStop=false;
             groupBox2.Text="Добовление города";
+            // 
+            // costNumericUpDown
+            // 
+            costNumericUpDown.Location=new Point(76, 204);
+            costNumericUpDown.Maximum=new decimal(new int[] { 10000000, 0, 0, 0 });
+            costNumericUpDown.Name="costNumericUpDown";
+            costNumericUpDown.Size=new Size(122, 37);
+            costNumericUpDown.TabIndex=52;
+            costNumericUpDown.ValueChanged+=costNumericUpDown_ValueChanged;
             // 
             // deleteButton
             // 
@@ -291,12 +292,10 @@
             ClientSize=new Size(801, 711);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
-            Controls.Add(CostText);
             Controls.Add(customerCombo);
             Controls.Add(executerCombo);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(label3);
             Controls.Add(CancelcontEdit);
             Controls.Add(OKcontAdd);
             Controls.Add(dateAction);
@@ -311,6 +310,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)costNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -337,5 +338,6 @@
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private Button deleteButton;
+        private NumericUpDown costNumericUpDown;
     }
 }
