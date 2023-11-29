@@ -231,8 +231,11 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (CheckDataGrid())
             {
-                //_locations.RemoveAt(_locations.Where<>);
+                MessageBox.Show(_locations.ToString());
+                int idLoc = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+                _locations.Remove(_locations.First(x => x.IdLocation == idLoc));
                 dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+                MessageBox.Show(_locations.ToString());
             }
         }
     }
