@@ -21,7 +21,7 @@ namespace GrpcClient_PI_21_01.Views
         public bool ContToEdit;
         public int ContId;
         private List<Models.Location> _locations = new List<Models.Location>();
-        private Dictionary<int, string> _idLocToCity = new Dictionary<int, string>();
+        private Dictionary<int, int> _idCityToCost = new Dictionary<int, int>();
 
 
         public AddContractForm()
@@ -104,13 +104,9 @@ namespace GrpcClient_PI_21_01.Views
 
         private async void OKcontAdd_Click(object sender, EventArgs e)
         {
-            if (ContToEdit)
-                if (CostText.Text == "")
-                    MessageBox.Show("Вы не указали цену.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else if (int.Parse(CostText.Text) == 0)
+            if (ContToEdit) /*CostText*/
+                if (costNumericUpDown.Value == 0)
                     MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else if (!int.TryParse(CostText.Text, out int _))
-                    MessageBox.Show("Вы ввели некоректную цену.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                 {
                     //var cont = new string[]
@@ -127,12 +123,8 @@ namespace GrpcClient_PI_21_01.Views
                     this.Close();
                 }
             else
-                if (CostText.Text == "")
-                MessageBox.Show("Вы не указали цену.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else if (int.Parse(CostText.Text) == 0)
+                if (costNumericUpDown.Value == 0)
                 MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else if (!int.TryParse(CostText.Text, out int _))
-                MessageBox.Show("Вы ввели некоректную цену.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 //var id = ContractRepository.contract.Max(x => x.IdContract) + 1;
@@ -169,7 +161,7 @@ namespace GrpcClient_PI_21_01.Views
             if (_locations.Count == 0) { CreateData(); }
             Models.Location selectedLoc = new Models.Location(int.Parse(cityCombo.SelectedValue.ToString()) - 1, cityCombo.Text);
 
-            if (ConteinceSelectedId(selectedLoc)) { MessageBox.Show("Этот город выбран"); }
+            if (ConteinceSelectedId(selectedLoc)) { MessageBox.Show("Этот город выбран", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             else
             {
                 _locations.Add(selectedLoc);
@@ -206,21 +198,6 @@ namespace GrpcClient_PI_21_01.Views
             MessageBox.Show("yra");
         }
 
-        private void CostText_TextChanged(object sender, EventArgs e)
-        {
-            if (CheckDataGrid())
-            {
-                MessageBox.Show("YES");
-            }
-            else
-                if (CostText.Text != "")
-                { 
-                    MessageBox.Show("Вы не выбрали строку!");
-                    CostText.Text = "";
-                }
-
-        }
-
         private bool CheckDataGrid()
         {
             if (dataGridView1.CurrentRow != null) { return true; }
@@ -231,11 +208,31 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (CheckDataGrid())
             {
-                MessageBox.Show(_locations.ToString());
+                //MessageBox.Show(_locations.ToString());
                 int idLoc = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
                 _locations.Remove(_locations.First(x => x.IdLocation == idLoc));
                 dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
-                MessageBox.Show(_locations.ToString());
+                costNumericUpDown.Value = 0;
+                //MessageBox.Show(_locations.ToString());
+            }
+        }
+
+        private void costNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (CheckDataGrid())
+            {
+                var idLoc = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+                var cost = (int)costNumericUpDown.Value;
+                if (!_idCityToCost.ContainsKey(idLoc))
+                    _idCityToCost.Add(idLoc, cost);
+                else
+                    _idCityToCost[idLoc] = cost;
+            }
+            else
+                if (((int)costNumericUpDown.Value) != 0)
+            {
+                MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                costNumericUpDown.Value = 0;
             }
         }
     }
