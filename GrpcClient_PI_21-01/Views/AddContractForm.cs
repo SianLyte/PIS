@@ -149,13 +149,20 @@ namespace GrpcClient_PI_21_01.Views
                     MessageBox.Show("Internal error while adding animal card. Please try again later");
                     return;
                 }
-                //var successful = await LocationService.
-                if (!successful)
+
+                foreach (var loc in  _locations)
                 {
-                    this.DialogResult = DialogResult.Cancel;
-                    MessageBox.Show("Internal error while adding animal card. Please try again later");
-                    return;
+                    Location_Contract l_C = new Location_Contract(-1, loc, _idCityToCost[loc.IdLocation], contr);
+                    successful = await LocationService.AddLocationContract(l_C);
+                    
+                    if (!successful)
+                    {
+                        this.DialogResult = DialogResult.Cancel;
+                        MessageBox.Show("Internal error while adding animal card. Please try again later");
+                        return;
+                    }
                 }
+                
                 this.Close();
             }
         }
