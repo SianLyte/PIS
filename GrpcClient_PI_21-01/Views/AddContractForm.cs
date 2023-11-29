@@ -56,6 +56,10 @@ namespace GrpcClient_PI_21_01.Views
                 var lcs = (await LocationService.GetLocationContracts())
                     .Where(lc => lc.Contract.IdContract == ContId);
                 var allLocations = await LocationService.GetLocations();
+
+                // тут пытался вытянуть цены\город\контракты
+                //var costCity = await LocationService.GetLocationContract(ContId);
+
                 foreach (var lc in lcs)
                 {
                     var location = allLocations.FirstOrDefault(loc => loc.IdLocation == lc.Locality.IdLocation);
@@ -67,7 +71,7 @@ namespace GrpcClient_PI_21_01.Views
                 CreateData();
                 foreach (var loc in _locations)
                 {
-                    dataGridView1.Rows.Add(loc.City);
+                    dataGridView1.Rows.Add(loc.IdLocation, loc.City);
                 }
             }
             else
