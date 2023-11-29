@@ -36,7 +36,6 @@
             label1=new Label();
             nameTextBox=new TextBox();
             button1=new Button();
-            groupBox2=new GroupBox();
             groupBox=new GroupBox();
             label10=new Label();
             postTextBox=new TextBox();
@@ -53,6 +52,8 @@
             dateTimeTextBox=new TextBox();
             label15=new Label();
             loginTextBox=new TextBox();
+            nextButton=new Button();
+            priviousButton=new Button();
             groupBox1.SuspendLayout();
             groupBox.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -135,7 +136,7 @@
             // button1
             // 
             button1.DialogResult=DialogResult.OK;
-            button1.Location=new Point(961, 897);
+            button1.Location=new Point(961, 684);
             button1.Margin=new Padding(4);
             button1.Name="button1";
             button1.Size=new Size(129, 44);
@@ -143,28 +144,17 @@
             button1.Text="OK";
             button1.UseVisualStyleBackColor=true;
             // 
-            // groupBox2
-            // 
-            groupBox2.Location=new Point(13, 182);
-            groupBox2.Margin=new Padding(4);
-            groupBox2.Name="groupBox2";
-            groupBox2.Padding=new Padding(4);
-            groupBox2.Size=new Size(1074, 138);
-            groupBox2.TabIndex=8;
-            groupBox2.TabStop=false;
-            groupBox2.Text="Контактная информация";
-            // 
             // groupBox
             // 
             groupBox.Controls.Add(label10);
             groupBox.Controls.Add(postTextBox);
             groupBox.Controls.Add(label8);
             groupBox.Controls.Add(OrganisationTextBox);
-            groupBox.Location=new Point(13, 344);
+            groupBox.Location=new Point(16, 164);
             groupBox.Margin=new Padding(4);
             groupBox.Name="groupBox";
             groupBox.Padding=new Padding(4);
-            groupBox.Size=new Size(1074, 208);
+            groupBox.Size=new Size(1074, 129);
             groupBox.TabIndex=6;
             groupBox.TabStop=false;
             groupBox.Text="Место работы, должность";
@@ -172,7 +162,7 @@
             // label10
             // 
             label10.AutoSize=true;
-            label10.Location=new Point(8, 114);
+            label10.Location=new Point(389, 34);
             label10.Margin=new Padding(4, 0, 4, 0);
             label10.Name="label10";
             label10.Size=new Size(119, 30);
@@ -181,7 +171,7 @@
             // 
             // postTextBox
             // 
-            postTextBox.Location=new Point(8, 148);
+            postTextBox.Location=new Point(389, 68);
             postTextBox.Margin=new Padding(4);
             postTextBox.Name="postTextBox";
             postTextBox.ReadOnly=true;
@@ -219,18 +209,18 @@
             groupBox4.Controls.Add(dateTimeTextBox);
             groupBox4.Controls.Add(label15);
             groupBox4.Controls.Add(loginTextBox);
-            groupBox4.Location=new Point(13, 587);
+            groupBox4.Location=new Point(16, 316);
             groupBox4.Margin=new Padding(4);
             groupBox4.Name="groupBox4";
             groupBox4.Padding=new Padding(4);
-            groupBox4.Size=new Size(1074, 302);
+            groupBox4.Size=new Size(1074, 297);
             groupBox4.TabIndex=12;
             groupBox4.TabStop=false;
             // 
             // label16
             // 
             label16.AutoSize=true;
-            label16.Location=new Point(770, 32);
+            label16.Location=new Point(8, 177);
             label16.Margin=new Padding(4, 0, 4, 0);
             label16.Name="label16";
             label16.Size=new Size(261, 60);
@@ -239,7 +229,7 @@
             // 
             // objectNumberTextBox
             // 
-            objectNumberTextBox.Location=new Point(770, 96);
+            objectNumberTextBox.Location=new Point(8, 241);
             objectNumberTextBox.Margin=new Padding(4);
             objectNumberTextBox.Name="objectNumberTextBox";
             objectNumberTextBox.ReadOnly=true;
@@ -268,7 +258,7 @@
             // label12
             // 
             label12.AutoSize=true;
-            label12.Location=new Point(8, 207);
+            label12.Location=new Point(744, 62);
             label12.Margin=new Padding(4, 0, 4, 0);
             label12.Name="label12";
             label12.Size=new Size(134, 30);
@@ -277,7 +267,7 @@
             // 
             // descriptionTextBox
             // 
-            descriptionTextBox.Location=new Point(8, 242);
+            descriptionTextBox.Location=new Point(744, 97);
             descriptionTextBox.Margin=new Padding(4);
             descriptionTextBox.Name="descriptionTextBox";
             descriptionTextBox.ReadOnly=true;
@@ -322,14 +312,36 @@
             loginTextBox.Size=new Size(294, 37);
             loginTextBox.TabIndex=2;
             // 
+            // nextButton
+            // 
+            nextButton.Location=new Point(955, 620);
+            nextButton.Name="nextButton";
+            nextButton.Size=new Size(135, 37);
+            nextButton.TabIndex=0;
+            nextButton.Text="далее";
+            nextButton.UseVisualStyleBackColor=true;
+            nextButton.Click+=next_Click;
+            // 
+            // priviousButton
+            // 
+            priviousButton.Enabled=false;
+            priviousButton.Location=new Point(814, 620);
+            priviousButton.Name="priviousButton";
+            priviousButton.Size=new Size(135, 37);
+            priviousButton.TabIndex=13;
+            priviousButton.Text="предыдущее";
+            priviousButton.UseVisualStyleBackColor=true;
+            priviousButton.Click+=privious_Click;
+            // 
             // HistoryForm
             // 
             AutoScaleMode=AutoScaleMode.Inherit;
             BackColor=Color.Wheat;
-            ClientSize=new Size(1100, 952);
+            ClientSize=new Size(1100, 736);
+            Controls.Add(priviousButton);
+            Controls.Add(nextButton);
             Controls.Add(groupBox4);
             Controls.Add(groupBox);
-            Controls.Add(groupBox2);
             Controls.Add(button1);
             Controls.Add(groupBox1);
             Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
@@ -357,7 +369,6 @@
         private Label label2;
         private TextBox surnameTextBox;
         private Label label1;
-        private GroupBox groupBox2;
         private GroupBox groupBox;
         private Label label10;
         private TextBox postTextBox;
@@ -374,5 +385,7 @@
         private TextBox loginTextBox;
         private Label label11;
         private TextBox nameTableBox;
+        private Button nextButton;
+        private Button priviousButton;
     }
 }
