@@ -10,7 +10,7 @@ namespace GrpcClient_PI_21_01.Models
     {
         public DateTime date { get; set; }
         public int number { get; set; }
-        public Location locality { get; set; }
+        public Models.Location locality { get; set; }
         public string territory { get; set; }
         public string animalHabiat { get; set; }
         public string urgencyOfExecution { get; set; }
