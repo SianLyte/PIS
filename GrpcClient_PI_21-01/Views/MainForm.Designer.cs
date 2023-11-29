@@ -147,6 +147,7 @@
             History_button.TabIndex=9;
             History_button.Text="История";
             History_button.UseVisualStyleBackColor=false;
+            History_button.Click+=History_button_Click;
             // 
             // buttonAnimalCard
             // 

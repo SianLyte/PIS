@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Xml.Linq;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace GrpcClient_PI_21_01.Views
 {
@@ -20,6 +21,7 @@ namespace GrpcClient_PI_21_01.Views
         public bool ContToEdit;
         public int ContId;
         private List<Models.Location> _locations = new List<Models.Location>();
+        private Dictionary<int, string> _idLocToCity = new Dictionary<int, string>();
 
 
         public AddContractForm()
@@ -74,7 +76,8 @@ namespace GrpcClient_PI_21_01.Views
 
         private void CreateData()
         {
-            dataGridView1.ColumnCount = 1;
+            dataGridView1.ColumnCount = 2;
+            dataGridView1.Columns[0].Visible = false;
             dataGridView1.RowCount = 0;
         }
 
@@ -164,7 +167,7 @@ namespace GrpcClient_PI_21_01.Views
         private void button1_Click(object sender, EventArgs e)
         {
             if (_locations.Count == 0) { CreateData(); }
-            Location selectedLoc = new Location(int.Parse(cityCombo.SelectedValue.ToString()) - 1, cityCombo.Text);
+            Models.Location selectedLoc = new Models.Location(int.Parse(cityCombo.SelectedValue.ToString()) - 1, cityCombo.Text);
 
             if (ConteinceSelectedId(selectedLoc)) { MessageBox.Show("Этот город выбран"); }
             else
@@ -174,7 +177,7 @@ namespace GrpcClient_PI_21_01.Views
             }
         }
 
-        private bool ConteinceSelectedId(Location selectedLoc)
+        private bool ConteinceSelectedId(Models.Location selectedLoc)
         {
             foreach (var item in _locations) { if (item.IdLocation == selectedLoc.IdLocation) return true; }
             return false;
@@ -184,11 +187,11 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (ContToEdit)
             {
-                dataGridView1.Rows.Add(_locations[_locations.Count-1].City);
+                dataGridView1.Rows.Add(_locations[_locations.Count-1].IdLocation, _locations[_locations.Count-1].City);
             }
             else
             {
-                dataGridView1.Rows.Add(_locations[_locations.Count-1].City);
+                dataGridView1.Rows.Add(_locations[_locations.Count-1].IdLocation, _locations[_locations.Count-1].City);
             }
         }
 
@@ -196,6 +199,41 @@ namespace GrpcClient_PI_21_01.Views
         {
             var locationAdd = new LocationAdd();
             locationAdd.Show();
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("yra");
+        }
+
+        private void CostText_TextChanged(object sender, EventArgs e)
+        {
+            if (CheckDataGrid())
+            {
+                MessageBox.Show("YES");
+            }
+            else
+                if (CostText.Text != "")
+                { 
+                    MessageBox.Show("Вы не выбрали строку!");
+                    CostText.Text = "";
+                }
+
+        }
+
+        private bool CheckDataGrid()
+        {
+            if (dataGridView1.CurrentRow != null) { return true; }
+            else { return false; }
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (CheckDataGrid())
+            {
+                //_locations.RemoveAt(_locations.Where<>);
+                dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+            }
         }
     }
 }

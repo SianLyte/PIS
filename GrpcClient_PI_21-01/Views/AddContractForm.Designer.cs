@@ -48,6 +48,7 @@
             newCity=new Button();
             groupBox1=new GroupBox();
             groupBox2=new GroupBox();
+            deleteButton=new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -107,7 +108,7 @@
             // 
             CancelcontEdit.BackColor=Color.Cornsilk;
             CancelcontEdit.FlatStyle=FlatStyle.Popup;
-            CancelcontEdit.Location=new Point(363, 477);
+            CancelcontEdit.Location=new Point(363, 545);
             CancelcontEdit.Margin=new Padding(4);
             CancelcontEdit.Name="CancelcontEdit";
             CancelcontEdit.Size=new Size(195, 74);
@@ -120,7 +121,7 @@
             // 
             OKcontAdd.BackColor=Color.Cornsilk;
             OKcontAdd.FlatStyle=FlatStyle.Popup;
-            OKcontAdd.Location=new Point(157, 477);
+            OKcontAdd.Location=new Point(157, 545);
             OKcontAdd.Margin=new Padding(4);
             OKcontAdd.Name="OKcontAdd";
             OKcontAdd.Size=new Size(195, 74);
@@ -132,7 +133,7 @@
             // label3
             // 
             label3.AutoSize=true;
-            label3.Location=new Point(20, 281);
+            label3.Location=new Point(163, 354);
             label3.Margin=new Padding(4, 0, 4, 0);
             label3.Name="label3";
             label3.Size=new Size(62, 30);
@@ -142,7 +143,7 @@
             // label4
             // 
             label4.AutoSize=true;
-            label4.Location=new Point(20, 347);
+            label4.Location=new Point(20, 415);
             label4.Margin=new Padding(4, 0, 4, 0);
             label4.Name="label4";
             label4.Size=new Size(96, 30);
@@ -152,7 +153,7 @@
             // label5
             // 
             label5.AutoSize=true;
-            label5.Location=new Point(20, 413);
+            label5.Location=new Point(20, 481);
             label5.Margin=new Padding(4, 0, 4, 0);
             label5.Name="label5";
             label5.Size=new Size(139, 30);
@@ -164,7 +165,7 @@
             customerCombo.BackColor=Color.OldLace;
             customerCombo.FlatStyle=FlatStyle.Popup;
             customerCombo.FormattingEnabled=true;
-            customerCombo.Location=new Point(233, 413);
+            customerCombo.Location=new Point(233, 481);
             customerCombo.Margin=new Padding(4, 7, 4, 7);
             customerCombo.Name="customerCombo";
             customerCombo.Size=new Size(322, 38);
@@ -175,7 +176,7 @@
             executerCombo.BackColor=Color.OldLace;
             executerCombo.FlatStyle=FlatStyle.Popup;
             executerCombo.FormattingEnabled=true;
-            executerCombo.Location=new Point(233, 347);
+            executerCombo.Location=new Point(233, 415);
             executerCombo.Margin=new Padding(4, 7, 4, 7);
             executerCombo.Name="executerCombo";
             executerCombo.Size=new Size(322, 38);
@@ -185,11 +186,12 @@
             // 
             CostText.BackColor=Color.OldLace;
             CostText.BorderStyle=BorderStyle.None;
-            CostText.Location=new Point(233, 286);
+            CostText.Location=new Point(233, 354);
             CostText.Margin=new Padding(4, 7, 4, 7);
             CostText.Name="CostText";
             CostText.Size=new Size(322, 30);
             CostText.TabIndex=45;
+            CostText.TextChanged+=CostText_TextChanged;
             // 
             // cityCombo
             // 
@@ -207,7 +209,7 @@
             // 
             button1.BackColor=Color.Cornsilk;
             button1.FlatStyle=FlatStyle.Popup;
-            button1.Location=new Point(264, 94);
+            button1.Location=new Point(267, 89);
             button1.Margin=new Padding(4);
             button1.Name="button1";
             button1.Size=new Size(114, 38);
@@ -231,8 +233,9 @@
             dataGridView1.RowHeadersVisible=false;
             dataGridView1.RowHeadersWidth=51;
             dataGridView1.RowTemplate.Height=29;
-            dataGridView1.Size=new Size(192, 92);
+            dataGridView1.Size=new Size(192, 163);
             dataGridView1.TabIndex=48;
+            dataGridView1.SelectionChanged+=dataGridView1_SelectionChanged;
             // 
             // newCity
             // 
@@ -256,22 +259,36 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(deleteButton);
             groupBox2.Controls.Add(dataGridView1);
             groupBox2.Controls.Add(cityCombo);
             groupBox2.Controls.Add(button1);
             groupBox2.Location=new Point(233, 135);
             groupBox2.Name="groupBox2";
-            groupBox2.Size=new Size(388, 141);
+            groupBox2.Size=new Size(388, 209);
             groupBox2.TabIndex=51;
             groupBox2.TabStop=false;
             groupBox2.Text="Добовление города";
+            // 
+            // deleteButton
+            // 
+            deleteButton.BackColor=Color.Cornsilk;
+            deleteButton.FlatStyle=FlatStyle.Popup;
+            deleteButton.Location=new Point(205, 164);
+            deleteButton.Margin=new Padding(4);
+            deleteButton.Name="deleteButton";
+            deleteButton.Size=new Size(114, 38);
+            deleteButton.TabIndex=49;
+            deleteButton.Text="Удалить";
+            deleteButton.UseVisualStyleBackColor=false;
+            deleteButton.Click+=deleteButton_Click;
             // 
             // AddContractForm
             // 
             AutoScaleDimensions=new SizeF(11F, 30F);
             AutoScaleMode=AutoScaleMode.Font;
             BackColor=Color.Wheat;
-            ClientSize=new Size(801, 620);
+            ClientSize=new Size(801, 711);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(CostText);
@@ -319,5 +336,6 @@
         private Button newCity;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
+        private Button deleteButton;
     }
 }

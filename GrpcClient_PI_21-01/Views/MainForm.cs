@@ -366,7 +366,7 @@ namespace GrpcClient_PI_21_01
         private async void History_button_Click(object sender, EventArgs e)
         {
             if (await CheckPrivilege(NameMdels.History))
-            {
+                {
                 var data = await OperationService.GetOperations();
                 var historyForm = new HistoryForm(data);
 
