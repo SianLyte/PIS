@@ -13,21 +13,8 @@ namespace GrpcServer_PI_21_01.Data
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
-        // это удалить после привязки БД
-        //private readonly static List<Organization> OrganizationsMas = new()
-        //{
-        //    new Organization(1,"МКУ «ЛесПаркХоз»", "3664069397", "770201001", "г. Сургут", "Коммерческий", "действующее"),
-        //    new Organization(2,"ГосОтлов", "9574637594","770495001", "г. Тюмень", "Государственная организация", "действующее"),
-        //    new Organization(3,"ПРОО «Общество защиты животных»", "5769384756", "720294631", "г. Тюмень", "Коммерческий", "действующее")
-        //};
-
         public static bool UpdateOrganization(Organization org)
         {
-            // на вход получаем новую организацию, нам нужно найти в БД организацию с
-            // ID = org.idOrg и апдейтнуть его по всем остальным полям
-            //var IdOrg = OrganizationsMas.FindIndex(x => x.idOrg == org.idOrg);
-            
-            //OrganizationsMas[IdOrg] = org;
             using NpgsqlCommand cmd = new($"UPDATE organization SET " +
                 $"namee = '{org.name}'," +
                 $"inn = '{org.INN}'," +
@@ -41,7 +28,6 @@ namespace GrpcServer_PI_21_01.Data
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
-
             // возвращаем true, если обновление произошло успешно,
             // вовзращаем false, если что-то пошло не так (например, контракта с таким Id не существует в БД)
             return true;
@@ -72,16 +58,31 @@ namespace GrpcServer_PI_21_01.Data
 
         public static bool RemoveOrganization(int id)
         {
-            // ~~old code~~ OrganizationsMas.Remove(organization);
-            using NpgsqlCommand cmd = new($"DELETE FROM organizataion WHERE id = {id}") { Connection = cn };
+            try
             {
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
+                // ~~old code~~ OrganizationsMas.Remove(organization);
+                using NpgsqlCommand cmd = new($"DELETE FROM organization WHERE id = {id}") { Connection = cn };
+                {
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+
+                    cn.Close();
+                }
+                // возвращаем true, если удаление произошло успешно,
+                // вовзращаем false, если что-то пошло не так (например, организации с таким Id не существует в БД)
+                return true;
             }
-            // возвращаем true, если удаление произошло успешно,
-            // вовзращаем false, если что-то пошло не так (например, организации с таким Id не существует в БД)
-            return true;
+            catch (Exception e)
+            {
+                cn.Close();
+                return false;
+                //var a = e as System.Data.Common.DbException;
+                //if ( a.SqlState == "23503" )
+                //{
+                //    return "Эта организация используется в муниципальном контракте или на нее зарегистрированы пользователи. Чтобы удалить ее, удалите все связанные записи.";
+                //}
+                //return a.Message;
+            }
         }
 
         public static List<Organization> GetOrganizations()

@@ -23,7 +23,7 @@ namespace GrpcServer_PI_21_01.Data
                 $"urgency = {app.urgencyOfExecution}," +
                 $"descr = '{app.animaldescription}'," +
                 $"client_category = '{app.applicantCategory}'," +
-                $"cityid = '{app.locality}'" +
+                $"cityid = '{app.locality.IdLocation}'" +
                 $" WHERE id = {app.number}") { Connection = cn };
             {
                 cn.Open();
@@ -48,7 +48,7 @@ namespace GrpcServer_PI_21_01.Data
             using NpgsqlCommand cmd = new($"INSERT INTO catch_request " +
                 $"(created_at, territory, habitat, urgency, descr, client_category, cityid)" +
                 $"VALUES ('{app.date}', '{app.territory}', '{app.animalHabiat}', {app.urgencyOfExecution}, " +
-                $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality}') RETURNING id")
+                $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality.IdLocation}') RETURNING id")
             { Connection = cn };
             {
                 cn.Open();

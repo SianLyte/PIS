@@ -18,13 +18,14 @@ namespace GrpcServer_PI_21_01.Data
                 NpgsqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    operationsEmpty.Add(new string[5] {
+                    operationsEmpty.Add(new string[6] {
                     reader[0].ToString(), //id
                     reader[1].ToString(), //type
                     reader[2].ToString(), //objectid
                     reader[3].ToString(), //tablename
-                    reader[4].ToString() //userid
-                                         });
+                    reader[4].ToString(), //userid
+                    reader[5].ToString() //date
+                    });
                 }
                 reader.Close();
                 cn.Close();
@@ -35,7 +36,8 @@ namespace GrpcServer_PI_21_01.Data
                         operationEmpty[1],
                         operationEmpty[2],
                         operationEmpty[3],
-                        User.GetById(int.Parse(operationEmpty[4]), cn)); 
+                        User.GetById(int.Parse(operationEmpty[4]), cn),
+                        DateTime.Parse(operationEmpty[5])); 
                     operations.Add(operation);
                 }
                 
@@ -61,8 +63,8 @@ namespace GrpcServer_PI_21_01.Data
 
 
             var cmdString = $"INSERT INTO operation " +
-                $"(actiontype, modifiedobjectid, modifiedtablename, userid) " +
-                $"VALUES ('{action}', {op.ModifiedObjectId}, '{op.ModifiedTableName}', {op.User.UserId}) RETURNING operationid";
+                $"(actiontype, modifiedobjectid, modifiedtablename, userid, date) " +
+                $"VALUES ('{action}', {op.ModifiedObjectId}, '{op.ModifiedTableName}', {op.User.UserId}, '{op.Date}') RETURNING operationid";
             using NpgsqlCommand cmd = new(cmdString) { Connection = cn };
             try
             {

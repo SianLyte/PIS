@@ -22,6 +22,15 @@ namespace GrpcServer_PI_21_01.Services
             };
             return Task.FromResult(result);
         }
+        //private static Task<OperationResult> CRUD(int modifiedId, string error)
+        //{
+        //    var result = new OperationResult()
+        //    {
+        //        ModifiedId = modifiedId,
+        //        Successful = successful,
+        //    };
+        //    return Task.FromResult(result);
+        //}
 
         public void Log(ActionType actType, string tableName, int modifId, UserReply actor)
         {

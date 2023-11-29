@@ -97,42 +97,6 @@ namespace GrpcClient_PI_21_01
             foreach (var act in actss.Where(a => a.Date >= dateTimePickerAct.Value)
                 .Select(a => ActService.ToDataArray(a)))
             {
-
-
-
-
-
-
-
-
-
-
-                // Типо так лучше работет? :)
-                // Ахахахаа, а как так вышло
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 DataGridViewActs.Rows.Add(act);
                 int b = 5;
             }
@@ -268,8 +232,12 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.Org))
                 if (dataGridViewOrg.CurrentRow != null)
                 {
-                    var org = int.Parse(dataGridViewOrg.CurrentRow.Cells[2].Value.ToString());
-                    await OrgService.RemoveOrganization(org);
+                    var org = int.Parse(dataGridViewOrg.CurrentRow.Cells[0].Value.ToString());
+                    var a = await OrgService.RemoveOrganization(org);
+                    if (!a)
+                    {
+                        MessageBox.Show("Произошла ошибка");
+                    }
                     await SetDataGridOrg();
                 }
         }
