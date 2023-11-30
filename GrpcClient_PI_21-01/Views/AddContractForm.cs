@@ -57,8 +57,18 @@ namespace GrpcClient_PI_21_01.Views
                     .Where(lc => lc.Contract.IdContract == ContId);
                 var allLocations = await LocationService.GetLocations();
 
-                // тут пытался вытянуть цены\город\контракты
-                //var costCity = await LocationService.GetLocationContract(ContId);
+                // тут пытался вытянуть цены\город\контракты firstOrDefalt
+                foreach (var loc in allLocations)
+                {
+
+                    var testCostCits = (await LocationService.GetLocationContracts())
+                        .FirstOrDefault(costCity => costCity.Contract.IdContract == ContId & costCity.Locality.IdLocation == loc.IdLocation);
+
+                    if (testCostCits != null)
+                    {
+                        _idCityToCost.Add(testCostCits.Locality.IdLocation, (int)testCostCits.Price);
+                    }
+                }
 
                 foreach (var lc in lcs)
                 {
@@ -73,6 +83,7 @@ namespace GrpcClient_PI_21_01.Views
                 {
                     dataGridView1.Rows.Add(loc.IdLocation, loc.City);
                 }
+                DataGridClearSelection();
             }
             else
                 await FullComboBox();
@@ -88,7 +99,7 @@ namespace GrpcClient_PI_21_01.Views
         public async Task FullComboBox()
         {
             var orgs = await OrgService.GetOrganizations();
-            cityCombo.DataSource = new BindingSource(await LocationService.GetLocations(), null);
+            cityCombo.DataSource = await LocationService.GetLocations();
             cityCombo.DisplayMember = "City";
             cityCombo.ValueMember = "IdLocation";
 
@@ -126,7 +137,7 @@ namespace GrpcClient_PI_21_01.Views
                     await ContractService.UpdateContract(contr);
                     this.Close();
                 }
-            else
+            else // дополнить, проверяет только текущую цену
                 if (costNumericUpDown.Value == 0)
                 MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
@@ -150,11 +161,11 @@ namespace GrpcClient_PI_21_01.Views
                     return;
                 }
 
-                foreach (var loc in  _locations)
+                foreach (var loc in _locations)
                 {
                     Location_Contract l_C = new Location_Contract(-1, loc, _idCityToCost[loc.IdLocation], contr);
                     successful = await LocationService.AddLocationContract(l_C);
-                    
+
                     if (!successful)
                     {
                         this.DialogResult = DialogResult.Cancel;
@@ -162,7 +173,7 @@ namespace GrpcClient_PI_21_01.Views
                         return;
                     }
                 }
-                
+
                 this.Close();
             }
         }
@@ -173,9 +184,13 @@ namespace GrpcClient_PI_21_01.Views
             {
                 CreateData();
             }
-            Models.Location selectedLoc = new Models.Location(int.Parse(cityCombo.SelectedValue.ToString()) - 1, cityCombo.Text);
+            Models.Location selectedLoc = (Models.Location)cityCombo.SelectedItem;
 
-            if (ConteinceSelectedId(selectedLoc)) { MessageBox.Show("Этот город выбран", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (ConteinceSelectedId(selectedLoc))
+            {
+                MessageBox.Show("Этот город выбран", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             else
             {
                 _locations.Add(selectedLoc);
@@ -186,7 +201,10 @@ namespace GrpcClient_PI_21_01.Views
 
         private bool ConteinceSelectedId(Models.Location selectedLoc)
         {
-            foreach (var item in _locations) { if (item.IdLocation == selectedLoc.IdLocation) return true; }
+            foreach (var item in _locations)
+            {
+                if (item.IdLocation == selectedLoc.IdLocation) return true;
+            }
             return false;
         }
 
@@ -230,10 +248,15 @@ namespace GrpcClient_PI_21_01.Views
                 costNumericUpDown.Value = 0;
                 dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
                 _idCityToCost.Remove(idLoc);
-                dataGridView1.ClearSelection();
-                dataGridView1.CurrentCell  = null;
+                DataGridClearSelection();
                 //MessageBox.Show(_locations.ToString());
             }
+        }
+
+        private void DataGridClearSelection()
+        {
+            dataGridView1.ClearSelection();
+            dataGridView1.CurrentCell  = null;
         }
 
         private void costNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -249,10 +272,10 @@ namespace GrpcClient_PI_21_01.Views
             }
             else
                 if (costNumericUpDown.Value != 0)
-                {
-                    MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    costNumericUpDown.Value = 0;
-                }
+            {
+                MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                costNumericUpDown.Value = 0;
+            }
         }
 
         private void dataGridView1_MouseClick(object sender, MouseEventArgs e)

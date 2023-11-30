@@ -266,6 +266,7 @@
             // 
             // costNumericUpDown
             // 
+            costNumericUpDown.DecimalPlaces=2;
             costNumericUpDown.Location=new Point(76, 204);
             costNumericUpDown.Maximum=new decimal(new int[] { 10000000, 0, 0, 0 });
             costNumericUpDown.Name="costNumericUpDown";
@@ -306,9 +307,11 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            FormBorderStyle=FormBorderStyle.FixedToolWindow;
             Icon=(Icon)resources.GetObject("$this.Icon");
             Margin=new Padding(4, 7, 4, 7);
             Name="AddContractForm";
+            StartPosition=FormStartPosition.CenterScreen;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
