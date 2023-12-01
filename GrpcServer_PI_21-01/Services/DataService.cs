@@ -437,10 +437,12 @@ namespace GrpcServer_PI_21_01.Services
         {
             return new OperationReply
             {
-               OperationId = operation.IdOperation,
-               Action = ActionType.ActionAdd, 
+                OperationId = operation.IdOperation,
+                Action = ActionType.ActionAdd, 
                 ModifiedObjectId = int.Parse(operation.modifiedObjectId), 
-                ModifiedTableName = operation.modifiedTableName, User = operation.user.ToReply()      
+                ModifiedTableName = operation.modifiedTableName,
+                User = operation.user.ToReply(),
+                Date = operation.date.ToUtc().ToTimestamp(),
             };
         }
 

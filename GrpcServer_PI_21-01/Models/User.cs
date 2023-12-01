@@ -42,6 +42,7 @@ namespace GrpcServer_PI_21_01.Models
                 Name = Name,
                 Surname = Surname,
                 Patronymic = Patronymic,
+                PrivelegeLevel = PrivelegeLevel.ToString().Replace("_", " "),
                 Organization = Organization.ToReply(),
             };
         }

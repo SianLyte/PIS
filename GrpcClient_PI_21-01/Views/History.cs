@@ -60,9 +60,9 @@ namespace GrpcClient_PI_21_01.Views
             nameTextBox.Text = thisPage.User.Name.ToString();
             patronymicTextBox.Text = thisPage.User.Patronymic.ToString();
             OrganisationTextBox.Text = thisPage.User.Organization.Name.ToString();
-            postTextBox.Text = thisPage.User.Organization.Status.ToString();
+            postTextBox.Text = thisPage.User.PrivelegeLevel.ToString();
             loginTextBox.Text = thisPage.User.Login.ToString();
-            //dateTimeTextBox.Text = thisPage.Date.ToString(); // дата Null
+            dateTimeTextBox.Text = thisPage.Date.ToDateTime().ToString();
             objectNumberTextBox.Text = thisPage.ModifiedObjectId.ToString();
             descriptionTextBox.Text = thisPage.Action.ToString();
             //                                               // и используй operation.ActionType
