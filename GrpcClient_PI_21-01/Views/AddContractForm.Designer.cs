@@ -266,7 +266,6 @@
             // 
             // costNumericUpDown
             // 
-            costNumericUpDown.DecimalPlaces=2;
             costNumericUpDown.Location=new Point(76, 204);
             costNumericUpDown.Maximum=new decimal(new int[] { 10000000, 0, 0, 0 });
             costNumericUpDown.Name="costNumericUpDown";
