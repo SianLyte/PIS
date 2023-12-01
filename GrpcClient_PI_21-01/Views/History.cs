@@ -62,7 +62,9 @@ namespace GrpcClient_PI_21_01.Views
             OrganisationTextBox.Text = thisPage.User.Organization.Name.ToString();
             postTextBox.Text = thisPage.User.Organization.Status.ToString();
             loginTextBox.Text = thisPage.User.Login.ToString();
-            //dateTimeTextBox.Text = thisPage.Date.ToString(); // дата Null
+            if (thisPage.Date != null)
+                dateTimeTextBox.Text = thisPage.Date.ToString(); // дата Null
+            
             objectNumberTextBox.Text = thisPage.ModifiedObjectId.ToString();
             descriptionTextBox.Text = thisPage.Action.ToString();
             //                                               // и используй operation.ActionType
