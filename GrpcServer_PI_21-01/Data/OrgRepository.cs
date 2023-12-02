@@ -60,7 +60,6 @@ namespace GrpcServer_PI_21_01.Data
         {
             try
             {
-                // ~~old code~~ OrganizationsMas.Remove(organization);
                 using NpgsqlCommand cmd = new($"DELETE FROM organization WHERE id = {id}") { Connection = cn };
                 {
                     cn.Open();

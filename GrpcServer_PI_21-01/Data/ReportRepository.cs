@@ -44,6 +44,7 @@ namespace GrpcServer_PI_21_01.Data
                     int localityId = loc.IdLocation;
                     summ += (double)Location_Contract.GetAnimalCost(localityId, contractId, cn).Price;
                 }
+
                 if (summ != 0)
                     reports.Add(new Report(start, finish, loc, apps.Count(), acts.Sum(x => x.Sum), summ));
             }

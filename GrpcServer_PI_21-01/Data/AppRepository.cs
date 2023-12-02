@@ -23,7 +23,8 @@ namespace GrpcServer_PI_21_01.Data
                 $"urgency = {app.urgencyOfExecution}," +
                 $"descr = '{app.animaldescription}'," +
                 $"client_category = '{app.applicantCategory}'," +
-                $"cityid = '{app.locality.IdLocation}'" +
+                $"cityid = '{app.locality.IdLocation}'," +
+                $"status = '{App.EnumToString(app.status)}'" +
                 $" WHERE id = {app.number}") { Connection = cn };
             {
                 cn.Open();
@@ -48,7 +49,8 @@ namespace GrpcServer_PI_21_01.Data
             using NpgsqlCommand cmd = new($"INSERT INTO catch_request " +
                 $"(created_at, territory, habitat, urgency, descr, client_category, cityid)" +
                 $"VALUES ('{app.date}', '{app.territory}', '{app.animalHabiat}', {app.urgencyOfExecution}, " +
-                $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality.IdLocation}') RETURNING id")
+                $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality.IdLocation}'," +
+                $" '{App.EnumToString(app.status)}') RETURNING id")
             { Connection = cn };
             {
                 cn.Open();
@@ -95,7 +97,8 @@ namespace GrpcServer_PI_21_01.Data
                     app.animalHabiat,
                     app.urgencyOfExecution,
                     app.animaldescription,
-                    app.applicantCategory
+                    app.applicantCategory,
+                    App.EnumToString(app.status)
                 };
                 apps.Add(tempApp.ToArray());
             }
@@ -117,7 +120,7 @@ namespace GrpcServer_PI_21_01.Data
                 NpgsqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    appsEmpty.Add(new string[8] {
+                    appsEmpty.Add(new string[9] {
                     reader[0].ToString(), //id
                     reader[1].ToString(), //date
                     reader[2].ToString(), //territory
@@ -126,6 +129,7 @@ namespace GrpcServer_PI_21_01.Data
                     reader[5].ToString(), //descr
                     reader[6].ToString(), //client_category
                     reader[7].ToString(), //locality
+                    reader[8].ToString() //status
                     });
                 }
                 reader.Close();
@@ -133,7 +137,7 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < appsEmpty.Count; i++)
                 {
                     var a = appsEmpty[i];
-                    App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), Location.GetById(int.Parse(a[7]),cn), a[2], a[3], a[4], a[5], a[6]);
+                    App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), Location.GetById(int.Parse(a[7]),cn), a[2], a[3], a[4], a[5], a[6], App.StringToEnum(a[8]));
                     apps.Add(app);
                 }
             }
