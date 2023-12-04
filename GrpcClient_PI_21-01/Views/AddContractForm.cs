@@ -232,11 +232,6 @@ namespace GrpcClient_PI_21_01.Views
         //        costNumericUpDown.Value = _idCityToCost[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())];
         //}
 
-        private bool CheckDataGrid()
-        {
-            if (dataGridView1.CurrentRow != null) { return true; }
-            else { return false; }
-        }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
@@ -282,6 +277,19 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (CheckDataGrid())
                 costNumericUpDown.Value = _idCityToCost[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())];
+        }
+        private bool CheckDataGrid()
+        {
+            if (dataGridView1.CurrentRow != null) 
+            { 
+                return true; 
+            }
+            
+            else 
+            {
+                MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; 
+            }
         }
     }
 }

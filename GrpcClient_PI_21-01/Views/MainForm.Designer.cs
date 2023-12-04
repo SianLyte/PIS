@@ -72,6 +72,7 @@
             Column5=new DataGridViewTextBoxColumn();
             Column6=new DataGridViewTextBoxColumn();
             tabPage4=new TabPage();
+            historuAppButton=new Button();
             filterAppDate2=new DateTimePicker();
             label6=new Label();
             filterAppDate=new DateTimePicker();
@@ -81,6 +82,7 @@
             AppDelete=new Button();
             dataGridViewApp=new DataGridView();
             tabPage5=new TabPage();
+            historyOrganisationButton=new Button();
             dataGridViewOrg=new DataGridView();
             OrgAdd=new Button();
             OrgEdit=new Button();
@@ -556,6 +558,7 @@
             // tabPage4
             // 
             tabPage4.BackColor=Color.Tan;
+            tabPage4.Controls.Add(historuAppButton);
             tabPage4.Controls.Add(filterAppDate2);
             tabPage4.Controls.Add(label6);
             tabPage4.Controls.Add(filterAppDate);
@@ -569,6 +572,20 @@
             tabPage4.Size=new Size(1374, 705);
             tabPage4.TabIndex=3;
             tabPage4.Text="Реестр заявок";
+            // 
+            // historuAppButton
+            // 
+            historuAppButton.BackColor=Color.Cornsilk;
+            historuAppButton.FlatStyle=FlatStyle.Popup;
+            historuAppButton.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            historuAppButton.ForeColor=Color.Black;
+            historuAppButton.Location=new Point(626, 651);
+            historuAppButton.Name="historuAppButton";
+            historuAppButton.Size=new Size(115, 37);
+            historuAppButton.TabIndex=22;
+            historuAppButton.Text="Истоия";
+            historuAppButton.UseVisualStyleBackColor=false;
+            historuAppButton.Click+=History_button_Click;
             // 
             // filterAppDate2
             // 
@@ -667,6 +684,7 @@
             // tabPage5
             // 
             tabPage5.BackColor=Color.Tan;
+            tabPage5.Controls.Add(historyOrganisationButton);
             tabPage5.Controls.Add(dataGridViewOrg);
             tabPage5.Controls.Add(OrgAdd);
             tabPage5.Controls.Add(OrgEdit);
@@ -676,6 +694,18 @@
             tabPage5.Size=new Size(1374, 705);
             tabPage5.TabIndex=4;
             tabPage5.Text="Реестр организаций";
+            // 
+            // historyOrganisationButton
+            // 
+            historyOrganisationButton.BackColor=Color.Cornsilk;
+            historyOrganisationButton.FlatStyle=FlatStyle.Popup;
+            historyOrganisationButton.Location=new Point(26, 652);
+            historyOrganisationButton.Name="historyOrganisationButton";
+            historyOrganisationButton.Size=new Size(132, 45);
+            historyOrganisationButton.TabIndex=18;
+            historyOrganisationButton.Text="История";
+            historyOrganisationButton.UseVisualStyleBackColor=false;
+            historyOrganisationButton.Click+=History_button_Click;
             // 
             // dataGridViewOrg
             // 
@@ -837,6 +867,8 @@
         private DataGridViewTextBoxColumn Date;
         private DataGridViewTextBoxColumn Target;
         private DataGridViewTextBoxColumn Kontracts;
+        private Button historuAppButton;
+        private Button historyOrganisationButton;
     }
 }
 
