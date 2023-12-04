@@ -97,7 +97,7 @@ namespace GrpcClient_PI_21_01.Views
             }
             var app = new App(DateTime.Parse(dateTime.Text), appNum,
                 loc, territory.Text, animalHabbiat.Text, urgency.Text,
-                descrip.Text, category.SelectedItem.ToString());
+                descrip.Text, category.SelectedItem.ToString(), AppStatus.Registered);
             var updated = await AppService.UpdateApplication(app);
             if (!updated)
             {

@@ -160,7 +160,8 @@ namespace GrpcClient_PI_21_01
                 reply.AnimalHabitat,
                 reply.UrgencyOfExecution,
                 reply.AnimalDescription,
-                reply.ApplicantCategory);
+                reply.ApplicantCategory,
+                reply.Status);
         }
 
         public static AnimalCard FromReply(this AnimalCardReply reply)

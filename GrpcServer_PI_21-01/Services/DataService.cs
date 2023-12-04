@@ -599,7 +599,8 @@ namespace GrpcServer_PI_21_01.Services
                 reply.AnimalHabitat,
                 reply.UrgencyOfExecution,
                 reply.AnimalDescription,
-                reply.ApplicantCategory);
+                reply.ApplicantCategory,
+                reply.Status);
         }
 
         public static AnimalCard FromReply(this AnimalCardReply reply)

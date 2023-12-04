@@ -8,15 +8,6 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01.Models
 {
-
-    public enum AppStatus
-    {
-        Awaiting_Registration,
-        Registered,
-        Performed,
-        Fulfilled,
-        Removed
-    }
     public class App
     {
         public DateTime date { get; set; }
@@ -31,7 +22,7 @@ namespace GrpcServer_PI_21_01.Models
 
         public static string EnumToString(AppStatus status)
         {
-            if (status == AppStatus.Awaiting_Registration)
+            if (status == AppStatus.AwaitingRegistration)
             {
                 return "awaiting registration";
             }
@@ -57,7 +48,7 @@ namespace GrpcServer_PI_21_01.Models
         {
             if (status == "awaiting registration")
             {
-                return AppStatus.Awaiting_Registration;
+                return AppStatus.AwaitingRegistration;
             }
             if (status == "registered")
             {
@@ -75,7 +66,7 @@ namespace GrpcServer_PI_21_01.Models
             {
                 return AppStatus.Removed;
             }
-            return AppStatus.Awaiting_Registration;
+            return AppStatus.AwaitingRegistration;
         }
         public App(DateTime date, int number, Location locality, string territory, string animalHabiat, string urgencyOfExecution, string animaldescription, string applicantCategory, AppStatus status)
         {

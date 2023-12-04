@@ -122,7 +122,8 @@ message ApplicationReply {
 	string urgencyOfExecution = 6;
 	string animalDescription = 7;
 	string applicantCategory = 8;
-	UserReply actor = 9;
+	AppStatus status = 9;
+	UserReply actor = 10;
 }
 
 message AnimalCardReply {
@@ -180,4 +181,12 @@ message LocationContractReply {
 	ContractReply contract = 3;
 	double price = 4;
 	UserReply actor = 5;
+}
+
+enum AppStatus {
+    Awaiting_Registration = 0;
+    Registered = 1;
+    Performed = 2;
+    Fulfilled = 3;
+    Removed = 4;
 }
