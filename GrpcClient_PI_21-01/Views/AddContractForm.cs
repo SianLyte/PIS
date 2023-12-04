@@ -122,10 +122,10 @@ namespace GrpcClient_PI_21_01.Views
             if (ContToEdit) /*CostText*/
                 if (costNumericUpDown.Value == 0)
                     MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else if (await ChekLocationAndPriceFromOtherAsync())
-                {
-                    MessageBox.Show("Такой город с такой ценой существует.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                //else if (await ChekLocationAndPriceFromOtherAsync())
+                //{
+                //    MessageBox.Show("Такой город с такой ценой существует.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
                 else
                 {
                     //var cont = new string[]
