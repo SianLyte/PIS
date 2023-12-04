@@ -119,13 +119,12 @@ namespace GrpcClient_PI_21_01.Views
 
         private async void OKcontAdd_Click(object sender, EventArgs e)
         {
-            if (ContToEdit) /*CostText*/
-                if (costNumericUpDown.Value == 0)
-                    MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //else if (await ChekLocationAndPriceFromOtherAsync())
-                //{
-                //    MessageBox.Show("Такой город с такой ценой существует.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //}
+            if (ContToEdit)
+            {
+                if (CheckValueNumericUpDown())
+                    ;
+                else if (await ChekLocationAndPriceFromOtherAsync())
+                    ;
                 else
                 {
                     //var cont = new string[]
@@ -141,45 +140,64 @@ namespace GrpcClient_PI_21_01.Views
                     await ContractService.UpdateContract(contr);
                     this.Close();
                 }
-            else // дополнить, проверяет только текущую цену
-                if (costNumericUpDown.Value == 0)
-                MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             else
-            {
-                //var id = ContractRepository.contract.Max(x => x.IdContract) + 1;
-                //var cont = new Contract(id,
-                //                    dateConclusion.Value, dateAction.Value,
-                //                    LocationCostReposiroty.locationCosts[int.Parse(cityCombo.SelectedValue.ToString()) - 1],
-                //                    int.Parse(CostText.Text),
-                //                    OrgRepository.Organizations[int.Parse(executerCombo.SelectedValue.ToString()) - 1],
-                //                    OrgRepository.Organizations[int.Parse(customerCombo.SelectedValue.ToString()) - 1]);
-                var contr = new Contract(-1,
-                    dateConclusion.Value, dateAction.Value,
-                    executerCombo.SelectedItem as Organization,
-                    customerCombo.SelectedItem as Organization);
-                var successful = await ContractService.AddContract(contr);
-                if (!successful)
-                {
-                    this.DialogResult = DialogResult.Cancel;
-                    MessageBox.Show("Internal error while adding animal card. Please try again later");
-                    return;
-                }
+            { // дополнить, проверяет только текущую цену
+                if (CheckValueNumericUpDown())
+                    ;
+                else if (await ChekLocationAndPriceFromOtherAsync())
+                    ;
 
-                foreach (var loc in _locations)
+                else
                 {
-                    Location_Contract l_C = new Location_Contract(-1, loc, _idCityToCost[loc.IdLocation], contr);
-                    successful = await LocationService.AddLocationContract(l_C);
-
+                    //var id = ContractRepository.contract.Max(x => x.IdContract) + 1;
+                    //var cont = new Contract(id,
+                    //                    dateConclusion.Value, dateAction.Value,
+                    //                    LocationCostReposiroty.locationCosts[int.Parse(cityCombo.SelectedValue.ToString()) - 1],
+                    //                    int.Parse(CostText.Text),
+                    //                    OrgRepository.Organizations[int.Parse(executerCombo.SelectedValue.ToString()) - 1],
+                    //                    OrgRepository.Organizations[int.Parse(customerCombo.SelectedValue.ToString()) - 1]);
+                    var contr = new Contract(-1,
+                        dateConclusion.Value, dateAction.Value,
+                        executerCombo.SelectedItem as Organization,
+                        customerCombo.SelectedItem as Organization);
+                    var successful = await ContractService.AddContract(contr);
                     if (!successful)
                     {
                         this.DialogResult = DialogResult.Cancel;
                         MessageBox.Show("Internal error while adding animal card. Please try again later");
                         return;
                     }
-                }
 
-                this.Close();
+                    foreach (var loc in _locations)
+                    {
+                        Location_Contract l_C = new Location_Contract(-1, loc, _idCityToCost[loc.IdLocation], contr);
+                        successful = await LocationService.AddLocationContract(l_C);
+
+                        if (!successful)
+                        {
+                            this.DialogResult = DialogResult.Cancel;
+                            MessageBox.Show("Internal error while adding animal card. Please try again later");
+                            return;
+                        }
+                    }
+
+                    this.Close();
+                }
             }
+        }
+
+        private bool CheckValueNumericUpDown()
+        {
+            var findProblem = false;
+            foreach (var cityKey in _idCityToCost)
+                if (cityKey.Value == 0)
+                {
+                    MessageBox.Show($"в {_locations.First(x => x.IdLocation == cityKey.Key).City} вы не можете указать цену 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    findProblem = false;
+                    break;
+                }
+            return findProblem;
         }
 
         private async Task<bool> ChekLocationAndPriceFromOtherAsync()
@@ -187,8 +205,13 @@ namespace GrpcClient_PI_21_01.Views
             var find = false;
             foreach (var idCityCost in _idCityToCost) 
             {
-                if ((await LocationService.GetLocationContracts()).FirstOrDefault(x => x.Price == idCityCost.Value & x.Locality.IdLocation == idCityCost.Key) != null)
-                { find = true; break; }
+                var locCon = (await LocationService.GetLocationContracts()).FirstOrDefault(x => x.Price == idCityCost.Value & x.Locality.IdLocation == idCityCost.Key);
+                if (locCon != null)
+                { 
+                    find = true; 
+                    MessageBox.Show($"Имеется контракт №{locCon.Contract.IdContract}, у которого город '{locCon.Locality.City}' имеет цену {locCon.Price}"); 
+                    break; 
+                }
             } 
             return find;
         }
