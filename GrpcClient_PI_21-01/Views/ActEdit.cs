@@ -41,7 +41,7 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (actToEdit)
             {
-                
+
                 //var index = ActRepository.acts.FindIndex(x => x.ActNumber == actId);
                 //Act act = ActRepository.acts[index];
                 var act = await ActService.GetAct(actId);
@@ -166,11 +166,11 @@ namespace GrpcClient_PI_21_01.Views
                                 return;
                             }
                         }
-                        foreach(var app in _apps)
+                        foreach (var app in _apps)
                         {
                             var appReply = (await AppService.GetApplication(app)).ToReply();
-                            successful = await ActService.AddActApp(new ActAppReply() 
-                            { 
+                            successful = await ActService.AddActApp(new ActAppReply()
+                            {
                                 App = appReply,
                                 Act = act.ToReply()
                             });
@@ -240,6 +240,33 @@ namespace GrpcClient_PI_21_01.Views
             else
             {
                 dataGridView1.Rows.Add("" + _apps[_apps.Count-1]);
+            }
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (CheckDataGrid())
+            {
+                int appId = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+                dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+                _apps.Remove(appId);
+                dataGridView1.ClearSelection();
+                dataGridView1.CurrentCell  = null;
+
+            }
+        }
+
+        private bool CheckDataGrid()
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                return true;
+            }
+
+            else
+            {
+                MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
     }

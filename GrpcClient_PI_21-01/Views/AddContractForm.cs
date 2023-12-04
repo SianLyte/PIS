@@ -119,17 +119,10 @@ namespace GrpcClient_PI_21_01.Views
 
         private async void OKcontAdd_Click(object sender, EventArgs e)
         {
-            var isGood = true;
-            if (ContToEdit)
-            {
-                foreach (var cityKey in _idCityToCost)
-                    if (cityKey.Value == 0)
-                    {
-                        MessageBox.Show($"в {_locations.First(x => x.IdLocation == cityKey.Key).City} вы не можете указать цену 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        isGood = false;
-                        break;
-                    }
-                if (isGood)
+            if (ContToEdit) /*CostText*/
+                if (costNumericUpDown.Value == 0)
+                    MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
                 {
                     //var cont = new string[]
                     //{
@@ -144,52 +137,44 @@ namespace GrpcClient_PI_21_01.Views
                     await ContractService.UpdateContract(contr);
                     this.Close();
                 }
-            }
+            else // дополнить, проверяет только текущую цену
+                if (costNumericUpDown.Value == 0)
+                MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
-            { // дополнить, проверяет только текущую цену
-                foreach (var cityKey in _idCityToCost)
-                    if (cityKey.Value == 0)
-                    {
-                        MessageBox.Show($"в {_locations.First(x => x.IdLocation == cityKey.Key).City} вы не можете указать цену 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        isGood = false;
-                        break;
-                    }
-                if (isGood)
+            {
+                //var id = ContractRepository.contract.Max(x => x.IdContract) + 1;
+                //var cont = new Contract(id,
+                //                    dateConclusion.Value, dateAction.Value,
+                //                    LocationCostReposiroty.locationCosts[int.Parse(cityCombo.SelectedValue.ToString()) - 1],
+                //                    int.Parse(CostText.Text),
+                //                    OrgRepository.Organizations[int.Parse(executerCombo.SelectedValue.ToString()) - 1],
+                //                    OrgRepository.Organizations[int.Parse(customerCombo.SelectedValue.ToString()) - 1]);
+                var contr = new Contract(-1,
+                    dateConclusion.Value, dateAction.Value,
+                    executerCombo.SelectedItem as Organization,
+                    customerCombo.SelectedItem as Organization);
+                var successful = await ContractService.AddContract(contr);
+                if (!successful)
                 {
-                    //var id = ContractRepository.contract.Max(x => x.IdContract) + 1;
-                    //var cont = new Contract(id,
-                    //                    dateConclusion.Value, dateAction.Value,
-                    //                    LocationCostReposiroty.locationCosts[int.Parse(cityCombo.SelectedValue.ToString()) - 1],
-                    //                    int.Parse(CostText.Text),
-                    //                    OrgRepository.Organizations[int.Parse(executerCombo.SelectedValue.ToString()) - 1],
-                    //                    OrgRepository.Organizations[int.Parse(customerCombo.SelectedValue.ToString()) - 1]);
-                    var contr = new Contract(-1,
-                        dateConclusion.Value, dateAction.Value,
-                        executerCombo.SelectedItem as Organization,
-                        customerCombo.SelectedItem as Organization);
-                    var successful = await ContractService.AddContract(contr);
+                    this.DialogResult = DialogResult.Cancel;
+                    MessageBox.Show("Internal error while adding animal card. Please try again later");
+                    return;
+                }
+
+                foreach (var loc in _locations)
+                {
+                    Location_Contract l_C = new Location_Contract(-1, loc, _idCityToCost[loc.IdLocation], contr);
+                    successful = await LocationService.AddLocationContract(l_C);
+
                     if (!successful)
                     {
                         this.DialogResult = DialogResult.Cancel;
                         MessageBox.Show("Internal error while adding animal card. Please try again later");
                         return;
                     }
-
-                    foreach (var loc in _locations)
-                    {
-                        Location_Contract l_C = new Location_Contract(-1, loc, (int)_idCityToCost[loc.IdLocation], contr);
-                        successful = await LocationService.AddLocationContract(l_C);
-
-                        if (!successful)
-                        {
-                            this.DialogResult = DialogResult.Cancel;
-                            MessageBox.Show("Internal error while adding animal card. Please try again later");
-                            return;
-                        }
-                    }
-
-                    this.Close();
                 }
+
+                this.Close();
             }
         }
 
@@ -241,11 +226,12 @@ namespace GrpcClient_PI_21_01.Views
             locationAdd.Show();
         }
 
-        private bool CheckDataGrid()
-        {
-            if (dataGridView1.CurrentRow != null) { return true; }
-            else { return false; }
-        }
+        //private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    if (CheckDataGrid())
+        //        costNumericUpDown.Value = _idCityToCost[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())];
+        //}
+
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
@@ -291,6 +277,19 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (CheckDataGrid())
                 costNumericUpDown.Value = _idCityToCost[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())];
+        }
+        private bool CheckDataGrid()
+        {
+            if (dataGridView1.CurrentRow != null) 
+            { 
+                return true; 
+            }
+            
+            else 
+            {
+                MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; 
+            }
         }
     }
 }

@@ -21,6 +21,7 @@ namespace GrpcClient_PI_21_01
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
+            // Только сейчас заметил, что это?!
             filterAppDate2.Value = DateTime.Now;
             filterAppDate2.ValueChanged += filterAppDate_ValueChanged;
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
@@ -48,7 +49,7 @@ namespace GrpcClient_PI_21_01
             tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
 
             historyButton.Click += History_button_Click;
-            History_button.Click += History_button_Click;
+            //History_button.Click += History_button_Click;
 
             Task.Run(Setup);
         }
@@ -366,7 +367,7 @@ namespace GrpcClient_PI_21_01
         private async void History_button_Click(object sender, EventArgs e)
         {
             if (await CheckPrivilege(NameMdels.History))
-                {
+            {
                 var data = await OperationService.GetOperations();
                 var historyForm = new HistoryForm(data);
 
