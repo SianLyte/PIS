@@ -122,6 +122,10 @@ namespace GrpcClient_PI_21_01.Views
             if (ContToEdit) /*CostText*/
                 if (costNumericUpDown.Value == 0)
                     MessageBox.Show("Вы не можете указать цену раной 0.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else if (await ChekLocationAndPriceFromOtherAsync())
+                {
+                    MessageBox.Show("Такой город с такой ценой существует.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 else
                 {
                     //var cont = new string[]
@@ -176,6 +180,17 @@ namespace GrpcClient_PI_21_01.Views
 
                 this.Close();
             }
+        }
+
+        private async Task<bool> ChekLocationAndPriceFromOtherAsync()
+        {
+            var find = false;
+            foreach (var idCityCost in _idCityToCost) 
+            {
+                if ((await LocationService.GetLocationContracts()).FirstOrDefault(x => x.Price == idCityCost.Value & x.Locality.IdLocation == idCityCost.Key) != null)
+                { find = true; break; }
+            } 
+            return find;
         }
 
         private void button1_Click(object sender, EventArgs e)

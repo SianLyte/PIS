@@ -30,444 +30,435 @@ namespace GrpcClient_PI_21_01.Views
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimalCardForm));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxFurType = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.numericUpDownSize = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBoxKategori = new System.Windows.Forms.TextBox();
-            this.textBoxPoroda = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxTail = new System.Windows.Forms.TextBox();
-            this.textBoxEars = new System.Windows.Forms.TextBox();
-            this.textBoxColor = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.Cancel = new System.Windows.Forms.Button();
-            this.OK = new System.Windows.Forms.Button();
-            this.God = new System.Windows.Forms.Label();
-            this.textBoxIdentificationLabel = new System.Windows.Forms.TextBox();
-            this.textBoxSpicialSigns = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.comboBoxLocation = new System.Windows.Forms.ComboBox();
-            this.GITLER = new System.Windows.Forms.Label();
-            this.male = new System.Windows.Forms.RadioButton();
-            this.female = new System.Windows.Forms.RadioButton();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSize)).BeginInit();
-            this.SuspendLayout();
+            groupBox1=new GroupBox();
+            female=new RadioButton();
+            male=new RadioButton();
+            textBoxFurType=new TextBox();
+            label12=new Label();
+            numericUpDownSize=new NumericUpDown();
+            label11=new Label();
+            label7=new Label();
+            label9=new Label();
+            label10=new Label();
+            textBoxKategori=new TextBox();
+            textBoxPoroda=new TextBox();
+            label3=new Label();
+            label2=new Label();
+            label1=new Label();
+            textBoxTail=new TextBox();
+            textBoxEars=new TextBox();
+            textBoxColor=new TextBox();
+            label4=new Label();
+            label5=new Label();
+            label6=new Label();
+            label8=new Label();
+            Cancel=new Button();
+            OK=new Button();
+            God=new Label();
+            textBoxIdentificationLabel=new TextBox();
+            textBoxSpicialSigns=new TextBox();
+            label13=new Label();
+            comboBoxLocation=new ComboBox();
+            GITLER=new Label();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSize).BeginInit();
+            SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.female);
-            this.groupBox1.Controls.Add(this.male);
-            this.groupBox1.Controls.Add(this.textBoxFurType);
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.numericUpDownSize);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.textBoxKategori);
-            this.groupBox1.Controls.Add(this.textBoxPoroda);
-            this.groupBox1.Location = new System.Drawing.Point(26, 110);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.groupBox1.Size = new System.Drawing.Size(433, 252);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Характеристики животного";
-            // 
-            // textBoxFurType
-            // 
-            this.textBoxFurType.BackColor = System.Drawing.Color.OldLace;
-            this.textBoxFurType.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxFurType.Location = new System.Drawing.Point(204, 206);
-            this.textBoxFurType.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxFurType.Name = "textBoxFurType";
-            this.textBoxFurType.Size = new System.Drawing.Size(212, 30);
-            this.textBoxFurType.TabIndex = 20;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 206);
-            this.label12.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(89, 30);
-            this.label12.TabIndex = 19;
-            this.label12.Text = "Шерсть";
-            // 
-            // numericUpDownSize
-            // 
-            this.numericUpDownSize.BackColor = System.Drawing.Color.OldLace;
-            this.numericUpDownSize.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDownSize.Cursor = System.Windows.Forms.Cursors.PanNW;
-            this.numericUpDownSize.Location = new System.Drawing.Point(204, 161);
-            this.numericUpDownSize.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.numericUpDownSize.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownSize.Name = "numericUpDownSize";
-            this.numericUpDownSize.Size = new System.Drawing.Size(217, 33);
-            this.numericUpDownSize.TabIndex = 18;
-            this.numericUpDownSize.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 164);
-            this.label11.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(78, 30);
-            this.label11.TabIndex = 17;
-            this.label11.Text = "Размер";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 128);
-            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(76, 30);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "Порода";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 86);
-            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(46, 30);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Пол";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 44);
-            this.label10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(113, 30);
-            this.label10.TabIndex = 13;
-            this.label10.Text = "Категория";
-            // 
-            // textBoxKategori
-            // 
-            this.textBoxKategori.BackColor = System.Drawing.Color.OldLace;
-            this.textBoxKategori.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxKategori.Location = new System.Drawing.Point(202, 35);
-            this.textBoxKategori.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxKategori.Name = "textBoxKategori";
-            this.textBoxKategori.ReadOnly = true;
-            this.textBoxKategori.Size = new System.Drawing.Size(212, 30);
-            this.textBoxKategori.TabIndex = 10;
-            // 
-            // textBoxPoroda
-            // 
-            this.textBoxPoroda.BackColor = System.Drawing.Color.OldLace;
-            this.textBoxPoroda.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxPoroda.Location = new System.Drawing.Point(202, 119);
-            this.textBoxPoroda.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxPoroda.Name = "textBoxPoroda";
-            this.textBoxPoroda.Size = new System.Drawing.Size(212, 30);
-            this.textBoxPoroda.TabIndex = 12;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(472, 238);
-            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 30);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Хвост";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(472, 196);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 30);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Уши";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(472, 154);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 30);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Окрас";
-            // 
-            // textBoxTail
-            // 
-            this.textBoxTail.BackColor = System.Drawing.Color.OldLace;
-            this.textBoxTail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxTail.Location = new System.Drawing.Point(679, 229);
-            this.textBoxTail.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxTail.Name = "textBoxTail";
-            this.textBoxTail.Size = new System.Drawing.Size(212, 30);
-            this.textBoxTail.TabIndex = 2;
-            // 
-            // textBoxEars
-            // 
-            this.textBoxEars.BackColor = System.Drawing.Color.OldLace;
-            this.textBoxEars.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxEars.Location = new System.Drawing.Point(679, 187);
-            this.textBoxEars.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxEars.Name = "textBoxEars";
-            this.textBoxEars.Size = new System.Drawing.Size(212, 30);
-            this.textBoxEars.TabIndex = 1;
-            // 
-            // textBoxColor
-            // 
-            this.textBoxColor.BackColor = System.Drawing.Color.OldLace;
-            this.textBoxColor.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxColor.Location = new System.Drawing.Point(679, 145);
-            this.textBoxColor.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxColor.Name = "textBoxColor";
-            this.textBoxColor.Size = new System.Drawing.Size(212, 30);
-            this.textBoxColor.TabIndex = 0;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 380);
-            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(171, 30);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Особые приметы";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(22, 422);
-            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(266, 30);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Идентификационная метка";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(22, 467);
-            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(182, 30);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "Населённый пункт";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(22, 538);
-            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(276, 30);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Материалы с места отлова";
-            this.label8.Visible = false;
-            // 
-            // Cancel
-            // 
-            this.Cancel.BackColor = System.Drawing.Color.Cornsilk;
-            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Cancel.Location = new System.Drawing.Point(786, 589);
-            this.Cancel.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(162, 61);
-            this.Cancel.TabIndex = 7;
-            this.Cancel.Text = "Cancel";
-            this.Cancel.UseVisualStyleBackColor = false;
-            // 
-            // OK
-            // 
-            this.OK.BackColor = System.Drawing.Color.Cornsilk;
-            this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.OK.Location = new System.Drawing.Point(610, 587);
-            this.OK.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.OK.Name = "OK";
-            this.OK.Size = new System.Drawing.Size(162, 61);
-            this.OK.TabIndex = 8;
-            this.OK.Text = "OK";
-            this.OK.UseVisualStyleBackColor = false;
-            this.OK.Click += new System.EventHandler(this.OK_Click);
-            // 
-            // God
-            // 
-            this.God.AutoSize = true;
-            this.God.Location = new System.Drawing.Point(26, 24);
-            this.God.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.God.Name = "God";
-            this.God.Size = new System.Drawing.Size(60, 30);
-            this.God.TabIndex = 9;
-            this.God.Text = "Акт:";
-            // 
-            // textBoxIdentificationLabel
-            // 
-            this.textBoxIdentificationLabel.BackColor = System.Drawing.Color.OldLace;
-            this.textBoxIdentificationLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxIdentificationLabel.Location = new System.Drawing.Point(251, 422);
-            this.textBoxIdentificationLabel.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxIdentificationLabel.Name = "textBoxIdentificationLabel";
-            this.textBoxIdentificationLabel.Size = new System.Drawing.Size(212, 30);
-            this.textBoxIdentificationLabel.TabIndex = 11;
-            // 
-            // textBoxSpicialSigns
-            // 
-            this.textBoxSpicialSigns.BackColor = System.Drawing.Color.OldLace;
-            this.textBoxSpicialSigns.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxSpicialSigns.Location = new System.Drawing.Point(251, 380);
-            this.textBoxSpicialSigns.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxSpicialSigns.Name = "textBoxSpicialSigns";
-            this.textBoxSpicialSigns.Size = new System.Drawing.Size(212, 30);
-            this.textBoxSpicialSigns.TabIndex = 10;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(46, 766);
-            this.label13.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(0, 30);
-            this.label13.TabIndex = 12;
-            // 
-            // comboBoxLocation
-            // 
-            this.comboBoxLocation.BackColor = System.Drawing.Color.OldLace;
-            this.comboBoxLocation.Cursor = System.Windows.Forms.Cursors.PanNW;
-            this.comboBoxLocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxLocation.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.comboBoxLocation.FormattingEnabled = true;
-            this.comboBoxLocation.Location = new System.Drawing.Point(251, 464);
-            this.comboBoxLocation.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.comboBoxLocation.Name = "comboBoxLocation";
-            this.comboBoxLocation.Size = new System.Drawing.Size(212, 38);
-            this.comboBoxLocation.TabIndex = 13;
-            // 
-            // GITLER
-            // 
-            this.GITLER.AutoSize = true;
-            this.GITLER.Location = new System.Drawing.Point(367, 21);
-            this.GITLER.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.GITLER.Name = "GITLER";
-            this.GITLER.Size = new System.Drawing.Size(56, 30);
-            this.GITLER.TabIndex = 14;
-            this.GITLER.Text = "Кот";
-            // 
-            // male
-            // 
-            this.male.AutoSize = true;
-            this.male.Checked = true;
-            this.male.Location = new System.Drawing.Point(204, 75);
-            this.male.Name = "male";
-            this.male.Size = new System.Drawing.Size(51, 34);
-            this.male.TabIndex = 21;
-            this.male.TabStop = true;
-            this.male.Text = "М";
-            this.male.UseVisualStyleBackColor = true;
+            groupBox1.Controls.Add(female);
+            groupBox1.Controls.Add(male);
+            groupBox1.Controls.Add(textBoxFurType);
+            groupBox1.Controls.Add(label12);
+            groupBox1.Controls.Add(numericUpDownSize);
+            groupBox1.Controls.Add(label11);
+            groupBox1.Controls.Add(label7);
+            groupBox1.Controls.Add(label9);
+            groupBox1.Controls.Add(label10);
+            groupBox1.Controls.Add(textBoxKategori);
+            groupBox1.Controls.Add(textBoxPoroda);
+            groupBox1.Location=new Point(26, 110);
+            groupBox1.Margin=new Padding(6, 9, 6, 9);
+            groupBox1.Name="groupBox1";
+            groupBox1.Padding=new Padding(6, 9, 6, 9);
+            groupBox1.Size=new Size(433, 252);
+            groupBox1.TabIndex=0;
+            groupBox1.TabStop=false;
+            groupBox1.Text="Характеристики животного";
             // 
             // female
             // 
-            this.female.AutoSize = true;
-            this.female.Location = new System.Drawing.Point(273, 75);
-            this.female.Name = "female";
-            this.female.Size = new System.Drawing.Size(51, 34);
-            this.female.TabIndex = 22;
-            this.female.Text = "Ж";
-            this.female.UseVisualStyleBackColor = true;
+            female.AutoSize=true;
+            female.Location=new Point(273, 75);
+            female.Name="female";
+            female.Size=new Size(51, 34);
+            female.TabIndex=22;
+            female.Text="Ж";
+            female.UseVisualStyleBackColor=true;
+            // 
+            // male
+            // 
+            male.AutoSize=true;
+            male.Checked=true;
+            male.Location=new Point(204, 75);
+            male.Name="male";
+            male.Size=new Size(51, 34);
+            male.TabIndex=21;
+            male.TabStop=true;
+            male.Text="М";
+            male.UseVisualStyleBackColor=true;
+            // 
+            // textBoxFurType
+            // 
+            textBoxFurType.BackColor=Color.OldLace;
+            textBoxFurType.BorderStyle=BorderStyle.None;
+            textBoxFurType.Location=new Point(204, 206);
+            textBoxFurType.Margin=new Padding(6, 9, 6, 9);
+            textBoxFurType.Name="textBoxFurType";
+            textBoxFurType.Size=new Size(212, 30);
+            textBoxFurType.TabIndex=20;
+            // 
+            // label12
+            // 
+            label12.AutoSize=true;
+            label12.Location=new Point(12, 206);
+            label12.Margin=new Padding(6, 0, 6, 0);
+            label12.Name="label12";
+            label12.Size=new Size(89, 30);
+            label12.TabIndex=19;
+            label12.Text="Шерсть";
+            // 
+            // numericUpDownSize
+            // 
+            numericUpDownSize.BackColor=Color.OldLace;
+            numericUpDownSize.BorderStyle=BorderStyle.None;
+            numericUpDownSize.Cursor=Cursors.PanNW;
+            numericUpDownSize.Location=new Point(204, 161);
+            numericUpDownSize.Margin=new Padding(6, 9, 6, 9);
+            numericUpDownSize.Minimum=new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownSize.Name="numericUpDownSize";
+            numericUpDownSize.Size=new Size(217, 33);
+            numericUpDownSize.TabIndex=18;
+            numericUpDownSize.Value=new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // label11
+            // 
+            label11.AutoSize=true;
+            label11.Location=new Point(12, 164);
+            label11.Margin=new Padding(6, 0, 6, 0);
+            label11.Name="label11";
+            label11.Size=new Size(78, 30);
+            label11.TabIndex=17;
+            label11.Text="Размер";
+            // 
+            // label7
+            // 
+            label7.AutoSize=true;
+            label7.Location=new Point(12, 128);
+            label7.Margin=new Padding(6, 0, 6, 0);
+            label7.Name="label7";
+            label7.Size=new Size(76, 30);
+            label7.TabIndex=15;
+            label7.Text="Порода";
+            // 
+            // label9
+            // 
+            label9.AutoSize=true;
+            label9.Location=new Point(12, 86);
+            label9.Margin=new Padding(6, 0, 6, 0);
+            label9.Name="label9";
+            label9.Size=new Size(46, 30);
+            label9.TabIndex=14;
+            label9.Text="Пол";
+            // 
+            // label10
+            // 
+            label10.AutoSize=true;
+            label10.Location=new Point(12, 44);
+            label10.Margin=new Padding(6, 0, 6, 0);
+            label10.Name="label10";
+            label10.Size=new Size(113, 30);
+            label10.TabIndex=13;
+            label10.Text="Категория";
+            // 
+            // textBoxKategori
+            // 
+            textBoxKategori.BackColor=Color.OldLace;
+            textBoxKategori.BorderStyle=BorderStyle.None;
+            textBoxKategori.Location=new Point(202, 35);
+            textBoxKategori.Margin=new Padding(6, 9, 6, 9);
+            textBoxKategori.Name="textBoxKategori";
+            textBoxKategori.ReadOnly=true;
+            textBoxKategori.Size=new Size(212, 30);
+            textBoxKategori.TabIndex=10;
+            // 
+            // textBoxPoroda
+            // 
+            textBoxPoroda.BackColor=Color.OldLace;
+            textBoxPoroda.BorderStyle=BorderStyle.None;
+            textBoxPoroda.Location=new Point(202, 119);
+            textBoxPoroda.Margin=new Padding(6, 9, 6, 9);
+            textBoxPoroda.Name="textBoxPoroda";
+            textBoxPoroda.Size=new Size(212, 30);
+            textBoxPoroda.TabIndex=12;
+            // 
+            // label3
+            // 
+            label3.AutoSize=true;
+            label3.Location=new Point(472, 238);
+            label3.Margin=new Padding(6, 0, 6, 0);
+            label3.Name="label3";
+            label3.Size=new Size(70, 30);
+            label3.TabIndex=5;
+            label3.Text="Хвост";
+            // 
+            // label2
+            // 
+            label2.AutoSize=true;
+            label2.Location=new Point(472, 196);
+            label2.Margin=new Padding(6, 0, 6, 0);
+            label2.Name="label2";
+            label2.Size=new Size(50, 30);
+            label2.TabIndex=4;
+            label2.Text="Уши";
+            // 
+            // label1
+            // 
+            label1.AutoSize=true;
+            label1.Location=new Point(472, 154);
+            label1.Margin=new Padding(6, 0, 6, 0);
+            label1.Name="label1";
+            label1.Size=new Size(68, 30);
+            label1.TabIndex=3;
+            label1.Text="Окрас";
+            // 
+            // textBoxTail
+            // 
+            textBoxTail.BackColor=Color.OldLace;
+            textBoxTail.BorderStyle=BorderStyle.None;
+            textBoxTail.Location=new Point(679, 229);
+            textBoxTail.Margin=new Padding(6, 9, 6, 9);
+            textBoxTail.Name="textBoxTail";
+            textBoxTail.Size=new Size(212, 30);
+            textBoxTail.TabIndex=2;
+            // 
+            // textBoxEars
+            // 
+            textBoxEars.BackColor=Color.OldLace;
+            textBoxEars.BorderStyle=BorderStyle.None;
+            textBoxEars.Location=new Point(679, 187);
+            textBoxEars.Margin=new Padding(6, 9, 6, 9);
+            textBoxEars.Name="textBoxEars";
+            textBoxEars.Size=new Size(212, 30);
+            textBoxEars.TabIndex=1;
+            // 
+            // textBoxColor
+            // 
+            textBoxColor.BackColor=Color.OldLace;
+            textBoxColor.BorderStyle=BorderStyle.None;
+            textBoxColor.Location=new Point(679, 145);
+            textBoxColor.Margin=new Padding(6, 9, 6, 9);
+            textBoxColor.Name="textBoxColor";
+            textBoxColor.Size=new Size(212, 30);
+            textBoxColor.TabIndex=0;
+            // 
+            // label4
+            // 
+            label4.AutoSize=true;
+            label4.Location=new Point(22, 380);
+            label4.Margin=new Padding(6, 0, 6, 0);
+            label4.Name="label4";
+            label4.Size=new Size(171, 30);
+            label4.TabIndex=2;
+            label4.Text="Особые приметы";
+            // 
+            // label5
+            // 
+            label5.AutoSize=true;
+            label5.Location=new Point(22, 422);
+            label5.Margin=new Padding(6, 0, 6, 0);
+            label5.Name="label5";
+            label5.Size=new Size(266, 30);
+            label5.TabIndex=3;
+            label5.Text="Идентификационная метка";
+            // 
+            // label6
+            // 
+            label6.AutoSize=true;
+            label6.Location=new Point(22, 467);
+            label6.Margin=new Padding(6, 0, 6, 0);
+            label6.Name="label6";
+            label6.Size=new Size(182, 30);
+            label6.TabIndex=4;
+            label6.Text="Населённый пункт";
+            // 
+            // label8
+            // 
+            label8.AutoSize=true;
+            label8.Location=new Point(22, 538);
+            label8.Margin=new Padding(6, 0, 6, 0);
+            label8.Name="label8";
+            label8.Size=new Size(276, 30);
+            label8.TabIndex=6;
+            label8.Text="Материалы с места отлова";
+            label8.Visible=false;
+            // 
+            // Cancel
+            // 
+            Cancel.BackColor=Color.Cornsilk;
+            Cancel.DialogResult=DialogResult.Cancel;
+            Cancel.FlatStyle=FlatStyle.Popup;
+            Cancel.Location=new Point(786, 589);
+            Cancel.Margin=new Padding(6, 9, 6, 9);
+            Cancel.Name="Cancel";
+            Cancel.Size=new Size(162, 61);
+            Cancel.TabIndex=7;
+            Cancel.Text="Cancel";
+            Cancel.UseVisualStyleBackColor=false;
+            // 
+            // OK
+            // 
+            OK.BackColor=Color.Cornsilk;
+            OK.FlatStyle=FlatStyle.Popup;
+            OK.Location=new Point(610, 587);
+            OK.Margin=new Padding(6, 9, 6, 9);
+            OK.Name="OK";
+            OK.Size=new Size(162, 61);
+            OK.TabIndex=8;
+            OK.Text="OK";
+            OK.UseVisualStyleBackColor=false;
+            OK.Click+=OK_Click;
+            // 
+            // God
+            // 
+            God.AutoSize=true;
+            God.Location=new Point(26, 24);
+            God.Margin=new Padding(6, 0, 6, 0);
+            God.Name="God";
+            God.Size=new Size(60, 30);
+            God.TabIndex=9;
+            God.Text="Акт:";
+            // 
+            // textBoxIdentificationLabel
+            // 
+            textBoxIdentificationLabel.BackColor=Color.OldLace;
+            textBoxIdentificationLabel.BorderStyle=BorderStyle.None;
+            textBoxIdentificationLabel.Location=new Point(299, 422);
+            textBoxIdentificationLabel.Margin=new Padding(6, 9, 6, 9);
+            textBoxIdentificationLabel.Name="textBoxIdentificationLabel";
+            textBoxIdentificationLabel.Size=new Size(212, 30);
+            textBoxIdentificationLabel.TabIndex=11;
+            // 
+            // textBoxSpicialSigns
+            // 
+            textBoxSpicialSigns.BackColor=Color.OldLace;
+            textBoxSpicialSigns.BorderStyle=BorderStyle.None;
+            textBoxSpicialSigns.Location=new Point(299, 380);
+            textBoxSpicialSigns.Margin=new Padding(6, 9, 6, 9);
+            textBoxSpicialSigns.Name="textBoxSpicialSigns";
+            textBoxSpicialSigns.Size=new Size(212, 30);
+            textBoxSpicialSigns.TabIndex=10;
+            // 
+            // label13
+            // 
+            label13.AutoSize=true;
+            label13.Location=new Point(46, 766);
+            label13.Margin=new Padding(6, 0, 6, 0);
+            label13.Name="label13";
+            label13.Size=new Size(0, 30);
+            label13.TabIndex=12;
+            // 
+            // comboBoxLocation
+            // 
+            comboBoxLocation.BackColor=Color.OldLace;
+            comboBoxLocation.Cursor=Cursors.PanNW;
+            comboBoxLocation.DropDownStyle=ComboBoxStyle.DropDownList;
+            comboBoxLocation.FlatStyle=FlatStyle.Popup;
+            comboBoxLocation.FormattingEnabled=true;
+            comboBoxLocation.Location=new Point(299, 464);
+            comboBoxLocation.Margin=new Padding(6, 9, 6, 9);
+            comboBoxLocation.Name="comboBoxLocation";
+            comboBoxLocation.Size=new Size(212, 38);
+            comboBoxLocation.TabIndex=13;
+            // 
+            // GITLER
+            // 
+            GITLER.AutoSize=true;
+            GITLER.Location=new Point(367, 21);
+            GITLER.Margin=new Padding(6, 0, 6, 0);
+            GITLER.Name="GITLER";
+            GITLER.Size=new Size(56, 30);
+            GITLER.TabIndex=14;
+            GITLER.Text="Кот";
             // 
             // AnimalCardForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 30F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Wheat;
-            this.ClientSize = new System.Drawing.Size(959, 657);
-            this.Controls.Add(this.GITLER);
-            this.Controls.Add(this.comboBoxLocation);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.textBoxIdentificationLabel);
-            this.Controls.Add(this.textBoxSpicialSigns);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.God);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.OK);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.Cancel);
-            this.Controls.Add(this.textBoxTail);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBoxEars);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBoxColor);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.groupBox1);
-            this.Font = new System.Drawing.Font("Segoe Print", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.Name = "AnimalCardForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Карточка животного";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSize)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions=new SizeF(11F, 30F);
+            AutoScaleMode=AutoScaleMode.Font;
+            BackColor=Color.Wheat;
+            ClientSize=new Size(959, 657);
+            Controls.Add(GITLER);
+            Controls.Add(comboBoxLocation);
+            Controls.Add(label13);
+            Controls.Add(textBoxIdentificationLabel);
+            Controls.Add(textBoxSpicialSigns);
+            Controls.Add(label3);
+            Controls.Add(God);
+            Controls.Add(label2);
+            Controls.Add(OK);
+            Controls.Add(label1);
+            Controls.Add(label4);
+            Controls.Add(Cancel);
+            Controls.Add(textBoxTail);
+            Controls.Add(label8);
+            Controls.Add(textBoxEars);
+            Controls.Add(label6);
+            Controls.Add(textBoxColor);
+            Controls.Add(label5);
+            Controls.Add(groupBox1);
+            Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            Icon=(Icon)resources.GetObject("$this.Icon");
+            Margin=new Padding(6, 9, 6, 9);
+            Name="AnimalCardForm";
+            StartPosition=FormStartPosition.CenterScreen;
+            Text="Карточка животного";
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSize).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxTail;
-        private System.Windows.Forms.TextBox textBoxEars;
-        private System.Windows.Forms.TextBox textBoxColor;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button Cancel;
-        private System.Windows.Forms.Button OK;
-        private System.Windows.Forms.Label God;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBoxKategori;
-        private System.Windows.Forms.TextBox textBoxPoroda;
-        private System.Windows.Forms.TextBox textBoxFurType;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.NumericUpDown numericUpDownSize;
-        private System.Windows.Forms.TextBox textBoxIdentificationLabel;
-        private System.Windows.Forms.TextBox textBoxSpicialSigns;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox comboBoxLocation;
-        private System.Windows.Forms.Label GITLER;
+        private GroupBox groupBox1;
+        private Label label3;
+        private Label label2;
+        private Label label1;
+        private TextBox textBoxTail;
+        private TextBox textBoxEars;
+        private TextBox textBoxColor;
+        private Label label4;
+        private Label label5;
+        private Label label6;
+        private Label label8;
+        private Button Cancel;
+        private Button OK;
+        private Label God;
+        private Label label11;
+        private Label label7;
+        private Label label9;
+        private Label label10;
+        private TextBox textBoxKategori;
+        private TextBox textBoxPoroda;
+        private TextBox textBoxFurType;
+        private Label label12;
+        private NumericUpDown numericUpDownSize;
+        private TextBox textBoxIdentificationLabel;
+        private TextBox textBoxSpicialSigns;
+        private Label label13;
+        private ComboBox comboBoxLocation;
+        private Label GITLER;
         private RadioButton female;
         private RadioButton male;
     }

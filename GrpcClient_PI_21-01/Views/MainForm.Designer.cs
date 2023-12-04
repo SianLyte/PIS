@@ -506,6 +506,7 @@
             ContractTable.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             ContractTable.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column5, Column6 });
             ContractTable.Location=new Point(18, 12);
+            ContractTable.MultiSelect=false;
             ContractTable.Name="ContractTable";
             ContractTable.ReadOnly=true;
             ContractTable.RowHeadersVisible=false;
@@ -670,14 +671,19 @@
             // 
             dataGridViewApp.AllowUserToAddRows=false;
             dataGridViewApp.AllowUserToDeleteRows=false;
+            dataGridViewApp.AllowUserToResizeColumns=false;
+            dataGridViewApp.AllowUserToResizeRows=false;
+            dataGridViewApp.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewApp.BackgroundColor=Color.OldLace;
             dataGridViewApp.CellBorderStyle=DataGridViewCellBorderStyle.RaisedVertical;
             dataGridViewApp.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewApp.Location=new Point(18, 14);
+            dataGridViewApp.MultiSelect=false;
             dataGridViewApp.Name="dataGridViewApp";
             dataGridViewApp.ReadOnly=true;
             dataGridViewApp.RowHeadersWidth=62;
             dataGridViewApp.RowTemplate.Height=28;
+            dataGridViewApp.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
             dataGridViewApp.Size=new Size(1331, 587);
             dataGridViewApp.TabIndex=0;
             // 
@@ -711,13 +717,18 @@
             // 
             dataGridViewOrg.AllowUserToAddRows=false;
             dataGridViewOrg.AllowUserToDeleteRows=false;
+            dataGridViewOrg.AllowUserToResizeColumns=false;
+            dataGridViewOrg.AllowUserToResizeRows=false;
+            dataGridViewOrg.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewOrg.BackgroundColor=Color.OldLace;
             dataGridViewOrg.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewOrg.Location=new Point(26, 3);
+            dataGridViewOrg.MultiSelect=false;
             dataGridViewOrg.Name="dataGridViewOrg";
             dataGridViewOrg.ReadOnly=true;
             dataGridViewOrg.RowHeadersWidth=62;
             dataGridViewOrg.RowTemplate.Height=28;
+            dataGridViewOrg.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
             dataGridViewOrg.Size=new Size(1331, 607);
             dataGridViewOrg.TabIndex=17;
             // 
