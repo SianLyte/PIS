@@ -123,8 +123,8 @@ namespace GrpcClient_PI_21_01.Views
             {
                 if (CheckValueNumericUpDown())
                     ;
-                else if (await ChekLocationAndPriceFromOtherAsync())
-                    ;
+                //else if (await ChekLocationAndPriceFromOtherAsync())
+                //    ;
                 else
                 {
                     //var cont = new string[]
@@ -145,8 +145,8 @@ namespace GrpcClient_PI_21_01.Views
             { // дополнить, проверяет только текущую цену
                 if (CheckValueNumericUpDown())
                     ;
-                else if (await ChekLocationAndPriceFromOtherAsync())
-                    ;
+                //else if (await ChekLocationAndPriceFromOtherAsync())
+                //    ;
 
                 else
                 {
