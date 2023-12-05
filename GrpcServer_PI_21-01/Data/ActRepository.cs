@@ -80,12 +80,14 @@ namespace GrpcServer_PI_21_01.Data
             return true;
         }
 
-        public static List<Act> GetActs()
+        public static List<Act> GetActs(Filter<Act>? filter = null)
         {
+            var query = filter is not null ? filter.GenerateSQL() : "SELECT * FROM act";
+
             List<Act> acts = new();
             List<string?[]> actsEmpty = new();
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM act") {Connection = cn})
+            using (NpgsqlCommand cmd = new(query) {Connection = cn})
             {
                 cn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();

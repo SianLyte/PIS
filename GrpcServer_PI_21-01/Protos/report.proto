@@ -7,10 +7,10 @@ import "google/protobuf/timestamp.proto";
 package report;
 
 service ReportGenerator {
-	rpc Generate_ActCaptureReport (FilterReply) returns (stream Report_ActCapture);
+	rpc Generate_ActCaptureReport (Report_FilterReply) returns (stream Report_ActCapture);
 }
 
-message FilterReply {
+message Report_FilterReply {
 	data.UserReply actor = 1;
 	google.protobuf.Timestamp beginDate = 2;
 	google.protobuf.Timestamp endDate = 3;

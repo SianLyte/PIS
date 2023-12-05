@@ -90,7 +90,7 @@ namespace GrpcClient_PI_21_01
                 ContractService.GetContractFromReply(reply.Contract));
         }
 
-        public static async Task<List<Act>> GetActs()
+        public static async Task<List<Act>> GetActs(Filter<Act>? filter = null)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);

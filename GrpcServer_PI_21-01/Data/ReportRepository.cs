@@ -46,7 +46,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
 
                 if (summ != 0)
-                    reports.Add(new Report(start, finish, loc, apps.Count(), acts.Sum(x => x.Sum), summ));
+                    reports.Add(new Report(start, finish, loc, apps.Count(), acts.Sum(x => x.Sum), summ, ReportStatus.Revision, DateTime.Now));
             }
             return reports;
         }

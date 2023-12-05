@@ -65,16 +65,19 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(contr.ToReply());
         }
 
-        public override Task<ContractsReply> GetContracts(UserReply user, ServerCallContext context)
+        public override Task<ContractsReply> GetContracts(DataRequest request, ServerCallContext context)
         {
-            IEnumerable<ContractReply> contracts;
-            if (user.PrivelegeLevel == "Admin")
-                contracts = ContractRepository.GetContracts()
-                    .Select(c => c.ToReply());
-            else contracts = ContractRepository.GetContracts()
-                    .Where(c => c.Costumer.idOrg == user.Organization.IdOrganization
-                    || c.Executer.idOrg == user.Organization.IdOrganization)
-                    .Select(c => c.ToReply());
+            //IEnumerable<ContractReply> contracts;
+            //if (user.PrivelegeLevel == "Admin")
+            //    contracts = ContractRepository.GetContracts()
+            //        .Select(c => c.ToReply());
+            //else contracts = ContractRepository.GetContracts()
+            //        .Where(c => c.Costumer.idOrg == user.Organization.IdOrganization
+            //        || c.Executer.idOrg == user.Organization.IdOrganization)
+            //        .Select(c => c.ToReply());
+            // gotta add filters for different roles, will need to add 'OR' function to Filter.cs
+            var requestFilter = new Filter<Contract>(request.Filter);
+            var contracts = ContractRepository.GetContracts(requestFilter);
 
             var reply = new ContractsReply();
             reply.Contracts.AddRange(contracts);
@@ -165,11 +168,11 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(org.ToReply());
         }
 
-        public override async Task GetOrganizations(UserReply user,
+        public override async Task GetOrganizations(DataRequest request,
             IServerStreamWriter<OrganizationReply> responseStream,
             ServerCallContext context)
         {
-            foreach (var org in OrgRepository.GetOrganizations())
+            foreach (var org in OrgRepository.GetOrganizations(request.Filter))
                 await responseStream.WriteAsync(org.ToReply());
         }
 
@@ -208,13 +211,15 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(act.ToReply());
         }
 
-        public override async Task GetActs(UserReply user,
+        public override async Task GetActs(DataRequest request,
             IServerStreamWriter<ActReply> responseStream,
             ServerCallContext ctx)
         {
-            foreach (var act in ActRepository.GetActs()
-                .Where(a => user.PrivelegeLevel == "Admin"
-                || a.Organization.idOrg == user.Organization.IdOrganization))
+            var filter = new Filter<Act>(request.Filter);
+            filter.AddFilter(act => act.Organization, request.Actor.Organization.IdOrganization.ToString());
+            foreach (var act in ActRepository.GetActs(filter))
+                //.Where(a => user.PrivelegeLevel == "Admin"
+                //|| a.Organization.idOrg == user.Organization.IdOrganization))
                 await responseStream.WriteAsync(act.ToReply());
         }
 
@@ -253,11 +258,12 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(app.ToReply());
         }
 
-        public override async Task GetApps(UserReply user,
+        public override async Task GetApps(DataRequest request,
             IServerStreamWriter<ApplicationReply> responseStream,
             ServerCallContext ctx)
         {
-            foreach (var app in AppRepository.GetApplications())
+            var filter = new Filter<App>(request.Filter);
+            foreach (var app in AppRepository.GetApplications(filter))
                 // у заявки на отлов нет организации, хотя по суди должна быть
                 // пока не меняю, но потом из этого могут вырасти проблемы
                 // например, сейчас не могу отфильтровать заявки для пользователя

@@ -8,16 +8,24 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01
 {
+    [FilterableModel("act")]
     public class Act
     {
         public int ActNumber { get; set; }
+        [Filterable("dog_count")]
         public int CountDogs { get; set; }
+        [Filterable("cat_count")]
         public int CountCats { get; set; }
+        [Filterable("dog_count+cat_count")]
         public int Sum { get; private set; }
+        [Filterable("organization_id")]
         public Organization Organization { get; set; }
+        [Filterable("created_at")]
         public DateTime Date { get; set; }
+        [Filterable("goal")]
         public string TargetCapture { get; set; }
         //public App Application { get; set; }
+        [Filterable("municipal_contract_id")]
         public Contract Contracts { get; set; }
 
         public Act(int actNumber, int countDogs, int countCats, Organization organization, DateTime date, string targetCapture, Contract contracts)
@@ -35,8 +43,14 @@ namespace GrpcServer_PI_21_01
 
         public override bool Equals(object? obj)
         {
-            Act obj1 = obj as Act;
-            return this.ActNumber == obj1.ActNumber;
+            if (obj is Act act)
+                return act.ActNumber == ActNumber;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return ActNumber.GetHashCode();
         }
 
         public static Act GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)

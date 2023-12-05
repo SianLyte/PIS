@@ -12,7 +12,7 @@ namespace GrpcServer_PI_21_01.Services
             _logger = logger;
         }
 
-        public override async Task Generate_ActCaptureReport(FilterReply request,
+        public override async Task Generate_ActCaptureReport(Report_FilterReply request,
             IServerStreamWriter<Report_ActCapture> responseStream,
             ServerCallContext context)
         {

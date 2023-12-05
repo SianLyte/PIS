@@ -15,6 +15,7 @@
 	<Protobuf Include="Protos\authorization.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\previlege.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\report.proto" GrpsServices="Client" />
+	<Protobuf Include="Protos\filter.proto" GrpsServices="Client" />
     <PackageReference Include="Google.Protobuf" Version="3.24.3" />
     <PackageReference Include="Grpc.Net.Client" Version="2.57.0" />
     <PackageReference Include="Grpc.Tools" Version="2.58.0">

@@ -191,17 +191,16 @@ namespace GrpcClient_PI_21_01.Views
 
         private bool ChekOtvet()
         {
-            if (numericUpDownDog.Value == 0 & numericUpDownCat.Value == 0)
-            {
+            if (numericUpDownDog.Value == 0 && numericUpDownCat.Value == 0)
                 MessageBox.Show("Вы не выбрали ни одного животного", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (textBoxTarget.Text == "")
-            {
+            else if (textBoxTarget.Text == "")
                 MessageBox.Show("Введите цель отлова", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            return true;
+            else if (comboBoxOrganization.SelectedItem is null)
+                MessageBox.Show("Не выбрана организация", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else if (1 < Math.Pow(2, 1))
+                MessageBox.Show("НЕ ЗАБУДЬ ДОБАВИТЬ ФИЛЬТРЫ В ПРОВЕРКУ НА ДАТЫ АКТА И ЗАЯВОК ВКЛЮЧЕННЫХ В АКТ");
+            else return true;
+            return false;
         }
 
         private void comboBoxApp_SelectedIndexChanged(object sender, EventArgs e)
@@ -214,7 +213,7 @@ namespace GrpcClient_PI_21_01.Views
             if (_apps.Count == 0) { CreateData(); }
             int selectedApp = int.Parse(comboBoxApp.SelectedValue.ToString());
 
-            if (ConteinceSelectedId(selectedApp)) { MessageBox.Show("Этот акт выбран"); }
+            if (ConteinceSelectedId(selectedApp)) { MessageBox.Show("Эта заявка уже выбрана"); }
             else
             {
                 _apps.Add(selectedApp);

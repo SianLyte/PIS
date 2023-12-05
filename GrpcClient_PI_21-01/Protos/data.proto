@@ -9,7 +9,7 @@ package data;
 
 service DataRetriever {
   rpc GetContract (IdRequest) returns (ContractReply);
-  rpc GetContracts (UserReply) returns (ContractsReply);
+  rpc GetContracts (DataRequest) returns (ContractsReply);
   rpc AddContract (ContractReply) returns (OperationResult);
   rpc RemoveContract (IdRequest) returns (OperationResult);
   rpc UpdateContract (ContractReply) returns (OperationResult);
@@ -21,19 +21,19 @@ service DataRetriever {
   rpc UpdateLocation (LocationReply) returns (OperationResult);
 
   rpc GetOrganization (IdRequest) returns (OrganizationReply);
-  rpc GetOrganizations (UserReply) returns (stream OrganizationReply);
+  rpc GetOrganizations (DataRequest) returns (stream OrganizationReply);
   rpc AddOrganization (OrganizationReply) returns (OperationResult);
   rpc RemoveOrganization (IdRequest) returns (OperationResult);
   rpc UpdateOrganization (OrganizationReply) returns (OperationResult);
 
   rpc GetAct (IdRequest) returns (ActReply);
-  rpc GetActs (UserReply) returns (stream ActReply);
+  rpc GetActs (DataRequest) returns (stream ActReply);
   rpc AddAct (ActReply) returns (OperationResult);
   rpc RemoveAct (IdRequest) returns (OperationResult);
   rpc UpdateAct (ActReply) returns (OperationResult);
 
   rpc GetApp (IdRequest) returns (ApplicationReply);
-  rpc GetApps (UserReply) returns (stream ApplicationReply);
+  rpc GetApps (DataRequest) returns (stream ApplicationReply);
   rpc AddApp (ApplicationReply) returns (OperationResult);
   rpc RemoveApp (IdRequest) returns (OperationResult);
   rpc UpdateApp (ApplicationReply) returns (OperationResult);
@@ -62,6 +62,11 @@ service DataRetriever {
 message IdRequest {
   int32 id = 1;
   UserReply actor = 2;
+}
+
+message DataRequest {
+	UserReply actor = 1;
+	FilterReply filter = 2;
 }
 
 message OperationResult {
@@ -189,4 +194,8 @@ enum AppStatus {
     Performed = 2;
     Fulfilled = 3;
     Removed = 4;
+}
+
+message FilterReply {
+	repeated string equations = 1;
 }
