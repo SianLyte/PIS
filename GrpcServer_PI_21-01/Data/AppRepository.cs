@@ -82,36 +82,36 @@ namespace GrpcServer_PI_21_01.Data
             // вовзращаем false, если что-то пошло не так (например, организации с таким Id не существует в БД)
         }
 
-        public static List<string[]> FilterByDate(string filter, string filter2)
-        {
-            List<App> AppsFilter = GetApplications().Where(x => x.date >= DateTime.Parse(filter) && x.date <= DateTime.Parse(filter2)).ToList();
-            List<string[]> apps = new();
-            foreach (App app in AppsFilter)
-            {
-                var tempApp = new List<string>
-                {
-                    app.date.ToString(),
-                    app.number.ToString(),
-                    app.locality.City,
-                    app.territory,
-                    app.animalHabiat,
-                    app.urgencyOfExecution,
-                    app.animaldescription,
-                    app.applicantCategory,
-                    App.EnumToString(app.status)
-                };
-                apps.Add(tempApp.ToArray());
-            }
-            return apps;
-        }
+        //public static List<string[]> FilterByDate(string filter, string filter2)
+        //{
+        //    List<App> AppsFilter = GetApplications().Where(x => x.date >= DateTime.Parse(filter) && x.date <= DateTime.Parse(filter2)).ToList();
+        //    List<string[]> apps = new();
+        //    foreach (App app in AppsFilter)
+        //    {
+        //        var tempApp = new List<string>
+        //        {
+        //            app.date.ToString(),
+        //            app.number.ToString(),
+        //            app.locality.City,
+        //            app.territory,
+        //            app.animalHabiat,
+        //            app.urgencyOfExecution,
+        //            app.animaldescription,
+        //            app.applicantCategory,
+        //            App.EnumToString(app.status)
+        //        };
+        //        apps.Add(tempApp.ToArray());
+        //    }
+        //    return apps;
+        //}
 
-        public static List<App> GetApplications(Filter<App> filter = null)
+        public static List<App> GetApplications(DataRequest request)
         {
             // должно забирать все заявки из БД (желательно сделать кэширование:
             // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов
             // этого метода в течение 5 секунд возвращает кэшированное значение)
             // P.S. кэширование должно очищаться после выполнения других действий CRUD кроме Read
-            var query = filter is not null ? filter.GenerateSQL() : "SELECT * FROM catch_request";
+            var query = new Filter<App>(request.Filter).GenerateSQL(request.Page);
 
             List<App> apps = new();
             List<string?[]> appsEmpty = new();
@@ -144,6 +144,11 @@ namespace GrpcServer_PI_21_01.Data
                 }
             }
             return apps;
+        }
+
+        public static App? GetApplication(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -56,11 +56,10 @@ namespace GrpcServer_PI_21_01.Services
         #region Contracts
         public override Task<ContractReply> GetContract(IdRequest request, ServerCallContext context)
         {
-            Contract? contr = ContractRepository.GetContracts()
-                .FirstOrDefault(c => c.IdContract == request.Id);
+            Contract? contr = ContractRepository.GetContract(request.Id);
 
             if (contr is null)
-                throw new RpcException(new Status(StatusCode.NotFound, "Item does not exist"));
+                throw new RpcException(new Status(StatusCode.NotFound, $"Contract with ID {request.Id} does not exist"));
 
             return Task.FromResult(contr.ToReply());
         }
@@ -75,10 +74,10 @@ namespace GrpcServer_PI_21_01.Services
             //        .Where(c => c.Costumer.idOrg == user.Organization.IdOrganization
             //        || c.Executer.idOrg == user.Organization.IdOrganization)
             //        .Select(c => c.ToReply());
+            var filter = new Filter<Contract>();
             // gotta add filters for different roles, will need to add 'OR' function to Filter.cs
-            var requestFilter = new Filter<Contract>(request.Filter);
-            
-            var contracts = ContractRepository.GetContracts(requestFilter).Select(c => c.ToReply());
+            filter.ExtendReply(request.Filter);
+            var contracts = ContractRepository.GetContracts(request).Select(c => c.ToReply());
 
             var reply = new ContractsReply();
             reply.Contracts.AddRange(contracts);
@@ -161,7 +160,7 @@ namespace GrpcServer_PI_21_01.Services
         #region Organizations
         public override Task<OrganizationReply> GetOrganization(IdRequest request, ServerCallContext context)
         {
-            Organization? org = OrgRepository.GetOrganizations().FirstOrDefault(o => o.idOrg == request.Id);
+            Organization? org = OrgRepository.GetOrganization(request.Id);
 
             if (org is null)
                 throw new RpcException(new Status(StatusCode.NotFound, "Item does not exist"));
@@ -174,7 +173,7 @@ namespace GrpcServer_PI_21_01.Services
             ServerCallContext context)
         {
             var filter = new Filter<Organization>(request.Filter);
-            foreach (var org in OrgRepository.GetOrganizations(filter))
+            foreach (var org in OrgRepository.GetOrganizations(request))
                 await responseStream.WriteAsync(org.ToReply());
         }
 
@@ -204,8 +203,7 @@ namespace GrpcServer_PI_21_01.Services
         #region Acts
         public override Task<ActReply> GetAct(IdRequest request, ServerCallContext context)
         {
-            Act? act = ActRepository.GetActs()
-                .FirstOrDefault(a => a.ActNumber == request.Id);
+            Act? act = ActRepository.GetAct(request.Id);
 
             if (act is null)
                 throw new RpcException(new Status(StatusCode.NotFound, "Item does not exist"));
@@ -218,8 +216,10 @@ namespace GrpcServer_PI_21_01.Services
             ServerCallContext ctx)
         {
             var filter = new Filter<Act>(request.Filter);
-            filter.AddFilter(act => act.Organization, request.Actor.Organization.IdOrganization.ToString());
-            foreach (var act in ActRepository.GetActs(filter))
+            if (request.Actor.PrivelegeLevel != "Admin")
+                filter.AddFilter(act => act.Organization, request.Actor.Organization.IdOrganization.ToString());
+            filter.ExtendReply(request.Filter);
+            foreach (var act in ActRepository.GetActs(request))
                 //.Where(a => user.PrivelegeLevel == "Admin"
                 //|| a.Organization.idOrg == user.Organization.IdOrganization))
                 await responseStream.WriteAsync(act.ToReply());
@@ -251,8 +251,7 @@ namespace GrpcServer_PI_21_01.Services
         #region Applications
         public override Task<ApplicationReply> GetApp(IdRequest request, ServerCallContext ctx)
         {
-            App? app = AppRepository.GetApplications()
-                .FirstOrDefault(a => a.number == request.Id);
+            App? app = AppRepository.GetApplication(request.Id);
 
             if (app is null)
                 throw new RpcException(new Status(StatusCode.NotFound, "Item does not exist"));
@@ -265,7 +264,7 @@ namespace GrpcServer_PI_21_01.Services
             ServerCallContext ctx)
         {
             var filter = new Filter<App>(request.Filter);
-            foreach (var app in AppRepository.GetApplications(filter))
+            foreach (var app in AppRepository.GetApplications(request))
                 // у заявки на отлов нет организации, хотя по суди должна быть
                 // пока не меняю, но потом из этого могут вырасти проблемы
                 // например, сейчас не могу отфильтровать заявки для пользователя

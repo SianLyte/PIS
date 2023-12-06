@@ -80,9 +80,9 @@ namespace GrpcServer_PI_21_01.Data
             return true;
         }
 
-        public static List<Act> GetActs(Filter<Act>? filter = null)
+        public static List<Act> GetActs(DataRequest request)
         {
-            var query = filter is not null ? filter.GenerateSQL() : "SELECT * FROM act";
+            var query = new Filter<Act>(request.Filter).GenerateSQL(request.Page);
 
             List<Act> acts = new();
             List<string?[]> actsEmpty = new();
@@ -222,6 +222,11 @@ namespace GrpcServer_PI_21_01.Data
             // возвращаем true, если удаление произошло успешно,
             // вовзращаем false, если что-то пошло не так (например, акт отлова с таким Id не существует в БД)
             return true;
+        }
+
+        public static Act? GetAct(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

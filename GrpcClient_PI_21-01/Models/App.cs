@@ -7,23 +7,30 @@ using System.Threading.Tasks;
 
 namespace GrpcClient_PI_21_01.Models
 {
-    //public enum AppStatus
-    //{
-    //    Awaiting_Registration,
-    //    Registered,
-    //    Performed,
-    //    Fulfilled,
-    //    Removed
-    //}
+    [FilterableModel]
     public class App
     {
+
+        [Filterable("created_at")]
         public DateTime date { get; set; }
         public int number { get; set; }
-        public Models.Location locality { get; set; }
+
+        [Filterable("cityid")]
+        public Location locality { get; set; }
+
+        [Filterable("territory")]
         public string territory { get; set; }
+
+        [Filterable("habitat")]
         public string animalHabiat { get; set; }
+
+        [Filterable("urgency")]
         public string urgencyOfExecution { get; set; }
+
+        [Filterable("descr")]
         public string animaldescription { get; set; }
+
+        [Filterable("client_category")]
         public string applicantCategory { get; set; }
         public AppStatus status { get; set; }
 

@@ -74,11 +74,11 @@ namespace GrpcClient_PI_21_01.Controllers
             };
         }
 
-        public static async Task<List<Organization>> GetOrganizations()
+        public static async Task<List<Organization>> GetOrganizations(int page = -1, Filter<Organization>? filter = null)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var serverData = client.GetOrganizations(UserService.CurrentUser?.ToReply());
+            var serverData = client.GetOrganizations(UserService.GenerateDataRequest(page, filter));
             var responseStream = serverData.ResponseStream;
             var orgs = new List<Organization>();
             await foreach (var response in responseStream.ReadAllAsync())

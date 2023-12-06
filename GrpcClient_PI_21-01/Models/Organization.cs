@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 
 namespace GrpcClient_PI_21_01.Models
 {
+    [FilterableModel]
     public class Organization
     {
         public int idOrg { get; set; }
+
+        [Filterable("namee")]
         public string name { get; set; }
+
+        [Filterable("inn")]
         public string INN { get; set; }
+
+        [Filterable("kpp")]
         public string KPP { get; set; }
+
+        [Filterable("registration")]
         public string registrationAdress { get; set; }
+
+        [Filterable("typee")]
         public string type { get; set; }
         public string status { get; set; }
 

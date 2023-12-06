@@ -64,6 +64,8 @@ namespace GrpcServer_PI_21_01.Models
             if (filterType.HasFlag(FilterType.Equals))
                 @operator += "=";
 
+            if (!decimal.TryParse(desiredValue, out decimal _)) desiredValue = $"'{desiredValue}'";
+
             var equation = $"{filterable.ColumnName} {@operator} {desiredValue}";
             equations.Add(equation);
         }
@@ -85,14 +87,15 @@ namespace GrpcServer_PI_21_01.Models
             };
         }
 
-        public string GenerateSQL(int page)
+        public string GenerateSQL(int page = -1)
         {
             var startQuery = $"SELECT * FROM {tableName}";
             if (equations.Count > 0)
-                startQuery += $" WHERE {string.Join(" and ", equations)};";
-            else startQuery += ";";
-            
-            return startQuery + $"limit 10 offset {page*10}";
+                startQuery += $" WHERE {string.Join(" and ", equations)}";
+
+            if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
+
+            return startQuery + ";";
         }
 
         private bool CheckCorrectFormat()
@@ -100,8 +103,10 @@ namespace GrpcServer_PI_21_01.Models
             return equations.All(eq =>
             {
                 var items = eq.Split(' ');
-                return items.Length == 3 && items[1].Length <= 2
-                    && (items[1].Length == 1 || items[1][1] == '=');
+                if (items.Length == 3)
+                    return items[1].Length <= 2 && (items[1].Length == 1 || items[1][1] == '=');
+                var possibleDate = string.Join(" ", items.Skip(2)).Replace("'", "");
+                return DateTime.TryParse(possibleDate, out DateTime _);
             });
         }
 
@@ -111,15 +116,21 @@ namespace GrpcServer_PI_21_01.Models
             equations.AddRange(filter.equations);
         }
 
+        public void ExtendReply(FilterReply reply)
+        {
+            if (reply is not null)
+                reply.Equations.AddRange(equations);
+        }
+
         private readonly List<string> equations;
         private readonly string tableName;
     }
 
-    public enum FilterType
+    [Flags] public enum FilterType
     {
-        Equals,
-        GreaterThan,
-        LesserThan,
+        Equals = 1,
+        GreaterThan = 2,
+        LesserThan = 4,
     }
 
     [AttributeUsage(AttributeTargets.Property)]

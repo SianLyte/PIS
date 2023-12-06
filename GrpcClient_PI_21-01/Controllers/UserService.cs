@@ -25,5 +25,15 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             CurrentUser = user;
         }
+
+        public static DataRequest GenerateDataRequest<T>(int page = -1, Filter<T>? filter = null) // -1 will return unpaged query
+        {
+            return new DataRequest()
+            {
+                Actor = UserService.CurrentUser?.ToReply(),
+                Filter = filter?.ToReply(),
+                Page = page,
+            };
+        }
     }
 }

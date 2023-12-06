@@ -12,7 +12,7 @@ namespace GrpcClient_PI_21_01.Controllers
             var reports = new List<Report_ActCapture>();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new ReportGenerator.ReportGeneratorClient(channel);
-            var serverData = client.Generate_ActCaptureReport(new FilterReply()
+            var serverData = client.Generate_ActCaptureReport(new Report_FilterReply()
             {
                 Actor = UserService.CurrentUser?.ToReply(),
                 BeginDate = start.ToUtc().ToTimestamp(),

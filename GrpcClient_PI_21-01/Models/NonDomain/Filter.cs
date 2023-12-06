@@ -53,6 +53,8 @@ namespace GrpcClient_PI_21_01.Models
             if (filterType.HasFlag(FilterType.Equals))
                 @operator += "=";
 
+            if (!decimal.TryParse(desiredValue, out decimal _)) desiredValue = $"'{desiredValue}'";
+
             var equation = $"{filterable.ColumnName} {@operator} {desiredValue}";
             equations.Add(equation);
         }
@@ -60,6 +62,11 @@ namespace GrpcClient_PI_21_01.Models
         public void RemoveFilterAt(int index)
         {
             equations.RemoveAt(index);
+        }
+
+        public void Clear()
+        {
+            equations.Clear();
         }
 
         private static PropertyInfo GetProperty<TValue>(Expression<Func<T, TValue>> selector)
@@ -74,14 +81,21 @@ namespace GrpcClient_PI_21_01.Models
             };
         }
 
+        public FilterReply ToReply()
+        {
+            var reply = new FilterReply();
+            reply.Equations.AddRange(equations);
+            return reply;
+        }
+
         private readonly List<string> equations;
     }
 
-    public enum FilterType
+    [Flags] public enum FilterType
     {
-        Equals,
-        GreaterThan,
-        LesserThan,
+        Equals = 1,
+        GreaterThan = 2,
+        LesserThan = 4,
     }
 
     [AttributeUsage(AttributeTargets.Property)]

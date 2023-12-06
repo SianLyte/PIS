@@ -90,17 +90,19 @@ namespace GrpcClient_PI_21_01
                 ContractService.GetContractFromReply(reply.Contract));
         }
 
-        public static async Task<List<Act>> GetActs(Filter<Act>? filter = null)
+        public static async Task<List<Act>> GetActs(int page = -1, Filter<Act>? filter = null)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var serverData = client.GetActs(UserService.CurrentUser?.ToReply());
+            var serverData = client.GetActs(UserService.GenerateDataRequest(page, filter));
             var responseStream = serverData.ResponseStream;
             var acts = new List<Act>();
+            var tasks = new List<Task>();
             await foreach (var response in responseStream.ReadAllAsync())
             {
-                acts.Add(GetActFromReply(response));
+                tasks.Add(Task.Run(() => acts.Add(GetActFromReply(response))));
             }
+            await Task.WhenAll(tasks);
             return acts;
         }
 

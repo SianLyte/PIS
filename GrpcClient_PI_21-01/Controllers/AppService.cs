@@ -84,11 +84,11 @@ namespace GrpcClient_PI_21_01.Controllers
             };
         }
 
-        public static async Task<List<App>> GetApplications()
+        public static async Task<List<App>> GetApplications(int page = -1, Filter<App>? filter = null)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var serverData = client.GetApps(UserService.CurrentUser?.ToReply());
+            var serverData = client.GetApps(UserService.GenerateDataRequest(page, filter));
             var responseStream = serverData.ResponseStream;
             var apps = new List<App>();
             await foreach (var response in responseStream.ReadAllAsync())

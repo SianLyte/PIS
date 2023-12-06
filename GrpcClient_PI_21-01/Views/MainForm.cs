@@ -2,6 +2,7 @@
 //using GrpcClient_PI_21_01.Data;
 using GrpcClient_PI_21_01.Models;
 using GrpcClient_PI_21_01.Views;
+using GrpcClient_PI_21_01.Views.Filters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -55,6 +56,10 @@ namespace GrpcClient_PI_21_01
         }
         readonly DataSet dsApplication = new();
         readonly DataSet dsOrganization = new();
+        readonly Filter<Act> actFilter = new();
+        readonly Filter<App> appFilter = new();
+        readonly Filter<Organization> orgFilter = new();
+        readonly Filter<Contract> contrFilter = new();
 
         private async Task Setup()
         {
@@ -89,19 +94,24 @@ namespace GrpcClient_PI_21_01
 
 
         /* -----------------------------------ACT----------------------------------------------------- */
-
+        
+        private readonly SemaphoreSlim actGridSemaphore = new(1, 1);
         private async Task SetDataGridAct()
         {
-            DataGridViewActs.Rows.Clear();
-            var actss = await ActService.GetActs();
-            //var actss = ActService.ShowAct(dateTimePickerAct.Value.ToString());
-            foreach (var act in actss.Where(a => a.Date >= dateTimePickerAct.Value)
-                .Select(a => ActService.ToDataArray(a)))
+            await actGridSemaphore.WaitAsync();
+            try
             {
-                DataGridViewActs.Rows.Add(act);
-                int b = 5;
+                int page = -1; // to do: сделать пагинацию
+
+                DataGridViewActs.Rows.Clear();
+                var acts = await ActService.GetActs(page, actFilter);
+                foreach (var act in acts.Select(a => ActService.ToDataArray(a)))
+                    DataGridViewActs.Rows.Add(act);
             }
-            int a = 5;
+            finally
+            {
+                actGridSemaphore.Release();
+            }
         }
 
         private async void AddButton_Click(object sender, EventArgs e)
@@ -164,6 +174,8 @@ namespace GrpcClient_PI_21_01
 
         private async Task SetDataGridOrg()
         {
+            int page = -1; // сделать пагинацию
+
             /*-Organization-------------------------*/
             dsOrganization.Tables.Clear();
             dsOrganization.Tables.Add("Score");
@@ -174,8 +186,7 @@ namespace GrpcClient_PI_21_01
             dsOrganization.Tables[0].Columns.Add("Адрес регистрации");
             dsOrganization.Tables[0].Columns.Add("Тип");
             dsOrganization.Tables[0].Columns.Add("Статус");
-            var orgs = await OrgService.GetOrganizations();
-            //var orgs = OrgService.ShowOrganizations();
+            var orgs = await OrgService.GetOrganizations(page, orgFilter);
             foreach (var org in orgs.Select(o => OrgService.ToDataArray(o)))
             {
                 dsOrganization.Tables[0].Rows.Add(org);
@@ -185,6 +196,8 @@ namespace GrpcClient_PI_21_01
 
         private async Task SetDataGridApp()
         {
+            int page = -1; // to do: сделать пагинацию
+
             /*-Applications-------------------------*/
             dsApplication.Tables.Clear();
             dsApplication.Tables.Add("Score");
@@ -196,7 +209,7 @@ namespace GrpcClient_PI_21_01
             dsApplication.Tables[0].Columns.Add("Срочность исполнения");
             dsApplication.Tables[0].Columns.Add("Описание животного");
             dsApplication.Tables[0].Columns.Add("Категория заявителя");
-            var apps = await AppService.GetApplications();
+            var apps = await AppService.GetApplications(page, appFilter);
             foreach (var app in apps.Select(a => AppService.ToDataArray(a)))
             {
                 dsApplication.Tables[0].Rows.Add(app);
@@ -277,11 +290,11 @@ namespace GrpcClient_PI_21_01
 
         private async Task ShowContract()
         {
+            int page = -1; // to do: сделать пагинацию
+
             ContractTable.Rows.Clear();
-            var cont = await ContractService.GetContracts();
-            //var contract = ContractService.ShowContract(dateTimePicker3.Value.ToString(), dateTimePicker1.Value.ToString());
-            foreach (var i in cont.Where(c => c.DateConclusion >= dateTimePicker3.Value)
-                .Select(c => ContractService.ToDataArray(c)))
+            var cont = await ContractService.GetContracts(page, contrFilter);
+            foreach (var i in cont.Select(c => ContractService.ToDataArray(c)))
             {
                 ContractTable.Rows.Add(i);
             }
@@ -382,6 +395,12 @@ namespace GrpcClient_PI_21_01
                 historyForm.ShowDialog();
             }
             else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций");
+        }
+
+        private void OpenActFilters(object sender, EventArgs e)
+        {
+            var form = new ActFilter(actFilter, SetDataGridAct);
+            form.Show();
         }
     }
 }

@@ -71,13 +71,13 @@ namespace GrpcServer_PI_21_01.Data
             return true;
         }
 
-        public static List<Contract> GetContracts(Filter<Contract> filter = null)
+        public static List<Contract> GetContracts(DataRequest request)
         {
             // должно забирать все контракты из БД (желательно сделать кэширование:
             // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов
             // этого метода в течение 5 секунд возвращает кэшированное значение)
             // P.S. кэширование должно очищаться после выполнения других действий CRUD кроме Read
-            var query = filter is not null ? filter.GenerateSQL() : "SELECT * FROM municipal_contract";
+            var query = new Filter<Contract>(request.Filter).GenerateSQL(request.Page);
 
             List<Contract> contracts = new();
             List<string?[]> contractsEmpty = new();
@@ -111,6 +111,11 @@ namespace GrpcServer_PI_21_01.Data
                 }
             }
             return contracts;
+        }
+
+        public static Contract? GetContract(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

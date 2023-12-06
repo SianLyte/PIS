@@ -84,11 +84,16 @@ namespace GrpcClient_PI_21_01.Controllers
                 );
         }
 
-        public static async Task<IEnumerable<Contract>> GetContracts()
+        /// <summary>
+        /// Returns all contracts from the server.
+        /// </summary>
+        /// <param name="page">Desired page to be returned. If -1, will return all results.</param>
+        /// <returns><see cref="IEnumerable{T}"/> where T : <see cref="Contract"/></returns>
+        public static async Task<IEnumerable<Contract>> GetContracts(int page = -1, Filter<Contract>? filter = null)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var contracts = await client.GetContractsAsync(UserService.CurrentUser?.ToReply());
+            var contracts = await client.GetContractsAsync(UserService.GenerateDataRequest(page, filter));
             return contracts.Contracts.Select(cr => GetContractFromReply(cr));
         } 
         

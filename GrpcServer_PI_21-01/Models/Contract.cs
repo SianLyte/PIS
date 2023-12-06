@@ -10,7 +10,6 @@ namespace GrpcServer_PI_21_01.Models
     [FilterableModel("municipal_contract")]
     public class Contract
     {
-
         public int IdContract { get; set; }
 
         [Filterable("created_at")]
