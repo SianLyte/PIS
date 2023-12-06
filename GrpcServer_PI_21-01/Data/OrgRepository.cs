@@ -84,7 +84,7 @@ namespace GrpcServer_PI_21_01.Data
             }
         }
 
-        public static List<Organization> GetOrganizations()
+        public static List<Organization> GetOrganizations(Filter<Organization> filter = null)
         {
             // должно забирать все организации из БД (желательно сделать кэширование:
             // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов
@@ -92,8 +92,10 @@ namespace GrpcServer_PI_21_01.Data
             // P.S. кэширование должно очищаться после выполнения других действий CRUD кроме Read
             List<Organization> orgs = new();
             List<string?[]> orgsEmpty = new();
+            var query = filter is not null ? filter.GenerateSQL() : "SELECT * FROM organization";
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM organization") { Connection = cn })
+
+            using (NpgsqlCommand cmd = new(query) { Connection = cn })
             {
                 cn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();

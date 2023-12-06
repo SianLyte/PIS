@@ -85,14 +85,14 @@ namespace GrpcServer_PI_21_01.Models
             };
         }
 
-        public string GenerateSQL()
+        public string GenerateSQL(int page)
         {
             var startQuery = $"SELECT * FROM {tableName}";
             if (equations.Count > 0)
                 startQuery += $" WHERE {string.Join(" and ", equations)};";
             else startQuery += ";";
             
-            return startQuery;
+            return startQuery + $"limit 10 offset {page*10}";
         }
 
         private bool CheckCorrectFormat()

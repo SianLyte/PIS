@@ -12,26 +12,6 @@ namespace GrpcServer_PI_21_01.Data
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
-        // это удалить когда БД будет привязана
-        //private readonly static List<Contract> contract = new()
-        //{ 
-        //    new Contract(1, DateTime.Parse("02.05.2023"), DateTime.Parse("05.05.2023"), 
-        //        LocationRepository.GetLocations()[0], 1000, 
-        //        OrgRepository.GetOrganizations()[0], OrgRepository.GetOrganizations()[1]),
-
-        //    new Contract(2, DateTime.Parse("12.05.2023"), DateTime.Parse("15.05.2023"), 
-        //        LocationRepository.GetLocations()[1], 2000, 
-        //        OrgRepository.GetOrganizations()[1], OrgRepository.GetOrganizations()[1]),
-
-        //    new Contract(3, DateTime.Parse("10.05.2023"), DateTime.Parse("19.05.2023"),
-        //        LocationRepository.GetLocations()[2], 1550,
-        //        OrgRepository.GetOrganizations()[2], OrgRepository.GetOrganizations()[1]),
-
-        //    new Contract(4, DateTime.Parse("20.05.2023"), DateTime.Parse("25.05.2023"),
-        //        LocationRepository.GetLocations()[0], 2100,
-        //        OrgRepository.GetOrganizations()[0], OrgRepository.GetOrganizations()[2])
-        //};
-
         public static bool UpdateContract(Contract c)
         {
             using NpgsqlCommand cmd = new($"UPDATE municipal_contract SET " +
@@ -91,16 +71,18 @@ namespace GrpcServer_PI_21_01.Data
             return true;
         }
 
-        public static List<Contract> GetContracts()
+        public static List<Contract> GetContracts(Filter<Contract> filter = null)
         {
             // должно забирать все контракты из БД (желательно сделать кэширование:
             // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов
             // этого метода в течение 5 секунд возвращает кэшированное значение)
             // P.S. кэширование должно очищаться после выполнения других действий CRUD кроме Read
+            var query = filter is not null ? filter.GenerateSQL() : "SELECT * FROM municipal_contract";
+
             List<Contract> contracts = new();
             List<string?[]> contractsEmpty = new();
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM municipal_contract") { Connection = cn })
+            using (NpgsqlCommand cmd = new(query) { Connection = cn })
             {
                 cn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();

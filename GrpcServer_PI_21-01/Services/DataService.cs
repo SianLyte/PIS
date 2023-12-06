@@ -77,7 +77,8 @@ namespace GrpcServer_PI_21_01.Services
             //        .Select(c => c.ToReply());
             // gotta add filters for different roles, will need to add 'OR' function to Filter.cs
             var requestFilter = new Filter<Contract>(request.Filter);
-            var contracts = ContractRepository.GetContracts(requestFilter);
+            
+            var contracts = ContractRepository.GetContracts(requestFilter).Select(c => c.ToReply());
 
             var reply = new ContractsReply();
             reply.Contracts.AddRange(contracts);
@@ -172,7 +173,8 @@ namespace GrpcServer_PI_21_01.Services
             IServerStreamWriter<OrganizationReply> responseStream,
             ServerCallContext context)
         {
-            foreach (var org in OrgRepository.GetOrganizations(request.Filter))
+            var filter = new Filter<Organization>(request.Filter);
+            foreach (var org in OrgRepository.GetOrganizations(filter))
                 await responseStream.WriteAsync(org.ToReply());
         }
 

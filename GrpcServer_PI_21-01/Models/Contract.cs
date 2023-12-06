@@ -7,12 +7,22 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01.Models
 {
+    [FilterableModel("municipal_contract")]
     public class Contract
     {
+
         public int IdContract { get; set; }
+
+        [Filterable("created_at")]
         public DateTime DateConclusion { get; set; }
+
+        [Filterable("validity_date")]
         public DateTime ActionDate { get; set; }
+
+        [Filterable("executer_id")]
         public Organization Executer { get; set; }
+
+        [Filterable("customer_id")]
         public Organization Costumer { get; set; }
 
         public Contract(int idContract, 

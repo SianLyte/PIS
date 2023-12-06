@@ -67,6 +67,7 @@ message IdRequest {
 message DataRequest {
 	UserReply actor = 1;
 	FilterReply filter = 2;
+	int32 itemsRange = 3;
 }
 
 message OperationResult {

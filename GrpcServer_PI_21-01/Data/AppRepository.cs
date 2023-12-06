@@ -105,16 +105,18 @@ namespace GrpcServer_PI_21_01.Data
             return apps;
         }
 
-        public static List<App> GetApplications()
+        public static List<App> GetApplications(Filter<App> filter = null)
         {
             // должно забирать все заявки из БД (желательно сделать кэширование:
             // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов
             // этого метода в течение 5 секунд возвращает кэшированное значение)
             // P.S. кэширование должно очищаться после выполнения других действий CRUD кроме Read
+            var query = filter is not null ? filter.GenerateSQL() : "SELECT * FROM catch_request";
+
             List<App> apps = new();
             List<string?[]> appsEmpty = new();
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM catch_request") { Connection = cn })
+            using (NpgsqlCommand cmd = new(query) { Connection = cn })
             {
                 cn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();
