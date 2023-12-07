@@ -56,19 +56,19 @@ namespace GrpcServer_PI_21_01.Models
         Podpisant_Po_Otlovy,
         Admin
     }
-    enum OrganizationType
-    {
-        Znacheniya_Spravochnika,
-        Ispolnitelni_Organ_Gos_Vlasti,
-        Organ_Mestnogo_Samoypravleniya,
-        Priut,
-        Organization_Otlov,
-        Organization_Otlov_Priut,
-        Organization_Transportirovka,
-        Veterinarnaya_Gos_Klinika,
-        Veterinarnaya_Municipal_Klinika,
-        Blagotvoritelni_Fond,
-        Organization_Prodaja_Tovarov_And_Yslygi_Dlya_Jivotnih,
-        Zayavitel
-    }
+    //enum OrganizationType
+    //{
+    //    Znacheniya_Spravochnika,
+    //    Ispolnitelni_Organ_Gos_Vlasti,
+    //    Organ_Mestnogo_Samoypravleniya,
+    //    Priut,
+    //    Organization_Otlov,
+    //    Organization_Otlov_Priut,
+    //    Organization_Transportirovka,
+    //    Veterinarnaya_Gos_Klinika,
+    //    Veterinarnaya_Municipal_Klinika,
+    //    Blagotvoritelni_Fond,
+    //    Organization_Prodaja_Tovarov_And_Yslygi_Dlya_Jivotnih,
+    //    Zayavitel
+    //}
 }

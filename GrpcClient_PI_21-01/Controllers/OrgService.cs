@@ -56,7 +56,7 @@ namespace GrpcClient_PI_21_01.Controllers
                 reply.Name,
                 reply.INN,
                 reply.KPP,
-                reply.RegistrationAddress,
+                reply.RegistrationAddress.FromReply(),
                 reply.Type,
                 reply.Status);
         }
@@ -68,8 +68,8 @@ namespace GrpcClient_PI_21_01.Controllers
                     org.name,
                     org.INN,
                     org.KPP,
-                    org.registrationAdress,
-                    org.type,
+                    org.registrationAdress.City,
+                    org.type.Translate(),
                     org.status
             };
         }
@@ -86,6 +86,14 @@ namespace GrpcClient_PI_21_01.Controllers
                 orgs.Add(GetOrganizationFromReply(response));
             }
             return orgs;
+        }
+
+        public static async Task<int> GetPageCount(int pageSize, Filter<Organization>? filter)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var pageCount = await client.GetOrganizationsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
         }
 
         public static async Task<Organization> GetOrganization(int orgId)

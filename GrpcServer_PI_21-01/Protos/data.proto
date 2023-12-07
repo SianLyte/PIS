@@ -10,50 +10,59 @@ package data;
 service DataRetriever {
   rpc GetContract (IdRequest) returns (ContractReply);
   rpc GetContracts (DataRequest) returns (ContractsReply);
+  rpc GetContractsPageCount (DataRequest) returns (PageCount);
   rpc AddContract (ContractReply) returns (OperationResult);
   rpc RemoveContract (IdRequest) returns (OperationResult);
   rpc UpdateContract (ContractReply) returns (OperationResult);
 
   rpc GetLocation (IdRequest) returns (LocationReply);
   rpc GetLocations (UserReply) returns (stream LocationReply);
+  rpc GetLocationsPageCount (DataRequest) returns (PageCount);
   rpc AddLocation (LocationReply) returns (OperationResult);
   rpc RemoveLocation (IdRequest) returns (OperationResult);
   rpc UpdateLocation (LocationReply) returns (OperationResult);
 
   rpc GetOrganization (IdRequest) returns (OrganizationReply);
   rpc GetOrganizations (DataRequest) returns (stream OrganizationReply);
+  rpc GetOrganizationsPageCount (DataRequest) returns (PageCount);
   rpc AddOrganization (OrganizationReply) returns (OperationResult);
   rpc RemoveOrganization (IdRequest) returns (OperationResult);
   rpc UpdateOrganization (OrganizationReply) returns (OperationResult);
 
   rpc GetAct (IdRequest) returns (ActReply);
   rpc GetActs (DataRequest) returns (stream ActReply);
+  rpc GetActsPageCount (DataRequest) returns (PageCount);
   rpc AddAct (ActReply) returns (OperationResult);
   rpc RemoveAct (IdRequest) returns (OperationResult);
   rpc UpdateAct (ActReply) returns (OperationResult);
 
   rpc GetApp (IdRequest) returns (ApplicationReply);
   rpc GetApps (DataRequest) returns (stream ApplicationReply);
+  rpc GetAppsPageCount (DataRequest) returns (PageCount);
   rpc AddApp (ApplicationReply) returns (OperationResult);
   rpc RemoveApp (IdRequest) returns (OperationResult);
   rpc UpdateApp (ApplicationReply) returns (OperationResult);
 
   rpc GetAnimalCard (IdRequest) returns (AnimalCardReply);
   rpc GetAnimalCards (UserReply) returns (stream AnimalCardReply);
+  rpc GetAnimalCardsPageCount (DataRequest) returns (PageCount);
   rpc RemoveAnimalCard (IdRequest) returns (OperationResult);
   rpc AddAnimalCard (AnimalCardReply) returns (OperationResult);
   rpc UpdateAnimalCard (AnimalCardReply) returns (OperationResult);
 
   rpc GetOperations (UserReply) returns (stream OperationReply);
+  rpc GetOperationsPageCount (DataRequest) returns (PageCount);
 
   rpc GetActApp (IdRequest) returns (ActAppReply);
   rpc GetActApps (UserReply) returns (stream ActAppReply);
+  rpc GetActAppsCount (DataRequest) returns (PageCount);
   rpc AddActApps (ActAppReply) returns (OperationResult);
   rpc UpdateActApps (ActAppReply) returns (OperationResult);
   rpc RemoveActApps (IdRequest) returns (OperationResult);
 
   rpc GetLocationContract (IdRequest) returns (LocationContractReply);
   rpc GetLocationContracts (UserReply) returns (stream LocationContractReply);
+  rpc GetLocationContractsPageCount (DataRequest) returns (PageCount);
   rpc AddLocationContract (LocationContractReply) returns (OperationResult);
   rpc UpdateLocationContract (LocationContractReply) returns (OperationResult);
   rpc RemoveLocationContract (IdRequest) returns (OperationResult);
@@ -68,6 +77,10 @@ message DataRequest {
 	UserReply actor = 1;
 	FilterReply filter = 2;
 	int32 page = 3;
+}
+
+message PageCount {
+	int32 count = 1;
 }
 
 message OperationResult {
@@ -96,13 +109,29 @@ message LocationReply {
   UserReply actor = 3;
 }
 
+enum OrganizationType {
+	DirectoryValues = 0;
+	GovernmentExecutive = 1;
+	LocalGovernment = 2;
+	Shelter = 3;
+	Trapping = 4;
+	TrappingAndShelter = 5;
+	Transportation = 6;
+	VetClinicState = 7;
+	VetClinicMunicipal = 8;
+	VetClinicPrivate = 9;
+	CharityFoundation = 10;
+	AnimalGoodsSeller = 11;
+	Applicant = 12;
+}
+
 message OrganizationReply {
 	int32 idOrganization = 1;
 	string name = 2;
 	string INN = 3;
 	string KPP = 4;
-	string registrationAddress = 5;
-	string type = 6;
+	LocationReply registrationAddress = 5;
+	OrganizationType type = 6;
 	string status = 7;
 	UserReply actor = 8;
 }

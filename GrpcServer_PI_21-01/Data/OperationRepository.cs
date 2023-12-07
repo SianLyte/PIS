@@ -6,7 +6,7 @@ namespace GrpcServer_PI_21_01.Data
     public class OperationRepository
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
-        public static int GetMaxPage()
+        public static int GetMaxPage(DataRequest dataRequest)
         {
             using (NpgsqlCommand cmd = new("SELECT count(*) from operation") { Connection = cn })
             {
@@ -19,7 +19,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / 10);
+                var a = Math.Ceiling((decimal)int.Parse(count) / dataRequest.Page);
                 return (int)a;
             };
         }

@@ -38,7 +38,7 @@ namespace GrpcServer_PI_21_01.Data
         //                    ActRepository.GetActs()[2],
         //                    null),
         //};
-        public static int GetMaxPage()
+        public static int GetMaxPage(DataRequest Геннадий_Петрович)
         {
             using (NpgsqlCommand cmd = new("SELECT count(*) from animal_card") { Connection = cn })
             {
@@ -51,7 +51,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / 10);
+                var a = Math.Ceiling((decimal)int.Parse(count) / Геннадий_Петрович.Page);
                 return (int)a;
             };
         }

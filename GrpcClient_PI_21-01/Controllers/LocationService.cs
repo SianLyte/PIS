@@ -25,6 +25,14 @@ namespace GrpcClient_PI_21_01.Controllers
             return locations;
         }
 
+        public static async Task<int> GetPageCount(int pageSize, Filter<Location>? filter = null)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var pageCount = await client.GetLocationsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
+        }
+
         public static async Task<List<Location_Contract>> GetLocationContracts()
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
@@ -37,6 +45,14 @@ namespace GrpcClient_PI_21_01.Controllers
                 locationContractsList.Add(response.FromReply());
             }
             return locationContractsList;
+        }
+
+        public static async Task<int> GetLocationContractPageCount(int pageSize, Filter<Location_Contract>? filter = null)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var pageCount = await client.GetLocationContractsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
         }
 
         public static async Task<Location_Contract> GetLocationContract(int id)

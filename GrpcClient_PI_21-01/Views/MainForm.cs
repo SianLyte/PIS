@@ -180,26 +180,32 @@ namespace GrpcClient_PI_21_01
             new ActFilter(actFilter, SetDataGridAct).Show();
         #endregion
         #region Related: Organizations
+        private readonly SemaphoreSlim orgGridSemaphore = new(1, 1);
         private async Task SetDataGridOrg()
         {
-            int page = -1; // сделать пагинацию
-
-            /*-Organization-------------------------*/
-            dsOrganization.Tables.Clear();
-            dsOrganization.Tables.Add("Score");
-            dsOrganization.Tables[0].Columns.Add("Номер");
-            dsOrganization.Tables[0].Columns.Add("Наименование");
-            dsOrganization.Tables[0].Columns.Add("ИНН");
-            dsOrganization.Tables[0].Columns.Add("КПП");
-            dsOrganization.Tables[0].Columns.Add("Адрес регистрации");
-            dsOrganization.Tables[0].Columns.Add("Тип");
-            dsOrganization.Tables[0].Columns.Add("Статус");
-            var orgs = await OrgService.GetOrganizations(page, orgFilter);
-            foreach (var org in orgs.Select(o => OrgService.ToDataArray(o)))
+            await orgGridSemaphore.WaitAsync();
+            try
             {
-                dsOrganization.Tables[0].Rows.Add(org);
+                int page = -1; // сделать пагинацию
+
+                /*-Organization-------------------------*/
+                dsOrganization.Tables.Clear();
+                dsOrganization.Tables.Add("Score");
+                dsOrganization.Tables[0].Columns.Add("Номер");
+                dsOrganization.Tables[0].Columns.Add("Наименование");
+                dsOrganization.Tables[0].Columns.Add("ИНН");
+                dsOrganization.Tables[0].Columns.Add("КПП");
+                dsOrganization.Tables[0].Columns.Add("Адрес регистрации");
+                dsOrganization.Tables[0].Columns.Add("Тип");
+                dsOrganization.Tables[0].Columns.Add("Статус");
+                var orgs = await OrgService.GetOrganizations(page, orgFilter);
+                foreach (var org in orgs.Select(o => OrgService.ToDataArray(o)))
+                {
+                    dsOrganization.Tables[0].Rows.Add(org);
+                }
+                dataGridViewOrg.DataSource = dsOrganization.Tables[0];
             }
-            dataGridViewOrg.DataSource = dsOrganization.Tables[0];
+            finally { orgGridSemaphore.Release(); }
         }
 
         private async void OrgDelete_Click(object sender, EventArgs e)
@@ -222,8 +228,9 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.Org))
                 if (dataGridViewOrg.CurrentRow != null)
                 {
-                    var org = int.Parse(dataGridViewOrg.CurrentRow.Cells[0].Value.ToString());
-                    var orgEdit = new OrgEdit(org);
+                    var orgId = int.Parse(dataGridViewOrg.CurrentRow.Cells[0].Value.ToString());
+                    var org = await OrgService.GetOrganization(orgId);
+                    var orgEdit = new OrgAdd(org);
                     orgEdit.ShowDialog();
                     await SetDataGridOrg();
                 }

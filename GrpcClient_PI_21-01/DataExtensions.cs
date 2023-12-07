@@ -103,7 +103,7 @@ namespace GrpcClient_PI_21_01
                 KPP = org.KPP,
                 Status = org.status,
                 Name = org.name,
-                RegistrationAddress = org.registrationAdress,
+                RegistrationAddress = org.registrationAdress.ToReply(),
                 Type = org.type,
             };
         }
@@ -125,7 +125,7 @@ namespace GrpcClient_PI_21_01
                 reply.Name,
                 reply.INN,
                 reply.KPP,
-                reply.RegistrationAddress,
+                reply.RegistrationAddress.FromReply(),
                 reply.Type,
                 reply.Status);
         }

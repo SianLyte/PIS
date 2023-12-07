@@ -19,7 +19,7 @@ namespace GrpcServer_PI_21_01.Data
         //    new Location(2, "г. Тобольск"),
         //    new Location(3, "г. Сургут")};
 
-        public static int GetMaxPage()
+        public static int GetMaxPage(DataRequest req)
         {
             using (NpgsqlCommand cmd = new("SELECT count(*) from city") { Connection = cn })
             {
@@ -32,9 +32,14 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / 10);
+                var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
                 return (int)a;
             };
+        }
+
+        public static int GetLocationContractMaxPage(DataRequest uest)
+        {
+            throw new NotImplementedException();
         }
 
         public static List<Location> GetLocations()

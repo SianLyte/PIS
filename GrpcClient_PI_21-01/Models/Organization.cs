@@ -21,13 +21,14 @@ namespace GrpcClient_PI_21_01.Models
         public string KPP { get; set; }
 
         [Filterable("registration")]
-        public string registrationAdress { get; set; }
+        public Location registrationAdress { get; set; }
 
         [Filterable("typee")]
-        public string type { get; set; }
+        public OrganizationType type { get; set; }
         public string status { get; set; }
 
-        public Organization(int IdOrg, string name, string iNN, string kPP, string registrationAdress, string type, string status)
+        public Organization(int IdOrg, string name, string iNN, string kPP,
+            Location registrationAdress, OrganizationType type, string status)
         {
             this.idOrg = IdOrg;
             this.name = name;

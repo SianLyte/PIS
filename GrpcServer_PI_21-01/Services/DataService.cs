@@ -66,16 +66,12 @@ namespace GrpcServer_PI_21_01.Services
 
         public override Task<ContractsReply> GetContracts(DataRequest request, ServerCallContext context)
         {
-            //IEnumerable<ContractReply> contracts;
-            //if (user.PrivelegeLevel == "Admin")
-            //    contracts = ContractRepository.GetContracts()
-            //        .Select(c => c.ToReply());
-            //else contracts = ContractRepository.GetContracts()
-            //        .Where(c => c.Costumer.idOrg == user.Organization.IdOrganization
-            //        || c.Executer.idOrg == user.Organization.IdOrganization)
-            //        .Select(c => c.ToReply());
             var filter = new Filter<Contract>();
-            // gotta add filters for different roles, will need to add 'OR' function to Filter.cs
+            if (request.Actor.PrivelegeLevel != "Admin")
+            {
+                filter.AddOrFilter(c => c.Costumer, request.Actor.Organization.IdOrganization.ToString());
+                filter.AddOrFilter(c => c.Executer, request.Actor.Organization.IdOrganization.ToString());
+            }
             filter.ExtendReply(request.Filter);
             var contracts = ContractRepository.GetContracts(request).Select(c => c.ToReply());
 
@@ -83,6 +79,9 @@ namespace GrpcServer_PI_21_01.Services
             reply.Contracts.AddRange(contracts);
             return Task.FromResult(reply);
         }
+
+        public override Task<PageCount> GetContractsPageCount(DataRequest req, ServerCallContext ctx)
+            => Task.FromResult(new PageCount() { Count = ContractRepository.GetMaxPage(req) });
 
         public override Task<OperationResult> AddContract(ContractReply request, ServerCallContext ctx)
         {
@@ -134,6 +133,9 @@ namespace GrpcServer_PI_21_01.Services
             }
         }
 
+        public override Task<PageCount> GetLocationsPageCount(DataRequest request, ServerCallContext context)
+            => Task.FromResult(new PageCount() { Count = LocationRepository.GetMaxPage(request) });
+
         public override Task<OperationResult> AddLocation(LocationReply request, ServerCallContext ctx)
         {
             var location = request.FromReply();
@@ -176,6 +178,9 @@ namespace GrpcServer_PI_21_01.Services
             foreach (var org in OrgRepository.GetOrganizations(request))
                 await responseStream.WriteAsync(org.ToReply());
         }
+
+        public override Task<PageCount> GetOrganizationsPageCount(DataRequest request, ServerCallContext context)
+            => Task.FromResult(new PageCount() { Count = OrgRepository.GetMaxPage(request) });
 
         public override Task<OperationResult> AddOrganization(OrganizationReply reply, ServerCallContext ctx)
         {
@@ -225,6 +230,9 @@ namespace GrpcServer_PI_21_01.Services
                 await responseStream.WriteAsync(act.ToReply());
         }
 
+        public override Task<PageCount> GetActsPageCount(DataRequest request, ServerCallContext context)
+            => Task.FromResult(new PageCount() { Count = ActRepository.GetMaxPage(request) });
+
         public override Task<OperationResult> AddAct(ActReply request, ServerCallContext ctx)
         {
             var act = request.FromReply();
@@ -271,6 +279,9 @@ namespace GrpcServer_PI_21_01.Services
                 await responseStream.WriteAsync(app.ToReply());
         }
 
+        public override Task<PageCount> GetAppsPageCount(DataRequest request, ServerCallContext context)
+            => Task.FromResult(new PageCount() { Count = AppRepository.GetMaxPage(request) });
+
         public override Task<OperationResult> AddApp(ApplicationReply reply, ServerCallContext ctx)
         {
             var app = reply.FromReply();
@@ -316,6 +327,9 @@ namespace GrpcServer_PI_21_01.Services
                 await responseStream.WriteAsync(animalCard.ToReply());
         }
 
+        public override Task<PageCount> GetAnimalCardsPageCount(DataRequest request, ServerCallContext context)
+            => Task.FromResult(new PageCount() { Count = AnimalRepository.GetMaxPage(request) });
+
         public override Task<OperationResult> AddAnimalCard(AnimalCardReply request, ServerCallContext ctx)
         {
             var animalCard = request.FromReply();
@@ -347,6 +361,9 @@ namespace GrpcServer_PI_21_01.Services
             foreach (var op in OperationRepository.GetOperations())
                 await responseStream.WriteAsync(op.ToReply());
         }
+
+        public override Task<PageCount> GetOperationsPageCount(DataRequest req, ServerCallContext ctx)
+            => Task.FromResult(new PageCount() { Count = OperationRepository.GetMaxPage(req) });
         #endregion
         #region ActApps
         public override Task<ActAppReply> GetActApp(IdRequest request, ServerCallContext context)
@@ -367,6 +384,9 @@ namespace GrpcServer_PI_21_01.Services
             foreach (var actApp in ActRepository.GetActApps())
                 await responseStream.WriteAsync(actApp.ToReply());
         }
+
+        public override Task<PageCount> GetActAppsCount(DataRequest request, ServerCallContext context)
+            => Task.FromResult(new PageCount() { Count = ActRepository.GetActAppMaxPage(request) });
 
         public override Task<OperationResult> AddActApps(ActAppReply request, ServerCallContext context)
         {
@@ -409,6 +429,9 @@ namespace GrpcServer_PI_21_01.Services
             foreach (var locationContract in LocationRepository.GetLocationContracts())
                 await responseStream.WriteAsync(locationContract.ToReply());
         }
+
+        public override Task<PageCount> GetLocationContractsPageCount(DataRequest request, ServerCallContext context)
+            => Task.FromResult(new PageCount() { Count = LocationRepository.GetLocationContractMaxPage(request) });
 
         public override Task<OperationResult> AddLocationContract(LocationContractReply request, ServerCallContext context)
         {
@@ -542,7 +565,7 @@ namespace GrpcServer_PI_21_01.Services
                 KPP = org.KPP,
                 Status = org.status,
                 Name = org.name,
-                RegistrationAddress = org.registrationAdress,
+                RegistrationAddress = org.registrationAdress.ToReply(),
                 Type = org.type,
             };
         }
@@ -564,7 +587,7 @@ namespace GrpcServer_PI_21_01.Services
                 reply.Name,
                 reply.INN,
                 reply.KPP,
-                reply.RegistrationAddress,
+                reply.RegistrationAddress.FromReply(),
                 reply.Type,
                 reply.Status);
         }

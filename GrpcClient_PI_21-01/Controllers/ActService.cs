@@ -106,6 +106,14 @@ namespace GrpcClient_PI_21_01
             return acts;
         }
 
+        public static async Task<int> GetPageCount(int pageSize, Filter<Act>? filter)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var pageCount = await client.GetActsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
+        }
+
         public static async Task<Act> GetAct(int id)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");

@@ -95,8 +95,16 @@ namespace GrpcClient_PI_21_01.Controllers
             var client = new DataRetriever.DataRetrieverClient(channel);
             var contracts = await client.GetContractsAsync(UserService.GenerateDataRequest(page, filter));
             return contracts.Contracts.Select(cr => GetContractFromReply(cr));
-        } 
-        
+        }
+
+        public static async Task<int> GetPageCount(int pageSize, Filter<Contract>? filter)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var pageCount = await client.GetContractsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
+        }
+
         public static async Task<Contract> GetContract(int contrId)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");

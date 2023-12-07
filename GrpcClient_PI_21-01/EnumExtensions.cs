@@ -99,8 +99,26 @@ namespace GrpcClient_PI_21_01
                 AppStatus.AwaitingRegistration => "Ожидает регистрации",
                 AppStatus.Performed => "В исполнении",
                 AppStatus.Removed => "Снята с контроля исполнения без отлова",
-                _ => "unknown_status"
+                _ => throw new InvalidEnumArgumentException("Unknown AppStatus enum for translation"),
             };
         }
+
+        public static string Translate(this OrganizationType orgType) => orgType switch
+        {
+            OrganizationType.AnimalGoodsSeller => "Организация по продаже товаров и предоставлению услуг для животных",
+            OrganizationType.Applicant => "Заявитель",
+            OrganizationType.Shelter => "Приют",
+            OrganizationType.TrappingAndShelter => "Организация по отлову и приют",
+            OrganizationType.VetClinicPrivate => "Ветеринарная клиника: частная",
+            OrganizationType.VetClinicState => "Ветеринарная клиника: государственная",
+            OrganizationType.VetClinicMunicipal => "Ветеринарная клиника: муниципальная",
+            OrganizationType.CharityFoundation => "Благотворительный фонд",
+            OrganizationType.DirectoryValues => "Значения справочника",
+            OrganizationType.GovernmentExecutive => "Исполнительный орган государственной власти",
+            OrganizationType.Transportation => "Организация по транспортировке",
+            OrganizationType.Trapping => "Организация по отлову",
+            OrganizationType.LocalGovernment => "Орган местного самоуправления",
+            _ => throw new InvalidEnumArgumentException("Unknown OrganizationType enum for translation"),
+        };
     }
 }

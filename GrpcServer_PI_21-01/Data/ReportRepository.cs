@@ -14,7 +14,7 @@ namespace GrpcServer_PI_21_01.Data
 
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
-        public static int GetMaxPage()
+        public static int GetMaxPage(int pageSize)
         {
             using (NpgsqlCommand cmd = new("SELECT count(*) from report") { Connection = cn })
             {
@@ -27,7 +27,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / 10);
+                var a = Math.Ceiling((decimal)int.Parse(count) / pageSize);
                 return (int)a;
             };
         }

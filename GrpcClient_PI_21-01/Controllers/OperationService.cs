@@ -1,10 +1,6 @@
 ﻿using Grpc.Core;
 using Grpc.Net.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GrpcClient_PI_21_01.Models;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
@@ -22,6 +18,14 @@ namespace GrpcClient_PI_21_01.Controllers
                 ops.Add(response);
             }
             return ops;
+        }
+
+        public static async Task<int> GetPageCount(int pageSize, Filter<OperationReply>? filter = null)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var pageCount = await client.GetOperationsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
         }
     }
 }

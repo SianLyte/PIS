@@ -39,10 +39,10 @@ namespace GrpcClient_PI_21_01
         }
 
         public static Act Empty = new(-1, 0, 0,
-                        new Organization(-1, "", "", "", "", "", ""),
+                        new Organization(-1, "", "", "", new Location(-1, ""), 0, ""),
                         DateTime.MinValue, "",
                         new Contract(-1, DateTime.MinValue, DateTime.MinValue,
-                        new Organization(-1, "", "", "", "", "", ""),
-                        new Organization(-1, "", "", "", "", "", "")));
+                        new Organization(-1, "", "", "", new Location(-1, ""), 0, ""),
+                        new Organization(-1, "", "", "", new Location(-1, ""), 0, "")));
     }
 }

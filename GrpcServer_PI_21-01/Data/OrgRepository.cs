@@ -13,7 +13,7 @@ namespace GrpcServer_PI_21_01.Data
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
-        public static int GetMaxPage()
+        public static int GetMaxPage(DataRequest 数据请求)
         {
             using (NpgsqlCommand cmd = new("SELECT count(*) from organization") { Connection = cn })
             {
@@ -26,7 +26,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / 10);
+                var a = Math.Ceiling((decimal)int.Parse(count) / 数据请求.Page);
                 return (int)a;
             };
         }
@@ -134,7 +134,8 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < orgsEmpty.Count; i++)
                 {
                     var a = orgsEmpty[i];
-                    Organization org = new Organization(int.Parse(a[0]), a[1], a[2], a[3], a[4], a[5], a[6]);
+                    Organization org = new Organization(int.Parse(a[0]), a[1], a[2], a[3],
+                        Location.GetById(int.Parse(a[4]), cn, true), Enum.Parse<OrganizationType>(a[5]), a[6]);
                     orgs.Add(org);
                 }
                 cn.Close();

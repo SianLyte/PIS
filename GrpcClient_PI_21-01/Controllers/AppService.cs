@@ -98,6 +98,14 @@ namespace GrpcClient_PI_21_01.Controllers
             return apps;
         }
 
+        public static async Task<int> GetPageCount(int pageSize, Filter<App>? filter)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var pageCount = await client.GetAppsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
+        }
+
         public static async Task<App> GetApplication(int appId)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");

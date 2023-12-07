@@ -31,7 +31,15 @@ namespace GrpcClient_PI_21_01.Controllers
             return response.Successful;
         }
 
-           public static async Task<List<AnimalCard>> GetAnimalCards()
+        public static async Task<int> GetPageCount(int pageSize, Filter<AnimalCard>? filter = null)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var pageCount = await client.GetAnimalCardsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
+        }
+
+        public static async Task<List<AnimalCard>> GetAnimalCards()
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
