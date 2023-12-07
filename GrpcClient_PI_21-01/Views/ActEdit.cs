@@ -72,9 +72,17 @@ namespace GrpcClient_PI_21_01.Views
 
         private async Task FullComboBox()
         {
-            var organizations = await OrgService.GetOrganizations();
-            var contracts = await ContractService.GetContracts();
-            var applications = await AppService.GetApplications();
+            var appFilter = new Filter<App>();
+            appFilter.AddOrFilter(app => app.status, AppStatus.Registered.ToString());
+            appFilter.AddOrFilter(app => app.status, AppStatus.Performed.ToString());
+            if (actToEdit) appFilter.AddOrFilter(app => app.status, AppStatus.Fulfilled.ToString());
+
+            var contractFilter = new Filter<Contract>();
+            contractFilter.AddFilter(c => c.Executer, UserService.CurrentUser?.Organization.idOrg.ToString());
+
+            var contracts = await ContractService.GetContracts(-1, contractFilter);
+            var applications = await AppService.GetApplications(-1, appFilter);
+            var organizations = contracts.Select(c => c.Costumer).Distinct().ToList();
 
             comboBoxOrganization.DataSource = new BindingSource(organizations, null);
             comboBoxOrganization.DisplayMember = "name";
@@ -91,13 +99,11 @@ namespace GrpcClient_PI_21_01.Views
                 comboBoxContract.DisplayMember = "IdContract";
                 comboBoxContract.ValueMember = "IdContract";
             }
-
-
         }
 
         private async void OK_Click(object sender, EventArgs e)
         {
-            if (ChekOtvet())
+            if (await ChekOtvet())
             {
                 var act = new Act(actId, (int)numericUpDownDog.Value, (int)numericUpDownCat.Value,
                         comboBoxOrganization.SelectedItem as Organization,
@@ -189,16 +195,26 @@ namespace GrpcClient_PI_21_01.Views
             }
         }
 
-        private bool ChekOtvet()
+        private async Task<bool> ChekOtvet()
         {
+            foreach (var appId in _apps)
+            {
+                var app = await AppService.GetApplication(appId);
+                if (app.date > dateAct.Value)
+                {
+                    MessageBox.Show("Заявка с ID " + appId + " была подана " + app.date.ToString("dd.MM.yyyy") +
+                        ", однако дата регистрации акта отлова - " + dateAct.Value.ToString("dd.MM.yyyy") + ", что " +
+                        "противоречит логике.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+
             if (numericUpDownDog.Value == 0 && numericUpDownCat.Value == 0)
                 MessageBox.Show("Вы не выбрали ни одного животного", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (textBoxTarget.Text == "")
                 MessageBox.Show("Введите цель отлова", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (comboBoxOrganization.SelectedItem is null)
                 MessageBox.Show("Не выбрана организация", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else if (1 < Math.Pow(2, 1))
-                MessageBox.Show("НЕ ЗАБУДЬ ДОБАВИТЬ ФИЛЬТРЫ В ПРОВЕРКУ НА ДАТЫ АКТА И ЗАЯВОК ВКЛЮЧЕННЫХ В АКТ");
             else return true;
             return false;
         }

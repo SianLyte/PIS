@@ -30,313 +30,310 @@ namespace GrpcClient_PI_21_01.Views
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ActEdit));
-            label1=new Label();
-            Cancel=new Button();
-            OK=new Button();
-            label2=new Label();
-            label3=new Label();
-            label4=new Label();
-            dateAct=new DateTimePicker();
-            comboBoxOrganization=new ComboBox();
-            comboBoxContract=new ComboBox();
-            comboBoxApp=new ComboBox();
-            label5=new Label();
-            textBoxTarget=new TextBox();
-            R=new Label();
-            label7=new Label();
-            Isus=new Label();
-            numericUpDownDog=new NumericUpDown();
-            numericUpDownCat=new NumericUpDown();
-            groupBox2=new GroupBox();
-            deleteButton=new Button();
-            dataGridView1=new DataGridView();
-            addApp=new Button();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownDog).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownCat).BeginInit();
-            groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Cancel = new System.Windows.Forms.Button();
+            this.OK = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dateAct = new System.Windows.Forms.DateTimePicker();
+            this.comboBoxOrganization = new System.Windows.Forms.ComboBox();
+            this.comboBoxContract = new System.Windows.Forms.ComboBox();
+            this.comboBoxApp = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxTarget = new System.Windows.Forms.TextBox();
+            this.R = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.Isus = new System.Windows.Forms.Label();
+            this.numericUpDownDog = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownCat = new System.Windows.Forms.NumericUpDown();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.addApp = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDog)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCat)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.SuspendLayout();
             // 
             // label1
             // 
-            label1.AutoSize=true;
-            label1.Location=new Point(26, 310);
-            label1.Margin=new Padding(6, 0, 6, 0);
-            label1.Name="label1";
-            label1.Size=new Size(66, 30);
-            label1.TabIndex=0;
-            label1.Text="Дата";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 294);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(66, 30);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Дата";
             // 
             // Cancel
             // 
-            Cancel.BackColor=Color.Cornsilk;
-            Cancel.DialogResult=DialogResult.Cancel;
-            Cancel.FlatStyle=FlatStyle.Popup;
-            Cancel.Location=new Point(376, 788);
-            Cancel.Margin=new Padding(6, 9, 6, 9);
-            Cancel.Name="Cancel";
-            Cancel.Size=new Size(162, 61);
-            Cancel.TabIndex=1;
-            Cancel.Text="Cancel";
-            Cancel.UseVisualStyleBackColor=false;
+            this.Cancel.BackColor = System.Drawing.Color.Cornsilk;
+            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Cancel.Location = new System.Drawing.Point(376, 788);
+            this.Cancel.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(162, 61);
+            this.Cancel.TabIndex = 1;
+            this.Cancel.Text = "Cancel";
+            this.Cancel.UseVisualStyleBackColor = false;
             // 
             // OK
             // 
-            OK.BackColor=Color.Cornsilk;
-            OK.FlatStyle=FlatStyle.Popup;
-            OK.Location=new Point(201, 788);
-            OK.Margin=new Padding(6, 9, 6, 9);
-            OK.Name="OK";
-            OK.Size=new Size(162, 61);
-            OK.TabIndex=2;
-            OK.Text="OK";
-            OK.UseVisualStyleBackColor=false;
-            OK.Click+=OK_Click;
+            this.OK.BackColor = System.Drawing.Color.Cornsilk;
+            this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.OK.Location = new System.Drawing.Point(201, 788);
+            this.OK.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.OK.Name = "OK";
+            this.OK.Size = new System.Drawing.Size(162, 61);
+            this.OK.TabIndex = 2;
+            this.OK.Text = "OK";
+            this.OK.UseVisualStyleBackColor = false;
             // 
             // label2
             // 
-            label2.AutoSize=true;
-            label2.Location=new Point(26, 229);
-            label2.Margin=new Padding(6, 0, 6, 0);
-            label2.Name="label2";
-            label2.Size=new Size(124, 30);
-            label2.TabIndex=7;
-            label2.Text="Организация";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 229);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(124, 30);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Организация";
             // 
             // label3
             // 
-            label3.AutoSize=true;
-            label3.Location=new Point(25, 723);
-            label3.Margin=new Padding(6, 0, 6, 0);
-            label3.Name="label3";
-            label3.Size=new Size(127, 30);
-            label3.TabIndex=8;
-            label3.Text="Контракты";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(25, 723);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(127, 30);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Контракты";
             // 
             // label4
             // 
-            label4.AutoSize=true;
-            label4.Location=new Point(26, 441);
-            label4.Margin=new Padding(6, 0, 6, 0);
-            label4.Name="label4";
-            label4.Size=new Size(72, 30);
-            label4.TabIndex=9;
-            label4.Text="Заявка";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 441);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 30);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Заявка";
             // 
             // dateAct
             // 
-            dateAct.CalendarMonthBackground=Color.Cornsilk;
-            dateAct.CalendarTitleBackColor=Color.Cornsilk;
-            dateAct.CalendarTrailingForeColor=SystemColors.ControlText;
-            dateAct.Cursor=Cursors.PanNW;
-            dateAct.Location=new Point(283, 294);
-            dateAct.Margin=new Padding(6, 9, 6, 9);
-            dateAct.Name="dateAct";
-            dateAct.Size=new Size(250, 37);
-            dateAct.TabIndex=11;
-            dateAct.Value=new DateTime(2023, 6, 10, 0, 0, 0, 0);
+            this.dateAct.CalendarMonthBackground = System.Drawing.Color.Cornsilk;
+            this.dateAct.CalendarTitleBackColor = System.Drawing.Color.Cornsilk;
+            this.dateAct.CalendarTrailingForeColor = System.Drawing.SystemColors.ControlText;
+            this.dateAct.Cursor = System.Windows.Forms.Cursors.PanNW;
+            this.dateAct.Location = new System.Drawing.Point(283, 294);
+            this.dateAct.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.dateAct.Name = "dateAct";
+            this.dateAct.Size = new System.Drawing.Size(250, 37);
+            this.dateAct.TabIndex = 11;
+            this.dateAct.Value = new System.DateTime(2023, 6, 10, 0, 0, 0, 0);
             // 
             // comboBoxOrganization
             // 
-            comboBoxOrganization.BackColor=Color.OldLace;
-            comboBoxOrganization.Cursor=Cursors.PanNW;
-            comboBoxOrganization.DropDownStyle=ComboBoxStyle.DropDownList;
-            comboBoxOrganization.FlatStyle=FlatStyle.Popup;
-            comboBoxOrganization.FormattingEnabled=true;
-            comboBoxOrganization.Location=new Point(283, 220);
-            comboBoxOrganization.Margin=new Padding(6, 9, 6, 9);
-            comboBoxOrganization.Name="comboBoxOrganization";
-            comboBoxOrganization.Size=new Size(250, 38);
-            comboBoxOrganization.TabIndex=13;
+            this.comboBoxOrganization.BackColor = System.Drawing.Color.OldLace;
+            this.comboBoxOrganization.Cursor = System.Windows.Forms.Cursors.PanNW;
+            this.comboBoxOrganization.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxOrganization.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.comboBoxOrganization.FormattingEnabled = true;
+            this.comboBoxOrganization.Location = new System.Drawing.Point(283, 220);
+            this.comboBoxOrganization.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.comboBoxOrganization.Name = "comboBoxOrganization";
+            this.comboBoxOrganization.Size = new System.Drawing.Size(250, 38);
+            this.comboBoxOrganization.TabIndex = 13;
             // 
             // comboBoxContract
             // 
-            comboBoxContract.BackColor=Color.OldLace;
-            comboBoxContract.Cursor=Cursors.PanNW;
-            comboBoxContract.DropDownStyle=ComboBoxStyle.DropDownList;
-            comboBoxContract.FlatStyle=FlatStyle.Popup;
-            comboBoxContract.FormattingEnabled=true;
-            comboBoxContract.Location=new Point(282, 715);
-            comboBoxContract.Margin=new Padding(6, 9, 6, 9);
-            comboBoxContract.Name="comboBoxContract";
-            comboBoxContract.Size=new Size(251, 38);
-            comboBoxContract.TabIndex=14;
+            this.comboBoxContract.BackColor = System.Drawing.Color.OldLace;
+            this.comboBoxContract.Cursor = System.Windows.Forms.Cursors.PanNW;
+            this.comboBoxContract.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxContract.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.comboBoxContract.FormattingEnabled = true;
+            this.comboBoxContract.Location = new System.Drawing.Point(282, 715);
+            this.comboBoxContract.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.comboBoxContract.Name = "comboBoxContract";
+            this.comboBoxContract.Size = new System.Drawing.Size(251, 38);
+            this.comboBoxContract.TabIndex = 14;
             // 
             // comboBoxApp
             // 
-            comboBoxApp.BackColor=Color.OldLace;
-            comboBoxApp.Cursor=Cursors.PanNW;
-            comboBoxApp.DropDownStyle=ComboBoxStyle.DropDownList;
-            comboBoxApp.FlatStyle=FlatStyle.Popup;
-            comboBoxApp.FormattingEnabled=true;
-            comboBoxApp.Location=new Point(207, 40);
-            comboBoxApp.Margin=new Padding(6, 9, 6, 9);
-            comboBoxApp.Name="comboBoxApp";
-            comboBoxApp.Size=new Size(175, 38);
-            comboBoxApp.TabIndex=15;
-            comboBoxApp.SelectedIndexChanged+=comboBoxApp_SelectedIndexChanged;
+            this.comboBoxApp.BackColor = System.Drawing.Color.OldLace;
+            this.comboBoxApp.Cursor = System.Windows.Forms.Cursors.PanNW;
+            this.comboBoxApp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxApp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.comboBoxApp.FormattingEnabled = true;
+            this.comboBoxApp.Location = new System.Drawing.Point(207, 40);
+            this.comboBoxApp.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.comboBoxApp.Name = "comboBoxApp";
+            this.comboBoxApp.Size = new System.Drawing.Size(175, 38);
+            this.comboBoxApp.TabIndex = 15;
             // 
             // label5
             // 
-            label5.AutoSize=true;
-            label5.Location=new Point(26, 371);
-            label5.Margin=new Padding(6, 0, 6, 0);
-            label5.Name="label5";
-            label5.Size=new Size(129, 30);
-            label5.TabIndex=16;
-            label5.Text="Цель отлова";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 364);
+            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 30);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Цель отлова";
             // 
             // textBoxTarget
             // 
-            textBoxTarget.BackColor=Color.OldLace;
-            textBoxTarget.BorderStyle=BorderStyle.None;
-            textBoxTarget.Location=new Point(283, 364);
-            textBoxTarget.Margin=new Padding(6, 9, 6, 9);
-            textBoxTarget.Name="textBoxTarget";
-            textBoxTarget.Size=new Size(251, 30);
-            textBoxTarget.TabIndex=17;
+            this.textBoxTarget.BackColor = System.Drawing.Color.OldLace;
+            this.textBoxTarget.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxTarget.Location = new System.Drawing.Point(283, 364);
+            this.textBoxTarget.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.textBoxTarget.Name = "textBoxTarget";
+            this.textBoxTarget.Size = new System.Drawing.Size(251, 30);
+            this.textBoxTarget.TabIndex = 17;
             // 
             // R
             // 
-            R.AutoSize=true;
-            R.Location=new Point(26, 159);
-            R.Margin=new Padding(6, 0, 6, 0);
-            R.Name="R";
-            R.Size=new Size(183, 30);
-            R.TabIndex=20;
-            R.Text="Количество кошек";
+            this.R.AutoSize = true;
+            this.R.Location = new System.Drawing.Point(26, 159);
+            this.R.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.R.Name = "R";
+            this.R.Size = new System.Drawing.Size(183, 30);
+            this.R.TabIndex = 20;
+            this.R.Text = "Количество кошек";
             // 
             // label7
             // 
-            label7.AutoSize=true;
-            label7.Location=new Point(26, 89);
-            label7.Margin=new Padding(6, 0, 6, 0);
-            label7.Name="label7";
-            label7.Size=new Size(177, 30);
-            label7.TabIndex=21;
-            label7.Text="Количество собак";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 89);
+            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(177, 30);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Количество собак";
             // 
             // Isus
             // 
-            Isus.AutoSize=true;
-            Isus.Location=new Point(133, 24);
-            Isus.Margin=new Padding(6, 0, 6, 0);
-            Isus.Name="Isus";
-            Isus.Size=new Size(55, 30);
-            Isus.TabIndex=22;
-            Isus.Text="Акт";
+            this.Isus.AutoSize = true;
+            this.Isus.Location = new System.Drawing.Point(133, 24);
+            this.Isus.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.Isus.Name = "Isus";
+            this.Isus.Size = new System.Drawing.Size(55, 30);
+            this.Isus.TabIndex = 22;
+            this.Isus.Text = "Акт";
             // 
             // numericUpDownDog
             // 
-            numericUpDownDog.BackColor=Color.OldLace;
-            numericUpDownDog.Location=new Point(403, 86);
-            numericUpDownDog.Margin=new Padding(6, 9, 6, 9);
-            numericUpDownDog.Name="numericUpDownDog";
-            numericUpDownDog.Size=new Size(136, 37);
-            numericUpDownDog.TabIndex=23;
+            this.numericUpDownDog.BackColor = System.Drawing.Color.OldLace;
+            this.numericUpDownDog.Location = new System.Drawing.Point(403, 86);
+            this.numericUpDownDog.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.numericUpDownDog.Name = "numericUpDownDog";
+            this.numericUpDownDog.Size = new System.Drawing.Size(136, 37);
+            this.numericUpDownDog.TabIndex = 23;
             // 
             // numericUpDownCat
             // 
-            numericUpDownCat.BackColor=Color.OldLace;
-            numericUpDownCat.Location=new Point(402, 150);
-            numericUpDownCat.Margin=new Padding(6, 9, 6, 9);
-            numericUpDownCat.Name="numericUpDownCat";
-            numericUpDownCat.Size=new Size(136, 37);
-            numericUpDownCat.TabIndex=24;
+            this.numericUpDownCat.BackColor = System.Drawing.Color.OldLace;
+            this.numericUpDownCat.Location = new System.Drawing.Point(402, 150);
+            this.numericUpDownCat.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.numericUpDownCat.Name = "numericUpDownCat";
+            this.numericUpDownCat.Size = new System.Drawing.Size(136, 37);
+            this.numericUpDownCat.TabIndex = 24;
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(deleteButton);
-            groupBox2.Controls.Add(dataGridView1);
-            groupBox2.Controls.Add(addApp);
-            groupBox2.Controls.Add(comboBoxApp);
-            groupBox2.Location=new Point(283, 441);
-            groupBox2.Name="groupBox2";
-            groupBox2.Size=new Size(388, 258);
-            groupBox2.TabIndex=52;
-            groupBox2.TabStop=false;
-            groupBox2.Text="Добовление заявки";
+            this.groupBox2.Controls.Add(this.deleteButton);
+            this.groupBox2.Controls.Add(this.dataGridView1);
+            this.groupBox2.Controls.Add(this.addApp);
+            this.groupBox2.Controls.Add(this.comboBoxApp);
+            this.groupBox2.Location = new System.Drawing.Point(283, 441);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(388, 258);
+            this.groupBox2.TabIndex = 52;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Добавление заявки";
             // 
             // deleteButton
             // 
-            deleteButton.BackColor=Color.Cornsilk;
-            deleteButton.FlatStyle=FlatStyle.Popup;
-            deleteButton.Location=new Point(205, 165);
-            deleteButton.Margin=new Padding(4);
-            deleteButton.Name="deleteButton";
-            deleteButton.Size=new Size(114, 38);
-            deleteButton.TabIndex=53;
-            deleteButton.Text="Удалить";
-            deleteButton.UseVisualStyleBackColor=false;
-            deleteButton.Click+=deleteButton_Click;
+            this.deleteButton.BackColor = System.Drawing.Color.Cornsilk;
+            this.deleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.deleteButton.Location = new System.Drawing.Point(205, 165);
+            this.deleteButton.Margin = new System.Windows.Forms.Padding(4);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(114, 38);
+            this.deleteButton.TabIndex = 53;
+            this.deleteButton.Text = "Удалить";
+            this.deleteButton.UseVisualStyleBackColor = false;
             // 
             // dataGridView1
             // 
-            dataGridView1.AllowUserToAddRows=false;
-            dataGridView1.AllowUserToDeleteRows=false;
-            dataGridView1.AllowUserToResizeColumns=false;
-            dataGridView1.AllowUserToResizeRows=false;
-            dataGridView1.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location=new Point(6, 40);
-            dataGridView1.MultiSelect=false;
-            dataGridView1.Name="dataGridView1";
-            dataGridView1.ReadOnly=true;
-            dataGridView1.RowHeadersVisible=false;
-            dataGridView1.RowHeadersWidth=51;
-            dataGridView1.RowTemplate.Height=29;
-            dataGridView1.Size=new Size(192, 163);
-            dataGridView1.TabIndex=48;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 40);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 29;
+            this.dataGridView1.Size = new System.Drawing.Size(192, 163);
+            this.dataGridView1.TabIndex = 48;
             // 
             // addApp
             // 
-            addApp.BackColor=Color.Cornsilk;
-            addApp.FlatStyle=FlatStyle.Popup;
-            addApp.Location=new Point(264, 94);
-            addApp.Margin=new Padding(4);
-            addApp.Name="addApp";
-            addApp.Size=new Size(114, 38);
-            addApp.TabIndex=46;
-            addApp.Text="Добавить";
-            addApp.UseVisualStyleBackColor=false;
-            addApp.Click+=addApp_Click;
+            this.addApp.BackColor = System.Drawing.Color.Cornsilk;
+            this.addApp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.addApp.Location = new System.Drawing.Point(264, 94);
+            this.addApp.Margin = new System.Windows.Forms.Padding(4);
+            this.addApp.Name = "addApp";
+            this.addApp.Size = new System.Drawing.Size(114, 38);
+            this.addApp.TabIndex = 46;
+            this.addApp.Text = "Добавить";
+            this.addApp.UseVisualStyleBackColor = false;
             // 
             // ActEdit
             // 
-            AutoScaleDimensions=new SizeF(11F, 30F);
-            AutoScaleMode=AutoScaleMode.Font;
-            BackColor=Color.Wheat;
-            ClientSize=new Size(696, 868);
-            Controls.Add(groupBox2);
-            Controls.Add(numericUpDownCat);
-            Controls.Add(numericUpDownDog);
-            Controls.Add(Isus);
-            Controls.Add(label7);
-            Controls.Add(R);
-            Controls.Add(textBoxTarget);
-            Controls.Add(label5);
-            Controls.Add(comboBoxContract);
-            Controls.Add(comboBoxOrganization);
-            Controls.Add(dateAct);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(OK);
-            Controls.Add(Cancel);
-            Controls.Add(label1);
-            Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            FormBorderStyle=FormBorderStyle.SizableToolWindow;
-            Icon=(Icon)resources.GetObject("$this.Icon");
-            Margin=new Padding(6, 9, 6, 9);
-            Name="ActEdit";
-            StartPosition=FormStartPosition.CenterScreen;
-            Text="Акт";
-            ((System.ComponentModel.ISupportInitialize)numericUpDownDog).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownCat).EndInit();
-            groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 30F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Wheat;
+            this.ClientSize = new System.Drawing.Size(696, 868);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.numericUpDownCat);
+            this.Controls.Add(this.numericUpDownDog);
+            this.Controls.Add(this.Isus);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.R);
+            this.Controls.Add(this.textBoxTarget);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.comboBoxContract);
+            this.Controls.Add(this.comboBoxOrganization);
+            this.Controls.Add(this.dateAct);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.OK);
+            this.Controls.Add(this.Cancel);
+            this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("Segoe Print", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
+            this.Name = "ActEdit";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Акт";
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDog)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCat)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
