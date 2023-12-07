@@ -13,7 +13,8 @@ namespace GrpcServer_PI_21_01.Models
             if (filterableModelAttribute is null)
                 throw new Exception("This model cannot be filtered.");
 
-            equations = new List<string>();
+            andEquations = new List<string>();
+            orEquations = new List<string>();
             tableName = filterableModelAttribute.TableName;
         }
 
@@ -21,16 +22,18 @@ namespace GrpcServer_PI_21_01.Models
         {
             if (reply is not null)
             {
-                equations.AddRange(reply.Equations);
                 if (!CheckCorrectFormat()) // проверка на попытки нежелаемых SQL инжектов
                     throw new Exception("Incorrect reply format recieved. Filter reply is corrupted");
+                andEquations.AddRange(reply.AndEquations);
+                orEquations.AddRange(reply.OrEquations);
             }
         }
 
-        public IReadOnlyList<string> CurrentFilters => equations;
+        public IReadOnlyList<string> AndFilters => andEquations;
+        public IReadOnlyList<string> OrFilters => orEquations;
 
         /// <summary>
-        /// Adds a filter.
+        /// Adds an 'and' filter.
         /// <example>
         /// <code>
         /// <para/>// quick example for Act class:
@@ -51,11 +54,43 @@ namespace GrpcServer_PI_21_01.Models
         public void AddFilter<TValue>(Expression<Func<T, TValue>> selector,
             string desiredValue, FilterType filterType = FilterType.Equals)
         {
+            var equation = GenerateEquation(selector, desiredValue, filterType);
+            andEquations.Add(equation);
+        }
+
+        /// <summary>
+        /// Adds an 'or' filter.<br/>Usage is the same as for
+        /// <see cref="AddFilter{TValue}(Expression{Func{T, TValue}}, string, FilterType)"/>.
+        /// </summary>
+        /// <typeparam name="TValue">Property Type</typeparam>
+        /// <param name="selector">Property with [Filterable] attribute <br/> Example : <code>act => act.Organization</code></param>
+        /// <param name="desiredValue">Desired value of this property <br/> Example : <code>"1"</code>
+        /// <br/> will mean that target value for SQL query and operator will be "1".
+        /// If <paramref name="selector"/> is chosen for Organizations, this will mean organizations with id 1.</param>
+        /// <param name="filterType"> Which operator to use in SQL query for comparison,
+        /// <br/> Example : <code>FilterType.Equals | FilterType.GreaterThan</code> <br/> will return SQL query with operator '>='</param>
+        /// <exception cref="InvalidFilterCriteriaException">Will be thrown
+        /// if <paramref name="selector"/>'s property does not have [Filterable] attribute
+        /// </exception>
+        public void AddOrFilter<TValue>(Expression<Func<T, TValue>> selector,
+            string desiredValue, FilterType filterType = FilterType.Equals)
+        {
+            var equation = GenerateEquation(selector, desiredValue, filterType);
+            orEquations.Add(equation);
+        }
+
+        private static string GetColumnID<TValue>(Expression<Func<T, TValue>> selector)
+        {
             var property = Filter<T>.GetProperty(selector);
             var filterable = property.GetCustomAttributes<FilterableAttribute>().SingleOrDefault();
             if (filterable is null)
                 throw new InvalidFilterCriteriaException("Cannot filter property " + property.Name);
 
+            return filterable.ColumnName;
+        }
+
+        private static string GetOperator(FilterType filterType)
+        {
             var @operator = string.Empty;
             if (filterType.HasFlag(FilterType.GreaterThan))
                 @operator += ">";
@@ -64,16 +99,25 @@ namespace GrpcServer_PI_21_01.Models
             if (filterType.HasFlag(FilterType.Equals))
                 @operator += "=";
 
+            return @operator;
+        }
+
+        private static string GenerateEquation<TValue>(Expression<Func<T, TValue>> selector,
+            string desiredValue, FilterType filterType = FilterType.Equals)
+        {
+            var columnName = GetColumnID(selector);
+            var @operator = GetOperator(filterType);
+
             if (!decimal.TryParse(desiredValue, out decimal _)) desiredValue = $"'{desiredValue}'";
 
-            var equation = $"{filterable.ColumnName} {@operator} {desiredValue}";
-            equations.Add(equation);
+            return $"{columnName} {@operator} {desiredValue}";
         }
 
-        public void RemoveFilterAt(int index)
-        {
-            equations.RemoveAt(index);
-        }
+        public void RemoveAndFilterAt(int index) =>
+            andEquations.RemoveAt(index);
+
+        public void RemoveOrFilterAt(int index) =>
+            orEquations.RemoveAt(index);
 
         private static PropertyInfo GetProperty<TValue>(Expression<Func<T, TValue>> selector)
         {
@@ -90,8 +134,18 @@ namespace GrpcServer_PI_21_01.Models
         public string GenerateSQL(int page = -1)
         {
             var startQuery = $"SELECT * FROM {tableName}";
-            if (equations.Count > 0)
-                startQuery += $" WHERE {string.Join(" and ", equations)}";
+            if (andEquations.Count > 0 || orEquations.Count > 0)
+            {
+                startQuery += " WHERE ";
+                if (andEquations.Count > 0)
+                    startQuery += $"{string.Join(" and ", andEquations)}";
+                if (orEquations.Count > 0)
+                {
+                    if (andEquations.Count > 0)
+                        startQuery += " and ";
+                    startQuery += $"({string.Join(" or ", orEquations)})";
+                }
+            }
 
             if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
 
@@ -100,29 +154,35 @@ namespace GrpcServer_PI_21_01.Models
 
         private bool CheckCorrectFormat()
         {
-            return equations.All(eq =>
+            static bool checkForCorrectFormat(string eq)
             {
                 var items = eq.Split(' ');
                 if (items.Length == 3)
                     return items[1].Length <= 2 && (items[1].Length == 1 || items[1][1] == '=');
                 var possibleDate = string.Join(" ", items.Skip(2)).Replace("'", "");
                 return DateTime.TryParse(possibleDate, out DateTime _);
-            });
+            }
+            return andEquations.All(checkForCorrectFormat) && orEquations.All(checkForCorrectFormat);
         }
 
         public void CombineWith(Filter<T> filter)
         {
             if (filter is null) return;
-            equations.AddRange(filter.equations);
+            andEquations.AddRange(filter.andEquations);
+            orEquations.AddRange(filter.orEquations);
         }
 
         public void ExtendReply(FilterReply reply)
         {
             if (reply is not null)
-                reply.Equations.AddRange(equations);
+            {
+                reply.AndEquations.AddRange(andEquations);
+                reply.OrEquations.AddRange(orEquations);
+            }
         }
 
-        private readonly List<string> equations;
+        private readonly List<string> andEquations;
+        private readonly List<string> orEquations;
         private readonly string tableName;
     }
 

@@ -50,18 +50,18 @@
             this.goalBox = new System.Windows.Forms.GroupBox();
             this.goalTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.fromDateLabel = new System.Windows.Forms.Label();
-            this.fromDate = new System.Windows.Forms.DateTimePicker();
             this.toDateLabel = new System.Windows.Forms.Label();
             this.toDate = new System.Windows.Forms.DateTimePicker();
+            this.fromDateLabel = new System.Windows.Forms.Label();
+            this.fromDate = new System.Windows.Forms.DateTimePicker();
             this.contractBox = new System.Windows.Forms.GroupBox();
             this.contractComboBox = new System.Windows.Forms.ComboBox();
             this.applicationBox = new System.Windows.Forms.GroupBox();
-            this.applications = new System.Windows.Forms.ListBox();
-            this.appComboBox = new System.Windows.Forms.ComboBox();
-            this.addApplication = new System.Windows.Forms.Button();
-            this.removeApplication = new System.Windows.Forms.Button();
             this.appListLabel = new System.Windows.Forms.Label();
+            this.removeApplication = new System.Windows.Forms.Button();
+            this.addApplication = new System.Windows.Forms.Button();
+            this.appComboBox = new System.Windows.Forms.ComboBox();
+            this.applications = new System.Windows.Forms.ListBox();
             this.apply = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
             this.close = new System.Windows.Forms.Button();
@@ -316,22 +316,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "По дате отлова";
             // 
-            // fromDateLabel
-            // 
-            this.fromDateLabel.AutoSize = true;
-            this.fromDateLabel.Location = new System.Drawing.Point(37, 42);
-            this.fromDateLabel.Name = "fromDateLabel";
-            this.fromDateLabel.Size = new System.Drawing.Size(29, 20);
-            this.fromDateLabel.TabIndex = 1;
-            this.fromDateLabel.Text = "От:";
-            // 
-            // fromDate
-            // 
-            this.fromDate.Location = new System.Drawing.Point(70, 39);
-            this.fromDate.Name = "fromDate";
-            this.fromDate.Size = new System.Drawing.Size(221, 27);
-            this.fromDate.TabIndex = 0;
-            // 
             // toDateLabel
             // 
             this.toDateLabel.AutoSize = true;
@@ -347,6 +331,22 @@
             this.toDate.Name = "toDate";
             this.toDate.Size = new System.Drawing.Size(221, 27);
             this.toDate.TabIndex = 2;
+            // 
+            // fromDateLabel
+            // 
+            this.fromDateLabel.AutoSize = true;
+            this.fromDateLabel.Location = new System.Drawing.Point(37, 42);
+            this.fromDateLabel.Name = "fromDateLabel";
+            this.fromDateLabel.Size = new System.Drawing.Size(29, 20);
+            this.fromDateLabel.TabIndex = 1;
+            this.fromDateLabel.Text = "От:";
+            // 
+            // fromDate
+            // 
+            this.fromDate.Location = new System.Drawing.Point(70, 39);
+            this.fromDate.Name = "fromDate";
+            this.fromDate.Size = new System.Drawing.Size(221, 27);
+            this.fromDate.TabIndex = 0;
             // 
             // contractBox
             // 
@@ -381,32 +381,14 @@
             this.applicationBox.TabStop = false;
             this.applicationBox.Text = "По заявкам";
             // 
-            // applications
+            // appListLabel
             // 
-            this.applications.FormattingEnabled = true;
-            this.applications.ItemHeight = 20;
-            this.applications.Location = new System.Drawing.Point(15, 26);
-            this.applications.Name = "applications";
-            this.applications.Size = new System.Drawing.Size(150, 84);
-            this.applications.TabIndex = 0;
-            // 
-            // appComboBox
-            // 
-            this.appComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.appComboBox.FormattingEnabled = true;
-            this.appComboBox.Location = new System.Drawing.Point(190, 49);
-            this.appComboBox.Name = "appComboBox";
-            this.appComboBox.Size = new System.Drawing.Size(397, 28);
-            this.appComboBox.TabIndex = 1;
-            // 
-            // addApplication
-            // 
-            this.addApplication.Location = new System.Drawing.Point(430, 83);
-            this.addApplication.Name = "addApplication";
-            this.addApplication.Size = new System.Drawing.Size(157, 29);
-            this.addApplication.TabIndex = 2;
-            this.addApplication.Text = "Добавить заявку";
-            this.addApplication.UseVisualStyleBackColor = true;
+            this.appListLabel.AutoSize = true;
+            this.appListLabel.Location = new System.Drawing.Point(190, 26);
+            this.appListLabel.Name = "appListLabel";
+            this.appListLabel.Size = new System.Drawing.Size(129, 20);
+            this.appListLabel.TabIndex = 4;
+            this.appListLabel.Text = "Перечень заявок";
             // 
             // removeApplication
             // 
@@ -417,14 +399,32 @@
             this.removeApplication.Text = "Убрать заявку";
             this.removeApplication.UseVisualStyleBackColor = true;
             // 
-            // appListLabel
+            // addApplication
             // 
-            this.appListLabel.AutoSize = true;
-            this.appListLabel.Location = new System.Drawing.Point(190, 26);
-            this.appListLabel.Name = "appListLabel";
-            this.appListLabel.Size = new System.Drawing.Size(129, 20);
-            this.appListLabel.TabIndex = 4;
-            this.appListLabel.Text = "Перечень заявок";
+            this.addApplication.Location = new System.Drawing.Point(430, 83);
+            this.addApplication.Name = "addApplication";
+            this.addApplication.Size = new System.Drawing.Size(157, 29);
+            this.addApplication.TabIndex = 2;
+            this.addApplication.Text = "Добавить заявку";
+            this.addApplication.UseVisualStyleBackColor = true;
+            // 
+            // appComboBox
+            // 
+            this.appComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.appComboBox.FormattingEnabled = true;
+            this.appComboBox.Location = new System.Drawing.Point(190, 49);
+            this.appComboBox.Name = "appComboBox";
+            this.appComboBox.Size = new System.Drawing.Size(397, 28);
+            this.appComboBox.TabIndex = 1;
+            // 
+            // applications
+            // 
+            this.applications.FormattingEnabled = true;
+            this.applications.ItemHeight = 20;
+            this.applications.Location = new System.Drawing.Point(15, 26);
+            this.applications.Name = "applications";
+            this.applications.Size = new System.Drawing.Size(150, 84);
+            this.applications.TabIndex = 0;
             // 
             // apply
             // 
@@ -476,6 +476,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "ActFilter";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Фильтры: Акты Отлова";
             this.orgBox.ResumeLayout(false);

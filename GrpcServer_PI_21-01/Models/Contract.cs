@@ -18,7 +18,7 @@ namespace GrpcServer_PI_21_01.Models
         [Filterable("validity_date")]
         public DateTime ActionDate { get; set; }
 
-        [Filterable("executer_id")]
+        [Filterable("performer_id")]
         public Organization Executer { get; set; }
 
         [Filterable("customer_id")]

@@ -23,8 +23,7 @@ namespace GrpcClient_PI_21_01
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             // Только сейчас заметил, что это?!
-            filterAppDate2.Value = DateTime.Now;
-            filterAppDate2.ValueChanged += filterAppDate_ValueChanged;
+            // где?
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -52,6 +51,8 @@ namespace GrpcClient_PI_21_01
             historyButton.Click += History_button_Click;
             //History_button.Click += History_button_Click;
 
+            contractFiltersButton.Click += OpenContractFilters;
+
             Task.Run(Setup);
         }
         readonly DataSet dsApplication = new();
@@ -63,22 +64,11 @@ namespace GrpcClient_PI_21_01
 
         private async Task Setup()
         {
-            await CreateData();
             await SetDataGridAct();
             await ShowContract();
 
             await SetDataGridApp();
             await SetDataGridOrg();
-        }
-
-        private async Task CreateData()
-        {
-            ContractTable.Rows.Clear();
-            var cont = await ContractService.GetContracts();
-            //var cont = ContractRepository.ShowCont(dateTimePicker3.Value.ToString(), dateTimePicker1.Value.ToString());
-            foreach (var i in cont.Where(c => c.DateConclusion >= dateTimePicker3.Value
-            && c.DateConclusion <= dateTimePicker1.Value).Select(c => ContractService.ToDataArray(c)))
-                ContractTable.Rows.Add(i);
         }
 
         private static async Task<bool> CheckPrivilege(NameMdels model)
@@ -92,9 +82,9 @@ namespace GrpcClient_PI_21_01
             return true;
         }
 
-
+        #region Related: Act Capture
         /* -----------------------------------ACT----------------------------------------------------- */
-        
+
         private readonly SemaphoreSlim actGridSemaphore = new(1, 1);
         private async Task SetDataGridAct()
         {
@@ -171,7 +161,10 @@ namespace GrpcClient_PI_21_01
             await SetDataGridAct();
         }
 
-
+        private void OpenActFilters(object sender, EventArgs e) =>
+            new ActFilter(actFilter, SetDataGridAct).Show();
+        #endregion
+        #region Related: Organizations
         private async Task SetDataGridOrg()
         {
             int page = -1; // сделать пагинацию
@@ -194,6 +187,49 @@ namespace GrpcClient_PI_21_01
             dataGridViewOrg.DataSource = dsOrganization.Tables[0];
         }
 
+        private async void OrgDelete_Click(object sender, EventArgs e)
+        {
+            if (await CheckPrivilege(NameMdels.Org))
+                if (dataGridViewOrg.CurrentRow != null)
+                {
+                    var org = int.Parse(dataGridViewOrg.CurrentRow.Cells[0].Value.ToString());
+                    var a = await OrgService.RemoveOrganization(org);
+                    if (!a)
+                    {
+                        MessageBox.Show("Произошла ошибка");
+                    }
+                    await SetDataGridOrg();
+                }
+        }
+
+        private async void OrgEdit_Click(object sender, EventArgs e)
+        {
+            if (await CheckPrivilege(NameMdels.Org))
+                if (dataGridViewOrg.CurrentRow != null)
+                {
+                    var org = int.Parse(dataGridViewOrg.CurrentRow.Cells[0].Value.ToString());
+                    var orgEdit = new OrgEdit(org);
+                    orgEdit.ShowDialog();
+                    await SetDataGridOrg();
+                }
+        }
+
+        private async void OrgAdd_Click(object sender, EventArgs e)
+        {
+            if (await CheckPrivilege(NameMdels.Org))
+            {
+                var orgAdd = new OrgAdd();
+                orgAdd.ShowDialog();
+                await SetDataGridOrg();
+            }
+        }
+
+        private void OpenOrganizationFilters(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+        #region Related: Applications
         private async Task SetDataGridApp()
         {
             int page = -1; // to do: сделать пагинацию
@@ -241,43 +277,6 @@ namespace GrpcClient_PI_21_01
                 }
         }
 
-        private async void OrgDelete_Click(object sender, EventArgs e)
-        {
-            if (await CheckPrivilege(NameMdels.Org))
-                if (dataGridViewOrg.CurrentRow != null)
-                {
-                    var org = int.Parse(dataGridViewOrg.CurrentRow.Cells[0].Value.ToString());
-                    var a = await OrgService.RemoveOrganization(org);
-                    if (!a)
-                    {
-                        MessageBox.Show("Произошла ошибка");
-                    }
-                    await SetDataGridOrg();
-                }
-        }
-
-        private async void OrgEdit_Click(object sender, EventArgs e)
-        {
-            if (await CheckPrivilege(NameMdels.Org))
-                if (dataGridViewOrg.CurrentRow != null)
-                {
-                    var org = int.Parse(dataGridViewOrg.CurrentRow.Cells[0].Value.ToString());
-                    var orgEdit = new OrgEdit(org);
-                    orgEdit.ShowDialog();
-                    await SetDataGridOrg();
-                }
-        }
-
-        private async void OrgAdd_Click(object sender, EventArgs e)
-        {
-            if (await CheckPrivilege(NameMdels.Org))
-            {
-                var orgAdd = new OrgAdd();
-                orgAdd.ShowDialog();
-                await SetDataGridOrg();
-            }
-        }
-
         private async void AppAdd_Click(object sender, EventArgs e)
         {
             if (await CheckPrivilege(NameMdels.App))
@@ -288,15 +287,28 @@ namespace GrpcClient_PI_21_01
             }
         }
 
+        private void OpenApplicationFilters(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+        #region Related: Contracts
+        private readonly SemaphoreSlim contrGridSemaphore = new(1, 1);
         private async Task ShowContract()
         {
-            int page = -1; // to do: сделать пагинацию
-
-            ContractTable.Rows.Clear();
-            var cont = await ContractService.GetContracts(page, contrFilter);
-            foreach (var i in cont.Select(c => ContractService.ToDataArray(c)))
+            await contrGridSemaphore.WaitAsync();
+            try
             {
-                ContractTable.Rows.Add(i);
+                int page = -1; // to do: сделать пагинацию
+
+                ContractTable.Rows.Clear();
+                var cont = await ContractService.GetContracts(page, contrFilter);
+                foreach (var i in cont.Select(c => ContractService.ToDataArray(c)))
+                    ContractTable.Rows.Add(i);
+            }
+            finally
+            {
+                contrGridSemaphore.Release();
             }
         }
 
@@ -331,29 +343,16 @@ namespace GrpcClient_PI_21_01
                 }
         }
 
-        private async void dateTimePicker3_ValueChanged(object sender, EventArgs e)
-        {
-            await ShowContract();
-        }
-
         private async void ContractTable_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             var contAdd = new AddContractForm(int.Parse(ContractTable.CurrentRow.Cells[0].Value.ToString()));
             contAdd.ShowDialog();
             await ShowContract();
         }
-
-        private async void filterAppDate_ValueChanged(object sender, EventArgs e)
-        {
-            dsApplication.Tables[0].Rows.Clear();
-            var apps = (await AppService.GetApplications())
-                .Where(x => x.date >= filterAppDate.Value && x.date <= filterAppDate2.Value)
-                .Select(app => AppService.ToDataArray(app));
-            foreach (var app in apps)
-                dsApplication.Tables[0].Rows.Add(app);
-            dataGridViewApp.DataSource = dsApplication.Tables[0];
-        }
-
+        private void OpenContractFilters(object sender, EventArgs e) =>
+            new ContractFilter(contrFilter, ShowContract).Show();
+        #endregion
+        #region Related: Reports
         private void button1_Click(object sender, EventArgs e)
         {
             OpenReport();
@@ -376,7 +375,8 @@ namespace GrpcClient_PI_21_01
                 OpenReport();
             }
         }
-
+        #endregion
+        #region Related: Operation History
         private async void History_button_Click(object sender, EventArgs e)
         {
             if (await CheckPrivilege(NameMdels.History))
@@ -384,23 +384,10 @@ namespace GrpcClient_PI_21_01
                 var data = await OperationService.GetOperations();
                 var historyForm = new HistoryForm(data);
 
-                // это переписать так, чтобы можно было заменить кодом сверху
-                //var data = new List<string>() { "Фамилия", "Имя", "Отчество.", "Телефон",
-                //                    "Электронная почта", "Организация", "Наименование структурного подразделения",
-                //                    "Должность", "Рабочий телефон", "Рабочий адрес электронной почты подразделения",
-                //                    "Логин", "Дата и время", "Идентификационный номер экземпляра объекта.", "Описание экземпляра объекта после совершения действия",
-                //                    "Идентификационный номер загруженного файла"};
-                //var historyForm = new HistoryForm(data);
-
                 historyForm.ShowDialog();
             }
             else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций");
         }
-
-        private void OpenActFilters(object sender, EventArgs e)
-        {
-            var form = new ActFilter(actFilter, SetDataGridAct);
-            form.Show();
-        }
+        #endregion
     }
 }
