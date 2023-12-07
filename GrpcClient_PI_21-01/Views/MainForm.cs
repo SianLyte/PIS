@@ -50,6 +50,8 @@ namespace GrpcClient_PI_21_01
             tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
 
             contractFiltersButton.Click += OpenContractFilters;
+            applicationFiltersButton.Click += OpenApplicationFilters;
+            organizationFiltersButton.Click += OpenOrganizationFilters;
 
             Task.Run(Setup);
         }
@@ -243,27 +245,33 @@ namespace GrpcClient_PI_21_01
         }
         #endregion
         #region Related: Applications
+        private readonly SemaphoreSlim appGridSemaphore = new(1, 1);
         private async Task SetDataGridApp()
         {
-            int page = -1; // to do: сделать пагинацию
-
-            /*-Applications-------------------------*/
-            dsApplication.Tables.Clear();
-            dsApplication.Tables.Add("Score");
-            dsApplication.Tables[0].Columns.Add("Дата подачи");
-            dsApplication.Tables[0].Columns.Add("Номер");
-            dsApplication.Tables[0].Columns.Add("Населенный пункт");
-            dsApplication.Tables[0].Columns.Add("Территория");
-            dsApplication.Tables[0].Columns.Add("Место обитания");
-            dsApplication.Tables[0].Columns.Add("Срочность исполнения");
-            dsApplication.Tables[0].Columns.Add("Описание животного");
-            dsApplication.Tables[0].Columns.Add("Категория заявителя");
-            var apps = await AppService.GetApplications(page, appFilter);
-            foreach (var app in apps.Select(a => AppService.ToDataArray(a)))
+            await appGridSemaphore.WaitAsync();
+            try
             {
-                dsApplication.Tables[0].Rows.Add(app);
+                int page = -1; // to do: сделать пагинацию
+
+                /*-Applications-------------------------*/
+                dsApplication.Tables.Clear();
+                dsApplication.Tables.Add("Score");
+                dsApplication.Tables[0].Columns.Add("Дата подачи");
+                dsApplication.Tables[0].Columns.Add("Номер");
+                dsApplication.Tables[0].Columns.Add("Населенный пункт");
+                dsApplication.Tables[0].Columns.Add("Территория");
+                dsApplication.Tables[0].Columns.Add("Место обитания");
+                dsApplication.Tables[0].Columns.Add("Срочность исполнения");
+                dsApplication.Tables[0].Columns.Add("Описание животного");
+                dsApplication.Tables[0].Columns.Add("Категория заявителя");
+                var apps = await AppService.GetApplications(page, appFilter);
+                foreach (var app in apps.Select(a => AppService.ToDataArray(a)))
+                {
+                    dsApplication.Tables[0].Rows.Add(app);
+                }
+                dataGridViewApp.DataSource = dsApplication.Tables[0];
             }
-            dataGridViewApp.DataSource = dsApplication.Tables[0];
+            finally { appGridSemaphore.Release(); }
         }
 
         /*------------------------------------------------------------------*/
@@ -300,10 +308,8 @@ namespace GrpcClient_PI_21_01
             }
         }
 
-        private void OpenApplicationFilters(object sender, EventArgs e)
-        {
-
-        }
+        private void OpenApplicationFilters(object sender, EventArgs e) =>
+            new AppFilter(appFilter, SetDataGridApp).Show();
         #endregion
         #region Related: Contracts
         private int _PageContract = 1;
@@ -418,7 +424,6 @@ namespace GrpcClient_PI_21_01
             }
             else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        #endregion
 
         public void CreateDataSet()
         {
@@ -454,8 +459,9 @@ namespace GrpcClient_PI_21_01
             }
             dataGridViewHistory.DataSource = _dbHistory.Tables[0];
         }
-        
-        private void CheckPageButton(Button buttonPrevious, Button buttonNext, int page, int pageMax)
+        #endregion
+
+        private static void CheckPageButton(Button buttonPrevious, Button buttonNext, int page, int pageMax)
         {
             buttonPrevious.Enabled = true;
             buttonNext.Enabled = true;

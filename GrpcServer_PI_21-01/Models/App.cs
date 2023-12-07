@@ -35,6 +35,7 @@ namespace GrpcServer_PI_21_01.Models
         [Filterable("client_category")]
         public string applicantCategory { get; set; }
         
+        [Filterable("status")]
         public AppStatus status { get; set; }
 
         public static string EnumToString(AppStatus status)

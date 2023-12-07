@@ -42,13 +42,7 @@ namespace GrpcClient_PI_21_01.Views
             locality.DisplayMember = "City";
 
             category.Items.Clear();
-            category.Items.AddRange(new string[]
-            {
-                "Физ. лицо",
-                "Юр. лицо",
-                "Гос. лицо",
-                "Ин. лицо",
-            });
+            category.Items.AddRange(AppService.GetApplicantTypes());
 
             FillAppEdit();
         }

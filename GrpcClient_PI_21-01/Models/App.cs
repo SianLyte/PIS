@@ -32,6 +32,8 @@ namespace GrpcClient_PI_21_01.Models
 
         [Filterable("client_category")]
         public string applicantCategory { get; set; }
+
+        [Filterable("status")]
         public AppStatus status { get; set; }
 
         public App(DateTime date, int number, Location locality, string territory, string animalHabiat, string urgencyOfExecution, string animaldescription, string applicantCategory, AppStatus status)

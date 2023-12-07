@@ -22,13 +22,7 @@ namespace GrpcClient_PI_21_01.Views
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             category.Items.Clear();
-            category.Items.AddRange(new string[]
-            {
-                "Физ. лицо",
-                "Юр. лицо",
-                "Гос. лицо",
-                "Ин. лицо",
-            });
+            category.Items.AddRange(AppService.GetApplicantTypes());
             category.SelectedIndex = 0;
 
             Task.Run(LoadLocalities);

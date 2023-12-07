@@ -87,4 +87,20 @@ namespace GrpcClient_PI_21_01
             return null;
         }
     }
+
+    public static class EnumTranslationExtensions
+    {
+        public static string Translate(this AppStatus appStatus)
+        {
+            return appStatus switch
+            {
+                AppStatus.Registered => "Зарегистрирована",
+                AppStatus.Fulfilled => "Исполнена",
+                AppStatus.AwaitingRegistration => "Ожидает регистрации",
+                AppStatus.Performed => "В исполнении",
+                AppStatus.Removed => "Снята с контроля исполнения без отлова",
+                _ => "unknown_status"
+            };
+        }
+    }
 }

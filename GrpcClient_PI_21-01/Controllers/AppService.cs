@@ -141,5 +141,15 @@ namespace GrpcClient_PI_21_01.Controllers
             app.number = response.ModifiedId ?? -1;
             return response.Successful;
         }
+
+        public static string[] GetApplicantTypes()
+        {
+            return new string[]
+            {
+                "Физ. лицо",
+                "Юр. лицо",
+                "Гос. лицо",
+            };
+        }
     }
 }
