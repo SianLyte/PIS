@@ -247,9 +247,7 @@ namespace GrpcClient_PI_21_01
         }
 
         private void OpenOrganizationFilters(object sender, EventArgs e)
-        {
-
-        }
+            => new OrgFilter(orgFilter, SetDataGridOrg).Show();
         #endregion
         #region Related: Applications
         private readonly SemaphoreSlim appGridSemaphore = new(1, 1);
@@ -299,7 +297,8 @@ namespace GrpcClient_PI_21_01
                 if (dataGridViewApp.CurrentRow != null)
                 {
                     var appId = int.Parse(dataGridViewApp.CurrentRow.Cells[1].Value.ToString());
-                    var appEdit = new AppEdit(appId);
+                    var app = await AppService.GetApplication(appId);
+                    var appEdit = new AppEdit(app);
                     appEdit.ShowDialog();
                     await SetDataGridApp();
                 }
@@ -309,7 +308,7 @@ namespace GrpcClient_PI_21_01
         {
             if (await CheckPrivilege(NameMdels.App))
             {
-                var appAdd = new AppAdd();
+                var appAdd = new AppEdit();
                 appAdd.ShowDialog();
                 await SetDataGridApp();
             }

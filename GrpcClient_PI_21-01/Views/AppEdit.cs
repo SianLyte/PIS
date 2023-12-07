@@ -19,16 +19,17 @@ namespace GrpcClient_PI_21_01.Views
 {
     public partial class AppEdit : Form
     {
+        private readonly App? app;
         public AppEdit()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            Task.Run(SetupForm);
         }
-        private readonly int appNum = -1;
-        public AppEdit(int num)
+
+        public AppEdit(App app)
         {
             InitializeComponent();
-            appNum = num;
+            this.app = app;
             Task.Run(SetupForm);
         }
 
@@ -36,7 +37,7 @@ namespace GrpcClient_PI_21_01.Views
         {
             var localities = await LocationService.GetLocations();
             var orderedLocalities = localities.OrderBy(loc => loc.City)
-                .ToArray();
+                .ToArray(); // do sorting here using SQL
             locality.Items.Clear();
             locality.Items.AddRange(orderedLocalities);
             locality.DisplayMember = "City";
@@ -47,12 +48,9 @@ namespace GrpcClient_PI_21_01.Views
             FillAppEdit();
         }
 
-        private async void FillAppEdit()
+        private void FillAppEdit()
         {
-            //var NumAppId = AppRepository.Applicatiions.FindIndex(x => x.number == Convert.ToInt32(appNum));
-            //App app = AppRepository.Applicatiions[NumAppId];
-
-            var app = await AppService.GetApplication(appNum);
+            if (app is null) return;
 
             try
             {
@@ -89,18 +87,35 @@ namespace GrpcClient_PI_21_01.Views
                 urgency.Select();
                 return;
             }
-            var app = new App(DateTime.Parse(dateTime.Text), appNum,
+
+            var app = new App(DateTime.Parse(dateTime.Text), this.app is null ? -1 : this.app.number,
                 loc, territory.Text, animalHabbiat.Text, urgency.Text,
                 descrip.Text, category.SelectedItem.ToString(), AppStatus.Registered);
-            var updated = await AppService.UpdateApplication(app);
-            if (!updated)
+
+            if (this.app is null)
             {
-                MessageBox.Show("Could not update the application in the database." +
-                    " Please, double check what you entered inside of textboxes." +
-                    " If you are sure that inputs are correct, please contact the administrator.",
-                    "Internal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var added = await AppService.AddApplication(app);
+                if (!added)
+                {
+                    MessageBox.Show("Could not add the application to the database." +
+                        " Please, double check what you entered inside of textboxes." +
+                        " If you are sure that inputs are correct, please contact the administrator.",
+                        "Internal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else Close();
             }
-            else this.Close();
+            else
+            {
+                var updated = await AppService.UpdateApplication(app);
+                if (!updated)
+                {
+                    MessageBox.Show("Could not update the application in the database." +
+                        " Please, double check what you entered inside of textboxes." +
+                        " If you are sure that inputs are correct, please contact the administrator.",
+                        "Internal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else Close();
+            }
 
         }
 

@@ -90,7 +90,14 @@ namespace GrpcClient_PI_21_01.Views
 
             if (toEdit is null)
                 await OrgService.AddOrganization(org);
-            else await OrgService.UpdateOrganization(org);
+            else
+            {
+                org.idOrg = toEdit.idOrg;
+                var updateSuccessful = await OrgService.UpdateOrganization(org);
+                if (!updateSuccessful)
+                    MessageBox.Show("Some internal error has occured while updating the organization." +
+                        " Please contact the administrator.", "Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             this.Close();
         }
