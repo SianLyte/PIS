@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace GrpcClient_PI_21_01
 {
@@ -49,9 +50,6 @@ namespace GrpcClient_PI_21_01
 
             tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
 
-            historyButton.Click += History_button_Click;
-            //History_button.Click += History_button_Click;
-
             Task.Run(Setup);
         }
         readonly DataSet dsApplication = new();
@@ -69,6 +67,7 @@ namespace GrpcClient_PI_21_01
 
             await SetDataGridApp();
             await SetDataGridOrg();
+            await InicilisationHistory();
         }
 
         private async Task CreateData()
@@ -94,7 +93,7 @@ namespace GrpcClient_PI_21_01
 
 
         /* -----------------------------------ACT----------------------------------------------------- */
-        
+
         private readonly SemaphoreSlim actGridSemaphore = new(1, 1);
         private async Task SetDataGridAct()
         {
@@ -377,30 +376,63 @@ namespace GrpcClient_PI_21_01
             }
         }
 
-        private async void History_button_Click(object sender, EventArgs e)
-        {
-            if (await CheckPrivilege(NameMdels.History))
-            {
-                var data = await OperationService.GetOperations();
-                var historyForm = new HistoryForm(data);
-
-                // это переписать так, чтобы можно было заменить кодом сверху
-                //var data = new List<string>() { "Фамилия", "Имя", "Отчество.", "Телефон",
-                //                    "Электронная почта", "Организация", "Наименование структурного подразделения",
-                //                    "Должность", "Рабочий телефон", "Рабочий адрес электронной почты подразделения",
-                //                    "Логин", "Дата и время", "Идентификационный номер экземпляра объекта.", "Описание экземпляра объекта после совершения действия",
-                //                    "Идентификационный номер загруженного файла"};
-                //var historyForm = new HistoryForm(data);
-
-                historyForm.ShowDialog();
-            }
-            else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций");
-        }
-
         private void OpenActFilters(object sender, EventArgs e)
         {
             var form = new ActFilter(actFilter, SetDataGridAct);
             form.Show();
+        }
+
+
+        // ----------------------HistoryPage-------------------------------------
+
+
+        private List<OperationReply> _data;
+        readonly DataSet _dbHistory = new();
+
+        public async Task InicilisationHistory()
+        {
+            if (await CheckPrivilege(NameMdels.History))
+            {
+                _data = await OperationService.GetOperations();
+                CreateDataSet();
+                ParceDataToDataGrid();
+            }
+            else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public void CreateDataSet()
+        {
+            _dbHistory.Tables.Clear();
+            _dbHistory.Tables.Add("History");
+            _dbHistory.Tables[0].Columns.Add("Фамилия");
+            _dbHistory.Tables[0].Columns.Add("Имя");
+            _dbHistory.Tables[0].Columns.Add("Отчество");
+            _dbHistory.Tables[0].Columns.Add("Организация");
+            _dbHistory.Tables[0].Columns.Add("Должность");
+            _dbHistory.Tables[0].Columns.Add("Логин");
+            _dbHistory.Tables[0].Columns.Add("Дата и время");
+            _dbHistory.Tables[0].Columns.Add("Вид действия");
+            _dbHistory.Tables[0].Columns.Add("Идетификационный номер экземляра объекта");
+            _dbHistory.Tables[0].Columns.Add("Наименование таблицы, в которой произошло изменение");
+        }
+
+        private void ParceDataToDataGrid()
+        {
+            foreach (var data in _data)
+            {
+                var allDataParts = new string[10] { data.User.Surname.ToString(),
+                                                    data.User.Name.ToString(),
+                                                    data.User.Patronymic.ToString(),
+                                                    data.User.Organization.Name.ToString(),
+                                                    data.User.PrivelegeLevel.ToString(),
+                                                    data.User.Login.ToString(),
+                                                    data.Date.ToDateTime().ToString(),
+                                                    data.ModifiedObjectId.ToString(),
+                                                    data.Action.ToString(),
+                                                    data.ModifiedTableName.ToString()};
+                _dbHistory.Tables[0].Rows.Add(allDataParts);
+            }
+            dataGridViewHistory.DataSource = _dbHistory.Tables[0];
         }
     }
 }
