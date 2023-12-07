@@ -29,85 +29,77 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            tabControl1=new TabControl();
-            tabPage1=new TabPage();
-            buttonPriviosPageAct=new Button();
-            buttonNextPageAct=new Button();
-            filterActButton=new Button();
-            buttonAnimalCard=new Button();
-            AddActButton=new Button();
-            UpdateActButton=new Button();
-            DeleteActButton=new Button();
-            dateTimePickerAct=new DateTimePicker();
-            label1=new Label();
-            DataGridViewActs=new DataGridView();
-            Id=new DataGridViewTextBoxColumn();
-            CountDogs=new DataGridViewTextBoxColumn();
-            CountCats=new DataGridViewTextBoxColumn();
-            Organization=new DataGridViewTextBoxColumn();
-            Date=new DataGridViewTextBoxColumn();
-            Target=new DataGridViewTextBoxColumn();
-            Kontracts=new DataGridViewTextBoxColumn();
-            pictureBox1=new PictureBox();
-            tabPage2=new TabPage();
-            checkBox1=new CheckBox();
-            label5=new Label();
-            pictureBox2=new PictureBox();
-            button1=new Button();
-            button5=new Button();
-            button6=new Button();
-            button7=new Button();
-            dateTimePicker2=new DateTimePicker();
-            label2=new Label();
-            dataGridView2=new DataGridView();
-            tabPage3=new TabPage();
-            buttonPreviousContracts=new Button();
-            buttonNextContracts=new Button();
-            EditButton=new Button();
-            AddButton=new Button();
-            DeleteButton=new Button();
-            dateTimePicker3=new DateTimePicker();
-            label3=new Label();
-            ContractTable=new DataGridView();
-            Column1=new DataGridViewTextBoxColumn();
-            Column2=new DataGridViewTextBoxColumn();
-            Column3=new DataGridViewTextBoxColumn();
-            Column5=new DataGridViewTextBoxColumn();
-            Column6=new DataGridViewTextBoxColumn();
-            tabPage4=new TabPage();
-            filterAppDate2=new DateTimePicker();
-            label6=new Label();
-            filterAppDate=new DateTimePicker();
-            label4=new Label();
-            AppAdd=new Button();
-            AppEdit=new Button();
-            AppDelete=new Button();
-            dataGridViewApp=new DataGridView();
-            tabPage5=new TabPage();
-            dataGridViewOrg=new DataGridView();
-            OrgAdd=new Button();
-            OrgEdit=new Button();
-            OrgDelete=new Button();
-            tabPage6=new TabPage();
-            dataGridViewHistory=new DataGridView();
-            dateTimePicker1=new DateTimePicker();
-            label7=new Label();
-            tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
-            tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)ContractTable).BeginInit();
-            tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewApp).BeginInit();
-            tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewOrg).BeginInit();
-            tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewHistory).BeginInit();
-            SuspendLayout();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.filterActButton = new System.Windows.Forms.Button();
+            this.History_button = new System.Windows.Forms.Button();
+            this.buttonAnimalCard = new System.Windows.Forms.Button();
+            this.AddActButton = new System.Windows.Forms.Button();
+            this.UpdateActButton = new System.Windows.Forms.Button();
+            this.DeleteActButton = new System.Windows.Forms.Button();
+            this.dateTimePickerAct = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.DataGridViewActs = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CountDogs = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CountCats = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Organization = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Target = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Kontracts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.historyButton = new System.Windows.Forms.Button();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.AddButton = new System.Windows.Forms.Button();
+            this.DeleteButton = new System.Windows.Forms.Button();
+            this.ContractTable = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.historuAppButton = new System.Windows.Forms.Button();
+            this.AppAdd = new System.Windows.Forms.Button();
+            this.AppEdit = new System.Windows.Forms.Button();
+            this.AppDelete = new System.Windows.Forms.Button();
+            this.dataGridViewApp = new System.Windows.Forms.DataGridView();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.historyOrganisationButton = new System.Windows.Forms.Button();
+            this.dataGridViewOrg = new System.Windows.Forms.DataGridView();
+            this.OrgAdd = new System.Windows.Forms.Button();
+            this.OrgEdit = new System.Windows.Forms.Button();
+            this.OrgDelete = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.contractFiltersButton = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridViewActs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ContractTable)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewApp)).BeginInit();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOrg)).BeginInit();
+            this.SuspendLayout();
             // 
             // tabControl1
             // 
@@ -128,24 +120,46 @@
             // 
             // tabPage1
             // 
-            tabPage1.BackColor=Color.Tan;
-            tabPage1.Controls.Add(buttonPriviosPageAct);
-            tabPage1.Controls.Add(buttonNextPageAct);
-            tabPage1.Controls.Add(filterActButton);
-            tabPage1.Controls.Add(buttonAnimalCard);
-            tabPage1.Controls.Add(AddActButton);
-            tabPage1.Controls.Add(UpdateActButton);
-            tabPage1.Controls.Add(DeleteActButton);
-            tabPage1.Controls.Add(dateTimePickerAct);
-            tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(DataGridViewActs);
-            tabPage1.Controls.Add(pictureBox1);
-            tabPage1.Location=new Point(4, 39);
-            tabPage1.Name="tabPage1";
-            tabPage1.Padding=new Padding(3);
-            tabPage1.Size=new Size(1374, 715);
-            tabPage1.TabIndex=0;
-            tabPage1.Text="Акты";
+            this.tabPage1.BackColor = System.Drawing.Color.Tan;
+            this.tabPage1.Controls.Add(this.filterActButton);
+            this.tabPage1.Controls.Add(this.History_button);
+            this.tabPage1.Controls.Add(this.buttonAnimalCard);
+            this.tabPage1.Controls.Add(this.AddActButton);
+            this.tabPage1.Controls.Add(this.UpdateActButton);
+            this.tabPage1.Controls.Add(this.DeleteActButton);
+            this.tabPage1.Controls.Add(this.dateTimePickerAct);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.DataGridViewActs);
+            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 39);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1374, 705);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Акты";
+            // 
+            // filterActButton
+            // 
+            this.filterActButton.BackColor = System.Drawing.Color.Cornsilk;
+            this.filterActButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.filterActButton.Location = new System.Drawing.Point(25, 592);
+            this.filterActButton.Name = "filterActButton";
+            this.filterActButton.Size = new System.Drawing.Size(137, 36);
+            this.filterActButton.TabIndex = 10;
+            this.filterActButton.Text = "Фильтры";
+            this.filterActButton.UseVisualStyleBackColor = false;
+            this.filterActButton.Click += new System.EventHandler(this.OpenActFilters);
+            // 
+            // History_button
+            // 
+            this.History_button.BackColor = System.Drawing.Color.Cornsilk;
+            this.History_button.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.History_button.Location = new System.Drawing.Point(313, 650);
+            this.History_button.Name = "History_button";
+            this.History_button.Size = new System.Drawing.Size(106, 35);
+            this.History_button.TabIndex = 9;
+            this.History_button.Text = "История";
+            this.History_button.UseVisualStyleBackColor = false;
             // 
             // buttonPriviosPageAct
             // 
@@ -172,18 +186,6 @@
             buttonNextPageAct.Text=">";
             buttonNextPageAct.UseVisualStyleBackColor=false;
             buttonNextPageAct.Click+=buttonNextPage_Click;
-            // 
-            // filterActButton
-            // 
-            filterActButton.BackColor=Color.Cornsilk;
-            filterActButton.FlatStyle=FlatStyle.Popup;
-            filterActButton.Location=new Point(25, 592);
-            filterActButton.Name="filterActButton";
-            filterActButton.Size=new Size(137, 36);
-            filterActButton.TabIndex=10;
-            filterActButton.Text="Фильтры";
-            filterActButton.UseVisualStyleBackColor=false;
-            filterActButton.Click+=OpenActFilters;
             // 
             // buttonAnimalCard
             // 
@@ -449,20 +451,29 @@
             // 
             // tabPage3
             // 
-            tabPage3.BackColor=Color.Tan;
-            tabPage3.Controls.Add(buttonPreviousContracts);
-            tabPage3.Controls.Add(buttonNextContracts);
-            tabPage3.Controls.Add(EditButton);
-            tabPage3.Controls.Add(AddButton);
-            tabPage3.Controls.Add(DeleteButton);
-            tabPage3.Controls.Add(dateTimePicker3);
-            tabPage3.Controls.Add(label3);
-            tabPage3.Controls.Add(ContractTable);
-            tabPage3.Location=new Point(4, 39);
-            tabPage3.Name="tabPage3";
-            tabPage3.Size=new Size(1374, 715);
-            tabPage3.TabIndex=2;
-            tabPage3.Text="Муниципальные контракты";
+            this.tabPage3.BackColor = System.Drawing.Color.Tan;
+            this.tabPage3.Controls.Add(this.contractFiltersButton);
+            this.tabPage3.Controls.Add(this.historyButton);
+            this.tabPage3.Controls.Add(this.EditButton);
+            this.tabPage3.Controls.Add(this.AddButton);
+            this.tabPage3.Controls.Add(this.DeleteButton);
+            this.tabPage3.Controls.Add(this.ContractTable);
+            this.tabPage3.Location = new System.Drawing.Point(4, 39);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(1374, 705);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Муниципальные контракты";
+            // 
+            // historyButton
+            // 
+            this.historyButton.BackColor = System.Drawing.Color.Cornsilk;
+            this.historyButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.historyButton.Location = new System.Drawing.Point(173, 621);
+            this.historyButton.Name = "historyButton";
+            this.historyButton.Size = new System.Drawing.Size(135, 35);
+            this.historyButton.TabIndex = 14;
+            this.historyButton.Text = "История";
+            this.historyButton.UseVisualStyleBackColor = false;
             // 
             // buttonPreviousContracts
             // 
@@ -520,27 +531,6 @@
             DeleteButton.TabIndex=11;
             DeleteButton.Text="Удалить";
             DeleteButton.UseVisualStyleBackColor=false;
-            // 
-            // dateTimePicker3
-            // 
-            dateTimePicker3.CalendarForeColor=SystemColors.ActiveCaptionText;
-            dateTimePicker3.CalendarMonthBackground=Color.Black;
-            dateTimePicker3.CalendarTitleBackColor=SystemColors.ActiveCaptionText;
-            dateTimePicker3.Location=new Point(363, 646);
-            dateTimePicker3.Name="dateTimePicker3";
-            dateTimePicker3.Size=new Size(199, 37);
-            dateTimePicker3.TabIndex=10;
-            dateTimePicker3.Value=new DateTime(2023, 1, 1, 0, 0, 0, 0);
-            // 
-            // label3
-            // 
-            label3.AutoSize=true;
-            label3.BackColor=Color.SeaShell;
-            label3.Location=new Point(12, 646);
-            label3.Name="label3";
-            label3.Size=new Size(306, 30);
-            label3.TabIndex=9;
-            label3.Text="Муниципальные контракты от:";
             // 
             // ContractTable
             // 
@@ -605,62 +595,31 @@
             // 
             // tabPage4
             // 
-            tabPage4.BackColor=Color.Tan;
-            tabPage4.Controls.Add(filterAppDate2);
-            tabPage4.Controls.Add(label6);
-            tabPage4.Controls.Add(filterAppDate);
-            tabPage4.Controls.Add(label4);
-            tabPage4.Controls.Add(AppAdd);
-            tabPage4.Controls.Add(AppEdit);
-            tabPage4.Controls.Add(AppDelete);
-            tabPage4.Controls.Add(dataGridViewApp);
-            tabPage4.Location=new Point(4, 39);
-            tabPage4.Name="tabPage4";
-            tabPage4.Size=new Size(1374, 715);
-            tabPage4.TabIndex=3;
-            tabPage4.Text="Реестр заявок";
+            this.tabPage4.BackColor = System.Drawing.Color.Tan;
+            this.tabPage4.Controls.Add(this.button2);
+            this.tabPage4.Controls.Add(this.historuAppButton);
+            this.tabPage4.Controls.Add(this.AppAdd);
+            this.tabPage4.Controls.Add(this.AppEdit);
+            this.tabPage4.Controls.Add(this.AppDelete);
+            this.tabPage4.Controls.Add(this.dataGridViewApp);
+            this.tabPage4.Location = new System.Drawing.Point(4, 39);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(1374, 705);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Реестр заявок";
             // 
-            // filterAppDate2
+            // historuAppButton
             // 
-            filterAppDate2.Location=new Point(334, 651);
-            filterAppDate2.Name="filterAppDate2";
-            filterAppDate2.Size=new Size(265, 37);
-            filterAppDate2.TabIndex=20;
-            filterAppDate2.Value=new DateTime(2023, 1, 1, 0, 0, 0, 0);
-            // 
-            // label6
-            // 
-            label6.AutoSize=true;
-            label6.BackColor=Color.SeaShell;
-            label6.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            label6.Location=new Point(275, 651);
-            label6.Name="label6";
-            label6.Size=new Size(46, 30);
-            label6.TabIndex=19;
-            label6.Text=" по:";
-            // 
-            // filterAppDate
-            // 
-            filterAppDate.CalendarForeColor=SystemColors.ActiveCaptionText;
-            filterAppDate.CalendarMonthBackground=SystemColors.MenuText;
-            filterAppDate.CalendarTitleBackColor=SystemColors.ActiveCaptionText;
-            filterAppDate.CalendarTrailingForeColor=SystemColors.ControlText;
-            filterAppDate.Location=new Point(127, 651);
-            filterAppDate.Name="filterAppDate";
-            filterAppDate.Size=new Size(142, 37);
-            filterAppDate.TabIndex=18;
-            filterAppDate.Value=new DateTime(2023, 1, 1, 0, 0, 0, 0);
-            // 
-            // label4
-            // 
-            label4.AutoSize=true;
-            label4.BackColor=Color.SeaShell;
-            label4.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location=new Point(12, 651);
-            label4.Name="label4";
-            label4.Size=new Size(93, 30);
-            label4.TabIndex=17;
-            label4.Text="Заявки с:";
+            this.historuAppButton.BackColor = System.Drawing.Color.Cornsilk;
+            this.historuAppButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.historuAppButton.Font = new System.Drawing.Font("Segoe Print", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.historuAppButton.ForeColor = System.Drawing.Color.Black;
+            this.historuAppButton.Location = new System.Drawing.Point(175, 618);
+            this.historuAppButton.Name = "historuAppButton";
+            this.historuAppButton.Size = new System.Drawing.Size(141, 37);
+            this.historuAppButton.TabIndex = 22;
+            this.historuAppButton.Text = "История";
+            this.historuAppButton.UseVisualStyleBackColor = false;
             // 
             // AppAdd
             // 
@@ -829,48 +788,66 @@
             // 
             // label7
             // 
-            label7.AutoSize=true;
-            label7.Location=new Point(393, 498);
-            label7.Name="label7";
-            label7.Size=new Size(26, 16);
-            label7.TabIndex=16;
-            label7.Text="до:";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(393, 498);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(26, 16);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "до:";
+            // 
+            // contractFiltersButton
+            // 
+            this.contractFiltersButton.BackColor = System.Drawing.Color.Cornsilk;
+            this.contractFiltersButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.contractFiltersButton.Location = new System.Drawing.Point(18, 620);
+            this.contractFiltersButton.Name = "contractFiltersButton";
+            this.contractFiltersButton.Size = new System.Drawing.Size(137, 36);
+            this.contractFiltersButton.TabIndex = 15;
+            this.contractFiltersButton.Text = "Фильтры";
+            this.contractFiltersButton.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.Cornsilk;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button2.Location = new System.Drawing.Point(18, 618);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 36);
+            this.button2.TabIndex = 23;
+            this.button2.Text = "Фильтры";
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // MainForm
             // 
-            AutoScaleMode=AutoScaleMode.Inherit;
-            BackColor=Color.Wheat;
-            ClientSize=new Size(1408, 788);
-            Controls.Add(tabControl1);
-            Cursor=Cursors.PanNW;
-            Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            ForeColor=Color.Black;
-            FormBorderStyle=FormBorderStyle.FixedToolWindow;
-            Icon=(Icon)resources.GetObject("$this.Icon");
-            Name="MainForm";
-            StartPosition=FormStartPosition.CenterScreen;
-            Tag="";
-            Text="Заявки на отлов";
-            tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)DataGridViewActs).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            tabPage2.ResumeLayout(false);
-            tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
-            tabPage3.ResumeLayout(false);
-            tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)ContractTable).EndInit();
-            tabPage4.ResumeLayout(false);
-            tabPage4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewApp).EndInit();
-            tabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridViewOrg).EndInit();
-            tabPage6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridViewHistory).EndInit();
-            ResumeLayout(false);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+            this.BackColor = System.Drawing.Color.Wheat;
+            this.ClientSize = new System.Drawing.Size(1408, 788);
+            this.Controls.Add(this.tabControl1);
+            this.Cursor = System.Windows.Forms.Cursors.PanNW;
+            this.Font = new System.Drawing.Font("Segoe Print", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.ForeColor = System.Drawing.Color.Black;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Tag = "";
+            this.Text = "Заявки на отлов";
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridViewActs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ContractTable)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewApp)).EndInit();
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOrg)).EndInit();
+            this.ResumeLayout(false);
         }
 
         #endregion
@@ -894,8 +871,6 @@
         private DataGridView ContractTable;
         private TabPage tabPage4;
         private TabPage tabPage5;
-        private DateTimePicker dateTimePicker3;
-        private Label label3;
         private Button AppAdd;
         private Button AppEdit;
         private Button AppDelete;
@@ -908,10 +883,6 @@
         private Button EditButton;
         private Button AddButton;
         private Button DeleteButton;
-        private Label label6;
-        private DateTimePicker filterAppDate;
-        private Label label4;
-        private DateTimePicker filterAppDate2;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
@@ -932,6 +903,8 @@
         private DataGridViewTextBoxColumn Target;
         private DataGridViewTextBoxColumn Kontracts;
         private Button filterActButton;
+        private Button contractFiltersButton;
+        private Button button2;
         private TabPage tabPage6;
         private DataGridView dataGridViewHistory;
         private Button buttonPriviosPageAct;
