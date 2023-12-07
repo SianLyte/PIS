@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace GrpcClient_PI_21_01
 {
@@ -48,13 +49,11 @@ namespace GrpcClient_PI_21_01
 
             tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
 
-            historyButton.Click += History_button_Click;
-            //History_button.Click += History_button_Click;
-
             contractFiltersButton.Click += OpenContractFilters;
 
             Task.Run(Setup);
         }
+        
         readonly DataSet dsApplication = new();
         readonly DataSet dsOrganization = new();
         readonly Filter<Act> actFilter = new();
@@ -69,6 +68,7 @@ namespace GrpcClient_PI_21_01
 
             await SetDataGridApp();
             await SetDataGridOrg();
+            await InicilisationHistory();
         }
 
         private static async Task<bool> CheckPrivilege(NameMdels model)
@@ -85,16 +85,17 @@ namespace GrpcClient_PI_21_01
         #region Related: Act Capture
         /* -----------------------------------ACT----------------------------------------------------- */
 
+        private int _ActPage = 1;
+        private int _ActPageMax = 1;
         private readonly SemaphoreSlim actGridSemaphore = new(1, 1);
         private async Task SetDataGridAct()
         {
             await actGridSemaphore.WaitAsync();
             try
             {
-                int page = -1; // to do: сделать пагинацию
-
+                CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
                 DataGridViewActs.Rows.Clear();
-                var acts = await ActService.GetActs(page, actFilter);
+                var acts = await ActService.GetActs(_ActPage, actFilter);
                 foreach (var act in acts.Select(a => ActService.ToDataArray(a)))
                     DataGridViewActs.Rows.Add(act);
             }
@@ -103,6 +104,7 @@ namespace GrpcClient_PI_21_01
                 actGridSemaphore.Release();
             }
         }
+
 
         private async void AddButton_Click(object sender, EventArgs e)
         {
@@ -159,6 +161,17 @@ namespace GrpcClient_PI_21_01
         private async void dateTimePickerAct_ValueChanged(object sender, EventArgs e)
         {
             await SetDataGridAct();
+        }
+
+        private void buttonNextPage_Click(object sender, EventArgs e)
+        {
+            _ActPage++;
+            CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
+        }
+        private void buttonPriviosPage_Click(object sender, EventArgs e)
+        {
+            _ActPage--;
+            CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
         }
 
         private void OpenActFilters(object sender, EventArgs e) =>
@@ -293,16 +306,18 @@ namespace GrpcClient_PI_21_01
         }
         #endregion
         #region Related: Contracts
+        private int _PageContract = 1;
+        private int _PageContractMax = 1;
         private readonly SemaphoreSlim contrGridSemaphore = new(1, 1);
         private async Task ShowContract()
         {
             await contrGridSemaphore.WaitAsync();
             try
             {
-                int page = -1; // to do: сделать пагинацию
+                CheckPageButton(buttonPreviousContracts, buttonNextContracts, _PageContract, _PageContractMax);
 
                 ContractTable.Rows.Clear();
-                var cont = await ContractService.GetContracts(page, contrFilter);
+                var cont = await ContractService.GetContracts(_PageContract, contrFilter);
                 foreach (var i in cont.Select(c => ContractService.ToDataArray(c)))
                     ContractTable.Rows.Add(i);
             }
@@ -349,6 +364,19 @@ namespace GrpcClient_PI_21_01
             contAdd.ShowDialog();
             await ShowContract();
         }
+        
+        private void buttonPreviousContracts_Click(object sender, EventArgs e)
+        {
+            _PageContract--;
+            CheckPageButton(buttonPreviousContracts, buttonNextContracts, _PageContract, _PageContractMax);
+        }
+
+        private void buttonNextContracts_Click(object sender, EventArgs e)
+        {
+            _PageContract++;
+            CheckPageButton(buttonPreviousContracts, buttonNextContracts, _PageContract, _PageContractMax);
+        }
+        
         private void OpenContractFilters(object sender, EventArgs e) =>
             new ContractFilter(contrFilter, ShowContract).Show();
         #endregion
@@ -377,17 +405,68 @@ namespace GrpcClient_PI_21_01
         }
         #endregion
         #region Related: Operation History
-        private async void History_button_Click(object sender, EventArgs e)
+        private List<OperationReply> _data;
+        readonly DataSet _dbHistory = new();
+
+        public async Task InicilisationHistory()
         {
             if (await CheckPrivilege(NameMdels.History))
             {
-                var data = await OperationService.GetOperations();
-                var historyForm = new HistoryForm(data);
-
-                historyForm.ShowDialog();
+                _data = await OperationService.GetOperations();
+                CreateDataSet();
+                ParceDataToDataGrid();
             }
-            else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций");
+            else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         #endregion
+
+        public void CreateDataSet()
+        {
+            _dbHistory.Tables.Clear();
+            _dbHistory.Tables.Add("History");
+            _dbHistory.Tables[0].Columns.Add("Фамилия");
+            _dbHistory.Tables[0].Columns.Add("Имя");
+            _dbHistory.Tables[0].Columns.Add("Отчество");
+            _dbHistory.Tables[0].Columns.Add("Организация");
+            _dbHistory.Tables[0].Columns.Add("Должность");
+            _dbHistory.Tables[0].Columns.Add("Логин");
+            _dbHistory.Tables[0].Columns.Add("Дата и время");
+            _dbHistory.Tables[0].Columns.Add("Вид действия");
+            _dbHistory.Tables[0].Columns.Add("Идетификационный номер экземляра объекта");
+            _dbHistory.Tables[0].Columns.Add("Наименование таблицы, в которой произошло изменение");
+        }
+
+        private void ParceDataToDataGrid()
+        {
+            foreach (var data in _data)
+            {
+                var allDataParts = new string[10] { data.User.Surname.ToString(),
+                                                    data.User.Name.ToString(),
+                                                    data.User.Patronymic.ToString(),
+                                                    data.User.Organization.Name.ToString(),
+                                                    data.User.PrivelegeLevel.ToString(),
+                                                    data.User.Login.ToString(),
+                                                    data.Date.ToDateTime().ToString(),
+                                                    data.ModifiedObjectId.ToString(),
+                                                    data.Action.ToString(),
+                                                    data.ModifiedTableName.ToString()};
+                _dbHistory.Tables[0].Rows.Add(allDataParts);
+            }
+            dataGridViewHistory.DataSource = _dbHistory.Tables[0];
+        }
+        
+        private void CheckPageButton(Button buttonPrevious, Button buttonNext, int page, int pageMax)
+        {
+            buttonPrevious.Enabled = true;
+            buttonNext.Enabled = true;
+            if (page == 1)
+            {
+                buttonPrevious.Enabled = false;
+            }
+            if (page == pageMax)
+            {
+                buttonNext.Enabled = false;
+            }
+        }
     }
 }
