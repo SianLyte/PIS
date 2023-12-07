@@ -184,19 +184,6 @@ namespace GrpcClient_PI_21_01
             CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
         }
 
-        private void CheckPageButton(Button buttonPrevious, Button buttonNext, int page, int pageMax)
-        {
-            buttonPrevious.Enabled = true;
-            buttonNext.Enabled = true;
-            if (page == 1)
-            {
-                buttonPrevious.Enabled = false;
-            }
-            if (page == pageMax)
-            {
-                buttonNext.Enabled = false;
-            }
-        }
 
         private async Task SetDataGridOrg()
         {
@@ -314,12 +301,16 @@ namespace GrpcClient_PI_21_01
             }
         }
 
+        // --------------------------Contract--------------------------
+
+        private int _PageContract = 1;
+        private int _PageContractMax = 1;
         private async Task ShowContract()
         {
-            int page = -1; // to do: сделать пагинацию
+            CheckPageButton(buttonPreviousContracts, buttonNextContracts, _PageContract, _PageContractMax);
 
             ContractTable.Rows.Clear();
-            var cont = await ContractService.GetContracts(page, contrFilter);
+            var cont = await ContractService.GetContracts(_PageContract, contrFilter);
             foreach (var i in cont.Select(c => ContractService.ToDataArray(c)))
             {
                 ContractTable.Rows.Add(i);
@@ -367,6 +358,17 @@ namespace GrpcClient_PI_21_01
             var contAdd = new AddContractForm(int.Parse(ContractTable.CurrentRow.Cells[0].Value.ToString()));
             contAdd.ShowDialog();
             await ShowContract();
+        }
+        private void buttonPreviousContracts_Click(object sender, EventArgs e)
+        {
+            _PageContract--;
+            CheckPageButton(buttonPreviousContracts, buttonNextContracts, _PageContract, _PageContractMax);
+        }
+
+        private void buttonNextContracts_Click(object sender, EventArgs e)
+        {
+            _PageContract++;
+            CheckPageButton(buttonPreviousContracts, buttonNextContracts, _PageContract, _PageContractMax);
         }
 
         private async void filterAppDate_ValueChanged(object sender, EventArgs e)
@@ -460,6 +462,19 @@ namespace GrpcClient_PI_21_01
                 _dbHistory.Tables[0].Rows.Add(allDataParts);
             }
             dataGridViewHistory.DataSource = _dbHistory.Tables[0];
+        }
+        private void CheckPageButton(Button buttonPrevious, Button buttonNext, int page, int pageMax)
+        {
+            buttonPrevious.Enabled = true;
+            buttonNext.Enabled = true;
+            if (page == 1)
+            {
+                buttonPrevious.Enabled = false;
+            }
+            if (page == pageMax)
+            {
+                buttonNext.Enabled = false;
+            }
         }
 
     }
