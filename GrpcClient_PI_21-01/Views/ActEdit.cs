@@ -16,34 +16,33 @@ namespace GrpcClient_PI_21_01.Views
 {
     public partial class ActEdit : Form
     {
-        private readonly bool actToEdit;
+        private readonly bool actToEdit = false;
         private readonly int actId;
-        private List<int> _apps = new List<int>();
+        private List<int> _apps = new();
 
         public ActEdit()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            actToEdit = false;
-            Isus.Text = "Добавление акта";
             FillEditor();
         }
+
         public ActEdit(int id)
         {
             InitializeComponent();
             actToEdit = true;
             actId = id;
-            Isus.Text = "Редактирование акта";
             FillEditor();
         }
 
         private async void FillEditor()
         {
+            OK.Click += OK_Click;
+            addApp.Click += AddApplication;
+            deleteButton.Click += DeleteApplication;
+            Isus.Text = "Редактирование акта";
+
             if (actToEdit)
             {
-
-                //var index = ActRepository.acts.FindIndex(x => x.ActNumber == actId);
-                //Act act = ActRepository.acts[index];
                 var act = await ActService.GetAct(actId);
                 numericUpDownDog.Value = act.CountDogs;
                 numericUpDownCat.Value = act.CountCats;
@@ -52,7 +51,6 @@ namespace GrpcClient_PI_21_01.Views
                 await FullComboBox();
                 comboBoxOrganization.Text = act.Organization.name;
                 comboBoxContract.Text = act.Contracts.IdContract.ToString();
-                //comboBoxApp.Text = act.Application.number.ToString();
                 var actApps = (await ActService.GetActApps())
                     .Where(aa => aa.Act.ActNumber == actId);
                 _apps = actApps.Select(async aa => await Task.FromResult(aa.App.Number))
@@ -219,12 +217,7 @@ namespace GrpcClient_PI_21_01.Views
             return false;
         }
 
-        private void comboBoxApp_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addApp_Click(object sender, EventArgs e)
+        private void AddApplication(object sender, EventArgs e)
         {
             if (_apps.Count == 0) { CreateData(); }
             int selectedApp = int.Parse(comboBoxApp.SelectedValue.ToString());
@@ -236,16 +229,19 @@ namespace GrpcClient_PI_21_01.Views
                 InitialisationData();
             }
         }
+
         private bool ConteinceSelectedId(int selectedApp)
         {
             foreach (var item in _apps) { if (item == selectedApp) return true; }
             return false;
         }
+
         private void CreateData()
         {
             dataGridView1.ColumnCount = 1;
             dataGridView1.RowCount = 0;
         }
+
         private void InitialisationData()
         {
             if (actToEdit)
@@ -258,7 +254,7 @@ namespace GrpcClient_PI_21_01.Views
             }
         }
 
-        private void deleteButton_Click(object sender, EventArgs e)
+        private void DeleteApplication(object sender, EventArgs e)
         {
             if (CheckDataGrid())
             {
@@ -267,7 +263,6 @@ namespace GrpcClient_PI_21_01.Views
                 _apps.Remove(appId);
                 dataGridView1.ClearSelection();
                 dataGridView1.CurrentCell  = null;
-
             }
         }
 
