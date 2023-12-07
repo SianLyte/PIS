@@ -32,7 +32,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.filterActButton = new System.Windows.Forms.Button();
-            this.History_button = new System.Windows.Forms.Button();
             this.buttonAnimalCard = new System.Windows.Forms.Button();
             this.AddActButton = new System.Windows.Forms.Button();
             this.UpdateActButton = new System.Windows.Forms.Button();
@@ -60,7 +59,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.historyButton = new System.Windows.Forms.Button();
             this.EditButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
@@ -71,13 +69,17 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.historuAppButton = new System.Windows.Forms.Button();
             this.AppAdd = new System.Windows.Forms.Button();
             this.AppEdit = new System.Windows.Forms.Button();
             this.AppDelete = new System.Windows.Forms.Button();
             this.dataGridViewApp = new System.Windows.Forms.DataGridView();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.historyOrganisationButton = new System.Windows.Forms.Button();
+            this.tabPage6 = new TabPage();
+            this.dataGridViewHistory = new DataGridView();
+            this.buttonPriviosPageAct = new Button();
+            this.buttonNextPageAct = new Button();
+            this.buttonPreviousContracts = new Button();
+            this.buttonNextContracts = new Button();
             this.dataGridViewOrg = new System.Windows.Forms.DataGridView();
             this.OrgAdd = new System.Windows.Forms.Button();
             this.OrgEdit = new System.Windows.Forms.Button();
@@ -122,7 +124,6 @@
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Tan;
             this.tabPage1.Controls.Add(this.filterActButton);
-            this.tabPage1.Controls.Add(this.History_button);
             this.tabPage1.Controls.Add(this.buttonAnimalCard);
             this.tabPage1.Controls.Add(this.AddActButton);
             this.tabPage1.Controls.Add(this.UpdateActButton);
@@ -149,17 +150,6 @@
             this.filterActButton.Text = "Фильтры";
             this.filterActButton.UseVisualStyleBackColor = false;
             this.filterActButton.Click += new System.EventHandler(this.OpenActFilters);
-            // 
-            // History_button
-            // 
-            this.History_button.BackColor = System.Drawing.Color.Cornsilk;
-            this.History_button.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.History_button.Location = new System.Drawing.Point(313, 650);
-            this.History_button.Name = "History_button";
-            this.History_button.Size = new System.Drawing.Size(106, 35);
-            this.History_button.TabIndex = 9;
-            this.History_button.Text = "История";
-            this.History_button.UseVisualStyleBackColor = false;
             // 
             // buttonPriviosPageAct
             // 
@@ -453,7 +443,6 @@
             // 
             this.tabPage3.BackColor = System.Drawing.Color.Tan;
             this.tabPage3.Controls.Add(this.contractFiltersButton);
-            this.tabPage3.Controls.Add(this.historyButton);
             this.tabPage3.Controls.Add(this.EditButton);
             this.tabPage3.Controls.Add(this.AddButton);
             this.tabPage3.Controls.Add(this.DeleteButton);
@@ -463,17 +452,6 @@
             this.tabPage3.Size = new System.Drawing.Size(1374, 705);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Муниципальные контракты";
-            // 
-            // historyButton
-            // 
-            this.historyButton.BackColor = System.Drawing.Color.Cornsilk;
-            this.historyButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.historyButton.Location = new System.Drawing.Point(173, 621);
-            this.historyButton.Name = "historyButton";
-            this.historyButton.Size = new System.Drawing.Size(135, 35);
-            this.historyButton.TabIndex = 14;
-            this.historyButton.Text = "История";
-            this.historyButton.UseVisualStyleBackColor = false;
             // 
             // buttonPreviousContracts
             // 
@@ -597,7 +575,6 @@
             // 
             this.tabPage4.BackColor = System.Drawing.Color.Tan;
             this.tabPage4.Controls.Add(this.button2);
-            this.tabPage4.Controls.Add(this.historuAppButton);
             this.tabPage4.Controls.Add(this.AppAdd);
             this.tabPage4.Controls.Add(this.AppEdit);
             this.tabPage4.Controls.Add(this.AppDelete);
@@ -607,19 +584,6 @@
             this.tabPage4.Size = new System.Drawing.Size(1374, 705);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Реестр заявок";
-            // 
-            // historuAppButton
-            // 
-            this.historuAppButton.BackColor = System.Drawing.Color.Cornsilk;
-            this.historuAppButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.historuAppButton.Font = new System.Drawing.Font("Segoe Print", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.historuAppButton.ForeColor = System.Drawing.Color.Black;
-            this.historuAppButton.Location = new System.Drawing.Point(175, 618);
-            this.historuAppButton.Name = "historuAppButton";
-            this.historuAppButton.Size = new System.Drawing.Size(141, 37);
-            this.historuAppButton.TabIndex = 22;
-            this.historuAppButton.Text = "История";
-            this.historuAppButton.UseVisualStyleBackColor = false;
             // 
             // AppAdd
             // 

@@ -405,7 +405,7 @@ namespace GrpcClient_PI_21_01
         }
         #endregion
         #region Related: Operation History
-        private List<OperationReply> _data;
+        private List<OperationReply>? _data;
         readonly DataSet _dbHistory = new();
 
         public async Task InicilisationHistory()
