@@ -8,6 +8,7 @@ using Npgsql;
 using Microsoft.Extensions.Hosting;
 using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 using System.Xml.Linq;
+using System.Collections;
 
 namespace GrpcServer_PI_21_01.Data
 {
@@ -78,6 +79,24 @@ namespace GrpcServer_PI_21_01.Data
             // возвращаем true, если удаление произошло успешно,
             // вовзращаем false, если что-то пошло не так (например, акт отлова с таким Id не существует в БД)
             return true;
+        }
+
+        public static int GetMaxPage()
+        {
+            using (NpgsqlCommand cmd = new("SELECT count(*) from act") { Connection = cn })
+            {
+                cn.Open();
+                string count = "";
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    count = reader[0].ToString();
+                }
+                reader.Close();
+                cn.Close();
+                var a = Math.Ceiling((decimal)int.Parse(count)/10);
+                return (int)a;
+            };
         }
 
         public static List<Act> GetActs(DataRequest request)

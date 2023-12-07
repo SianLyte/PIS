@@ -19,6 +19,24 @@ namespace GrpcServer_PI_21_01.Data
         //    new Location(2, "г. Тобольск"),
         //    new Location(3, "г. Сургут")};
 
+        public static int GetMaxPage()
+        {
+            using (NpgsqlCommand cmd = new("SELECT count(*) from city") { Connection = cn })
+            {
+                cn.Open();
+                string count = "";
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    count = reader[0].ToString();
+                }
+                reader.Close();
+                cn.Close();
+                var a = Math.Ceiling((decimal)int.Parse(count) / 10);
+                return (int)a;
+            };
+        }
+
         public static List<Location> GetLocations()
         {
             // должно забирать все местности из БД (желательно сделать кэширование:

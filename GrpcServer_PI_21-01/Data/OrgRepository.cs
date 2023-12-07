@@ -13,6 +13,24 @@ namespace GrpcServer_PI_21_01.Data
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
+        public static int GetMaxPage()
+        {
+            using (NpgsqlCommand cmd = new("SELECT count(*) from organization") { Connection = cn })
+            {
+                cn.Open();
+                string count = "";
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    count = reader[0].ToString();
+                }
+                reader.Close();
+                cn.Close();
+                var a = Math.Ceiling((decimal)int.Parse(count) / 10);
+                return (int)a;
+            };
+        }
+
         public static bool UpdateOrganization(Organization org)
         {
             using NpgsqlCommand cmd = new($"UPDATE organization SET " +
