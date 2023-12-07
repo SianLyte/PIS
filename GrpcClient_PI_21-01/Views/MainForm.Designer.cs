@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             tabControl1=new TabControl();
             tabPage1=new TabPage();
+            buttonPriviosPageAct=new Button();
+            buttonNextPageAct=new Button();
             filterActButton=new Button();
             buttonAnimalCard=new Button();
             AddActButton=new Button();
@@ -59,6 +61,8 @@
             label2=new Label();
             dataGridView2=new DataGridView();
             tabPage3=new TabPage();
+            buttonPreviousContracts=new Button();
+            buttonNextContracts=new Button();
             EditButton=new Button();
             AddButton=new Button();
             DeleteButton=new Button();
@@ -119,12 +123,14 @@
             tabControl1.Name="tabControl1";
             tabControl1.RightToLeft=RightToLeft.No;
             tabControl1.SelectedIndex=0;
-            tabControl1.Size=new Size(1382, 748);
+            tabControl1.Size=new Size(1382, 758);
             tabControl1.TabIndex=0;
             // 
             // tabPage1
             // 
             tabPage1.BackColor=Color.Tan;
+            tabPage1.Controls.Add(buttonPriviosPageAct);
+            tabPage1.Controls.Add(buttonNextPageAct);
             tabPage1.Controls.Add(filterActButton);
             tabPage1.Controls.Add(buttonAnimalCard);
             tabPage1.Controls.Add(AddActButton);
@@ -137,9 +143,35 @@
             tabPage1.Location=new Point(4, 39);
             tabPage1.Name="tabPage1";
             tabPage1.Padding=new Padding(3);
-            tabPage1.Size=new Size(1374, 705);
+            tabPage1.Size=new Size(1374, 715);
             tabPage1.TabIndex=0;
             tabPage1.Text="Акты";
+            // 
+            // buttonPriviosPageAct
+            // 
+            buttonPriviosPageAct.BackColor=Color.Cornsilk;
+            buttonPriviosPageAct.FlatStyle=FlatStyle.Popup;
+            buttonPriviosPageAct.Location=new Point(1168, 592);
+            buttonPriviosPageAct.Name="buttonPriviosPageAct";
+            buttonPriviosPageAct.RightToLeft=RightToLeft.No;
+            buttonPriviosPageAct.Size=new Size(90, 36);
+            buttonPriviosPageAct.TabIndex=14;
+            buttonPriviosPageAct.Text="<";
+            buttonPriviosPageAct.UseVisualStyleBackColor=false;
+            buttonPriviosPageAct.Click+=buttonPriviosPage_Click;
+            // 
+            // buttonNextPageAct
+            // 
+            buttonNextPageAct.BackColor=Color.Cornsilk;
+            buttonNextPageAct.FlatStyle=FlatStyle.Popup;
+            buttonNextPageAct.Location=new Point(1264, 592);
+            buttonNextPageAct.Name="buttonNextPageAct";
+            buttonNextPageAct.RightToLeft=RightToLeft.No;
+            buttonNextPageAct.Size=new Size(90, 36);
+            buttonNextPageAct.TabIndex=13;
+            buttonNextPageAct.Text=">";
+            buttonNextPageAct.UseVisualStyleBackColor=false;
+            buttonNextPageAct.Click+=buttonNextPage_Click;
             // 
             // filterActButton
             // 
@@ -312,7 +344,7 @@
             tabPage2.Location=new Point(4, 39);
             tabPage2.Name="tabPage2";
             tabPage2.Padding=new Padding(3);
-            tabPage2.Size=new Size(1374, 705);
+            tabPage2.Size=new Size(1374, 715);
             tabPage2.TabIndex=1;
             tabPage2.Text="Отчёт";
             // 
@@ -418,6 +450,8 @@
             // tabPage3
             // 
             tabPage3.BackColor=Color.Tan;
+            tabPage3.Controls.Add(buttonPreviousContracts);
+            tabPage3.Controls.Add(buttonNextContracts);
             tabPage3.Controls.Add(EditButton);
             tabPage3.Controls.Add(AddButton);
             tabPage3.Controls.Add(DeleteButton);
@@ -426,15 +460,39 @@
             tabPage3.Controls.Add(ContractTable);
             tabPage3.Location=new Point(4, 39);
             tabPage3.Name="tabPage3";
-            tabPage3.Size=new Size(1374, 705);
+            tabPage3.Size=new Size(1374, 715);
             tabPage3.TabIndex=2;
             tabPage3.Text="Муниципальные контракты";
+            // 
+            // buttonPreviousContracts
+            // 
+            buttonPreviousContracts.BackColor=Color.Cornsilk;
+            buttonPreviousContracts.FlatStyle=FlatStyle.Popup;
+            buttonPreviousContracts.Location=new Point(1178, 609);
+            buttonPreviousContracts.Name="buttonPreviousContracts";
+            buttonPreviousContracts.RightToLeft=RightToLeft.No;
+            buttonPreviousContracts.Size=new Size(90, 36);
+            buttonPreviousContracts.TabIndex=16;
+            buttonPreviousContracts.Text="<";
+            buttonPreviousContracts.UseVisualStyleBackColor=false;
+            // 
+            // buttonNextContracts
+            // 
+            buttonNextContracts.BackColor=Color.Cornsilk;
+            buttonNextContracts.FlatStyle=FlatStyle.Popup;
+            buttonNextContracts.Location=new Point(1274, 609);
+            buttonNextContracts.Name="buttonNextContracts";
+            buttonNextContracts.RightToLeft=RightToLeft.No;
+            buttonNextContracts.Size=new Size(90, 36);
+            buttonNextContracts.TabIndex=15;
+            buttonNextContracts.Text=">";
+            buttonNextContracts.UseVisualStyleBackColor=false;
             // 
             // EditButton
             // 
             EditButton.BackColor=Color.Cornsilk;
             EditButton.FlatStyle=FlatStyle.Popup;
-            EditButton.Location=new Point(1070, 646);
+            EditButton.Location=new Point(1070, 665);
             EditButton.Name="EditButton";
             EditButton.Size=new Size(153, 44);
             EditButton.TabIndex=13;
@@ -445,7 +503,7 @@
             // 
             AddButton.BackColor=Color.Cornsilk;
             AddButton.FlatStyle=FlatStyle.Popup;
-            AddButton.Location=new Point(928, 646);
+            AddButton.Location=new Point(928, 665);
             AddButton.Name="AddButton";
             AddButton.Size=new Size(136, 47);
             AddButton.TabIndex=12;
@@ -456,7 +514,7 @@
             // 
             DeleteButton.BackColor=Color.Cornsilk;
             DeleteButton.FlatStyle=FlatStyle.Popup;
-            DeleteButton.Location=new Point(1229, 646);
+            DeleteButton.Location=new Point(1229, 665);
             DeleteButton.Name="DeleteButton";
             DeleteButton.Size=new Size(142, 47);
             DeleteButton.TabIndex=11;
@@ -558,7 +616,7 @@
             tabPage4.Controls.Add(dataGridViewApp);
             tabPage4.Location=new Point(4, 39);
             tabPage4.Name="tabPage4";
-            tabPage4.Size=new Size(1374, 705);
+            tabPage4.Size=new Size(1374, 715);
             tabPage4.TabIndex=3;
             tabPage4.Text="Реестр заявок";
             // 
@@ -671,7 +729,7 @@
             tabPage5.Controls.Add(OrgDelete);
             tabPage5.Location=new Point(4, 39);
             tabPage5.Name="tabPage5";
-            tabPage5.Size=new Size(1374, 705);
+            tabPage5.Size=new Size(1374, 715);
             tabPage5.TabIndex=4;
             tabPage5.Text="Реестр организаций";
             // 
@@ -736,7 +794,7 @@
             tabPage6.Location=new Point(4, 39);
             tabPage6.Name="tabPage6";
             tabPage6.Padding=new Padding(3);
-            tabPage6.Size=new Size(1374, 705);
+            tabPage6.Size=new Size(1374, 715);
             tabPage6.TabIndex=5;
             tabPage6.Text="История";
             // 
@@ -876,6 +934,10 @@
         private Button filterActButton;
         private TabPage tabPage6;
         private DataGridView dataGridViewHistory;
+        private Button buttonPriviosPageAct;
+        private Button buttonNextPageAct;
+        private Button buttonPreviousContracts;
+        private Button buttonNextContracts;
     }
 }
 

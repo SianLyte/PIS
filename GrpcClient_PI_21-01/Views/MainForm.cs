@@ -94,16 +94,17 @@ namespace GrpcClient_PI_21_01
 
         /* -----------------------------------ACT----------------------------------------------------- */
 
+        private int _ActPage = 1;
+        private int _ActPageMax = 1;
         private readonly SemaphoreSlim actGridSemaphore = new(1, 1);
         private async Task SetDataGridAct()
         {
             await actGridSemaphore.WaitAsync();
             try
             {
-                int page = -1; // to do: сделать пагинацию
-
+                CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
                 DataGridViewActs.Rows.Clear();
-                var acts = await ActService.GetActs(page, actFilter);
+                var acts = await ActService.GetActs(_ActPage, actFilter);
                 foreach (var act in acts.Select(a => ActService.ToDataArray(a)))
                     DataGridViewActs.Rows.Add(act);
             }
@@ -112,6 +113,7 @@ namespace GrpcClient_PI_21_01
                 actGridSemaphore.Release();
             }
         }
+
 
         private async void AddButton_Click(object sender, EventArgs e)
         {
@@ -170,6 +172,31 @@ namespace GrpcClient_PI_21_01
             await SetDataGridAct();
         }
 
+
+        private void buttonNextPage_Click(object sender, EventArgs e)
+        {
+            _ActPage++;
+            CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
+        }
+        private void buttonPriviosPage_Click(object sender, EventArgs e)
+        {
+            _ActPage--;
+            CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
+        }
+
+        private void CheckPageButton(Button buttonPrevious, Button buttonNext, int page, int pageMax)
+        {
+            buttonPrevious.Enabled = true;
+            buttonNext.Enabled = true;
+            if (page == 1)
+            {
+                buttonPrevious.Enabled = false;
+            }
+            if (page == pageMax)
+            {
+                buttonNext.Enabled = false;
+            }
+        }
 
         private async Task SetDataGridOrg()
         {
@@ -434,5 +461,6 @@ namespace GrpcClient_PI_21_01
             }
             dataGridViewHistory.DataSource = _dbHistory.Tables[0];
         }
+
     }
 }
