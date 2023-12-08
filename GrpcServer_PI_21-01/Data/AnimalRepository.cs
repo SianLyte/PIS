@@ -126,11 +126,12 @@ namespace GrpcServer_PI_21_01.Data
             // вовзращаем false, если что-то пошло не так (например, карточки животного с таким Id не существует в БД)
         }
 
-        public static List<AnimalCard> GetAnimalCards()
+        public static List<AnimalCard> GetAnimalCards(DataRequest request)
         {
+            var query = new Filter<AnimalCard>(request.Filter).GenerateSQL(request.Page);
             List<AnimalCard> cards = new();
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM animal_card") { Connection = cn })
+            using (NpgsqlCommand cmd = new(query) { Connection = cn })
             {
                 cn.Open();
                 var reader = cmd.ExecuteReader();
@@ -140,7 +141,7 @@ namespace GrpcServer_PI_21_01.Data
                     var category = reader.GetString(reader.GetOrdinal("category"));
                     var gender = reader.GetString(reader.GetOrdinal("sex"));
                     var breed = reader.GetString(reader.GetOrdinal("breed"));
-                    var size = reader.GetInt32(reader.GetOrdinal("sizee")); // в бд поменять varchar(30) на integer
+                    var size = reader.GetInt32(reader.GetOrdinal("sizee"));
                     var wool = reader.GetString(reader.GetOrdinal("wool"));
                     var signs = reader.GetString(reader.GetOrdinal("signs"));
                     var identificationMark = reader.GetString(reader.GetOrdinal("id_metka"));
@@ -156,7 +157,7 @@ namespace GrpcServer_PI_21_01.Data
                         if (processedId == id) return;
                         processedId = id;
 
-                        var animalCard = new AnimalCard(id, category, gender, breed, size, // убрать int.Parse, когда поменяем в бд
+                        var animalCard = new AnimalCard(id, category, gender, breed, size,
                             wool, color, ears, tail, signs, identificationMark,
                             Location.GetById(cityid, cn, true),
                             Act.GetById(actId, cn, true), null);
@@ -168,6 +169,38 @@ namespace GrpcServer_PI_21_01.Data
                 cn.Close();
             }
             return cards;
+        }
+
+        public static AnimalCard? GetAnimalCard(int id)
+        {
+            using NpgsqlCommand cmd = new("SELECT * FROM animal_card WHERE id = " + id) { Connection = cn };
+            cn.Open();
+
+            var reader = cmd.ExecuteReader();
+            if (!reader.Read()) return null;
+
+            var category = reader.GetString(reader.GetOrdinal("category"));
+            var gender = reader.GetString(reader.GetOrdinal("sex"));
+            var breed = reader.GetString(reader.GetOrdinal("breed"));
+            var size = reader.GetInt32(reader.GetOrdinal("sizee"));
+            var wool = reader.GetString(reader.GetOrdinal("wool"));
+            var signs = reader.GetString(reader.GetOrdinal("signs"));
+            var identificationMark = reader.GetString(reader.GetOrdinal("id_metka"));
+            var cityid = reader.GetInt32(reader.GetOrdinal("city_id"));
+            var color = reader.GetString(reader.GetOrdinal("color"));
+            var ears = reader.GetString(reader.GetOrdinal("ears"));
+            var tail = reader.GetString(reader.GetOrdinal("tail"));
+            var actId = reader.GetInt32(reader.GetOrdinal("act_id"));
+
+            reader.Close();
+
+            var animalCard = new AnimalCard(id, category, gender, breed, size,
+                        wool, color, ears, tail, signs, identificationMark,
+                        Location.GetById(cityid, cn, true),
+                        Act.GetById(actId, cn, true), null);
+
+            cn.Close();
+            return animalCard;
         }
     }
 }

@@ -5,7 +5,7 @@ using Google.Protobuf.WellKnownTypes;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
-    class ReportService
+    public static class ReportService
     {
         private static async Task<List<Report_ActCapture>> GetReports(DateTime start, DateTime finish)
         {

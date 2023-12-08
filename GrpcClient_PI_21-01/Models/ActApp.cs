@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GrpcClient_PI_21_01.Controllers;
 
 namespace GrpcClient_PI_21_01.Models
 {
+    [FilterableModel]
     public class ActApp
     {
         public int ActAppNumber { get; set; }
+        [Filterable("act_id")]
         public Act Act { get; set; }
+        [Filterable("catch_request_id")]
         public App Application { get; set; }
 
         public ActApp(int actAppNumber, Act act, App application)
@@ -19,21 +18,15 @@ namespace GrpcClient_PI_21_01.Models
             Application = application;
         }
 
-        //public static ActApp GetByActId(int actId, NpgsqlConnection cn)
-        //{
-        //    NpgsqlCommand cmd = new($"SELECT * FROM act_catch_request WHERE act_id = {actId}");
-        //    cmd.Connection = cn;
-        //    var reader = cmd.ExecuteReader();
-        //    string[] arr = { "0", "0", "0" };
-        //    while (reader.Read())
-        //    {
-        //        arr[0] = reader[0].ToString(); //id 
-        //        arr[1] = reader[1].ToString(); //act_id
-        //        arr[2] = reader[2].ToString(); //app_id
-        //    }
-        //    reader.Close();
-        //    return new ActApp(int.Parse(arr[0]), Act.GetById(int.Parse(arr[1]), cn), App.GetById(int.Parse(arr[2]), cn));
-        //}
-
+        public ActAppReply ToReply()
+        {
+            return new ActAppReply()
+            {
+                Act = Act.ToReply(),
+                Actor = UserService.CurrentUser?.ToReply(),
+                App = Application.ToReply(),
+                Id = ActAppNumber,
+            };
+        }
     }
 }

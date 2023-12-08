@@ -6,7 +6,7 @@ using Grpc.Core;
 
 namespace GrpcClient_PI_21_01
 {
-    internal class ActService
+    internal static class ActService
     {
         //public static List<string[]> ShowAct(string filter)
         //{
@@ -158,23 +158,26 @@ namespace GrpcClient_PI_21_01
             return response.Successful;
         }
 
-        public static async Task<bool> AddActApp(ActAppReply actApp)
+        public static async Task<bool> AddActApp(ActApp aa)
         {
+            var actApp = aa.ToReply();
             actApp.Id = -1;
             actApp.Actor = UserService.CurrentUser?.ToReply();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
             var response = await client.AddActAppsAsync(actApp);
             actApp.Id = response.ModifiedId ?? -1;
+            aa.ActAppNumber = response.ModifiedId ?? -1;
             return response.Successful;
         }
 
-        public static async Task<bool> UpdateActApp(ActAppReply actApp)
+        public static async Task<bool> UpdateActApp(ActApp actApp)
         {
-            actApp.Actor = UserService.CurrentUser?.ToReply();
+            var reply = actApp.ToReply();
+            reply.Actor = UserService.CurrentUser?.ToReply();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var response = await client.UpdateActAppsAsync(actApp);
+            var response = await client.UpdateActAppsAsync(reply);
             return response.Successful;
         }
 
@@ -190,7 +193,7 @@ namespace GrpcClient_PI_21_01
             return response.Successful;
         }
 
-        public static async Task<ActAppReply> GetActApp(int id)
+        public static async Task<ActApp> GetActApp(int id)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
@@ -199,19 +202,19 @@ namespace GrpcClient_PI_21_01
                 Id = id,
                 Actor = UserService.CurrentUser?.ToReply()
             });
-            return actApp;
+            return actApp.FromReply();
         }
 
-        public static async Task<List<ActAppReply>> GetActApps()
+        public static async Task<List<ActApp>> GetActApps(int page = -1, Filter<ActApp>? filter = null)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var serverData = client.GetActApps(UserService.CurrentUser?.ToReply());
+            var serverData = client.GetActApps(UserService.GenerateDataRequest(page, filter));
             var responseStream = serverData.ResponseStream;
-            var actApps = new List<ActAppReply>();
+            var actApps = new List<ActApp>();
             await foreach (var response in responseStream.ReadAllAsync())
             {
-                actApps.Add(response);
+                actApps.Add(response.FromReply());
             }
             return actApps;
         }

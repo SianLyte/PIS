@@ -7,23 +7,30 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01.Models
 {
+    [FilterableModel("operation")]
     public class Operation
     {
         public int IdOperation { get; set; }
-        public string actionType { get; set; }
-        public string modifiedObjectId { get; set; }
-        public string modifiedTableName { get; set; }
-        public User user { get; set; }
-        public DateTime date;
+        [Filterable("actiontype")]
+        public ActionType ActionType { get; set; }
+        [Filterable("modifiedobjectid")]
+        public string ModifiedObjectId { get; set; }
+        [Filterable("modifiedtablename")]
+        public string ModifiedTableName { get; set; }
+        [Filterable("user_id")]
+        public User Actor { get; set; }
+        [Filterable("date")]
+        public DateTime ActionDate { get; set; }
 
-        public Operation(int IdOperation, string actionType, string modifiedObjectId, string modifiedTableName, User user, DateTime date)
+        public Operation(int IdOperation, ActionType actionType, string modifiedObjectId,
+            string modifiedTableName, User user, DateTime date)
         {
             this.IdOperation = IdOperation;
-            this.actionType = actionType;
-            this.modifiedObjectId = modifiedObjectId;
-            this.modifiedTableName = modifiedTableName;
-            this.user = user;
-            this.date = date;
+            this.ActionType = actionType;
+            this.ModifiedObjectId = modifiedObjectId;
+            this.ModifiedTableName = modifiedTableName;
+            this.Actor = user;
+            this.ActionDate = date;
         }
 
         public static Operation GetById(int id, NpgsqlConnection cn)
@@ -44,7 +51,7 @@ namespace GrpcServer_PI_21_01.Models
             }
             reader.Close();
             cn.Close();
-            return new Operation(id, arr[0], arr[1], arr[2], User.GetById(int.Parse(arr[3]), cn), DateTime.Parse(arr[4]));
+            return new Operation(id, Enum.Parse<ActionType>(arr[0]), arr[1], arr[2], User.GetById(int.Parse(arr[3]), cn), DateTime.Parse(arr[4]));
         }
     }
 }

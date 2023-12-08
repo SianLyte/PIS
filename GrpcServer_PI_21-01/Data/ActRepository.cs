@@ -168,12 +168,13 @@ namespace GrpcServer_PI_21_01.Data
             };
         }
 
-        public static List<ActApp> GetActApps()
+        public static List<ActApp> GetActApps(DataRequest r)
         {
+            var query = new Filter<ActApp>(r.Filter).GenerateSQL(r.Page);
             List<ActApp> actsApps = new();
             List<string?[]> actsEmpty = new();
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM act_catch_request") { Connection = cn })
+            using (NpgsqlCommand cmd = new(query) { Connection = cn })
             {
                 cn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();

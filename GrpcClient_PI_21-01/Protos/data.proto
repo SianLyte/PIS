@@ -16,7 +16,7 @@ service DataRetriever {
   rpc UpdateContract (ContractReply) returns (OperationResult);
 
   rpc GetLocation (IdRequest) returns (LocationReply);
-  rpc GetLocations (UserReply) returns (stream LocationReply);
+  rpc GetLocations (DataRequest) returns (stream LocationReply);
   rpc GetLocationsPageCount (DataRequest) returns (PageCount);
   rpc AddLocation (LocationReply) returns (OperationResult);
   rpc RemoveLocation (IdRequest) returns (OperationResult);
@@ -44,24 +44,24 @@ service DataRetriever {
   rpc UpdateApp (ApplicationReply) returns (OperationResult);
 
   rpc GetAnimalCard (IdRequest) returns (AnimalCardReply);
-  rpc GetAnimalCards (UserReply) returns (stream AnimalCardReply);
+  rpc GetAnimalCards (DataRequest) returns (stream AnimalCardReply);
   rpc GetAnimalCardsPageCount (DataRequest) returns (PageCount);
   rpc RemoveAnimalCard (IdRequest) returns (OperationResult);
   rpc AddAnimalCard (AnimalCardReply) returns (OperationResult);
   rpc UpdateAnimalCard (AnimalCardReply) returns (OperationResult);
 
-  rpc GetOperations (UserReply) returns (stream OperationReply);
+  rpc GetOperations (DataRequest) returns (stream OperationReply);
   rpc GetOperationsPageCount (DataRequest) returns (PageCount);
 
   rpc GetActApp (IdRequest) returns (ActAppReply);
-  rpc GetActApps (UserReply) returns (stream ActAppReply);
+  rpc GetActApps (DataRequest) returns (stream ActAppReply);
   rpc GetActAppsCount (DataRequest) returns (PageCount);
   rpc AddActApps (ActAppReply) returns (OperationResult);
   rpc UpdateActApps (ActAppReply) returns (OperationResult);
   rpc RemoveActApps (IdRequest) returns (OperationResult);
 
   rpc GetLocationContract (IdRequest) returns (LocationContractReply);
-  rpc GetLocationContracts (UserReply) returns (stream LocationContractReply);
+  rpc GetLocationContracts (DataRequest) returns (stream LocationContractReply);
   rpc GetLocationContractsPageCount (DataRequest) returns (PageCount);
   rpc AddLocationContract (LocationContractReply) returns (OperationResult);
   rpc UpdateLocationContract (LocationContractReply) returns (OperationResult);

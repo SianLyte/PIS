@@ -37,11 +37,16 @@ namespace GrpcServer_PI_21_01.Data
         public static List<Report> GenereteReport(DateTime start, DateTime finish)
         {
             reports = new List<Report>();
-            foreach (var loc in LocationRepository.GetLocations())
+            var request = new DataRequest()
+            {
+                Filter = new FilterReply(),
+                Page = -1,
+            };
+            foreach (var loc in LocationRepository.GetLocations(request))
 
             {
                 //все заявки_акты за определнный период в конкретном городе
-                var allActApps = ActRepository.GetActApps().Where(actapp => actapp.Act.Date >= start & actapp.Act.Date <= finish & actapp.Application.locality.IdLocation == loc.IdLocation);
+                var allActApps = ActRepository.GetActApps(request).Where(actapp => actapp.Act.Date >= start & actapp.Act.Date <= finish & actapp.Application.locality.IdLocation == loc.IdLocation);
                 //массив уникальных актов
                 List<Act> acts = new(); 
                 //массив уникальных 

@@ -114,8 +114,7 @@ namespace GrpcServer_PI_21_01.Services
         #region Locations
         public override Task<LocationReply> GetLocation(IdRequest request, ServerCallContext context)
         {
-            Location? loc = LocationRepository.GetLocations()
-                .FirstOrDefault(l => l.IdLocation == request.Id);
+            Location? loc = LocationRepository.GetLocation(request.Id);
 
             if (loc is null)
                 throw new RpcException(new Status(StatusCode.NotFound, "Item does not exist"));
@@ -123,11 +122,11 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(loc.ToReply());
         }
 
-        public override async Task GetLocations(UserReply user,
+        public override async Task GetLocations(DataRequest r,
             IServerStreamWriter<LocationReply> responseStream,
             ServerCallContext context)
         {
-            foreach (var loc in LocationRepository.GetLocations())
+            foreach (var loc in LocationRepository.GetLocations(r))
             {
                 await responseStream.WriteAsync(loc.ToReply());
             }
@@ -308,8 +307,7 @@ namespace GrpcServer_PI_21_01.Services
         #region AnimalCards
         public override Task<AnimalCardReply> GetAnimalCard(IdRequest request, ServerCallContext context)
         {
-            AnimalCard? animalCard = AnimalRepository.GetAnimalCards()
-                .FirstOrDefault(a => a.IdAnimalCard == request.Id);
+            AnimalCard? animalCard = AnimalRepository.GetAnimalCard(request.Id);
 
             if (animalCard is null)
                 throw new RpcException(new Status(StatusCode.NotFound, "Item does not exist"));
@@ -317,13 +315,11 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(animalCard.ToReply());
         }
 
-        public override async Task GetAnimalCards(UserReply user,
+        public override async Task GetAnimalCards(DataRequest r,
             IServerStreamWriter<AnimalCardReply> responseStream,
             ServerCallContext ctx)
         {
-            foreach (var animalCard in AnimalRepository.GetAnimalCards()
-                .Where(ac => user.PrivelegeLevel == "Admin"
-                || ac.ActCapture.Organization.idOrg == user.Organization.IdOrganization))
+            foreach (var animalCard in AnimalRepository.GetAnimalCards(r))
                 await responseStream.WriteAsync(animalCard.ToReply());
         }
 
@@ -354,11 +350,13 @@ namespace GrpcServer_PI_21_01.Services
         }
         #endregion
         #region Operations
-        public override async Task GetOperations(UserReply user,
+        public override async Task GetOperations(DataRequest r,
             IServerStreamWriter<OperationReply> responseStream,
             ServerCallContext ctx)
         {
-            foreach (var op in OperationRepository.GetOperations())
+            if (r.Actor.PrivelegeLevel != "Admin")
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "You are not permitted to watch operations."));
+            foreach (var op in OperationRepository.GetOperations(r))
                 await responseStream.WriteAsync(op.ToReply());
         }
 
@@ -376,12 +374,12 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(r.ToReply());
         }
 
-        public override async Task GetActApps(UserReply request,
+        public override async Task GetActApps(DataRequest r,
             IServerStreamWriter<ActAppReply> responseStream,
             ServerCallContext context)
         {
 
-            foreach (var actApp in ActRepository.GetActApps())
+            foreach (var actApp in ActRepository.GetActApps(r))
                 await responseStream.WriteAsync(actApp.ToReply());
         }
 
@@ -422,11 +420,11 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(lc.ToReply());
         }
 
-        public override async Task GetLocationContracts(UserReply request,
+        public override async Task GetLocationContracts(DataRequest r,
             IServerStreamWriter<LocationContractReply> responseStream,
             ServerCallContext context)
         {
-            foreach (var locationContract in LocationRepository.GetLocationContracts())
+            foreach (var locationContract in LocationRepository.GetLocationContracts(r))
                 await responseStream.WriteAsync(locationContract.ToReply());
         }
 
@@ -469,10 +467,10 @@ namespace GrpcServer_PI_21_01.Services
             {
                 OperationId = operation.IdOperation,
                 Action = ActionType.ActionAdd, 
-                ModifiedObjectId = int.Parse(operation.modifiedObjectId), 
-                ModifiedTableName = operation.modifiedTableName,
-                User = operation.user.ToReply(),
-                Date = operation.date.ToUtc().ToTimestamp(),
+                ModifiedObjectId = int.Parse(operation.ModifiedObjectId), 
+                ModifiedTableName = operation.ModifiedTableName,
+                User = operation.Actor.ToReply(),
+                Date = operation.ActionDate.ToUtc().ToTimestamp(),
             };
         }
 
