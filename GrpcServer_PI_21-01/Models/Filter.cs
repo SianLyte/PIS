@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace GrpcServer_PI_21_01.Models
@@ -129,6 +130,28 @@ namespace GrpcServer_PI_21_01.Models
                 ExpressionType.MemberAccess => (PropertyInfo)((MemberExpression)body).Member,
                 _ => throw new InvalidOperationException(),
             };
+        }
+
+        public string GenerateSQLAct(int page = -1)
+        {
+            var startQuery = $"SELECT act.id, dog_count, cat_count, organization_id, act.created_at, goal, municipal_contract_id FROM {tableName} " +
+                $"inner join act_catch_request on act.id = act_catch_request.act_id " +
+                $"inner join catch_request on catch_request.id = act_catch_request.catch_request_id";
+            if (andEquations.Count > 0 || orEquations.Count > 0)
+            {
+                startQuery += " WHERE ";
+                if (andEquations.Count > 0)
+                    startQuery += $"{string.Join(" and ", andEquations)}";
+                if (orEquations.Count > 0)
+                {
+                    if (andEquations.Count > 0)
+                        startQuery += " and ";
+                    startQuery += $"({string.Join(" or ", orEquations)})";
+                }
+            }
+            if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
+
+            return startQuery + ";";
         }
 
         public string GenerateSQL(int page = -1)

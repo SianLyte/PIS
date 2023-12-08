@@ -53,7 +53,6 @@ namespace GrpcServer_PI_21_01.Data
                 cn.Open();
                 int returnValue = (int)cmd.ExecuteScalar();
                 A.ActNumber = returnValue;
-                //cmd.ExecuteNonQuery();
                 cn.Close();
             }
             // 'A' подаётся с Id = -1. После добавления в БД нужно присвоить
@@ -75,7 +74,6 @@ namespace GrpcServer_PI_21_01.Data
             }
             //var index = acts.FindIndex(x => x.ActNumber == choosedAct);
             //acts.RemoveAt(index);
-
             // возвращаем true, если удаление произошло успешно,
             // вовзращаем false, если что-то пошло не так (например, акт отлова с таким Id не существует в БД)
             return true;
@@ -108,7 +106,7 @@ namespace GrpcServer_PI_21_01.Data
 
         public static List<Act> GetActs(DataRequest request)
         {
-            var query = new Filter<Act>(request.Filter).GenerateSQL(request.Page);
+            var query = new Filter<Act>(request.Filter).GenerateSQLAct(request.Page);
 
             List<Act> acts = new();
             List<string?[]> actsEmpty = new();
@@ -164,7 +162,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                return new ActApp(int.Parse(arr[0]), ActRepository.GetAct(int.Parse(arr[1])), AppRepository.GetApplication(int.Parse(arr[2])));   
+                return new ActApp(int.Parse(arr[0]), GetAct(int.Parse(arr[1])), AppRepository.GetApplication(int.Parse(arr[2])));   
             };
         }
 
