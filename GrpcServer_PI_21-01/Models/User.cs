@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GrpcServer_PI_21_01.Data;
 using GrpcServer_PI_21_01.Services;
 using Npgsql;
 
@@ -66,7 +67,7 @@ namespace GrpcServer_PI_21_01.Models
             }
             reader.Close();
             cn.Close();
-            return new User(id, arr[0], arr[1], Role.ToString(arr[2]), arr[3], arr[4], arr[5], Organization.GetById(int.Parse(arr[6]), cn));
+            return new User(id, arr[0], arr[1], Role.ToString(arr[2]), arr[3], arr[4], arr[5], OrgRepository.GetOrganization(int.Parse(arr[6])));
         }
     }
 }

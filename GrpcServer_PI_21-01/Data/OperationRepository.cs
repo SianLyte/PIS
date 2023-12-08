@@ -67,24 +67,9 @@ namespace GrpcServer_PI_21_01.Data
 
         public static bool AddOperation(OperationReply op)
         {
-            string action = "";
-            if (op.Action == ActionType.ActionAdd)
-            {
-                action = "ACTION_ADD";
-            }
-            if (op.Action == ActionType.ActionUpdate)
-            {
-                action = "ACTION_UPDATE";
-            }
-            if (op.Action == ActionType.ActionDelete)
-            {
-                action = "ACTION_DELETE";
-            }
-
-
             var cmdString = $"INSERT INTO operation " +
                 $"(actiontype, modifiedobjectid, modifiedtablename, userid, date) " +
-                $"VALUES ('{action}', {op.ModifiedObjectId}, '{op.ModifiedTableName}', {op.User.UserId}, '{op.Date}') RETURNING operationid";
+                $"VALUES ('{op.Action}', {op.ModifiedObjectId}, '{op.ModifiedTableName}', {op.User.UserId}, '{op.Date}') RETURNING operationid";
             using NpgsqlCommand cmd = new(cmdString) { Connection = cn };
             try
             {
@@ -93,11 +78,31 @@ namespace GrpcServer_PI_21_01.Data
                 if (returnedVal is not int id)
                     return false;
                 op.OperationId = id;
-                
                 cn.Close();
                 return true;
             }
             catch { return false; }
+        }
+
+        public static Operation GetOperation(int id)
+        {
+
+            NpgsqlCommand cmd = new($"SELECT * FROM operation WHERE id = {id}") { Connection = cn };
+            cmd.Connection = cn;
+            cn.Open();
+            var reader = cmd.ExecuteReader();
+            string?[] arr = { "0", "0", "0", "0", "0" };
+            while (reader.Read())
+            {
+                arr[0] = (reader[1].ToString()); //actiontype
+                arr[1] = reader[2].ToString(); //modifiedobject
+                arr[2] = reader[3].ToString(); //modifiedtable
+                arr[3] = reader[4].ToString(); //userid
+                arr[4] = reader[5].ToString(); //date
+            }
+            reader.Close();
+            cn.Close();
+            return new Operation(id, Enum.Parse<ActionType>(arr[0]), arr[1], arr[2], User.GetById(int.Parse(arr[3]), cn), DateTime.Parse(arr[4]));
         }
     }
 }

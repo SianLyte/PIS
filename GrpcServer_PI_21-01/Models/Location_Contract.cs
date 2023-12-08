@@ -1,5 +1,6 @@
 ﻿using Npgsql;
 using GrpcServer_PI_21_01.Services;
+using GrpcServer_PI_21_01.Data;
 
 namespace GrpcServer_PI_21_01.Models
 {
@@ -39,9 +40,9 @@ namespace GrpcServer_PI_21_01.Models
             cn.Close();
             return new Location_Contract(
                 int.Parse(arr[0]),
-                Location.GetById(int.Parse(arr[3]), cn),
+                LocationRepository.GetLocation(int.Parse(arr[3])),
                 decimal.Parse(arr[1]),
-                Contract.GetById(int.Parse(arr[2]), cn));
+                ContractRepository.GetContract(int.Parse(arr[2])));
         }
 
         public LocationContractReply ToReply()

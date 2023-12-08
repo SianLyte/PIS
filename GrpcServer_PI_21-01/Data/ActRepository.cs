@@ -133,8 +133,8 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < actsEmpty.Count; i++)
                 {
                     var actEmpty = actsEmpty[i];
-                    Organization org = Organization.GetById(int.Parse(actEmpty[3]), cn);
-                    Contract contr = Contract.GetById(int.Parse(actEmpty[6]), cn);
+                    Organization org = OrgRepository.GetOrganization(int.Parse(actEmpty[3]));
+                    Contract contr = ContractRepository.GetContract(int.Parse(actEmpty[6]));
                     Act act = new Act(int.Parse(actEmpty[0]),
                         int.Parse(actEmpty[1]),
                         int.Parse(actEmpty[2]),
@@ -271,9 +271,9 @@ namespace GrpcServer_PI_21_01.Data
                 cn.Close();
 
             return new Act(id, dogCount, catCount,
-                Organization.GetById(orgId, cn, connectionAlreadyOpen),
+                OrgRepository.GetOrganization(orgId),
                 createdAt, goal,
-                Contract.GetById(contrId, cn, connectionAlreadyOpen));
+                ContractRepository.GetContract(contrId));
         }
     }
 }

@@ -159,7 +159,7 @@ namespace GrpcServer_PI_21_01.Data
 
                         var animalCard = new AnimalCard(id, category, gender, breed, size,
                             wool, color, ears, tail, signs, identificationMark,
-                            Location.GetById(cityid, cn, true),
+                            LocationRepository.GetLocation(cityid),
                             ActRepository.GetAct(actId, true), null);
 
                         cards.Add(animalCard);
@@ -196,7 +196,7 @@ namespace GrpcServer_PI_21_01.Data
 
             var animalCard = new AnimalCard(id, category, gender, breed, size,
                         wool, color, ears, tail, signs, identificationMark,
-                        Location.GetById(cityid, cn, true),
+                        LocationRepository.GetLocation(cityid),
                         ActRepository.GetAct(actId, true), null);
 
             cn.Close();

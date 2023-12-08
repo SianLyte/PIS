@@ -35,29 +35,29 @@ namespace GrpcServer_PI_21_01.Models
             Costumer = costumer;
         }
 
-        public static Contract GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)
-        {
-            NpgsqlCommand cmd = new($"SELECT * FROM municipal_contract WHERE id = {id}");
-            cmd.Connection = cn;
-            if (!connectionAlreadyOpen)
-                cn.Open();
+        //public static Contract GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)
+        //{
+        //    NpgsqlCommand cmd = new($"SELECT * FROM municipal_contract WHERE id = {id}");
+        //    cmd.Connection = cn;
+        //    if (!connectionAlreadyOpen)
+        //        cn.Open();
 
-            var reader = cmd.ExecuteReader();
-            if (!reader.Read()) throw new Exception("Unknown ID for Contract: " + id);
+        //    var reader = cmd.ExecuteReader();
+        //    if (!reader.Read()) throw new Exception("Unknown ID for Contract: " + id);
 
-            var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
-            var overAt = reader.GetDateTime(reader.GetOrdinal("validity_date"));
-            var performerId = reader.GetInt32(reader.GetOrdinal("performer_id"));
-            var customerId = reader.GetInt32(reader.GetOrdinal("customer_id"));
+        //    var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+        //    var overAt = reader.GetDateTime(reader.GetOrdinal("validity_date"));
+        //    var performerId = reader.GetInt32(reader.GetOrdinal("performer_id"));
+        //    var customerId = reader.GetInt32(reader.GetOrdinal("customer_id"));
 
-            reader.Close();
-            if (!connectionAlreadyOpen)
-                cn.Close();
+        //    reader.Close();
+        //    if (!connectionAlreadyOpen)
+        //        cn.Close();
 
-            return new Contract(id, createdAt, overAt,
-                Organization.GetById(performerId, cn, connectionAlreadyOpen),
-                Organization.GetById(customerId, cn, connectionAlreadyOpen));
-        }
+        //    return new Contract(id, createdAt, overAt,
+        //        Organization.GetById(performerId, cn, connectionAlreadyOpen),
+        //        Organization.GetById(customerId, cn, connectionAlreadyOpen));
+        //}
 
     }
 }

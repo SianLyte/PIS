@@ -39,9 +39,23 @@ namespace GrpcServer_PI_21_01.Data
             };
         }
 
-        public static int GetLocationContractMaxPage(DataRequest uest)
+        public static int GetLocationContractMaxPage(DataRequest req)
         {
-            throw new NotImplementedException();
+            var query = new Filter<Location_Contract>(req.Filter).GenerateSQLForCount();
+            using (NpgsqlCommand cmd = new("SELECT count(*) from location_contract") { Connection = cn })
+            {
+                cn.Open();
+                string count = "";
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    count = reader[0].ToString();
+                }
+                reader.Close();
+                cn.Close();
+                var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
+                return (int)a;
+            };
         }
 
         public static List<Location> GetLocations(DataRequest req)
@@ -80,7 +94,18 @@ namespace GrpcServer_PI_21_01.Data
 
         public static Location GetLocation(int id)
         {
-            throw new NotImplementedException();
+            NpgsqlCommand cmd = new($"SELECT * FROM city WHERE id = {id}");
+            cmd.Connection = cn;
+                cn.Open();
+
+            var reader = cmd.ExecuteReader();
+            if (!reader.Read()) throw new Exception("Unknown ID for location: " + id);
+            var location = new Location(id, reader.GetString(reader.GetOrdinal("city")));
+
+            reader.Close();
+                cn.Close();
+
+            return location;
         }
 
         public static bool AddLocation(Location loc)
@@ -197,7 +222,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                return new Location_Contract(int.Parse(arr[0]), Location.GetById(int.Parse(arr[2]), cn), decimal.Parse(arr[0]), Models.Contract.GetById(int.Parse(arr[1]), cn));
+                return new Location_Contract(int.Parse(arr[0]), GetLocation(int.Parse(arr[2])), decimal.Parse(arr[0]), ContractRepository.GetContract(int.Parse(arr[1])));
             };
         }
 
@@ -224,8 +249,8 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < lcsEmpty.Count; i++)
                 {
                     var lcEmpty = lcsEmpty[i];
-                    Models.Contract contract = Models.Contract.GetById(int.Parse(lcEmpty[2]), cn);
-                    Location location = Location.GetById(int.Parse(lcEmpty[3]), cn);
+                    Models.Contract contract = ContractRepository.GetContract(int.Parse(lcEmpty[2]));
+                    Location location = GetLocation(int.Parse(lcEmpty[3])); 
 
                     Location_Contract lc = new Location_Contract(int.Parse(lcEmpty[0]), location, decimal.Parse(lcEmpty[1]), contract);
                     lcs.Add(lc);

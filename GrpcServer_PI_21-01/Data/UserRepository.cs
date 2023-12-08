@@ -77,7 +77,7 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < usersEmpty.Count; i++)
                 {
                     var userEmpty = usersEmpty[i];
-                    Organization org = Organization.GetById(int.Parse(userEmpty[7]), cn);
+                    Organization org = OrgRepository.GetOrganization(int.Parse(userEmpty[7]));
 
                     User user = new User(int.Parse(userEmpty[0]),
                         userEmpty[5],
@@ -100,7 +100,7 @@ namespace GrpcServer_PI_21_01.Data
             var privelegeLevel = reader.GetString(reader.GetOrdinal("PrivelegeLevel"));
             var login = reader.GetString(reader.GetOrdinal("Login"));
             var password = reader.GetString(reader.GetOrdinal("Password"));
-            var org = Organization.GetById(reader.GetInt32(reader.GetOrdinal("OrganizationId")), cn);
+            var org = OrgRepository.GetOrganization(reader.GetInt32(reader.GetOrdinal("OrganizationId")));
 
             var user = new User(userId, login, password, Role.ToString(privelegeLevel), name, surname, patronymic, org);
             return user;

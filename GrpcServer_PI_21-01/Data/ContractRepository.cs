@@ -124,8 +124,8 @@ namespace GrpcServer_PI_21_01.Data
                         int.Parse(a[0]),
                         DateTime.Parse(a[1]),
                         DateTime.Parse(a[2]), 
-                        Organization.GetById(int.Parse(a[3]),cn),
-                        Organization.GetById(int.Parse(a[4]), cn));
+                        OrgRepository.GetOrganization(int.Parse(a[3])),
+                        OrgRepository.GetOrganization(int.Parse(a[4])));
                     contracts.Add(contract);
                 }
             }
@@ -134,7 +134,24 @@ namespace GrpcServer_PI_21_01.Data
 
         public static Contract? GetContract(int id)
         {
-            throw new NotImplementedException();
+            NpgsqlCommand cmd = new($"SELECT * FROM municipal_contract WHERE id = {id}");
+            cmd.Connection = cn;
+            cn.Open();
+
+            var reader = cmd.ExecuteReader();
+            if (!reader.Read()) throw new Exception("Unknown ID for Contract: " + id);
+
+            var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+            var overAt = reader.GetDateTime(reader.GetOrdinal("validity_date"));
+            var performerId = reader.GetInt32(reader.GetOrdinal("performer_id"));
+            var customerId = reader.GetInt32(reader.GetOrdinal("customer_id"));
+
+            reader.Close();
+            cn.Close();
+
+            return new Contract(id, createdAt, overAt,
+                OrgRepository.GetOrganization(performerId),
+                OrgRepository.GetOrganization(customerId));
         }
     }
 }

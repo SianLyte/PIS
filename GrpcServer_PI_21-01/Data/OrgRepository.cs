@@ -131,22 +131,42 @@ namespace GrpcServer_PI_21_01.Data
                     });
                 }
                 reader.Close();
+                cn.Close();
 
                 for (int i = 0; i < orgsEmpty.Count; i++)
                 {
                     var a = orgsEmpty[i];
                     Organization org = new Organization(int.Parse(a[0]), a[1], a[2], a[3],
-                        Location.GetById(int.Parse(a[4]), cn, true), Enum.Parse<OrganizationType>(a[5]), a[6]);
+                        LocationRepository.GetLocation(int.Parse(a[4])), Enum.Parse<OrganizationType>(a[5]), a[6]);
                     orgs.Add(org);
                 }
-                cn.Close();
+                
             }
             return orgs;
         }
 
         public static Organization? GetOrganization(int id)
         {
-            throw new NotImplementedException();
+
+            NpgsqlCommand cmd = new($"SELECT * FROM organization WHERE id = {id}") { Connection = cn };
+            string[] arr = { "0", "0", "0", "0", "0", "0", "0" };
+                cn.Open();
+
+            var reader = cmd.ExecuteReader();
+            if (!reader.Read()) throw new Exception("Unknown ID for organization: " + id);
+
+            var name = reader.GetString(reader.GetOrdinal("namee"));
+            var inn = reader.GetString(reader.GetOrdinal("inn"));
+            var kpp = reader.GetString(reader.GetOrdinal("kpp"));
+            var registrationAdress = reader.GetInt32(reader.GetOrdinal("registration"));
+            var type = reader.GetString(reader.GetOrdinal("typee"));
+            var status = reader.GetString(reader.GetOrdinal("status"));
+
+            reader.Close();
+            cn.Close();
+            return new Organization(id, name, inn, kpp,
+                LocationRepository.GetLocation(registrationAdress),
+                Enum.Parse<OrganizationType>(type), status);
         }
     }
 }

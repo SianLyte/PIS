@@ -33,25 +33,25 @@ namespace GrpcServer_PI_21_01.Models
             this.ActionDate = date;
         }
 
-        public static Operation GetById(int id, NpgsqlConnection cn)
-        {
+        //public static Operation GetById(int id, NpgsqlConnection cn)
+        //{
             
-            NpgsqlCommand cmd = new($"SELECT * FROM operation WHERE id = {id}") { Connection = cn };
-            cmd.Connection = cn;
-            cn.Open();
-            var reader = cmd.ExecuteReader();
-            string?[] arr = { "0", "0", "0", "0", "0" };
-            while (reader.Read())
-            {
-                arr[0] = (reader[1].ToString()); //actiontype
-                arr[1] = reader[2].ToString(); //modifiedobject
-                arr[2] = reader[3].ToString(); //modifiedtable
-                arr[3] = reader[4].ToString(); //userid
-                arr[4] = reader[5].ToString(); //date
-            }
-            reader.Close();
-            cn.Close();
-            return new Operation(id, Enum.Parse<ActionType>(arr[0]), arr[1], arr[2], User.GetById(int.Parse(arr[3]), cn), DateTime.Parse(arr[4]));
-        }
+        //    NpgsqlCommand cmd = new($"SELECT * FROM operation WHERE id = {id}") { Connection = cn };
+        //    cmd.Connection = cn;
+        //    cn.Open();
+        //    var reader = cmd.ExecuteReader();
+        //    string?[] arr = { "0", "0", "0", "0", "0" };
+        //    while (reader.Read())
+        //    {
+        //        arr[0] = (reader[1].ToString()); //actiontype
+        //        arr[1] = reader[2].ToString(); //modifiedobject
+        //        arr[2] = reader[3].ToString(); //modifiedtable
+        //        arr[3] = reader[4].ToString(); //userid
+        //        arr[4] = reader[5].ToString(); //date
+        //    }
+        //    reader.Close();
+        //    cn.Close();
+        //    return new Operation(id, Enum.Parse<ActionType>(arr[0]), arr[1], arr[2], User.GetById(int.Parse(arr[3]), cn), DateTime.Parse(arr[4]));
+        //}
     }
 }

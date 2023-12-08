@@ -44,7 +44,7 @@ namespace GrpcServer_PI_21_01.Data
                 $"descr = '{app.animaldescription}'," +
                 $"client_category = '{app.applicantCategory}'," +
                 $"cityid = '{app.locality.IdLocation}'," +
-                $"status = '{App.EnumToString(app.status)}'" +
+                $"status = '{app.status}'" +
                 $" WHERE id = {app.number}") { Connection = cn };
             {
                 cn.Open();
@@ -67,10 +67,10 @@ namespace GrpcServer_PI_21_01.Data
             // этому ссылочному значению новое Id, которое было присвоено самой БД
             //Applications.Add(app);
             using NpgsqlCommand cmd = new($"INSERT INTO catch_request " +
-                $"(created_at, territory, habitat, urgency, descr, client_category, cityid)" +
+                $"(created_at, territory, habitat, urgency, descr, client_category, cityid, status)" +
                 $"VALUES ('{app.date}', '{app.territory}', '{app.animalHabiat}', {app.urgencyOfExecution}, " +
                 $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality.IdLocation}'," +
-                $" '{App.EnumToString(app.status)}') RETURNING id")
+                $" '{app.status}') RETURNING id")
             { Connection = cn };
             {
                 cn.Open();
@@ -159,7 +159,7 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < appsEmpty.Count; i++)
                 {
                     var a = appsEmpty[i];
-                    App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), Location.GetById(int.Parse(a[7]),cn), a[2], a[3], a[4], a[5], a[6], App.StringToEnum(a[8]));
+                    App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), LocationRepository.GetLocation(int.Parse(a[7])), a[2], a[3], a[4], a[5], a[6], Enum.Parse<AppStatus>(a[8]));
                     apps.Add(app);
                 }
             }
@@ -189,7 +189,7 @@ namespace GrpcServer_PI_21_01.Data
             reader.Close();
             if (!connectionAlreadyOpen)
                 cn.Close();
-            return new App(DateTime.Parse(arr[0]), id, Location.GetById(int.Parse(arr[1]), cn),
+            return new App(DateTime.Parse(arr[0]), id, LocationRepository.GetLocation(int.Parse(arr[1])),
                 arr[2], arr[3], arr[4], arr[5], arr[6], status);
         }
     }

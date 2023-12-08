@@ -20,22 +20,22 @@ namespace GrpcServer_PI_21_01.Models
             City = city;
         }
 
-        public static Location GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)
-        {
-            NpgsqlCommand cmd = new($"SELECT * FROM city WHERE id = {id}");
-            cmd.Connection = cn;
-            if (!connectionAlreadyOpen)
-                cn.Open();
+        //public static Location GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)
+        //{
+        //    NpgsqlCommand cmd = new($"SELECT * FROM city WHERE id = {id}");
+        //    cmd.Connection = cn;
+        //    if (!connectionAlreadyOpen)
+        //        cn.Open();
 
-            var reader = cmd.ExecuteReader();
-            if (!reader.Read()) throw new Exception("Unknown ID for location: " + id);
-            var location = new Location(id, reader.GetString(reader.GetOrdinal("city")));
+        //    var reader = cmd.ExecuteReader();
+        //    if (!reader.Read()) throw new Exception("Unknown ID for location: " + id);
+        //    var location = new Location(id, reader.GetString(reader.GetOrdinal("city")));
 
-            reader.Close();
-            if (!connectionAlreadyOpen)
-                cn.Close();
+        //    reader.Close();
+        //    if (!connectionAlreadyOpen)
+        //        cn.Close();
 
-            return location;
-        }
+        //    return location;
+        //}
     }
 }
