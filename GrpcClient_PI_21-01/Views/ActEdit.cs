@@ -53,7 +53,7 @@ namespace GrpcClient_PI_21_01.Views
                 comboBoxContract.Text = act.Contracts.IdContract.ToString();
                 var actApps = (await ActService.GetActApps())
                     .Where(aa => aa.Act.ActNumber == actId);
-                _apps = actApps.Select(async aa => await Task.FromResult(aa.App.Number))
+                _apps = actApps.Select(async aa => await Task.FromResult(aa.Application.number))
                     .Select(task => task.Result)
                     .ToList();
                 CreateData();
@@ -172,12 +172,8 @@ namespace GrpcClient_PI_21_01.Views
                         }
                         foreach (var app in _apps)
                         {
-                            var appReply = (await AppService.GetApplication(app)).ToReply();
-                            successful = await ActService.AddActApp(new ActAppReply()
-                            {
-                                App = appReply,
-                                Act = act.ToReply()
-                            });
+                            var appReply = await AppService.GetApplication(app);
+                            successful = await ActService.AddActApp(new ActApp(-1, act, appReply));
                             if (!successful)
                             {
                                 this.DialogResult = DialogResult.Cancel;

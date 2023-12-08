@@ -5,7 +5,7 @@ using Grpc.Core;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
-    internal class AppService
+    internal static class AppService
     {
         //public static void AddApplication(App App)
         //{

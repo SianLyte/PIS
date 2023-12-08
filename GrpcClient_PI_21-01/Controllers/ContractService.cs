@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
-    internal class ContractService
+    internal static class ContractService
     {
         //public static List<string[]> ShowContract(string filter1, string filter2)
         //{

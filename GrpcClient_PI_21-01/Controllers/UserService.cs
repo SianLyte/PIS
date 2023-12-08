@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
-    class UserService
+    static class UserService
     {
         public static User? CurrentUser { get; private set; }
 

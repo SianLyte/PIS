@@ -4,18 +4,18 @@ using Grpc.Core;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
-    internal class LocationService
+    internal static class LocationService
     {
         public static Location GetLocationFromReply(LocationReply reply)
         {
             return new Location(reply.IdLocation, reply.City);
         }
 
-        public static async Task<List<Location>> GetLocations()
+        public static async Task<List<Location>> GetLocations(int page = -1, Filter<Location>? filter = null)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var serverData = client.GetLocations(UserService.CurrentUser?.ToReply());
+            var serverData = client.GetLocations(UserService.GenerateDataRequest(page, filter));
             var responseStream = serverData.ResponseStream;
             var locations = new List<Location>();
             await foreach (var response in responseStream.ReadAllAsync())
@@ -33,11 +33,12 @@ namespace GrpcClient_PI_21_01.Controllers
             return pageCount.Count;
         }
 
-        public static async Task<List<Location_Contract>> GetLocationContracts()
+        public static async Task<List<Location_Contract>> GetLocationContracts(int page = -1,
+            Filter<Location_Contract>? filter = null)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new DataRetriever.DataRetrieverClient(channel);
-            var serverData = client.GetLocationContracts(UserService.CurrentUser?.ToReply());
+            var serverData = client.GetLocationContracts(UserService.GenerateDataRequest(page, filter));
             var responseStream = serverData.ResponseStream;
             var locationContractsList = new List<Location_Contract>();
             await foreach (var response in responseStream.ReadAllAsync())

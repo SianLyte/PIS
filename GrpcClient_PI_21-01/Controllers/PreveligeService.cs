@@ -4,7 +4,7 @@ using Grpc.Net.Client;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
-    class PreveligeService
+    static class PreveligeService
     {
         //public static bool SetPrivilege(NameMdels model)
         //{

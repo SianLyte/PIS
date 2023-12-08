@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace GrpcClient_PI_21_01.Models
 {
+    [FilterableModel]
     public class Location
     {
         public int IdLocation { get; set; }
+        [Filterable("city")]
         public string City { get; set; }
 
         public Location(int idLocation, string city)

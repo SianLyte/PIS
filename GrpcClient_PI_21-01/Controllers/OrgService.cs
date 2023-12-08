@@ -5,7 +5,7 @@ using Grpc.Net.Client;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
-    internal class OrgService
+    internal static class OrgService
     {
         //public static List<string[]> ShowOrganizations()
         //{

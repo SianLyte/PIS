@@ -42,16 +42,17 @@ namespace GrpcServer_PI_21_01.Data
             throw new NotImplementedException();
         }
 
-        public static List<Location> GetLocations()
+        public static List<Location> GetLocations(DataRequest req)
         {
             // должно забирать все местности из БД (желательно сделать кэширование:
             // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов
             // этого метода в течение 5 секунд возвращает кэшированное значение)
             // P.S. кэширование должно очищаться после выполнения других действий CRUD кроме Read
+            var query = new Filter<Location>(req.Filter).GenerateSQL(req.Page);
             List<Location> locs = new();
             List<string?[]> locsEmpty = new();
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM city") { Connection = cn })
+            using (NpgsqlCommand cmd = new(query) { Connection = cn })
             {
                 cn.Open();
                 NpgsqlDataReader r = cmd.ExecuteReader();
@@ -73,6 +74,11 @@ namespace GrpcServer_PI_21_01.Data
                 
             }
             return locs;
+        }
+
+        public static Location GetLocation(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public static bool AddLocation(Location loc)
@@ -193,12 +199,13 @@ namespace GrpcServer_PI_21_01.Data
             };
         }
 
-        public static List<Location_Contract> GetLocationContracts()
+        public static List<Location_Contract> GetLocationContracts(DataRequest r)
         {
+            var query = new Filter<Location_Contract>(r.Filter).GenerateSQL(r.Page);
             List<Location_Contract> lcs = new();
             List<string?[]> lcsEmpty = new();
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM city_contract") { Connection = cn })
+            using (NpgsqlCommand cmd = new(query) { Connection = cn })
             {
                 cn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();

@@ -24,12 +24,13 @@ namespace GrpcServer_PI_21_01.Data
             };
         }
 
-        public static List<Operation> GetOperations()
+        public static List<Operation> GetOperations(DataRequest r)
         {
+            var query = new Filter<Operation>(r.Filter).GenerateSQL(r.Page);
             List<Operation> operations = new();
             List<string?[]> operationsEmpty = new();
 
-            using (NpgsqlCommand cmd = new("SELECT * FROM operation") { Connection = cn })
+            using (NpgsqlCommand cmd = new(query) { Connection = cn })
             {
                 cn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();
@@ -50,7 +51,7 @@ namespace GrpcServer_PI_21_01.Data
                 {
                     var operationEmpty = operationsEmpty[i];
                     Operation operation = new Operation(int.Parse(operationEmpty[0]),
-                        operationEmpty[1],
+                        Enum.Parse<ActionType>(operationEmpty[1]),
                         operationEmpty[2],
                         operationEmpty[3],
                         User.GetById(int.Parse(operationEmpty[4]), cn),

@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01
 {
+    [FilterableModel("act_catch_request")]
     public class ActApp
     {
         public int ActAppNumber { get; set; }
+        [Filterable("act_id")]
         public Act Act{ get; set; }
+        [Filterable("catch_request_id")]
         public App Application { get; set; }
 
         public ActApp(int actAppNumber, Act act, App application)
