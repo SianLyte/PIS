@@ -166,9 +166,31 @@ namespace GrpcServer_PI_21_01.Data
             return apps;
         }
 
-        public static App? GetApplication(int id)
+        public static App? GetApplication(int id, bool connectionAlreadyOpen = false)
         {
-            throw new NotImplementedException();
+            NpgsqlCommand cmd = new($"SELECT * FROM catch_request WHERE id = {id}");
+            cmd.Connection = cn;
+            if (!connectionAlreadyOpen)
+                cn.Open();
+            var reader = cmd.ExecuteReader();
+            string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0" };
+            while (reader.Read())
+            {
+                arr[0] = (reader[1].ToString());
+                arr[1] = reader[7].ToString();
+                arr[2] = reader[2].ToString();
+                arr[3] = reader[3].ToString();
+                arr[4] = reader[4].ToString();
+                arr[5] = reader[5].ToString();
+                arr[6] = reader[6].ToString();
+                arr[7] = reader[8].ToString();
+            }
+            var status = App.StringToEnum(arr[7]);
+            reader.Close();
+            if (!connectionAlreadyOpen)
+                cn.Close();
+            return new App(DateTime.Parse(arr[0]), id, Location.GetById(int.Parse(arr[1]), cn),
+                arr[2], arr[3], arr[4], arr[5], arr[6], status);
         }
     }
 }

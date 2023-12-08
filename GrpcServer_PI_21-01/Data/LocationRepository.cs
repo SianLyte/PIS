@@ -60,7 +60,7 @@ namespace GrpcServer_PI_21_01.Data
                 NpgsqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    locsEmpty.Add(new string[2] {
+                    locsEmpty.Add(new string?[2] {
                     r[0].ToString(), //id
                     r[1].ToString(), //city
                     });
@@ -183,7 +183,7 @@ namespace GrpcServer_PI_21_01.Data
 
         public static Location_Contract GetLocationContract(int id)
         {
-            string[] arr = { "0", "0", "0" };
+            string?[] arr = { "0", "0", "0" };
 
             using (NpgsqlCommand cmd = new($"SELECT * FROM city_contract WHERE id = {id}") { Connection = cn })
             {
@@ -213,7 +213,7 @@ namespace GrpcServer_PI_21_01.Data
                 NpgsqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    lcsEmpty.Add(new string[4] {
+                    lcsEmpty.Add(new string?[4] {
                     reader[0].ToString(),
                     reader[1].ToString(),
                     reader[2].ToString(),

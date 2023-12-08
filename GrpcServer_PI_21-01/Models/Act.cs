@@ -53,32 +53,32 @@ namespace GrpcServer_PI_21_01
             return ActNumber.GetHashCode();
         }
 
-        public static Act GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)
-        {
-            NpgsqlCommand cmd = new($"SELECT * FROM act WHERE id = {id}");
-            cmd.Connection = cn;
-            if (!connectionAlreadyOpen)
-                cn.Open();
+        //public static Act GetById(int id, NpgsqlConnection cn, bool connectionAlreadyOpen = false)
+        //{
+        //    NpgsqlCommand cmd = new($"SELECT * FROM act WHERE id = {id}");
+        //    cmd.Connection = cn;
+        //    if (!connectionAlreadyOpen)
+        //        cn.Open();
 
-            var reader = cmd.ExecuteReader();
-            if (!reader.Read()) throw new Exception("Unknown ID for act: " + id);
+        //    var reader = cmd.ExecuteReader();
+        //    if (!reader.Read()) throw new Exception("Unknown ID for act: " + id);
 
-            var dogCount = reader.GetInt32(reader.GetOrdinal("dog_count"));
-            var catCount = reader.GetInt32(reader.GetOrdinal("cat_count"));
-            var orgId = reader.GetInt32(reader.GetOrdinal("organization_id"));
-            var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
-            var goal = reader.GetString(reader.GetOrdinal("goal"));
-            var contrId = reader.GetInt32(reader.GetOrdinal("municipal_contract_id"));
+        //    var dogCount = reader.GetInt32(reader.GetOrdinal("dog_count"));
+        //    var catCount = reader.GetInt32(reader.GetOrdinal("cat_count"));
+        //    var orgId = reader.GetInt32(reader.GetOrdinal("organization_id"));
+        //    var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+        //    var goal = reader.GetString(reader.GetOrdinal("goal"));
+        //    var contrId = reader.GetInt32(reader.GetOrdinal("municipal_contract_id"));
 
-            reader.Close();
-            if (!connectionAlreadyOpen)
-                cn.Close();
+        //    reader.Close();
+        //    if (!connectionAlreadyOpen)
+        //        cn.Close();
 
-            return new Act(id, dogCount, catCount,
-                Organization.GetById(orgId, cn, connectionAlreadyOpen),
-                createdAt, goal,
-                Contract.GetById(contrId, cn, connectionAlreadyOpen));
-        }
+        //    return new Act(id, dogCount, catCount,
+        //        Organization.GetById(orgId, cn, connectionAlreadyOpen),
+        //        createdAt, goal,
+        //        Contract.GetById(contrId, cn, connectionAlreadyOpen));
+        //}
 
     }
 }

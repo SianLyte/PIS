@@ -11,7 +11,6 @@ namespace GrpcServer_PI_21_01.Models
     [FilterableModel("catch_request")]
     public class App
     {
-
         public int number { get; set; }
 
         [Filterable("created_at")]
@@ -84,29 +83,30 @@ namespace GrpcServer_PI_21_01.Models
             return this.number == obj1.number;
         }
 
-        public static App GetById(int id, NpgsqlConnection cn)
-        {
-            NpgsqlCommand cmd = new($"SELECT * FROM catch_request WHERE id = {id}");
-            cmd.Connection = cn;
-            cn.Open();
-            var reader = cmd.ExecuteReader();
-            string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0" };
-            while (reader.Read())
-            {
-                arr[0] = (reader[1].ToString());
-                arr[1] = reader[7].ToString();
-                arr[2] = reader[2].ToString();
-                arr[3] = reader[3].ToString();
-                arr[4] = reader[4].ToString();
-                arr[5] = reader[5].ToString();
-                arr[6] = reader[6].ToString();
-                arr[7] = reader[8].ToString();
-            }
-            var status = StringToEnum(arr[7]);
-            reader.Close();
-            cn.Close();
-            return new App( DateTime.Parse(arr[0]), id, Location.GetById(int.Parse(arr[1]), cn), arr[2], arr[3], arr[4], arr[5], arr[6], status);
-        }
+        //public static App GetById(int id, NpgsqlConnection cn)
+        //{
+        //    NpgsqlCommand cmd = new($"SELECT * FROM catch_request WHERE id = {id}");
+        //    cmd.Connection = cn;
+        //    cn.Open();
+        //    var reader = cmd.ExecuteReader();
+        //    string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0" };
+        //    while (reader.Read())
+        //    {
+        //        arr[0] = (reader[1].ToString());
+        //        arr[1] = reader[7].ToString();
+        //        arr[2] = reader[2].ToString();
+        //        arr[3] = reader[3].ToString();
+        //        arr[4] = reader[4].ToString();
+        //        arr[5] = reader[5].ToString();
+        //        arr[6] = reader[6].ToString();
+        //        arr[7] = reader[8].ToString();
+        //    }
+        //    var status = StringToEnum(arr[7]);
+        //    reader.Close();
+        //    cn.Close();
+        //    return new App( DateTime.Parse(arr[0]), id, Location.GetById(int.Parse(arr[1]), cn),
+        //        arr[2], arr[3], arr[4], arr[5], arr[6], status);
+        //}
 
         public override int GetHashCode()
         {

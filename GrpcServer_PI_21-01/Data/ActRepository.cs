@@ -164,7 +164,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                return new ActApp(int.Parse(arr[0]), Act.GetById(int.Parse(arr[1]), cn), App.GetById(int.Parse(arr[2]), cn));   
+                return new ActApp(int.Parse(arr[0]), ActRepository.GetAct(int.Parse(arr[1])), AppRepository.GetApplication(int.Parse(arr[2])));   
             };
         }
 
@@ -191,8 +191,8 @@ namespace GrpcServer_PI_21_01.Data
                 for (int i = 0; i < actsEmpty.Count; i++)
                 {
                     var actEmpty = actsEmpty[i];
-                    App app = App.GetById(int.Parse(actEmpty[2].ToString()), cn);
-                    Act act = Act.GetById(int.Parse(actEmpty[1]), cn);
+                    App app = AppRepository.GetApplication(int.Parse(actEmpty[2].ToString()));
+                    Act act = GetAct(int.Parse(actEmpty[1]));
                     actsApps.Add(new ActApp(int.Parse(actEmpty[0]), act, app));
                 }
             };
@@ -249,9 +249,31 @@ namespace GrpcServer_PI_21_01.Data
             return true;
         }
 
-        public static Act? GetAct(int id)
+        public static Act? GetAct(int id, bool connectionAlreadyOpen = false)
         {
-            throw new NotImplementedException();
+            NpgsqlCommand cmd = new($"SELECT * FROM act WHERE id = {id}");
+            cmd.Connection = cn;
+            if (!connectionAlreadyOpen)
+                cn.Open();
+
+            var reader = cmd.ExecuteReader();
+            if (!reader.Read()) throw new Exception("Unknown ID for act: " + id);
+
+            var dogCount = reader.GetInt32(reader.GetOrdinal("dog_count"));
+            var catCount = reader.GetInt32(reader.GetOrdinal("cat_count"));
+            var orgId = reader.GetInt32(reader.GetOrdinal("organization_id"));
+            var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+            var goal = reader.GetString(reader.GetOrdinal("goal"));
+            var contrId = reader.GetInt32(reader.GetOrdinal("municipal_contract_id"));
+
+            reader.Close();
+            if (!connectionAlreadyOpen)
+                cn.Close();
+
+            return new Act(id, dogCount, catCount,
+                Organization.GetById(orgId, cn, connectionAlreadyOpen),
+                createdAt, goal,
+                Contract.GetById(contrId, cn, connectionAlreadyOpen));
         }
     }
 }
