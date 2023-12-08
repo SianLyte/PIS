@@ -83,7 +83,7 @@ namespace GrpcClient_PI_21_01.Views
 
         private async void OKorgAdd_Click(object sender, EventArgs e)
         {
-            if (AreFieldsCorrect()) return;
+            if (!AreFieldsCorrect()) return;
 
             var org = new Organization(-1, orgName.Text, INN.Text,
                 KPP.Text, AdressReg.SelectedItem as Location, orgTypesArray[orgTypes.SelectedIndex], Status);
