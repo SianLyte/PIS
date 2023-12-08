@@ -40,7 +40,7 @@ namespace GrpcServer_PI_21_01.Models
             cmd.Connection = cn;
             cn.Open();
             var reader = cmd.ExecuteReader();
-            string[] arr = { "0", "0", "0", "0", "0" };
+            string?[] arr = { "0", "0", "0", "0", "0" };
             while (reader.Read())
             {
                 arr[0] = (reader[1].ToString()); //actiontype

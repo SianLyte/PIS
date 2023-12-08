@@ -1,3 +1,4 @@
+using GrpcServer_PI_21_01.Data;
 using GrpcServer_PI_21_01.Models;
 using Npgsql;
 using System;
@@ -39,7 +40,7 @@ namespace GrpcServer_PI_21_01
             }
             reader.Close();
             cn.Close();
-            return new ActApp(int.Parse(arr[0]), Act.GetById(int.Parse(arr[1]), cn), App.GetById(int.Parse(arr[2]), cn));
+            return new ActApp(int.Parse(arr[0]), ActRepository.GetAct(int.Parse(arr[1])), AppRepository.GetApplication(int.Parse(arr[2])));
         }
 
     }

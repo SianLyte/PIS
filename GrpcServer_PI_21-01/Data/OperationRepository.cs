@@ -38,7 +38,7 @@ namespace GrpcServer_PI_21_01.Data
                 NpgsqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    operationsEmpty.Add(new string[6] {
+                    operationsEmpty.Add(new string?[6] {
                     reader[0].ToString(), //id
                     reader[1].ToString(), //type
                     reader[2].ToString(), //objectid
