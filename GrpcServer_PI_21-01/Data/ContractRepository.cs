@@ -12,10 +12,10 @@ namespace GrpcServer_PI_21_01.Data
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
-        public static int GetMaxPage(DataRequest dr)
+        public static int GetMaxPage(DataRequest req)
         {
-            // use dr.Page as pageSize
-            using (NpgsqlCommand cmd = new("SELECT count(*) from contract") { Connection = cn })
+            var query = new Filter<Contract>(req.Filter).GenerateSQLForCount();
+            using (NpgsqlCommand cmd = new("SELECT count(*) from municipal_contract") { Connection = cn })
             {
                 cn.Open();
                 string count = "";
@@ -26,7 +26,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / dr.Page);
+                var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
                 return (int)a;
             };
         }

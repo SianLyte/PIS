@@ -152,6 +152,27 @@ namespace GrpcServer_PI_21_01.Models
             return startQuery + ";";
         }
 
+        public string GenerateSQLForCount(int page = -1)
+        {
+            var startQuery = $"SELECT count(*) FROM {tableName}";
+            if (andEquations.Count > 0 || orEquations.Count > 0)
+            {
+                startQuery += " WHERE ";
+                if (andEquations.Count > 0)
+                    startQuery += $"{string.Join(" and ", andEquations)}";
+                if (orEquations.Count > 0)
+                {
+                    if (andEquations.Count > 0)
+                        startQuery += " and ";
+                    startQuery += $"({string.Join(" or ", orEquations)})";
+                }
+            }
+
+            if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
+
+            return startQuery + ";";
+        }
+
         private bool CheckCorrectFormat()
         {
             static bool checkForCorrectFormat(string eq)

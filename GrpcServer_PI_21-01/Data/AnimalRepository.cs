@@ -38,10 +38,12 @@ namespace GrpcServer_PI_21_01.Data
         //                    ActRepository.GetActs()[2],
         //                    null),
         //};
-        public static int GetMaxPage(DataRequest Геннадий_Петрович)
+        public static int GetMaxPage(DataRequest req)
         {
+            var query = new Filter<AnimalCard>(req.Filter).GenerateSQLForCount();
             using (NpgsqlCommand cmd = new("SELECT count(*) from animal_card") { Connection = cn })
             {
+
                 cn.Open();
                 string count = "";
                 NpgsqlDataReader reader = cmd.ExecuteReader();
@@ -51,7 +53,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / Геннадий_Петрович.Page);
+                var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
                 return (int)a;
             };
         }

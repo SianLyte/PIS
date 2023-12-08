@@ -81,10 +81,12 @@ namespace GrpcServer_PI_21_01.Data
             return true;
         }
 
-        public static int GetMaxPage(DataRequest datadatadatadatadatadatadatadatadatadatadatadatadatadatadata)
+        public static int GetMaxPage(DataRequest req)
         {
+            var query = new Filter<Act>(req.Filter).GenerateSQLForCount();
             using (NpgsqlCommand cmd = new("SELECT count(*) from act") { Connection = cn })
             {
+                
                 cn.Open();
                 string count = "";
                 NpgsqlDataReader reader = cmd.ExecuteReader();
@@ -94,7 +96,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count)/datadatadatadatadatadatadatadatadatadatadatadatadatadatadata.Page);
+                var a = Math.Ceiling((decimal)int.Parse(count)/req.Page);
                 return (int)a;
             };
         }
@@ -162,10 +164,8 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                return new ActApp(int.Parse(arr[0]), Act.GetById(int.Parse(arr[1]), cn), App.GetById(int.Parse(arr[2]), cn));
-
+                return new ActApp(int.Parse(arr[0]), Act.GetById(int.Parse(arr[1]), cn), App.GetById(int.Parse(arr[2]), cn));   
             };
-
         }
 
         public static List<ActApp> GetActApps()

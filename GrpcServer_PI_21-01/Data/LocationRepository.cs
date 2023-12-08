@@ -21,8 +21,10 @@ namespace GrpcServer_PI_21_01.Data
 
         public static int GetMaxPage(DataRequest req)
         {
+            var query = new Filter<Location>(req.Filter).GenerateSQLForCount();
             using (NpgsqlCommand cmd = new("SELECT count(*) from city") { Connection = cn })
             {
+
                 cn.Open();
                 string count = "";
                 NpgsqlDataReader reader = cmd.ExecuteReader();

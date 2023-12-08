@@ -13,10 +13,12 @@ namespace GrpcServer_PI_21_01.Data
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
-        public static int GetMaxPage(DataRequest 数据请求)
+        public static int GetMaxPage(DataRequest req)
         {
+            var query = new Filter<Organization>(req.Filter).GenerateSQLForCount();
             using (NpgsqlCommand cmd = new("SELECT count(*) from organization") { Connection = cn })
             {
+
                 cn.Open();
                 string count = "";
                 NpgsqlDataReader reader = cmd.ExecuteReader();
@@ -26,7 +28,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / 数据请求.Page);
+                var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
                 return (int)a;
             };
         }
@@ -37,7 +39,7 @@ namespace GrpcServer_PI_21_01.Data
                 $"namee = '{org.name}'," +
                 $"inn = '{org.INN}'," +
                 $"kpp = '{org.KPP}'," +
-                $"registration = '{org.registrationAdress}'," +
+                $"registration = '{org.registrationAdress.IdLocation}'," +
                 $"typee = '{org.type}'," +
                 $"status = '{org.status}'" +
                 $" WHERE id = {org.idOrg}") { Connection = cn };
@@ -58,14 +60,13 @@ namespace GrpcServer_PI_21_01.Data
             //OrganizationsMas.Add(org);
             using NpgsqlCommand cmd = new($"INSERT INTO organization " +
                 $"(namee, inn, kpp, registration, typee, status)" +
-                $"VALUES ('{org.name}', '{org.INN}', '{org.KPP}', '{org.registrationAdress}', " +
+                $"VALUES ('{org.name}', '{org.INN}', '{org.KPP}', '{org.registrationAdress.IdLocation}', " +
                 $"'{org.type}', '{org.status}') RETURNING id")
             { Connection = cn };
             {
                 cn.Open();
                 int returnValue = (int)cmd.ExecuteScalar();
                 org.idOrg = returnValue;
-                //cmd.ExecuteNonQuery();
                 cn.Close();
             }
 
