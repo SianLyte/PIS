@@ -96,7 +96,8 @@ namespace GrpcClient_PI_21_01.Models
             var columnName = GetColumnID(selector);
             var @operator = GetOperator(filterType);
 
-            if (!decimal.TryParse(desiredValue, out decimal _)) desiredValue = $"'{desiredValue}'";
+            if (typeof(TValue) != typeof(decimal) && typeof(TValue) != typeof(double)
+                && typeof(TValue) != typeof(int) && typeof(TValue) != typeof(float)) desiredValue = $"'{desiredValue}'";
 
             return $"{columnName} {@operator} {desiredValue}";
         }

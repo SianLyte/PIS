@@ -87,7 +87,7 @@ namespace GrpcClient_PI_21_01
         #region Related: Act Capture
         /* -----------------------------------ACT----------------------------------------------------- */
 
-        private int _ActPage = 1;
+        private int _ActPage = 0;
         private int _ActPageMax = 1;
         private readonly SemaphoreSlim actGridSemaphore = new(1, 1);
         private async Task SetDataGridAct()
