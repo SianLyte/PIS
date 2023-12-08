@@ -199,5 +199,16 @@ namespace GrpcClient_PI_21_01
         {
             return new ActApp(r.Id, r.Act.FromReply(), r.App.FromReply());
         }
+
+        public static Operation FromReply(this OperationReply r)
+        {
+            return new Operation(
+                r.OperationId,
+                r.Action,
+                r.ModifiedObjectId,
+                r.ModifiedTableName,
+                User.FromReply(r.User),
+                r.Date.ToDateTime());
+        }
     }
 }

@@ -417,7 +417,7 @@ namespace GrpcClient_PI_21_01
         }
         #endregion
         #region Related: Operation History
-        private List<OperationReply>? _data;
+        private List<Operation>? _data;
         readonly DataSet _dbHistory = new();
 
         public async Task InicilisationHistory()
@@ -451,15 +451,15 @@ namespace GrpcClient_PI_21_01
         {
             foreach (var data in _data)
             {
-                var allDataParts = new string[10] { data.User.Surname.ToString(),
-                                                    data.User.Name.ToString(),
-                                                    data.User.Patronymic.ToString(),
-                                                    data.User.Organization.Name.ToString(),
-                                                    data.User.PrivelegeLevel.ToString(),
-                                                    data.User.Login.ToString(),
-                                                    data.Date.ToDateTime().ToString(),
+                var allDataParts = new string[10] { data.Actor.Surname.ToString(),
+                                                    data.Actor.Name.ToString(),
+                                                    data.Actor.Patronymic.ToString(),
+                                                    data.Actor.Organization.name.ToString(),
+                                                    data.Actor.PrivelegeLevel.ToString(),
+                                                    data.Actor.Login.ToString(),
+                                                    data.ActionDate.ToString(),
                                                     data.ModifiedObjectId.ToString(),
-                                                    data.Action.ToString(),
+                                                    data.ActionType.ToString(),
                                                     data.ModifiedTableName.ToString()};
                 _dbHistory.Tables[0].Rows.Add(allDataParts);
             }

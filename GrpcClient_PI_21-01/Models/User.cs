@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GrpcClient_PI_21_01.Models
 {
-    class User
+    public class User
     {
         public int IdUser { get; set; }
         //public string Login {get; set;}
@@ -51,6 +51,17 @@ namespace GrpcClient_PI_21_01.Models
                 PrivelegeLevel = PrivelegeLevel,
                 UserId = IdUser,
             };
+        }
+
+        public static User FromReply(UserReply r)
+        {
+            return new User(r.UserId,
+                r.Login,
+                r.PrivelegeLevel,
+                r.Name,
+                r.Surname,
+                r.Patronymic,
+                r.Organization.FromReply());
         }
     }
 }
