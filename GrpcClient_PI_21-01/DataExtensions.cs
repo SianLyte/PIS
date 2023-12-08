@@ -34,11 +34,17 @@ namespace GrpcClient_PI_21_01
 
         public static LocationReply ToReply(this Location loc)
         {
+            var reply = loc.ToReplyWithoutActor();
+            reply.Actor = UserService.CurrentUser?.ToReply();
+            return reply;
+        }
+
+        public static LocationReply ToReplyWithoutActor(this Location loc)
+        {
             return new LocationReply()
             {
                 City = loc.City,
                 IdLocation = loc.IdLocation,
-                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
 
@@ -91,6 +97,7 @@ namespace GrpcClient_PI_21_01
         {
             var reply = org.ToReplyWithoutActor();
             reply.Actor = UserService.CurrentUser?.ToReply();
+            reply.RegistrationAddress = org.registrationAdress.ToReply();
             return reply;
         }
 
@@ -103,7 +110,7 @@ namespace GrpcClient_PI_21_01
                 KPP = org.KPP,
                 Status = org.status,
                 Name = org.name,
-                RegistrationAddress = org.registrationAdress.ToReply(),
+                RegistrationAddress = org.registrationAdress.ToReplyWithoutActor(),
                 Type = org.type,
             };
         }
