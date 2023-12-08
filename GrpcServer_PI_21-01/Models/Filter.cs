@@ -152,7 +152,7 @@ namespace GrpcServer_PI_21_01.Models
             return startQuery + ";";
         }
 
-        public string GenerateSQLForCount(int page = -1)
+        public string GenerateSQLForCount()
         {
             var startQuery = $"SELECT count(*) FROM {tableName}";
             if (andEquations.Count > 0 || orEquations.Count > 0)
@@ -168,7 +168,7 @@ namespace GrpcServer_PI_21_01.Models
                 }
             }
 
-            if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
+            //if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
 
             return startQuery + ";";
         }
