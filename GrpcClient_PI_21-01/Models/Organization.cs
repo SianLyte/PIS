@@ -25,6 +25,7 @@ namespace GrpcClient_PI_21_01.Models
 
         [Filterable("typee")]
         public OrganizationType type { get; set; }
+        [Filterable("status")]
         public string status { get; set; }
 
         public Organization(int IdOrg, string name, string iNN, string kPP,

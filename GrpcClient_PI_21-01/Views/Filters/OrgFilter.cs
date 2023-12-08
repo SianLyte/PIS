@@ -58,6 +58,18 @@ namespace GrpcClient_PI_21_01.Views.Filters
         {
             Filter.Clear();
 
+            if (typeComboBox.SelectedIndex > 0)
+                Filter.AddFilter(o => o.type, typeComboBox.SelectedItem.ToString());
+
+            if (statusIndividual.Checked)
+                Filter.AddFilter(o => o.status, "ИН");
+
+            if (statusJuridical.Checked)
+                Filter.AddFilter(o => o.status, "Юр. лицо");
+
+            if (regComboBox.SelectedItem is Location loc)
+                Filter.AddFilter(o => o.registrationAdress, loc.IdLocation.ToString());
+
             Apply();
         }
 
