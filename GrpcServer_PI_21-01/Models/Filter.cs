@@ -145,7 +145,7 @@ namespace GrpcServer_PI_21_01.Models
                         startQuery += " and ";
                     startQuery += $"({string.Join(" or ", orEquations)})";
                 }
-            }
+            }   
 
             if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
 

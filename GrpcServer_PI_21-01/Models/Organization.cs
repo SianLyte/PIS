@@ -10,6 +10,64 @@ namespace GrpcServer_PI_21_01.Models
     [FilterableModel("organization")]
     public class Organization
     {
+
+        public static OrganizationType StringToEnum(string type)
+        {
+            if (type == "DirectoryValues")
+            {
+                return OrganizationType.DirectoryValues;
+            }
+            if (type == "GovernmentExecutive")
+            {
+                return OrganizationType.GovernmentExecutive;
+            }
+            if (type == "LocalGovernment")
+            {
+                return OrganizationType.LocalGovernment;
+            }
+            if (type == "Shelter")
+            {
+                return OrganizationType.Shelter;
+            }
+            if (type == "Trapping")
+            {
+                return OrganizationType.Trapping;
+            }
+            if (type == "TrappingAndShelter")
+            {
+                return OrganizationType.TrappingAndShelter;
+            }
+            if (type == "Transportation")
+            {
+                return OrganizationType.Transportation;
+            }
+            if (type == "VetClinicState")
+            {
+                return OrganizationType.VetClinicState;
+            }
+            if (type == "VetClinicMunicipal")
+            {
+                return OrganizationType.VetClinicMunicipal;
+            }
+            if (type == "VetClinicPrivate")
+            {
+                return OrganizationType.VetClinicPrivate;
+            }
+            if (type == "CharityFoundation")
+            {
+                return OrganizationType.CharityFoundation;
+            }
+            if (type == "AnimalGoodsSeller")
+            {
+                return OrganizationType.AnimalGoodsSeller;
+            }
+            if (type == "Applicant")
+            {
+                return OrganizationType.Applicant;
+            }
+            return OrganizationType.DirectoryValues;
+
+        }
         public int idOrg { get; set; }
 
         [Filterable("namee")]
@@ -55,7 +113,7 @@ namespace GrpcServer_PI_21_01.Models
             var inn = reader.GetString(reader.GetOrdinal("inn"));
             var kpp = reader.GetString(reader.GetOrdinal("kpp"));
             var registrationAdress = reader.GetInt32(reader.GetOrdinal("registration"));
-            var type = reader.GetFieldValue<OrganizationType>(reader.GetOrdinal("typee"));
+            var type = reader.GetString(reader.GetOrdinal("typee"));
             var status = reader.GetString(reader.GetOrdinal("status"));
 
             reader.Close();
@@ -63,7 +121,7 @@ namespace GrpcServer_PI_21_01.Models
                 cn.Close();
 
             return new Organization(id, name, inn, kpp,
-                Location.GetById(registrationAdress, cn, connectionAlreadyOpen), type, status);
+                Location.GetById(registrationAdress, cn, connectionAlreadyOpen), StringToEnum(type), status);
         }
     }
 }
