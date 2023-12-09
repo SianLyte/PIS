@@ -31,12 +31,13 @@ namespace GrpcServer_PI_21_01.Models
                 {
                     var typeName = eq[..eq.IndexOf('.')];
                     var remainingEquation = eq[(eq.IndexOf('.') + 1)..];
-                    var filterableModelAttribute = Type.GetType(typeName)?.GetCustomAttribute<FilterableModelAttribute>();
+                    var type= Type.GetType("GrpcServer_PI_21_01.Models."+typeName);
+                    var filterableModelAttribute = type.GetCustomAttribute<FilterableModelAttribute>();
                     if (filterableModelAttribute is null)
                         throw new Exception(typeName + " model cannot be filtered.");
 
                     return filterableModelAttribute.TableName + "." + remainingEquation;
-                }));
+                    }));
             }
         }
 

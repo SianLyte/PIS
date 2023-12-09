@@ -69,6 +69,7 @@ namespace GrpcClient_PI_21_01.Models
             orEquations.Add(equation);
         }
 
+        
         public void AddInnerJoinFilter<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector,
             string desiredValue, FilterType filterType = FilterType.Equals)
         {
@@ -127,6 +128,7 @@ namespace GrpcClient_PI_21_01.Models
         {
             andEquations.Clear();
             orEquations.Clear();
+            innerEquations.Clear();
         }
 
         private static PropertyInfo GetProperty<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)

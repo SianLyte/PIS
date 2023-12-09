@@ -108,7 +108,7 @@ namespace GrpcServer_PI_21_01.Data
         {
             var query = new Filter<Act>(request.Filter).GenerateSQLAct(request.Page);
 
-            List<Act> acts = new();
+                List<Act> acts = new();
             List<string?[]> actsEmpty = new();
 
             using (NpgsqlCommand cmd = new(query) {Connection = cn})

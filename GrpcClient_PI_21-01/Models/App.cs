@@ -13,6 +13,7 @@ namespace GrpcClient_PI_21_01.Models
 
         [Filterable("created_at")]
         public DateTime date { get; set; }
+        [Filterable("id")]
         public int number { get; set; }
 
         [Filterable("cityid")]

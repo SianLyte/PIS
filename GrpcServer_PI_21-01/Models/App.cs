@@ -11,6 +11,7 @@ namespace GrpcServer_PI_21_01.Models
     [FilterableModel("catch_request")]
     public class App
     {
+        [Filterable("id")]
         public int number { get; set; }
 
         [Filterable("created_at")]

@@ -1,6 +1,7 @@
 ﻿using System;
 using GrpcClient_PI_21_01.Models;
 using GrpcClient_PI_21_01.Controllers;
+using Google.Protobuf.WellKnownTypes;
 
 namespace GrpcClient_PI_21_01.Views.Filters
 {
@@ -20,7 +21,7 @@ namespace GrpcClient_PI_21_01.Views.Filters
         }
 
         public Filter<Act> Filter { get; }
-        public Func<Task> Apply { get; }
+            public Func<Task> Apply { get; }
         private FilterType CatFilterTypes { get; set; }
         private FilterType DogFilterTypes { get; set; }
 
@@ -115,8 +116,24 @@ namespace GrpcClient_PI_21_01.Views.Filters
             Filter.AddFilter(act => act.Date, fromDate.Value.ToString(), FilterType.GreaterThan);
             Filter.AddFilter(act => act.Date, toDate.Value.ToString(), FilterType.LesserThan);
 
-            // if (applications.Count > 0) ...
-
+            for (int i = 0; i < applications.Items.Count; i++)
+            {
+                App a = applications.Items[i] as App;
+                if (i == 0)
+                {
+                    Filter.AddInnerJoinFilter<App, int>(app => app.number, a.number.ToString(), FilterType.Equals);
+                    //Filter.AddFilter(act => 1, a.number.ToString(), FilterType.Equals);
+                    //( and
+                }
+                //if (i == applications.Items.Count-1)
+                //{
+                //    // or )
+                //}
+                //else
+                //{
+                //    //or
+                //}
+            }
             Apply();
         }
 
