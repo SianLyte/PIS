@@ -21,7 +21,7 @@ namespace GrpcClient_PI_21_01.Views.Filters
         }
 
         public Filter<Act> Filter { get; }
-            public Func<Task> Apply { get; }
+        public Func<Task> Apply { get; }
         private FilterType CatFilterTypes { get; set; }
         private FilterType DogFilterTypes { get; set; }
 
