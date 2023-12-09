@@ -134,7 +134,7 @@ namespace GrpcServer_PI_21_01.Models
 
         public string GenerateSQLAct(int page = -1)
         {
-            var startQuery = $"SELECT act.id, dog_count, cat_count, organization_id, act.created_at, goal, municipal_contract_id FROM {tableName} " +
+            var startQuery = $"SELECT DISTINCT act.id, dog_count, cat_count, organization_id, act.created_at, goal, municipal_contract_id FROM {tableName} " +
                 $"inner join act_catch_request on act.id = act_catch_request.act_id " +
                 $"inner join catch_request on catch_request.id = act_catch_request.catch_request_id";
             if (andEquations.Count > 0 || orEquations.Count > 0)
