@@ -55,7 +55,7 @@ namespace GrpcClient_PI_21_01
 
             Task.Run(Setup);
         }
-        
+
         readonly DataSet dsApplication = new();
         readonly DataSet dsOrganization = new();
         readonly Filter<Act> actFilter = new();
@@ -376,7 +376,7 @@ namespace GrpcClient_PI_21_01
             contAdd.ShowDialog();
             await ShowContract();
         }
-        
+
         private void buttonPreviousContracts_Click(object sender, EventArgs e)
         {
             _PageContract--;
@@ -388,7 +388,7 @@ namespace GrpcClient_PI_21_01
             _PageContract++;
             CheckPageButton(buttonPreviousContracts, buttonNextContracts, _PageContract, _PageContractMax);
         }
-        
+
         private void OpenContractFilters(object sender, EventArgs e) =>
             new ContractFilter(contrFilter, ShowContract).Show();
         #endregion
@@ -480,5 +480,6 @@ namespace GrpcClient_PI_21_01
                 buttonNext.Enabled = false;
             }
         }
+
     }
 }

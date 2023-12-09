@@ -199,5 +199,10 @@ namespace GrpcClient_PI_21_01.Views.Filters
                 if (appComboBox.SelectedItem is not App) appComboBox.SelectedIndex = 0;
             }
         }
+
+        private void apply_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
