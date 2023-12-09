@@ -55,7 +55,7 @@ namespace GrpcServer_PI_21_01.Models
         public void AddFilter<TValue>(Expression<Func<T, TValue>> selector,
             string desiredValue, FilterType filterType = FilterType.Equals)
         {
-            var equation = GenerateEquation(selector, desiredValue, filterType);
+            var equation = GenerateEquation(selector, desiredValue, tableName, filterType);
             andEquations.Add(equation);
         }
 
@@ -76,11 +76,22 @@ namespace GrpcServer_PI_21_01.Models
         public void AddOrFilter<TValue>(Expression<Func<T, TValue>> selector,
             string desiredValue, FilterType filterType = FilterType.Equals)
         {
-            var equation = GenerateEquation(selector, desiredValue, filterType);
+            var equation = GenerateEquation(selector, desiredValue, tableName, filterType);
             orEquations.Add(equation);
         }
 
-        private static string GetColumnID<TValue>(Expression<Func<T, TValue>> selector)
+        public void AddInnerJoinFilter<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector,
+            string desiredValue, FilterType filterType = FilterType.Equals)
+        {
+            var filterableModelAttribute = typeof(ObjectType).GetCustomAttribute<FilterableModelAttribute>();
+            if (filterableModelAttribute is null)
+                throw new Exception(typeof(ObjectType).Name + " model cannot be filtered.");
+            var tableName = filterableModelAttribute.TableName;
+            var equation = GenerateEquation(selector, desiredValue, tableName, filterType);
+            andEquations.Add(equation);
+        }
+
+        private static string GetColumnID<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
         {
             var property = Filter<T>.GetProperty(selector);
             var filterable = property.GetCustomAttributes<FilterableAttribute>().SingleOrDefault();
@@ -103,8 +114,8 @@ namespace GrpcServer_PI_21_01.Models
             return @operator;
         }
 
-        private string GenerateEquation<TValue>(Expression<Func<T, TValue>> selector,
-            string desiredValue, FilterType filterType = FilterType.Equals)
+        private static string GenerateEquation<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector,
+            string desiredValue, string tableName, FilterType filterType = FilterType.Equals)
         {
             var columnName = GetColumnID(selector);
             var @operator = GetOperator(filterType);
@@ -121,7 +132,7 @@ namespace GrpcServer_PI_21_01.Models
         public void RemoveOrFilterAt(int index) =>
             orEquations.RemoveAt(index);
 
-        private static PropertyInfo GetProperty<TValue>(Expression<Func<T, TValue>> selector)
+        private static PropertyInfo GetProperty<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
         {
             Expression body = selector;
             if (body is LambdaExpression expression)

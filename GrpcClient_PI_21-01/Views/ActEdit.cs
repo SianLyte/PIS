@@ -77,12 +77,14 @@ namespace GrpcClient_PI_21_01.Views
 
             var contractFilter = new Filter<Contract>();
             contractFilter.AddFilter(c => c.Executer, UserService.CurrentUser?.Organization.idOrg.ToString());
+            contractFilter.AddFilter(c => c.ActionDate, DateTime.Now.ToString(), FilterType.GreaterThan | FilterType.Equals);
 
             var contracts = await ContractService.GetContracts(-1, contractFilter);
             var applications = await AppService.GetApplications(-1, appFilter);
             var organizations = contracts.Select(c => c.Costumer).Distinct().ToList();
 
-            comboBoxOrganization.DataSource = new BindingSource(organizations, null);
+            comboBoxOrganization.DataSource = new BindingSource(organizations
+                .Where(o => o.type == OrganizationType.Trapping || o.type == OrganizationType.TrappingAndShelter), null);
             comboBoxOrganization.DisplayMember = "name";
             comboBoxOrganization.ValueMember = "idOrg";
 
@@ -209,6 +211,8 @@ namespace GrpcClient_PI_21_01.Views
                 MessageBox.Show("Введите цель отлова", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (comboBoxOrganization.SelectedItem is null)
                 MessageBox.Show("Не выбрана организация", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else if (comboBoxContract.SelectedItem is not Contract)
+                MessageBox.Show("Не выбран муниципальный контракт.");
             else return true;
             return false;
         }

@@ -158,8 +158,6 @@ namespace GrpcClient_PI_21_01.Views
 
             if (dateAction.Value <= dateConclusion.Value)
                 errorMessage = "Дата окончания контракта не может быть раньше даты заключения контракта.";
-            else if (lcs.Any(lc => _locations.Contains(lc.Locality)))
-                errorMessage = "Уже существует действующий контракт, в котором указан один из выбранных населённых пунктов.";
             else if (customerCombo.SelectedItem is not Organization)
                 errorMessage = "Выберите заказчика.";
             else if (executerCombo.SelectedItem is not Organization)
@@ -172,6 +170,9 @@ namespace GrpcClient_PI_21_01.Views
                 errorMessage = "Исполнителем контракта должна быть организация по отлову";
             else if (_locations.Count <= 0 || _locations.All(l => _idCityToCost[l.IdLocation] > 0))
                 errorMessage = "В одном из населённых пунктов не указана цена отлова.";
+            else if (lcs.Any(lc => _locations.Contains(lc.Locality) && lc.Contract.Costumer.idOrg == c.idOrg
+            && lc.Contract.Executer.idOrg == e.idOrg))
+                errorMessage = "Уже существует действующий контракт, в котором указан один из выбранных населённых пунктов.";
             else return new Tuple<bool, string>(true, errorMessage);
 
             return new Tuple<bool, string>(false, errorMessage);

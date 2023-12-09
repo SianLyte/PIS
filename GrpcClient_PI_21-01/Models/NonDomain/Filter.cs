@@ -111,6 +111,7 @@ namespace GrpcClient_PI_21_01.Models
         public void Clear()
         {
             andEquations.Clear();
+            orEquations.Clear();
         }
 
         private static PropertyInfo GetProperty<TValue>(Expression<Func<T, TValue>> selector)

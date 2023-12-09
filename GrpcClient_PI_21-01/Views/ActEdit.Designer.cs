@@ -98,9 +98,9 @@ namespace GrpcClient_PI_21_01.Views
             this.label2.Location = new System.Drawing.Point(26, 229);
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(124, 30);
+            this.label2.Size = new System.Drawing.Size(225, 30);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Организация";
+            this.label2.Text = "Организация по отлову";
             // 
             // label3
             // 
