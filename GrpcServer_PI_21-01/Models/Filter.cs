@@ -126,12 +126,6 @@ namespace GrpcServer_PI_21_01.Models
             return $"{tableName}.{columnName} {@operator} {desiredValue}";
         }
 
-        public void RemoveAndFilterAt(int index) =>
-            andEquations.RemoveAt(index);
-
-        public void RemoveOrFilterAt(int index) =>
-            orEquations.RemoveAt(index);
-
         private static PropertyInfo GetProperty<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
         {
             Expression body = selector;
@@ -143,6 +137,12 @@ namespace GrpcServer_PI_21_01.Models
                 _ => throw new InvalidOperationException(),
             };
         }
+
+        public void RemoveAndFilterAt(int index) =>
+            andEquations.RemoveAt(index);
+
+        public void RemoveOrFilterAt(int index) =>
+            orEquations.RemoveAt(index);
 
         public string GenerateSQLAct(int page = -1)
         {
