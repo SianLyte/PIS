@@ -1,16 +1,6 @@
 ﻿using GrpcClient_PI_21_01.Controllers;
-//using GrpcClient_PI_21_01.Data;
 using GrpcClient_PI_21_01.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace GrpcClient_PI_21_01.Views
 {
@@ -111,18 +101,17 @@ namespace GrpcClient_PI_21_01.Views
                         comboBoxContract.SelectedItem as Contract);
                 if (actToEdit)
                 {
-                    //var act = new string[] {actId.ToString(), numericUpDownDog.Value.ToString(),numericUpDownCat.Value.ToString(), comboBoxOrganization.SelectedValue.ToString(),
-                    //        dateAct.Value.ToString(), textBoxTarget.Text, comboBoxApp.SelectedValue.ToString(), comboBoxContract.SelectedValue.ToString()};
-
-                    await ActService.UpdateAct(act);
+                    var updated = await ActService.UpdateAct(act);
+                    if (!updated)
+                    {
+                        MessageBox.Show("Internal error has occured while updating the act. Please try again later."
+                            , "Internal Error", 0, MessageBoxIcon.Error);
+                        return;
+                    }
                     this.DialogResult = DialogResult.OK;
-
                 }
                 else
                 {
-                    //var act = new string[] {numericUpDownDog.Value.ToString(),numericUpDownCat.Value.ToString(), comboBoxOrganization.SelectedValue.ToString(),
-                    //        dateAct.Value.ToString(), textBoxTarget.Text, comboBoxApp.SelectedValue.ToString(), comboBoxContract.SelectedValue.ToString()};
-
                     bool IsDog = act.CountDogs > 0;
                     bool IsCat = act.CountCats > 0;
 

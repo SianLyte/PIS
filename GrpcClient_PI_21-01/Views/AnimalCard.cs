@@ -1,6 +1,5 @@
 ﻿using GrpcClient_PI_21_01.Controllers;
 using GrpcClient_PI_21_01.Models;
-//using GrpcClient_PI_21_01.Data;
 
 namespace GrpcClient_PI_21_01.Views
 {
@@ -12,7 +11,6 @@ namespace GrpcClient_PI_21_01.Views
         public AnimalCardForm(string act)
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             GITLER.Text = act;
             actId = -1;
             animalToEdit = true;
@@ -40,12 +38,12 @@ namespace GrpcClient_PI_21_01.Views
             }
             else
             {
+                var animalCardFilter = new Filter<AnimalCard>();
+                animalCardFilter.AddFilter(ac => ac.ActCapture, actId.ToString());
+                animalCardFilter.AddFilter(ac => ac.Category, GITLER.Text);
                 var locs = await LocationService.GetLocations();
-                //var index = AnimalRepository.animalCards.FindIndex(x => x.ActCapture.ActNumber == actId & x.Category == GITLER.Text);
-                //var animalCard = AnimalRepository.animalCards[index];
-                var animalCards = await AnimalCardService.GetAnimalCards();
-                var animalCard = animalCards
-                    .FirstOrDefault(ac => ac.ActCapture.ActNumber == actId && ac.Category.ToLower() == GITLER.Text.ToLower());
+                var animalCards = await AnimalCardService.GetAnimalCards(-1, animalCardFilter);
+                var animalCard = animalCards.SingleOrDefault();
                 if (animalCard is null)
                 {
                     MessageBox.Show("The form could not load:\n" +
@@ -94,13 +92,8 @@ namespace GrpcClient_PI_21_01.Views
         {
             if (animalToEdit)
             {
-                if (ChekOtvet())
+                if (AreFieldsValid())
                 {
-                    //var otp = new string[] { textBoxKategori.Text, textBoxGender.Text,
-                    //                        textBoxPoroda.Text, numericUpDownSize.Value.ToString(),
-                    //                        textBoxFurType.Text, textBoxColor.Text, textBoxEars.Text,
-                    //                        textBoxTail.Text, textBoxSpicialSigns.Text, textBoxIdentificationLabel.Text,
-                    //                        comboBoxLocation.SelectedValue.ToString(), actId.ToString(),null};
                     var animalCard = new AnimalCard(-1, textBoxKategori.Text, male.Checked ? "М" : "Ж",
                         textBoxPoroda.Text, (int)numericUpDownSize.Value, textBoxFurType.Text,
                         textBoxColor.Text, textBoxEars.Text, textBoxTail.Text,
@@ -117,14 +110,27 @@ namespace GrpcClient_PI_21_01.Views
             }
         }
 
-        private bool ChekOtvet()
+        private bool AreFieldsValid()
         {
+            static void printError(string errorMessage) { MessageBox.Show(errorMessage, "Ошибка", 0, MessageBoxIcon.Error); }
+
             if (textBoxPoroda.Text == "")
-            {
-                MessageBox.Show("Вы не ввели породу ", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            return true;
+                printError("Вы не заполнили поле \"Порода\".");
+            else if (numericUpDownSize.Value <= 0)
+                printError("Размер животного не может быть меньше или равен нулю.");
+            else if (textBoxFurType.Text.Length <= 0)
+                printError("Вы не заполнили поле \"Шерсть\".");
+            else if (textBoxColor.Text.Length <= 0)
+                printError("Вы не заполнили поле \"Окрас\".");
+            else if (textBoxEars.Text.Length <= 0)
+                printError("Вы не заполнили поле \"Уши\".");
+            else if (!int.TryParse(textBoxIdentificationLabel.Text, out int _))
+                printError("Идентификационная метка животного должна быть целым числом.");
+            else if (comboBoxLocation.SelectedItem is not Models.Location)
+                printError("Вы не выбрали населённый пункт, в котором был произведён отлов.");
+            else return true;
+
+            return false;
         }
     }
 }
