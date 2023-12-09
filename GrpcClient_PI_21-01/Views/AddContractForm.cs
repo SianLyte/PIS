@@ -1,18 +1,6 @@
 ﻿using GrpcClient_PI_21_01.Controllers;
-//using GrpcClient_PI_21_01.Data;
 using GrpcClient_PI_21_01.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Xml.Linq;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace GrpcClient_PI_21_01.Views
 {
@@ -20,14 +8,13 @@ namespace GrpcClient_PI_21_01.Views
     {
         public bool ContToEdit;
         public int ContId;
-        private List<Models.Location> _locations = new List<Models.Location>();
-        private Dictionary<int, int> _idCityToCost = new Dictionary<int, int>();
+        private List<Location> _locations = new();
+        private readonly Dictionary<int, int> _idCityToCost = new();
 
 
         public AddContractForm()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             ContToEdit = false;
             FillEditor();
         }
@@ -42,42 +29,30 @@ namespace GrpcClient_PI_21_01.Views
 
         public async void FillEditor()
         {
+            dataGridView1.MouseClick += DataGridView1_MouseClick;
+            costNumericUpDown.ValueChanged += CostNumericUpDown_ValueChanged;
+            deleteButton.Click += DeleteButton_Click;
+            newCity.Click += NewCity_Click;
+            CancelcontEdit.Click += CancelcontEdit_Click;
+            OKcontAdd.Click += OKcontAdd_Click;
+            button1.Click += button1_Click;
+
             if (ContToEdit)
             {
-                //CreateData();
-                //var index = ContractRepository.contract.FindIndex(x => x.IdContract == ContId);
-                //Contract cont = ContractRepository.contract[index];
                 var cont = await ContractService.GetContract(ContId);
                 dateConclusion.Value = cont.DateConclusion;
                 dateAction.Value = cont.ActionDate;
                 await FullComboBox();
                 executerCombo.Text = cont.Executer.name;
                 customerCombo.Text = cont.Costumer.name;
-                var lcs = (await LocationService.GetLocationContracts())
-                    .Where(lc => lc.Contract.IdContract == ContId);
-                var allLocations = await LocationService.GetLocations();
 
-                // тут пытался вытянуть цены\город\контракты firstOrDefalt
-                foreach (var loc in allLocations)
-                {
+                var locContrFilter = new Filter<Location_Contract>();
+                locContrFilter.AddFilter(lc => lc.Contract, ContToEdit.ToString());
+                var lcs = await LocationService.GetLocationContracts(-1, locContrFilter);
 
-                    var testCostCits = (await LocationService.GetLocationContracts())
-                        .FirstOrDefault(costCity => costCity.Contract.IdContract == ContId & costCity.Locality.IdLocation == loc.IdLocation);
+                _locations = lcs.Select(lc => lc.Locality).ToList();
+                lcs.ForEach(lc => _idCityToCost.Add(lc.Locality.IdLocation, (int)lc.Price));
 
-                    if (testCostCits != null)
-                    {
-                        _idCityToCost.Add(testCostCits.Locality.IdLocation, (int)testCostCits.Price);
-                    }
-                }
-
-                foreach (var lc in lcs)
-                {
-                    var location = allLocations.FirstOrDefault(loc => loc.IdLocation == lc.Locality.IdLocation);
-                    if (location != null)
-                    {
-                        _locations.Add(location);
-                    }
-                }
                 CreateData();
                 foreach (var loc in _locations)
                 {
@@ -103,13 +78,15 @@ namespace GrpcClient_PI_21_01.Views
             cityCombo.DisplayMember = "City";
             cityCombo.ValueMember = "IdLocation";
 
-            executerCombo.DataSource = new BindingSource(orgs, null);
-            executerCombo.DisplayMember = "name";
-            executerCombo.ValueMember = "idOrg";
-
-            customerCombo.DataSource = new BindingSource(orgs, null);
+            customerCombo.DataSource = new BindingSource(orgs
+                .Where(o => o.type != OrganizationType.Trapping && o.type != OrganizationType.TrappingAndShelter), null);
             customerCombo.DisplayMember = "name";
             customerCombo.ValueMember = "idOrg";
+
+            executerCombo.DataSource = new BindingSource(orgs
+                .Where(o => o.type == OrganizationType.TrappingAndShelter || o.type == OrganizationType.Trapping), null);
+            executerCombo.DisplayMember = "name";
+            executerCombo.ValueMember = "idOrg";
         }
 
         private void CancelcontEdit_Click(object sender, EventArgs e)
@@ -119,72 +96,85 @@ namespace GrpcClient_PI_21_01.Views
 
         private async void OKcontAdd_Click(object sender, EventArgs e)
         {
+            var correct = await AreFieldsCorrect();
+            if (!correct.Item1)
+            {
+                MessageBox.Show(correct.Item2, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (ContToEdit)
             {
-                if (CheckValueNumericUpDown())
-                    ;
                 //else if (await ChekLocationAndPriceFromOtherAsync())
                 //    ;
-                else
-                {
-                    //var cont = new string[]
-                    //{
-                    //        ContId.ToString(), dateConclusion.Value.ToString(),
-                    //                dateAction.Value.ToString(), cityCombo.SelectedValue.ToString(),
-                    //                CostText.Text, executerCombo.SelectedValue.ToString(),
-                    //                customerCombo.SelectedValue.ToString()
-                    //};
-                    var contr = new Contract(ContId, dateConclusion.Value,
-                        dateAction.Value, executerCombo.SelectedItem as Organization,
-                        customerCombo.SelectedItem as Organization);
-                    await ContractService.UpdateContract(contr);
-                    this.Close();
-                }
+                var contr = new Contract(ContId, dateConclusion.Value,
+                    dateAction.Value, executerCombo.SelectedItem as Organization,
+                    customerCombo.SelectedItem as Organization);
+                await ContractService.UpdateContract(contr);
+                this.Close();
             }
             else
             { // дополнить, проверяет только текущую цену
-                if (CheckValueNumericUpDown())
-                    ;
-                //else if (await ChekLocationAndPriceFromOtherAsync())
-                //    ;
-
-                else
+              //else if (await ChekLocationAndPriceFromOtherAsync())
+              //    ;
+                var contr = new Contract(-1,
+                    dateConclusion.Value, dateAction.Value,
+                    executerCombo.SelectedItem as Organization,
+                    customerCombo.SelectedItem as Organization);
+                var successful = await ContractService.AddContract(contr);
+                if (!successful)
                 {
-                    //var id = ContractRepository.contract.Max(x => x.IdContract) + 1;
-                    //var cont = new Contract(id,
-                    //                    dateConclusion.Value, dateAction.Value,
-                    //                    LocationCostReposiroty.locationCosts[int.Parse(cityCombo.SelectedValue.ToString()) - 1],
-                    //                    int.Parse(CostText.Text),
-                    //                    OrgRepository.Organizations[int.Parse(executerCombo.SelectedValue.ToString()) - 1],
-                    //                    OrgRepository.Organizations[int.Parse(customerCombo.SelectedValue.ToString()) - 1]);
-                    var contr = new Contract(-1,
-                        dateConclusion.Value, dateAction.Value,
-                        executerCombo.SelectedItem as Organization,
-                        customerCombo.SelectedItem as Organization);
-                    var successful = await ContractService.AddContract(contr);
+                    this.DialogResult = DialogResult.Cancel;
+                    MessageBox.Show("Internal error while adding animal card. Please try again later");
+                    return;
+                }
+
+                foreach (var loc in _locations)
+                {
+                    Location_Contract l_C = new Location_Contract(-1, loc, _idCityToCost[loc.IdLocation], contr);
+                    successful = await LocationService.AddLocationContract(l_C);
+
                     if (!successful)
                     {
                         this.DialogResult = DialogResult.Cancel;
                         MessageBox.Show("Internal error while adding animal card. Please try again later");
                         return;
                     }
-
-                    foreach (var loc in _locations)
-                    {
-                        Location_Contract l_C = new Location_Contract(-1, loc, _idCityToCost[loc.IdLocation], contr);
-                        successful = await LocationService.AddLocationContract(l_C);
-
-                        if (!successful)
-                        {
-                            this.DialogResult = DialogResult.Cancel;
-                            MessageBox.Show("Internal error while adding animal card. Please try again later");
-                            return;
-                        }
-                    }
-
-                    this.Close();
                 }
+
+                this.Close();
             }
+        }
+
+        private async Task<Tuple<bool, string>> AreFieldsCorrect()
+        {
+            string errorMessage = string.Empty;
+
+            var contrFilter = new Filter<Contract>();
+            contrFilter.AddFilter(c => c.ActionDate, dateConclusion.Value.ToString(), FilterType.GreaterThan);
+            var existingContracts = await ContractService.GetContracts(-1, contrFilter);
+
+            var lcs = await LocationService.GetLocationContracts();
+
+            if (dateAction.Value <= dateConclusion.Value)
+                errorMessage = "Дата окончания контракта не может быть раньше даты заключения контракта.";
+            else if (lcs.Any(lc => _locations.Contains(lc.Locality)))
+                errorMessage = "Уже существует действующий контракт, в котором указан один из выбранных населённых пунктов.";
+            else if (customerCombo.SelectedItem is not Organization)
+                errorMessage = "Выберите заказчика.";
+            else if (executerCombo.SelectedItem is not Organization)
+                errorMessage = "Выберите исполнителя.";
+            else if (customerCombo.SelectedItem is Organization c && executerCombo.SelectedItem is Organization e
+                && c.idOrg == e.idOrg)
+                errorMessage = "Контракт не может быть заключен между двумя одинаковыми организациями.";
+            else if (customerCombo.SelectedItem is Organization c1 && executerCombo.SelectedItem is Organization e1
+                && e1.type != OrganizationType.Trapping && e1.type != OrganizationType.TrappingAndShelter)
+                errorMessage = "Исполнителем контракта должна быть организация по отлову";
+            else if (_locations.Count <= 0 || _locations.All(l => _idCityToCost[l.IdLocation] > 0))
+                errorMessage = "В одном из населённых пунктов не указана цена отлова.";
+            else return new Tuple<bool, string>(true, errorMessage);
+
+            return new Tuple<bool, string>(false, errorMessage);
         }
 
         private bool CheckValueNumericUpDown()
@@ -258,7 +248,7 @@ namespace GrpcClient_PI_21_01.Views
             }
         }
 
-        private void newCity_Click(object sender, EventArgs e)
+        private void NewCity_Click(object sender, EventArgs e)
         {
             var locationAdd = new LocationAdd();
             locationAdd.Show();
@@ -271,7 +261,7 @@ namespace GrpcClient_PI_21_01.Views
         //}
 
 
-        private void deleteButton_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (CheckDataGrid())
             {
@@ -292,7 +282,7 @@ namespace GrpcClient_PI_21_01.Views
             dataGridView1.CurrentCell  = null;
         }
 
-        private void costNumericUpDown_ValueChanged(object sender, EventArgs e)
+        private void CostNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (CheckDataGrid())
             {
@@ -311,11 +301,12 @@ namespace GrpcClient_PI_21_01.Views
             }
         }
 
-        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        private void DataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
             if (CheckDataGrid())
                 costNumericUpDown.Value = _idCityToCost[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())];
         }
+
         private bool CheckDataGrid()
         {
             if (dataGridView1.CurrentRow != null) 

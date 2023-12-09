@@ -66,10 +66,10 @@ namespace GrpcClient_PI_21_01.Controllers
             return new string[]
             {
                 contr.IdContract.ToString(),
-                contr.DateConclusion.ToString(),
                 contr.ActionDate.ToString(),
+                contr.DateConclusion.ToString(),
+                contr.Costumer.name,
                 contr.Executer.name,
-                contr.Costumer.name
             };
         }
 

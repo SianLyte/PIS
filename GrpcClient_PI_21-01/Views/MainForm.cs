@@ -318,7 +318,7 @@ namespace GrpcClient_PI_21_01
             new AppFilter(appFilter, SetDataGridApp).Show();
         #endregion
         #region Related: Contracts
-        private int _PageContract = 1;
+        private int _PageContract = 0;
         private int _PageContractMax = 1;
         private readonly SemaphoreSlim contrGridSemaphore = new(1, 1);
         private async Task ShowContract()
