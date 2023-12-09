@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GrpcClient_PI_21_01.Controllers;
 
 namespace GrpcClient_PI_21_01.Models
 {
@@ -32,6 +28,7 @@ namespace GrpcClient_PI_21_01.Models
                 Location = Locality.ToReply(),
                 Contract = Contract.ToReply(),
                 Price = (double)Price,
+                Actor = UserService.CurrentUser?.ToReply(),
             };
         }
     }
