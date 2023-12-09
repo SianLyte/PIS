@@ -15,10 +15,12 @@ namespace GrpcClient_PI_21_01.Models
 
             andEquations = new List<string>();
             orEquations = new List<string>();
+            innerEquations = new List<string>();
         }
 
         public IReadOnlyList<string> AndFilters => andEquations;
         public IReadOnlyList<string> OrFilters => orEquations;
+        public IReadOnlyList<string> InnerJoinFilters => innerEquations;
 
         /// <summary>
         /// Adds an 'and' filter.
@@ -67,7 +69,20 @@ namespace GrpcClient_PI_21_01.Models
             orEquations.Add(equation);
         }
 
-        private static string GetColumnID<TValue>(Expression<Func<T, TValue>> selector)
+        public void AddInnerJoinFilter<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector,
+            string desiredValue, FilterType filterType = FilterType.Equals)
+        {
+            var column = GetColumnID(selector);
+            var @operator = GetOperator(filterType);
+
+            if (typeof(TValue) != typeof(decimal) && typeof(TValue) != typeof(double)
+                && typeof(TValue) != typeof(int) && typeof(TValue) != typeof(float)) desiredValue = $"'{desiredValue}'";
+
+            var equation = $"{typeof(ObjectType).Name}.{column} {@operator} {desiredValue}";
+            innerEquations.Add(equation);
+        }
+
+        private static string GetColumnID<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
         {
             var property = Filter<T>.GetProperty(selector);
             var filterable = property.GetCustomAttributes<FilterableAttribute>().SingleOrDefault();
@@ -114,7 +129,7 @@ namespace GrpcClient_PI_21_01.Models
             orEquations.Clear();
         }
 
-        private static PropertyInfo GetProperty<TValue>(Expression<Func<T, TValue>> selector)
+        private static PropertyInfo GetProperty<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
         {
             Expression body = selector;
             if (body is LambdaExpression expression)
@@ -136,6 +151,7 @@ namespace GrpcClient_PI_21_01.Models
 
         private readonly List<string> andEquations;
         private readonly List<string> orEquations;
+        private readonly List<string> innerEquations;
     }
 
     [Flags] public enum FilterType

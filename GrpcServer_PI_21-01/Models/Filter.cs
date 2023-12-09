@@ -27,6 +27,16 @@ namespace GrpcServer_PI_21_01.Models
                     throw new Exception("Incorrect reply format recieved. Filter reply is corrupted");
                 andEquations.AddRange(reply.AndEquations.Select(eq => tableName + "." + eq));
                 orEquations.AddRange(reply.OrEquations.Select(eq => tableName + "." + eq));
+                andEquations.AddRange(reply.InnerEquations.Select(eq =>
+                {
+                    var typeName = eq[..eq.IndexOf('.')];
+                    var remainingEquation = eq[(eq.IndexOf('.') + 1)..];
+                    var filterableModelAttribute = Type.GetType(typeName)?.GetCustomAttribute<FilterableModelAttribute>();
+                    if (filterableModelAttribute is null)
+                        throw new Exception(typeName + " model cannot be filtered.");
+
+                    return filterableModelAttribute.TableName + "." + remainingEquation;
+                }));
             }
         }
 
