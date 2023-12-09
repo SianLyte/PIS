@@ -25,8 +25,8 @@ namespace GrpcServer_PI_21_01.Models
             {
                 if (!CheckCorrectFormat()) // проверка на попытки нежелаемых SQL инжектов
                     throw new Exception("Incorrect reply format recieved. Filter reply is corrupted");
-                andEquations.AddRange(reply.AndEquations);
-                orEquations.AddRange(reply.OrEquations);
+                andEquations.AddRange(reply.AndEquations.Select(eq => tableName + "." + eq));
+                orEquations.AddRange(reply.OrEquations.Select(eq => tableName + "." + eq));
             }
         }
 
@@ -103,15 +103,16 @@ namespace GrpcServer_PI_21_01.Models
             return @operator;
         }
 
-        private static string GenerateEquation<TValue>(Expression<Func<T, TValue>> selector,
+        private string GenerateEquation<TValue>(Expression<Func<T, TValue>> selector,
             string desiredValue, FilterType filterType = FilterType.Equals)
         {
             var columnName = GetColumnID(selector);
             var @operator = GetOperator(filterType);
 
-            if (!decimal.TryParse(desiredValue, out decimal _)) desiredValue = $"'{desiredValue}'";
+            if (typeof(TValue) != typeof(decimal) && typeof(TValue) != typeof(double)
+                && typeof(TValue) != typeof(int) && typeof(TValue) != typeof(float)) desiredValue = $"'{desiredValue}'";
 
-            return $"{columnName} {@operator} {desiredValue}";
+            return $"{tableName}.{columnName} {@operator} {desiredValue}";
         }
 
         public void RemoveAndFilterAt(int index) =>
@@ -137,47 +138,23 @@ namespace GrpcServer_PI_21_01.Models
             var startQuery = $"SELECT DISTINCT act.id, dog_count, cat_count, organization_id, act.created_at, goal, municipal_contract_id FROM {tableName} " +
                 $"inner join act_catch_request on act.id = act_catch_request.act_id " +
                 $"inner join catch_request on catch_request.id = act_catch_request.catch_request_id";
-            if (andEquations.Count > 0 || orEquations.Count > 0)
-            {
-                startQuery += " WHERE ";
-                if (andEquations.Count > 0)
-                    startQuery += $"{string.Join(" and ", andEquations)}";
-                if (orEquations.Count > 0)
-                {
-                    if (andEquations.Count > 0)
-                        startQuery += " and ";
-                    startQuery += $"({string.Join(" or ", orEquations)})";
-                }
-            }
-            if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
-
-            return startQuery + ";";
-        }
-
-        public string GenerateSQL(int page = -1)
-        {
-            var startQuery = $"SELECT * FROM {tableName}";
-            if (andEquations.Count > 0 || orEquations.Count > 0)
-            {
-                startQuery += " WHERE ";
-                if (andEquations.Count > 0)
-                    startQuery += $"{string.Join(" and ", andEquations)}";
-                if (orEquations.Count > 0)
-                {
-                    if (andEquations.Count > 0)
-                        startQuery += " and ";
-                    startQuery += $"({string.Join(" or ", orEquations)})";
-                }
-            }   
-
-            if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
-
-            return startQuery + ";";
+            return GenerateSQL(page, startQuery);
         }
 
         public string GenerateSQLForCount()
         {
             var startQuery = $"SELECT count(*) FROM {tableName}";
+            return GenerateSQL(-1, startQuery);
+        }
+
+        public string GenerateSQL(int page = -1)
+        {
+            var startQuery = $"SELECT * FROM {tableName}";
+            return GenerateSQL(page, startQuery);
+        }
+
+        private string GenerateSQL(int page, string startQuery)
+        {
             if (andEquations.Count > 0 || orEquations.Count > 0)
             {
                 startQuery += " WHERE ";
@@ -190,8 +167,7 @@ namespace GrpcServer_PI_21_01.Models
                     startQuery += $"({string.Join(" or ", orEquations)})";
                 }
             }
-
-            //if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
+            if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
 
             return startQuery + ";";
         }

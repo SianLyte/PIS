@@ -219,7 +219,7 @@ namespace GrpcServer_PI_21_01.Services
             IServerStreamWriter<ActReply> responseStream,
             ServerCallContext ctx)
         {
-            var filter = new Filter<Act>(request.Filter);
+            var filter = new Filter<Act>();
             if (request.Actor.PrivelegeLevel != "Admin")
                 filter.AddFilter(act => act.Organization, request.Actor.Organization.IdOrganization.ToString());
             filter.ExtendReply(request.Filter);

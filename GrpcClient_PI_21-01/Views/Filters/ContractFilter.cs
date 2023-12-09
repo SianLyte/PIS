@@ -72,14 +72,14 @@ namespace GrpcClient_PI_21_01.Views.Filters
 
             if (showContractActive.Checked)
             {
-                Filter.AddFilter(c => c.ActionDate, DateTime.Now.ToString(), FilterType.GreaterThan);
-                Filter.AddFilter(c => c.DateConclusion, DateTime.Now.ToString(), FilterType.LesserThan);
+                Filter.AddFilter(c => c.ActionDate, DateTime.Now.ToString(), FilterType.GreaterThan | FilterType.Equals);
+                Filter.AddFilter(c => c.DateConclusion, DateTime.Now.ToString(), FilterType.LesserThan | FilterType.Equals);
             }
 
             if (showContractExpired.Checked)
             {
-                Filter.AddOrFilter(c => c.ActionDate, DateTime.Now.ToString(), FilterType.LesserThan);
-                Filter.AddOrFilter(c => c.DateConclusion, DateTime.Now.ToString(), FilterType.GreaterThan);
+                Filter.AddOrFilter(c => c.ActionDate, DateTime.Now.ToString(), FilterType.LesserThan | FilterType.Equals);
+                Filter.AddOrFilter(c => c.DateConclusion, DateTime.Now.ToString(), FilterType.GreaterThan | FilterType.Equals);
             }
 
             if (performerComboBox.SelectedItem is Organization performer)

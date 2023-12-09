@@ -99,8 +99,6 @@ namespace GrpcClient_PI_21_01.Models
             if (typeof(TValue) != typeof(decimal) && typeof(TValue) != typeof(double)
                 && typeof(TValue) != typeof(int) && typeof(TValue) != typeof(float)) desiredValue = $"'{desiredValue}'";
 
-            if (typeof(TValue) == typeof(bool)) desiredValue = desiredValue.ToLower();
-
             return $"{columnName} {@operator} {desiredValue}";
         }
 
