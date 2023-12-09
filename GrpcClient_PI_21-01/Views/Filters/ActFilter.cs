@@ -118,21 +118,23 @@ namespace GrpcClient_PI_21_01.Views.Filters
 
             for (int i = 0; i < applications.Items.Count; i++)
             {
-                App a = applications.Items[i] as App;
-                if (i == 0)
+                if (applications.Items[i] is App a)
                 {
-                    Filter.AddInnerJoinFilter<App, int>(app => app.number, a.number.ToString(), FilterType.Equals);
-                    //Filter.AddFilter(act => 1, a.number.ToString(), FilterType.Equals);
-                    //( and
+                    if (i == 0)
+                    {
+                        Filter.AddInnerJoinFilter<App, int>(app => app.number, a.number.ToString(), FilterType.Equals);
+                        //Filter.AddFilter(act => 1, a.number.ToString(), FilterType.Equals);
+                        //( and
+                    }
+                    //if (i == applications.Items.Count-1)
+                    //{
+                    //    // or )
+                    //}
+                    //else
+                    //{
+                    //    //or
+                    //}
                 }
-                //if (i == applications.Items.Count-1)
-                //{
-                //    // or )
-                //}
-                //else
-                //{
-                //    //or
-                //}
             }
             Apply();
         }
@@ -204,6 +206,8 @@ namespace GrpcClient_PI_21_01.Views.Filters
                 appComboBox.Items.Remove(app);
                 if (prevIndex > 0) appComboBox.SelectedIndex = prevIndex - 1;
                 else if (appComboBox.Items.Count > 0) appComboBox.SelectedIndex = 0;
+
+                ApplyFilter();
             }
         }
 
@@ -214,12 +218,9 @@ namespace GrpcClient_PI_21_01.Views.Filters
                 applications.Items.Remove(app);
                 appComboBox.Items.Add(app);
                 if (appComboBox.SelectedItem is not App) appComboBox.SelectedIndex = 0;
+
+                ApplyFilter();
             }
-        }
-
-        private void apply_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

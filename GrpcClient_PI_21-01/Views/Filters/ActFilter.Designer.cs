@@ -436,7 +436,6 @@
             apply.TabIndex=8;
             apply.Text="Применить";
             apply.UseVisualStyleBackColor=false;
-            apply.Click+=apply_Click;
             // 
             // reset
             // 
