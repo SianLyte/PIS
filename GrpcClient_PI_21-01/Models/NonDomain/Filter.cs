@@ -146,6 +146,7 @@ namespace GrpcClient_PI_21_01.Models
             var reply = new FilterReply();
             reply.AndEquations.AddRange(andEquations);
             reply.OrEquations.AddRange(orEquations);
+            reply.InnerEquations.AddRange(innerEquations);
             return reply;
         }
 
