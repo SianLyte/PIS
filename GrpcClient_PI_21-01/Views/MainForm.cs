@@ -26,6 +26,7 @@ namespace GrpcClient_PI_21_01
             // Только сейчас заметил, что это?!
             // где?
             // именно, где мои кнопки?!)
+            // кончились
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -53,6 +54,11 @@ namespace GrpcClient_PI_21_01
             contractFiltersButton.Click += OpenContractFilters;
             applicationFiltersButton.Click += OpenApplicationFilters;
             organizationFiltersButton.Click += OpenOrganizationFilters;
+
+            DataGridViewActs.ColumnSortModeChanged += SortActs;
+            dataGridViewApp.ColumnSortModeChanged += SortApps;
+            dataGridViewOrg.ColumnSortModeChanged += SortOrganizations;
+            ContractTable.ColumnSortModeChanged += SortContracts;
 
             Task.Run(Setup);
         }
@@ -99,8 +105,7 @@ namespace GrpcClient_PI_21_01
             {
                 DataGridViewActs.Rows.Clear();
                 var acts = await ActService.GetActs(_ActPage, actFilter);
-                foreach (var act in acts.Select(a => ActService.ToDataArray(a)))
-                    DataGridViewActs.Rows.Add(act);
+                ActService.FillDataGrid(acts, DataGridViewActs);
                 _ActPageMax = await ActService.GetPageCount(_pageSize, actFilter);
                 CheckPageButton(buttobPreviosActs, buttonNextActs, _ActPage, _ActPageMax);
             }
@@ -172,16 +177,22 @@ namespace GrpcClient_PI_21_01
         private void OpenActFilters(object sender, EventArgs e) =>
             new ActFilter(actFilter, SetDataGridAct).Show();
 
-        private void buttonNextActs_Click(object sender, EventArgs e)
+        private async void buttonNextActs_Click(object sender, EventArgs e)
         {
             _ActPage++;
-            SetDataGridAct();
+            await SetDataGridAct();
         }
 
-        private void buttobPreviosActs_Click(object sender, EventArgs e)
+        private async void buttobPreviosActs_Click(object sender, EventArgs e)
         {
             _ActPage--;
-            SetDataGridAct();
+            await SetDataGridAct();
+        }
+
+        private async void SortActs(object sender, DataGridViewColumnEventArgs e)
+        {
+            ActService.SortByColumn(actFilter, e.Column);
+            await SetDataGridAct();
         }
 
         #endregion
@@ -267,6 +278,10 @@ namespace GrpcClient_PI_21_01
             _OrgPage--;
         }
 
+        private async void SortOrganizations(object sender, DataGridViewColumnEventArgs e)
+        {
+        }
+
         #endregion
         #region Related: Applications
         private int _AppPage = 0;
@@ -337,16 +352,20 @@ namespace GrpcClient_PI_21_01
 
         private void OpenApplicationFilters(object sender, EventArgs e) =>
             new AppFilter(appFilter, SetDataGridApp).Show();
-        private void buttonNextApps_Click(object sender, EventArgs e)
+        private async void buttonNextApps_Click(object sender, EventArgs e)
         {
             _AppPage++;
-            SetDataGridApp();
+            await SetDataGridApp();
         }
 
-        private void buttonPreviosApps_Click(object sender, EventArgs e)
+        private async void buttonPreviosApps_Click(object sender, EventArgs e)
         {
             _AppPage--;
-            SetDataGridApp();
+            await SetDataGridApp();
+        }
+
+        private async void SortApps(object sender, DataGridViewColumnEventArgs e)
+        {
         }
 
         #endregion
@@ -413,16 +432,20 @@ namespace GrpcClient_PI_21_01
         private void OpenContractFilters(object sender, EventArgs e) =>
             new ContractFilter(contrFilter, ShowContract).Show();
 
-        private void buttonNextContract_Click(object sender, EventArgs e)
+        private async void buttonNextContract_Click(object sender, EventArgs e)
         {
             _HistoryPage++;
-            ShowContract();
+            await ShowContract();
         }
 
-        private void buttonPreviosContract_Click(object sender, EventArgs e)
+        private async void buttonPreviosContract_Click(object sender, EventArgs e)
         {
             _HistoryPage--;
-            ShowContract();
+            await ShowContract();
+        }
+
+        private async void SortContracts(object sender, DataGridViewColumnEventArgs e)
+        {
         }
 
         #endregion

@@ -94,6 +94,7 @@ namespace GrpcClient_PI_21_01.Models
             var equation = $"{typeof(ObjectType).Name}.{column} {@operator} {desiredValue}";
             andInnerEquations.Add(equation);
         }
+
         public void OrAddInnerJoinFilter<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector,
     string desiredValue, FilterType filterType = FilterType.Equals)
         {
@@ -160,6 +161,8 @@ namespace GrpcClient_PI_21_01.Models
             orEquations.Clear();
             andInnerEquations.Clear();
             orInnerEquations.Clear();
+
+            sort = String.Empty;
         }
 
         private static PropertyInfo GetProperty<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)

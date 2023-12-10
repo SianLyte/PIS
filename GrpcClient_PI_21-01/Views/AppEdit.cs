@@ -35,11 +35,11 @@ namespace GrpcClient_PI_21_01.Views
 
         private async void SetupForm()
         {
-            var localities = await LocationService.GetLocations();
-            var orderedLocalities = localities.OrderBy(loc => loc.City)
-                .ToArray(); // do sorting here using SQL
+            var localityFilter = new Filter<Location>();
+            localityFilter.SetSort<Location, string>(loc => loc.City);
+            var localities = await LocationService.GetLocations(-1, localityFilter);
             locality.Items.Clear();
-            locality.Items.AddRange(orderedLocalities);
+            locality.Items.AddRange(localities.ToArray());
             locality.DisplayMember = "City";
 
             category.Items.Clear();
