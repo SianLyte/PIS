@@ -76,7 +76,7 @@
             AppDelete=new Button();
             buttonPreviosApps=new Button();
             buttonNextApps=new Button();
-            button2=new Button();
+            //button2=new Button();
             dataGridViewApp=new DataGridView();
             tabPage5=new TabPage();
             buttonPreviosOrganisations=new Button();
@@ -611,7 +611,7 @@
             tabPage4.Controls.Add(buttonPreviosApps);
             tabPage4.Controls.Add(applicationFiltersButton);
             tabPage4.Controls.Add(buttonNextApps);
-            tabPage4.Controls.Add(button2);
+            //tabPage4.Controls.Add(button2);
             tabPage4.Controls.Add(AppAdd);
             tabPage4.Controls.Add(AppEdit);
             tabPage4.Controls.Add(AppDelete);
@@ -650,14 +650,14 @@
             // 
             // button2
             // 
-            button2.BackColor=Color.Cornsilk;
-            button2.FlatStyle=FlatStyle.Popup;
-            button2.Location=new Point(18, 618);
-            button2.Name="button2";
-            button2.Size=new Size(137, 36);
-            button2.TabIndex=23;
-            button2.Text="Фильтры";
-            button2.UseVisualStyleBackColor=false;
+            //button2.BackColor=Color.Cornsilk;
+            //button2.FlatStyle=FlatStyle.Popup;
+            //button2.Location=new Point(18, 618);
+            //button2.Name="button2";
+            //button2.Size=new Size(137, 36);
+            //button2.TabIndex=23;
+            //button2.Text="Фильтры";
+            //button2.UseVisualStyleBackColor=false;
             // 
             // applicationFiltersButton
             // 
