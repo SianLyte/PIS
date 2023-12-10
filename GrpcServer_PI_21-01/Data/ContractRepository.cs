@@ -45,8 +45,8 @@ namespace GrpcServer_PI_21_01.Data
             try
             {
                 using NpgsqlCommand cmd = new($"UPDATE municipal_contract SET " +
-                                $"created_at = '{c.ActionDate}'," +
-                                $"validity_date = '{c.DateConclusion}'," +
+                                $"created_at = '{c.DateConclusion}'," +
+                                $"validity_date = '{c.ActionDate}'," +
                                 $"customer_id = {c.Costumer.idOrg}," +
                                 $"performer_id = {c.Executer.idOrg}," +
                                 $" WHERE id = {c.IdContract}")
@@ -75,7 +75,7 @@ namespace GrpcServer_PI_21_01.Data
                 // этому ссылочному значению новое Id, которое было присвоено самой БД
                 using NpgsqlCommand cmd = new($"INSERT INTO municipal_contract " +
                     $"(created_at, validity_date, customer_id, performer_id)" +
-                    $"VALUES ('{c.ActionDate}', '{c.DateConclusion}', {c.Costumer.idOrg}, {c.Executer.idOrg}) RETURNING id")
+                    $"VALUES ('{c.DateConclusion}', '{c.ActionDate}', {c.Costumer.idOrg}, {c.Executer.idOrg}) RETURNING id")
                 { Connection = cn };
                 {
                     cn.Open();

@@ -231,4 +231,5 @@ message FilterReply {
 	repeated string orEquations = 2;
 	repeated string andInnerEquations = 3;
 	repeated string orInnerEquations = 4;
+	string sort = 5;
 }

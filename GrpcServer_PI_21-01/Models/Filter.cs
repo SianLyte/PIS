@@ -6,6 +6,11 @@ namespace GrpcServer_PI_21_01.Models
 {
     public class Filter<T>
     {
+        private readonly List<string> andEquations;
+        private readonly List<string> orEquations;
+        private readonly string sort;
+        private readonly string tableName;
+
         public Filter()
         {
             var type = typeof(T);
@@ -49,6 +54,9 @@ namespace GrpcServer_PI_21_01.Models
 
                     return filterableModelAttribute.TableName + "." + remainingEquation;
                 }));
+                //default table.id_name
+                //asc.act.id
+
 
             }
         }
@@ -264,9 +272,6 @@ namespace GrpcServer_PI_21_01.Models
             }
         }
 
-        private readonly List<string> andEquations;
-        private readonly List<string> orEquations;
-        private readonly string tableName;
     }
 
     [Flags] public enum FilterType

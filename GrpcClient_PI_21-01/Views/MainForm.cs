@@ -480,6 +480,5 @@ namespace GrpcClient_PI_21_01
                 buttonNext.Enabled = false;
             }
         }
-
     }
 }

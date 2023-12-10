@@ -17,12 +17,15 @@ namespace GrpcClient_PI_21_01.Models
             orEquations = new List<string>();
             andInnerEquations = new List<string>();
             orInnerEquations = new List<string>();
+            sort = "";
+            
         }
 
         private readonly List<string> andEquations;
         private readonly List<string> orEquations;
         private readonly List<string> andInnerEquations;
         private readonly List<string> orInnerEquations;
+        private string sort;
 
 
         public IReadOnlyList<string> AndFilters => andEquations;
@@ -104,6 +107,12 @@ namespace GrpcClient_PI_21_01.Models
             orInnerEquations.Add(equation);
         }
 
+        public void SetSort<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector, SortType sortType = SortType.Asc)
+        {
+            var column = GetColumnID(selector);
+            sort = $"{sortType}.{typeof(ObjectType).Name}.{column}"; 
+        }
+
         private static string GetColumnID<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
         {
             var property = Filter<T>.GetProperty(selector);
@@ -172,6 +181,7 @@ namespace GrpcClient_PI_21_01.Models
             reply.OrEquations.AddRange(orEquations);
             reply.AndInnerEquations.AddRange(andInnerEquations);
             reply.OrInnerEquations.AddRange(orInnerEquations);
+            reply.Sort = sort;
 
             return reply;
         }
@@ -182,6 +192,12 @@ namespace GrpcClient_PI_21_01.Models
         Equals = 1,
         GreaterThan = 2,
         LesserThan = 4,
+    }
+    
+    public enum SortType
+    {
+        Asc = 1,
+        Desc = 2,
     }
 
     [AttributeUsage(AttributeTargets.Property)]

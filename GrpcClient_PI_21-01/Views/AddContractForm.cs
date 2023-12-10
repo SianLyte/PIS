@@ -47,7 +47,7 @@ namespace GrpcClient_PI_21_01.Views
                 customerCombo.Text = cont.Costumer.name;
 
                 var locContrFilter = new Filter<Location_Contract>();
-                locContrFilter.AddFilter(lc => lc.Contract, ContToEdit.ToString());
+                locContrFilter.AddFilter(lc => lc.Contract, cont.IdContract.ToString());
                 var lcs = await LocationService.GetLocationContracts(-1, locContrFilter);
 
                 _locations = lcs.Select(lc => lc.Locality).ToList();

@@ -26,9 +26,7 @@ namespace GrpcServer_PI_21_01.Data
                     string count = "";
                     NpgsqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
-                    {
                         count = reader[0].ToString();
-                    }
                     reader.Close();
                     cn.Close();
                     var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
