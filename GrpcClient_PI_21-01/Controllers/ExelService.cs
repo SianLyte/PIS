@@ -10,7 +10,7 @@ namespace GrpcClient_PI_21_01.Controllers
 {
     internal class ExelService
     {
-        static private Dictionary<string, string> _TipeExportToName = new Dictionary<string, string>(){ { "Act", "актам" },
+        static private Dictionary<string, string> _TipeExportToName = new Dictionary<string, string>(){ { "act", "актам" },
             {"report", "отчётам" }, {"contract", "контрактам" }, {"app", "заявкам" }, {"org", "организациям" }, {"hist", "истории" } };
         public static void ExportExel(DataGridView dataGridView, string tipeExport)
         {
