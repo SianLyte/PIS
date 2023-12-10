@@ -25,6 +25,7 @@ namespace GrpcClient_PI_21_01
 
             // Только сейчас заметил, что это?!
             // где?
+            // именно, где мои кнопки?!)
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -62,6 +63,7 @@ namespace GrpcClient_PI_21_01
         readonly Filter<App> appFilter = new();
         readonly Filter<Organization> orgFilter = new();
         readonly Filter<Contract> contrFilter = new();
+        static private int _pageSize = 10;
 
         private async Task Setup()
         {
@@ -88,15 +90,14 @@ namespace GrpcClient_PI_21_01
         /* -----------------------------------ACT----------------------------------------------------- */
 
         private int _ActPage = 0;
-        private int _ActPageMax = 1;
+        private int _ActPageMax = 0;
         private readonly SemaphoreSlim actGridSemaphore = new(1, 1);
         private async Task SetDataGridAct()
         {
             await actGridSemaphore.WaitAsync();
             try
             {
-                CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
-                DataGridViewActs.Rows.Clear();
+                CheckPageButton(buttobPreviosActs, buttonNextActs, _ActPage, _ActPageMax); DataGridViewActs.Rows.Clear();
                 var acts = await ActService.GetActs(_ActPage, actFilter);
                 foreach (var act in acts.Select(a => ActService.ToDataArray(a)))
                     DataGridViewActs.Rows.Add(act);
@@ -419,14 +420,19 @@ namespace GrpcClient_PI_21_01
         #region Related: Operation History
         private List<Operation>? _data;
         readonly DataSet _dbHistory = new();
+        private int _HistoryPage = 0;
+        private int _HistoryPageMax = 0;
 
         public async Task InicilisationHistory()
         {
             if (await CheckPrivilege(NameMdels.History))
             {
-                _data = await OperationService.GetOperations();
+                _data = await OperationService.GetOperations(_HistoryPage);
                 CreateDataSet();
                 ParceDataToDataGrid();
+                _HistoryPageMax = await OperationService.GetPageCount(_pageSize)-1;
+                CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
+
             }
             else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
@@ -465,13 +471,27 @@ namespace GrpcClient_PI_21_01
             }
             dataGridViewHistory.DataSource = _dbHistory.Tables[0];
         }
+        private void buttonPriviosHistory_Click(object sender, EventArgs e)
+        {
+            _HistoryPage--;
+            //CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
+            InicilisationHistory();
+        }
+
+        private void buttonNextHistory_Click(object sender, EventArgs e)
+        {
+            _HistoryPage++;
+            //CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
+            InicilisationHistory();
+        }
+
         #endregion
 
         private static void CheckPageButton(Button buttonPrevious, Button buttonNext, int page, int pageMax)
         {
             buttonPrevious.Enabled = true;
             buttonNext.Enabled = true;
-            if (page == 1)
+            if (page == 0)
             {
                 buttonPrevious.Enabled = false;
             }
