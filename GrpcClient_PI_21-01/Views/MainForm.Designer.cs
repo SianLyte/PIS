@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             tabControl1=new TabControl();
             tabPage1=new TabPage();
+            buttobPreviosActs=new Button();
+            buttonNextActs=new Button();
             filterActButton=new Button();
             buttonAnimalCard=new Button();
             AddActButton=new Button();
@@ -82,6 +84,8 @@
             OrgEdit=new Button();
             OrgDelete=new Button();
             tabPage6=new TabPage();
+            buttonPriviosHistory=new Button();
+            buttonNextHistory=new Button();
             dataGridViewHistory=new DataGridView();
             buttonPriviosPageAct=new Button();
             buttonNextPageAct=new Button();
@@ -126,6 +130,8 @@
             // tabPage1
             // 
             tabPage1.BackColor=Color.Tan;
+            tabPage1.Controls.Add(buttobPreviosActs);
+            tabPage1.Controls.Add(buttonNextActs);
             tabPage1.Controls.Add(filterActButton);
             tabPage1.Controls.Add(buttonAnimalCard);
             tabPage1.Controls.Add(AddActButton);
@@ -141,6 +147,30 @@
             tabPage1.Size=new Size(1374, 715);
             tabPage1.TabIndex=0;
             tabPage1.Text="Акты";
+            // 
+            // buttobPreviosActs
+            // 
+            buttobPreviosActs.BackColor=Color.Cornsilk;
+            buttobPreviosActs.FlatStyle=FlatStyle.Popup;
+            buttobPreviosActs.Location=new Point(1258, 592);
+            buttobPreviosActs.Name="buttobPreviosActs";
+            buttobPreviosActs.RightToLeft=RightToLeft.No;
+            buttobPreviosActs.Size=new Size(45, 35);
+            buttobPreviosActs.TabIndex=12;
+            buttobPreviosActs.Text="<";
+            buttobPreviosActs.UseVisualStyleBackColor=false;
+            // 
+            // buttonNextActs
+            // 
+            buttonNextActs.BackColor=Color.Cornsilk;
+            buttonNextActs.FlatStyle=FlatStyle.Popup;
+            buttonNextActs.Location=new Point(1309, 592);
+            buttonNextActs.Name="buttonNextActs";
+            buttonNextActs.RightToLeft=RightToLeft.No;
+            buttonNextActs.Size=new Size(45, 35);
+            buttonNextActs.TabIndex=11;
+            buttonNextActs.Text=">";
+            buttonNextActs.UseVisualStyleBackColor=false;
             // 
             // filterActButton
             // 
@@ -699,6 +729,8 @@
             // tabPage6
             // 
             tabPage6.BackColor=Color.Tan;
+            tabPage6.Controls.Add(buttonPriviosHistory);
+            tabPage6.Controls.Add(buttonNextHistory);
             tabPage6.Controls.Add(dataGridViewHistory);
             tabPage6.ForeColor=Color.Black;
             tabPage6.Location=new Point(4, 39);
@@ -707,6 +739,32 @@
             tabPage6.Size=new Size(1374, 715);
             tabPage6.TabIndex=5;
             tabPage6.Text="История";
+            // 
+            // buttonPriviosHistory
+            // 
+            buttonPriviosHistory.BackColor=Color.Cornsilk;
+            buttonPriviosHistory.FlatStyle=FlatStyle.Popup;
+            buttonPriviosHistory.Location=new Point(1272, 619);
+            buttonPriviosHistory.Name="buttonPriviosHistory";
+            buttonPriviosHistory.RightToLeft=RightToLeft.No;
+            buttonPriviosHistory.Size=new Size(45, 35);
+            buttonPriviosHistory.TabIndex=20;
+            buttonPriviosHistory.Text="<";
+            buttonPriviosHistory.UseVisualStyleBackColor=false;
+            buttonPriviosHistory.Click+=buttonPriviosHistory_Click;
+            // 
+            // buttonNextHistory
+            // 
+            buttonNextHistory.BackColor=Color.Cornsilk;
+            buttonNextHistory.FlatStyle=FlatStyle.Popup;
+            buttonNextHistory.Location=new Point(1323, 619);
+            buttonNextHistory.Name="buttonNextHistory";
+            buttonNextHistory.RightToLeft=RightToLeft.No;
+            buttonNextHistory.Size=new Size(45, 35);
+            buttonNextHistory.TabIndex=19;
+            buttonNextHistory.Text=">";
+            buttonNextHistory.UseVisualStyleBackColor=false;
+            buttonNextHistory.Click+=buttonNextHistory_Click;
             // 
             // dataGridViewHistory
             // 
@@ -891,6 +949,10 @@
         private Button buttonPreviousContracts;
         private Button buttonNextContracts;
         private Button organizationFiltersButton;
+        private Button buttonNextActs;
+        private Button buttobPreviosActs;
+        private Button buttonPriviosHistory;
+        private Button buttonNextHistory;
     }
 }
 
