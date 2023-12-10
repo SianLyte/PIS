@@ -462,7 +462,6 @@ namespace GrpcClient_PI_21_01
             {
                 _data = await OperationService.GetOperations(_HistoryPage);
                 CreateDataSet();
-                ParceDataToDataGrid();
                 _HistoryPageMax = await OperationService.GetPageCount(_pageSize);
                 CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
 
@@ -470,7 +469,7 @@ namespace GrpcClient_PI_21_01
             else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public void CreateDataSet()
+        public async void CreateDataSet()
         {
             _dbHistory.Tables.Clear();
             _dbHistory.Tables.Add("History");
@@ -484,26 +483,14 @@ namespace GrpcClient_PI_21_01
             _dbHistory.Tables[0].Columns.Add("Вид действия");
             _dbHistory.Tables[0].Columns.Add("Идетификационный номер экземляра объекта");
             _dbHistory.Tables[0].Columns.Add("Наименование таблицы, в которой произошло изменение");
-        }
 
-        private void ParceDataToDataGrid()
-        {
-            foreach (var data in _data)
-            {
-                var allDataParts = new string[10] { data.Actor.Surname.ToString(),
-                                                    data.Actor.Name.ToString(),
-                                                    data.Actor.Patronymic.ToString(),
-                                                    data.Actor.Organization.name.ToString(),
-                                                    data.Actor.PrivelegeLevel.ToString(),
-                                                    data.Actor.Login.ToString(),
-                                                    data.ActionDate.ToString(),
-                                                    data.ModifiedObjectId.ToString(),
-                                                    data.ActionType.ToString(),
-                                                    data.ModifiedTableName.ToString()};
-                _dbHistory.Tables[0].Rows.Add(allDataParts);
-            }
+            var parceData = await OperationService.GetParceDataHistory(_data);
+            foreach (var data in parceData)
+                _dbHistory.Tables[0].Rows.Add(data);
+
             dataGridViewHistory.DataSource = _dbHistory.Tables[0];
         }
+
         private void buttonPriviosHistory_Click(object sender, EventArgs e)
         {
             _HistoryPage--;

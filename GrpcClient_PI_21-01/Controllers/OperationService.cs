@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcClient_PI_21_01.Models;
+using System.Xml.Linq;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
@@ -26,6 +27,27 @@ namespace GrpcClient_PI_21_01.Controllers
             var client = new DataRetriever.DataRetrieverClient(channel);
             var pageCount = await client.GetOperationsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
             return pageCount.Count;
+        }
+
+        public static async Task<List<string[]>> GetParceDataHistory(List<Operation> dataNoParce)
+        {
+            var returnList = new List<string[]>();
+
+            foreach (var data in dataNoParce)
+            {
+                var allDataParts = new string[10] { data.Actor.Surname.ToString(),
+                                                    data.Actor.Name.ToString(),
+                                                    data.Actor.Patronymic.ToString(),
+                                                    data.Actor.Organization.name.ToString(),
+                                                    data.Actor.PrivelegeLevel.ToString(),
+                                                    data.Actor.Login.ToString(),
+                                                    data.ActionDate.ToString(),
+                                                    data.ModifiedObjectId.ToString(),
+                                                    data.ActionType.ToString(),
+                                                    data.ModifiedTableName.ToString()};
+                returnList.Add(allDataParts);
+            }
+            return returnList;
         }
     }
 }
