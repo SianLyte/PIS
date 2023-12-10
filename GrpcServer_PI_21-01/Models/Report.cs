@@ -15,6 +15,7 @@ namespace GrpcServer_PI_21_01.Models
         ApprovedByMunicipalContractExecutor,
         ApprovedByOMSY
     }
+    [FilterableModel("report")]
     class Report
     {
         public DateTime DateStart { get; set; }

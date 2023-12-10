@@ -170,10 +170,18 @@ namespace GrpcServer_PI_21_01.Models
         public string GenerateSQLAct(int page = -1)
         {
             var startQuery = $"SELECT DISTINCT act.id, dog_count, cat_count, organization_id, act.created_at, goal, municipal_contract_id FROM {tableName} " +
-                $"inner join act_catch_request on act.id = act_catch_request.act_id " +
-                $"inner join catch_request on catch_request.id = act_catch_request.catch_request_id";
+                $"left join act_catch_request on act.id = act_catch_request.act_id " +
+                $"left join catch_request on catch_request.id = act_catch_request.catch_request_id";
             return GenerateSQL(page, startQuery);
         }
+        //TODO
+        //public string GenerateSQLContract(int page = -1)
+        //{
+        //    var startQuery = $"SELECT DISTINCT act.id, dog_count, cat_count, organization_id, act.created_at, goal, municipal_contract_id FROM {tableName} " +
+        //        $"left join act_catch_request on act.id = act_catch_request.act_id " +
+        //        $"left join catch_request on catch_request.id = act_catch_request.catch_request_id";
+        //    return GenerateSQL(page, startQuery);
+        //}
 
         public string GenerateSQLForCount()
         {
@@ -194,9 +202,8 @@ namespace GrpcServer_PI_21_01.Models
             {
                 var table = andEquations[i].Split('.', 2)[0];
                 var expression = andEquations[i].Split('.', 2)[1];
-                if (!dict.ContainsKey(table)) {
+                if (!dict.ContainsKey(table)) 
                     dict.Add(table, $"({table}.{expression}");
-                }
                 else
                     dict[table] += $" and {table}.{expression}";
             }
@@ -205,19 +212,14 @@ namespace GrpcServer_PI_21_01.Models
                 var table = orEquations[i].Split('.', 2)[0];
                 var expression = orEquations[i].Split('.', 2)[1];
                 if (andEquations.Count == 0 && !dict.ContainsKey(table))
-                {
                     dict.Add(table, $"({table}.{expression}");
-
-                }
                 dict[table] += $" or {table}.{expression}";
             }
             if (andEquations.Count > 0 || orEquations.Count > 0)
             {
                 startQuery += " WHERE ";
                 foreach (var table in dict.Keys)
-                {
                     startQuery += dict[table] + ") and ";
-                }
                 startQuery = startQuery.Remove(startQuery.Length - 5);
                 //if (andEquations.Count > 0)
                 //    startQuery += $"{string.Join(" and ", andEquations)}";

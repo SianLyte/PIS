@@ -16,22 +16,31 @@ namespace GrpcServer_PI_21_01.Data
 
         public static int GetMaxPage(DataRequest req)
         {
-            var query = new Filter<Report>(req.Filter).GenerateSQLForCount();
-            using (NpgsqlCommand cmd = new("SELECT count(*) from report") { Connection = cn })
+            try
             {
-
-                cn.Open();
-                string count = "";
-                NpgsqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                var query = new Filter<Report>(req.Filter).GenerateSQLForCount();
+                using (NpgsqlCommand cmd = new(query) { Connection = cn })
                 {
-                    count = reader[0].ToString();
-                }
-                reader.Close();
+
+                    cn.Open();
+                    string count = "";
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        count = reader[0].ToString();
+                    }
+                    reader.Close();
+                    cn.Close();
+                    var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
+                    return (int)a;
+                };
+            }
+            catch (Exception e)
+            {
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
-                return (int)a;
-            };
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public static List<Report> GenereteReport(DateTime start, DateTime finish)

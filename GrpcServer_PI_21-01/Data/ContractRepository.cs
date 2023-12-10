@@ -14,144 +14,185 @@ namespace GrpcServer_PI_21_01.Data
 
         public static int GetMaxPage(DataRequest req)
         {
-            var query = new Filter<Contract>(req.Filter).GenerateSQLForCount();
-            using (NpgsqlCommand cmd = new("SELECT count(*) from municipal_contract") { Connection = cn })
+            try
             {
-                cn.Open();
-                string count = "";
-                NpgsqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                var query = new Filter<Contract>(req.Filter).GenerateSQLForCount();
+                using (NpgsqlCommand cmd = new(query) { Connection = cn })
                 {
-                    count = reader[0].ToString();
-                }
-                reader.Close();
+                    cn.Open();
+                    string count = "";
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        count = reader[0].ToString();
+                    }
+                    reader.Close();
+                    cn.Close();
+                    var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
+                    return (int)a;
+                };
+            }
+            catch (Exception e)
+            {
                 cn.Close();
-                var a = Math.Ceiling((decimal)int.Parse(count) / req.Page);
-                return (int)a;
-            };
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public static bool UpdateContract(Contract c)
         {
-            using NpgsqlCommand cmd = new($"UPDATE municipal_contract SET " +
-                $"created_at = '{c.ActionDate}'," +
-                $"validity_date = '{c.DateConclusion}'," +
-                $"customer_id = {c.Costumer.idOrg}," +
-                $"performer_id = {c.Executer.idOrg}," +
-                $" WHERE id = {c.IdContract}") { Connection = cn };
+            try
             {
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
+                using NpgsqlCommand cmd = new($"UPDATE municipal_contract SET " +
+                                $"created_at = '{c.ActionDate}'," +
+                                $"validity_date = '{c.DateConclusion}'," +
+                                $"customer_id = {c.Costumer.idOrg}," +
+                                $"performer_id = {c.Executer.idOrg}," +
+                                $" WHERE id = {c.IdContract}")
+                { Connection = cn };
+                {
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+                return true;
             }
-            // на вход получаем новый контракт, нам нужно найти в БД контракт с
-            // ID = cont.IdContract и апдейтнуть его по всем остальным полям
-            //var index = contract.FindIndex(x => x.IdContract == cont.IdContract); // старый код, на замену
-            //contract[index] = cont; // старый код, на замену
-
-            // возвращаем true, если обновление произошло успешно,
-            // вовзращаем false, если что-то пошло не так (например, контракта с таким Id не существует в БД)
-            return true;
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                return false;
+                throw ;
+            }
         }
 
         public static bool AddContract(Contract c)
         {
-            // 'cont' подаётся с Id = -1. После добавления в БД нужно присвоить
-            // этому ссылочному значению новое Id, которое было присвоено самой БД
-            using NpgsqlCommand cmd = new($"INSERT INTO municipal_contract " +
-                $"(created_at, validity_date, customer_id, performer_id)" +
-                $"VALUES ('{c.ActionDate}', '{c.DateConclusion}', {c.Costumer.idOrg}, {c.Executer.idOrg}) RETURNING id")
-            { Connection = cn };
+            try
             {
-                cn.Open();
-                int returnValue = (int)cmd.ExecuteScalar();
-                c.IdContract = returnValue;
-                //cmd.ExecuteNonQuery();
-                cn.Close();
+                // 'cont' подаётся с Id = -1. После добавления в БД нужно присвоить
+                // этому ссылочному значению новое Id, которое было присвоено самой БД
+                using NpgsqlCommand cmd = new($"INSERT INTO municipal_contract " +
+                    $"(created_at, validity_date, customer_id, performer_id)" +
+                    $"VALUES ('{c.ActionDate}', '{c.DateConclusion}', {c.Costumer.idOrg}, {c.Executer.idOrg}) RETURNING id")
+                { Connection = cn };
+                {
+                    cn.Open();
+                    int returnValue = (int)cmd.ExecuteScalar();
+                    c.IdContract = returnValue;
+                    //cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+                return true;
             }
-            // возвращаем true, если добавление произошло успешно,
-            // вовзращаем false, если что-то пошло не так (например, поле, которое не может быть null, вдруг стало null)
-            return true;
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                return false;
+                throw ;
+            }
         }
 
         public static bool DeleteContract(int id)
         {
-            // contract.Remove(cont); // старый код, на замену
-            using NpgsqlCommand cmd = new($"DELETE FROM municipal_contract WHERE id = {id}") { Connection = cn };
+            try
             {
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
+                // contract.Remove(cont); // старый код, на замену
+                using NpgsqlCommand cmd = new($"DELETE FROM municipal_contract WHERE id = {id}") { Connection = cn };
+                {
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+                return true;
             }
-            //throw new NotImplementedException();
-            return true;    
-            // возвращаем true, если удаление произошло успешно,
-            // вовзращаем false, если что-то пошло не так (например, контракта с таким Id не существует в БД)
-            return true;
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                return false;
+                throw;
+            }
         }
 
         public static List<Contract> GetContracts(DataRequest request)
         {
-            // должно забирать все контракты из БД (желательно сделать кэширование:
-            // один раз читается и результат сохраняется на, например, 5 секунд, т.е. любой вызов
-            // этого метода в течение 5 секунд возвращает кэшированное значение)
-            // P.S. кэширование должно очищаться после выполнения других действий CRUD кроме Read
-            var query = new Filter<Contract>(request.Filter).GenerateSQL(request.Page);
-
-            List<Contract> contracts = new();
-            List<string?[]> contractsEmpty = new();
-
-            using (NpgsqlCommand cmd = new(query) { Connection = cn })
+            try
             {
-                cn.Open();
-                NpgsqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                var query = new Filter<Contract>(request.Filter).GenerateSQL(request.Page);
+
+                List<Contract> contracts = new();
+                List<string?[]> contractsEmpty = new();
+
+                using (NpgsqlCommand cmd = new(query) { Connection = cn })
                 {
-                    contractsEmpty.Add(new string[5] {
+                    cn.Open();
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        contractsEmpty.Add(new string[5] {
                     reader[0].ToString(), //id
                     reader[1].ToString(), //created_at
                     reader[2].ToString(), //validity_date
                     reader[3].ToString(), //customer_id
                     reader[4].ToString() //performer_id
                     });
+                    }
+                    reader.Close();
+                    cn.Close();
+                    for (int i = 0; i < contractsEmpty.Count; i++)
+                    {
+                        var a = contractsEmpty[i];
+                        Contract contract = new(
+                            int.Parse(a[0]),
+                            DateTime.Parse(a[1]),
+                            DateTime.Parse(a[2]),
+                            OrgRepository.GetOrganization(int.Parse(a[3])),
+                            OrgRepository.GetOrganization(int.Parse(a[4])));
+                        contracts.Add(contract);
+                    }
                 }
-                reader.Close();
-                cn.Close();
-                for (int i = 0; i < contractsEmpty.Count; i++)
-                {
-                    var a = contractsEmpty[i];
-                    Contract contract = new (
-                        int.Parse(a[0]),
-                        DateTime.Parse(a[1]),
-                        DateTime.Parse(a[2]), 
-                        OrgRepository.GetOrganization(int.Parse(a[3])),
-                        OrgRepository.GetOrganization(int.Parse(a[4])));
-                    contracts.Add(contract);
-                }
+                return contracts;
             }
-            return contracts;
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                throw ;
+            }
         }
 
         public static Contract? GetContract(int id)
         {
-            NpgsqlCommand cmd = new($"SELECT * FROM municipal_contract WHERE id = {id}");
-            cmd.Connection = cn;
-            cn.Open();
+            try
+            {
+                NpgsqlCommand cmd = new($"SELECT * FROM municipal_contract WHERE id = {id}");
+                cmd.Connection = cn;
+                cn.Open();
 
-            var reader = cmd.ExecuteReader();
-            if (!reader.Read()) throw new Exception("Unknown ID for Contract: " + id);
+                var reader = cmd.ExecuteReader();
+                if (!reader.Read()) throw new Exception("Unknown ID for Contract: " + id);
 
-            var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
-            var overAt = reader.GetDateTime(reader.GetOrdinal("validity_date"));
-            var performerId = reader.GetInt32(reader.GetOrdinal("performer_id"));
-            var customerId = reader.GetInt32(reader.GetOrdinal("customer_id"));
+                var createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+                var overAt = reader.GetDateTime(reader.GetOrdinal("validity_date"));
+                var performerId = reader.GetInt32(reader.GetOrdinal("performer_id"));
+                var customerId = reader.GetInt32(reader.GetOrdinal("customer_id"));
 
-            reader.Close();
-            cn.Close();
+                reader.Close();
+                cn.Close();
 
-            return new Contract(id, createdAt, overAt,
-                OrgRepository.GetOrganization(performerId),
-                OrgRepository.GetOrganization(customerId));
+                return new Contract(id, createdAt, overAt,
+                    OrgRepository.GetOrganization(performerId),
+                    OrgRepository.GetOrganization(customerId));
+            }
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                throw ;
+            }
         }
     }
 }

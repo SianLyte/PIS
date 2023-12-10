@@ -12,14 +12,11 @@ namespace GrpcServer_PI_21_01.Data
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
-        //private readonly static List<User> users = new()
-        //                            {
-        //                                new User(1, "UserOtlov", "ot", "Оператор по отлову"),
-        //                                new User(2, "UserBET", "b", "Оператор вет. службы"),
-        //                                new User(3, "UserOMCY", "o", "Оператор ОМСУ"),
-        //                                new User(4, "User4", "4", "Сотрудник отлова"),
-        //                                new User(5, "Admin", "Admin", "Admin")
-        //                            };
+        //new User(1, "UserOtlov", "ot", "Оператор по отлову"),
+        //new User(2, "UserBET", "b", "Оператор вет. службы"),
+        //new User(3, "UserOMCY", "o", "Оператор ОМСУ"),
+        //new User(4, "User4", "4", "Сотрудник отлова"),
+        //new User(5, "Admin", "Admin", "Admin")
         public static bool CheckUser(string login, string password)
         {
             var user = GetUsers().FirstOrDefault(x => x.Login == login);
@@ -38,30 +35,41 @@ namespace GrpcServer_PI_21_01.Data
 
         public static User GetUserById(int userId)
         {
-            using var cmd = new NpgsqlCommand($"SELECT * FROM userr WHERE " +
+            try
+            {
+                using var cmd = new NpgsqlCommand($"SELECT * FROM userr WHERE " +
                 $"user.UserId = {userId}")
-            { Connection = cn };
-            cn.Open();
-            var reader = cmd.ExecuteReader();
-            if (!reader.Read())
-                throw new Exception("Userid " + userId + " not found in the database");
-            var user = ExtractUserFromReaderInstance(userId, reader);
-            cn.Close();
-            return user;
+                { Connection = cn };
+                cn.Open();
+                var reader = cmd.ExecuteReader();
+                if (!reader.Read())
+                    throw new Exception("Userid " + userId + " not found in the database");
+                var user = ExtractUserFromReaderInstance(userId, reader);
+                cn.Close();
+                return user;
+            }
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public static List<User> GetUsers()
         {
-            List<User> users = new();
-            List<string?[]> usersEmpty = new();
-
-            using (NpgsqlCommand cmd = new("SELECT * FROM userr") { Connection = cn })
+            try
             {
-                cn.Open();
-                NpgsqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                List<User> users = new();
+                List<string?[]> usersEmpty = new();
+
+                using (NpgsqlCommand cmd = new("SELECT * FROM userr") { Connection = cn })
                 {
-                    usersEmpty.Add(new string?[8] {
+                    cn.Open();
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        usersEmpty.Add(new string?[8] {
                     reader[0].ToString(), //id
                     reader[1].ToString(), //name
                     reader[2].ToString(), //surname
@@ -71,25 +79,32 @@ namespace GrpcServer_PI_21_01.Data
                     reader[6].ToString(), //password
                     reader[7].ToString() //orgId
                     });
-                }
-                reader.Close();
-                cn.Close();
-                for (int i = 0; i < usersEmpty.Count; i++)
-                {
-                    var userEmpty = usersEmpty[i];
-                    Organization org = OrgRepository.GetOrganization(int.Parse(userEmpty[7]));
+                    }
+                    reader.Close();
+                    cn.Close();
+                    for (int i = 0; i < usersEmpty.Count; i++)
+                    {
+                        var userEmpty = usersEmpty[i];
+                        Organization org = OrgRepository.GetOrganization(int.Parse(userEmpty[7]));
 
-                    User user = new User(int.Parse(userEmpty[0]),
-                        userEmpty[5],
-                        userEmpty[6],
-                        Role.ToString(userEmpty[4]),
-                        userEmpty[1], userEmpty[2],
-                        userEmpty[3], org);
-                    users.Add(user);
-                }
-                
-            };
-            return users;
+                        User user = new User(int.Parse(userEmpty[0]),
+                            userEmpty[5],
+                            userEmpty[6],
+                            Role.ToString(userEmpty[4]),
+                            userEmpty[1], userEmpty[2],
+                            userEmpty[3], org);
+                        users.Add(user);
+                    }
+
+                };
+                return users;
+            }
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         private static User ExtractUserFromReaderInstance(int userId, NpgsqlDataReader reader)
