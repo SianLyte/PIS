@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             tabControl1=new TabControl();
             tabPage1=new TabPage();
+            buttonExportExelActs=new Button();
             buttobPreviosActs=new Button();
             buttonNextActs=new Button();
             filterActButton=new Button();
@@ -99,6 +100,10 @@
             buttonNextContracts=new Button();
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
+            buttonExcelContract=new Button();
+            buttonExcelApp=new Button();
+            buttonExcelOrg=new Button();
+            buttonExcelHistory=new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
@@ -136,6 +141,7 @@
             // tabPage1
             // 
             tabPage1.BackColor=Color.Tan;
+            tabPage1.Controls.Add(buttonExportExelActs);
             tabPage1.Controls.Add(buttobPreviosActs);
             tabPage1.Controls.Add(buttonNextActs);
             tabPage1.Controls.Add(filterActButton);
@@ -153,6 +159,18 @@
             tabPage1.Size=new Size(1374, 715);
             tabPage1.TabIndex=0;
             tabPage1.Text="Акты";
+            // 
+            // buttonExportExelActs
+            // 
+            buttonExportExelActs.BackColor=Color.Cornsilk;
+            buttonExportExelActs.FlatStyle=FlatStyle.Popup;
+            buttonExportExelActs.Location=new Point(332, 633);
+            buttonExportExelActs.Name="buttonExportExelActs";
+            buttonExportExelActs.Size=new Size(132, 76);
+            buttonExportExelActs.TabIndex=13;
+            buttonExportExelActs.Text="Экспорт в \r\nэксель";
+            buttonExportExelActs.UseVisualStyleBackColor=false;
+            buttonExportExelActs.Click+=buttonExportExel_Click;
             // 
             // buttobPreviosActs
             // 
@@ -457,6 +475,7 @@
             // tabPage3
             // 
             tabPage3.BackColor=Color.Tan;
+            tabPage3.Controls.Add(buttonExcelContract);
             tabPage3.Controls.Add(buttonPreviosContract);
             tabPage3.Controls.Add(buttonNextContract);
             tabPage3.Controls.Add(contractFiltersButton);
@@ -604,6 +623,7 @@
             // tabPage4
             // 
             tabPage4.BackColor=Color.Tan;
+            tabPage4.Controls.Add(buttonExcelApp);
             tabPage4.Controls.Add(buttonPreviosApps);
             tabPage4.Controls.Add(buttonNextApps);
             tabPage4.Controls.Add(applicationFiltersButton);
@@ -715,6 +735,7 @@
             // tabPage5
             // 
             tabPage5.BackColor=Color.Tan;
+            tabPage5.Controls.Add(buttonExcelOrg);
             tabPage5.Controls.Add(buttonPreviosOrganisations);
             tabPage5.Controls.Add(buttonNextOrganisations);
             tabPage5.Controls.Add(organizationFiltersButton);
@@ -821,6 +842,7 @@
             // tabPage6
             // 
             tabPage6.BackColor=Color.Tan;
+            tabPage6.Controls.Add(buttonExcelHistory);
             tabPage6.Controls.Add(buttonPriviosHistory);
             tabPage6.Controls.Add(buttonNextHistory);
             tabPage6.Controls.Add(dataGridViewHistory);
@@ -944,6 +966,54 @@
             label7.TabIndex=16;
             label7.Text="до:";
             // 
+            // buttonExcelContract
+            // 
+            buttonExcelContract.BackColor=Color.Cornsilk;
+            buttonExcelContract.FlatStyle=FlatStyle.Popup;
+            buttonExcelContract.Location=new Point(243, 633);
+            buttonExcelContract.Name="buttonExcelContract";
+            buttonExcelContract.Size=new Size(132, 76);
+            buttonExcelContract.TabIndex=23;
+            buttonExcelContract.Text="Экспорт в \r\nэксель";
+            buttonExcelContract.UseVisualStyleBackColor=false;
+            buttonExcelContract.Click+=buttonExportExel_Click;
+            // 
+            // buttonExcelApp
+            // 
+            buttonExcelApp.BackColor=Color.Cornsilk;
+            buttonExcelApp.FlatStyle=FlatStyle.Popup;
+            buttonExcelApp.Location=new Point(243, 618);
+            buttonExcelApp.Name="buttonExcelApp";
+            buttonExcelApp.Size=new Size(132, 76);
+            buttonExcelApp.TabIndex=26;
+            buttonExcelApp.Text="Экспорт в \r\nэксель";
+            buttonExcelApp.UseVisualStyleBackColor=false;
+            buttonExcelApp.Click+=buttonExportExel_Click;
+            // 
+            // buttonExcelOrg
+            // 
+            buttonExcelOrg.BackColor=Color.Cornsilk;
+            buttonExcelOrg.FlatStyle=FlatStyle.Popup;
+            buttonExcelOrg.Location=new Point(211, 627);
+            buttonExcelOrg.Name="buttonExcelOrg";
+            buttonExcelOrg.Size=new Size(132, 76);
+            buttonExcelOrg.TabIndex=28;
+            buttonExcelOrg.Text="Экспорт в \r\nэксель";
+            buttonExcelOrg.UseVisualStyleBackColor=false;
+            buttonExcelOrg.Click+=buttonExportExel_Click;
+            // 
+            // buttonExcelHistory
+            // 
+            buttonExcelHistory.BackColor=Color.Cornsilk;
+            buttonExcelHistory.FlatStyle=FlatStyle.Popup;
+            buttonExcelHistory.Location=new Point(6, 619);
+            buttonExcelHistory.Name="buttonExcelHistory";
+            buttonExcelHistory.Size=new Size(132, 76);
+            buttonExcelHistory.TabIndex=21;
+            buttonExcelHistory.Text="Экспорт в \r\nэксель";
+            buttonExcelHistory.UseVisualStyleBackColor=false;
+            buttonExcelHistory.Click+=buttonExportExel_Click;
+            // 
             // MainForm
             // 
             AutoScaleMode=AutoScaleMode.Inherit;
@@ -1051,6 +1121,11 @@
         private Button buttonNextApps;
         private Button buttonPreviosOrganisations;
         private Button buttonNextOrganisations;
+        private Button buttonExportExelActs;
+        private Button buttonExcelContract;
+        private Button buttonExcelApp;
+        private Button buttonExcelOrg;
+        private Button buttonExcelHistory;
     }
 }
 
