@@ -88,14 +88,14 @@ namespace GrpcClient_PI_21_01
         /* -----------------------------------ACT----------------------------------------------------- */
 
         private int _ActPage = 0;
-        private int _ActPageMax = 0;
+        private int _ActPageMax = 1;
         private readonly SemaphoreSlim actGridSemaphore = new(1, 1);
         private async Task SetDataGridAct()
         {
             await actGridSemaphore.WaitAsync();
             try
             {
-                CheckPageButton(buttobPreviosActs, buttonNextActs, _ActPage, _ActPageMax);
+                CheckPageButton(buttonPriviosPageAct, buttonNextPageAct, _ActPage, _ActPageMax);
                 DataGridViewActs.Rows.Clear();
                 var acts = await ActService.GetActs(_ActPage, actFilter);
                 foreach (var act in acts.Select(a => ActService.ToDataArray(a)))
@@ -181,8 +181,6 @@ namespace GrpcClient_PI_21_01
         #endregion
         #region Related: Organizations
         private readonly SemaphoreSlim orgGridSemaphore = new(1, 1);
-        private int _OrgPage = 0;
-        private int _OrgPageMax = 0;
         private async Task SetDataGridOrg()
         {
             await orgGridSemaphore.WaitAsync();
@@ -249,27 +247,10 @@ namespace GrpcClient_PI_21_01
         }
 
         private void OpenOrganizationFilters(object sender, EventArgs e)
-         => new OrgFilter(orgFilter, SetDataGridOrg).Show();
-
-
-        private void buttonNextOrganisations_Click(object sender, EventArgs e)
-        {
-            _OrgPage++;
-            CheckPageButton(buttonPreviosOrganisations, buttonNextOrganisations, _OrgPage, _OrgPageMax);
-        }
-
-        private void buttonPreviosOrganisations_Click(object sender, EventArgs e)
-        {
-            _OrgPage--;
-            CheckPageButton(buttonPreviosOrganisations, buttonNextOrganisations, _OrgPage, _OrgPageMax);
-        }
-
+            => new OrgFilter(orgFilter, SetDataGridOrg).Show();
         #endregion
         #region Related: Applications
         private readonly SemaphoreSlim appGridSemaphore = new(1, 1);
-
-        private int _AppPage = 0;
-        private int _AppPageMax = 0;
         private async Task SetDataGridApp()
         {
             await appGridSemaphore.WaitAsync();
@@ -288,7 +269,7 @@ namespace GrpcClient_PI_21_01
                 dsApplication.Tables[0].Columns.Add("Срочность исполнения");
                 dsApplication.Tables[0].Columns.Add("Описание животного");
                 dsApplication.Tables[0].Columns.Add("Категория заявителя");
-                var apps = await AppService.GetApplications(_AppPage, appFilter);
+                var apps = await AppService.GetApplications(page, appFilter);
                 foreach (var app in apps.Select(a => AppService.ToDataArray(a)))
                 {
                     dsApplication.Tables[0].Rows.Add(app);
@@ -298,17 +279,7 @@ namespace GrpcClient_PI_21_01
             finally { appGridSemaphore.Release(); }
         }
 
-        private void buttonNextApps_Click(object sender, EventArgs e)
-        {
-            _AppPage++;
-            CheckPageButton(buttonPreviosApps, buttonNextApps, _AppPage, _AppPageMax);
-        }
-
-        private void buttonPreviosApps_Click(object sender, EventArgs e)
-        {
-            _AppPage--;
-            CheckPageButton(buttonPreviosApps, buttonNextApps, _AppPage, _AppPageMax);
-        }
+        /*------------------------------------------------------------------*/
         private async void AppDelete_Click(object sender, EventArgs e)
         {
             if (await CheckPrivilege(NameMdels.App))
@@ -348,14 +319,14 @@ namespace GrpcClient_PI_21_01
         #endregion
         #region Related: Contracts
         private int _PageContract = 0;
-        private int _PageContractMax = 0;
+        private int _PageContractMax = 1;
         private readonly SemaphoreSlim contrGridSemaphore = new(1, 1);
         private async Task ShowContract()
         {
             await contrGridSemaphore.WaitAsync();
             try
             {
-                CheckPageButton(buttonPreviosContract, buttonNextContract, _PageContract, _PageContractMax);
+                CheckPageButton(buttonPreviousContracts, buttonNextContracts, _PageContract, _PageContractMax);
 
                 ContractTable.Rows.Clear();
                 var cont = await ContractService.GetContracts(_PageContract, contrFilter);
@@ -449,8 +420,6 @@ namespace GrpcClient_PI_21_01
         private List<Operation>? _data;
         readonly DataSet _dbHistory = new();
 
-        private int _HistoryPage = 0;
-        private int _HistoryPageMax = 0;
         public async Task InicilisationHistory()
         {
             if (await CheckPrivilege(NameMdels.History))
@@ -461,20 +430,6 @@ namespace GrpcClient_PI_21_01
             }
             else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
-        private void buttonNextHistory_Click(object sender, EventArgs e)
-        {
-            _HistoryPage++;
-            CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
-        }
-
-        private void buttonPriviosHistory_Click(object sender, EventArgs e)
-        {
-            _HistoryPage--;
-            CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
-        }
-
-        #endregion
 
         public void CreateDataSet()
         {
@@ -516,7 +471,7 @@ namespace GrpcClient_PI_21_01
         {
             buttonPrevious.Enabled = true;
             buttonNext.Enabled = true;
-            if (page == 0)
+            if (page == 1)
             {
                 buttonPrevious.Enabled = false;
             }
