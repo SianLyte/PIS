@@ -229,5 +229,6 @@ enum AppStatus {
 message FilterReply {
 	repeated string andEquations = 1;
 	repeated string orEquations = 2;
-	repeated string innerEquations = 3;
+	repeated string andInnerEquations = 3;
+	repeated string orInnerEquations = 4;
 }

@@ -27,7 +27,7 @@ namespace GrpcServer_PI_21_01.Models
                     throw new Exception("Incorrect reply format recieved. Filter reply is corrupted");
                 andEquations.AddRange(reply.AndEquations.Select(eq => tableName + "." + eq));
                 orEquations.AddRange(reply.OrEquations.Select(eq => tableName + "." + eq));
-                andEquations.AddRange(reply.InnerEquations.Select(eq =>
+                andEquations.AddRange(reply.AndInnerEquations.Select(eq =>
                 {
                     var typeName = eq[..eq.IndexOf('.')];
                     var remainingEquation = eq[(eq.IndexOf('.') + 1)..];
@@ -37,7 +37,19 @@ namespace GrpcServer_PI_21_01.Models
                         throw new Exception(typeName + " model cannot be filtered.");
 
                     return filterableModelAttribute.TableName + "." + remainingEquation;
-                    }));
+                }));
+                orEquations.AddRange(reply.OrInnerEquations.Select(eq =>
+                {
+                    var typeName = eq[..eq.IndexOf('.')];
+                    var remainingEquation = eq[(eq.IndexOf('.') + 1)..];
+                    var type = Type.GetType("GrpcServer_PI_21_01.Models." + typeName);
+                    var filterableModelAttribute = type.GetCustomAttribute<FilterableModelAttribute>();
+                    if (filterableModelAttribute is null)
+                        throw new Exception(typeName + " model cannot be filtered.");
+
+                    return filterableModelAttribute.TableName + "." + remainingEquation;
+                }));
+
             }
         }
 
@@ -177,17 +189,44 @@ namespace GrpcServer_PI_21_01.Models
 
         private string GenerateSQL(int page, string startQuery)
         {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            for (int i = 0; i < andEquations.Count; i++)
+            {
+                var table = andEquations[i].Split('.', 2)[0];
+                var expression = andEquations[i].Split('.', 2)[1];
+                if (!dict.ContainsKey(table)) {
+                    dict.Add(table, $"({table}.{expression}");
+                }
+                else
+                    dict[table] += $" and {table}.{expression}";
+            }
+            for (int i = 0; i < orEquations.Count; i++)
+            {
+                var table = orEquations[i].Split('.', 2)[0];
+                var expression = orEquations[i].Split('.', 2)[1];
+                if (andEquations.Count == 0 && !dict.ContainsKey(table))
+                {
+                    dict.Add(table, $"({table}.{expression}");
+
+                }
+                dict[table] += $" or {table}.{expression}";
+            }
             if (andEquations.Count > 0 || orEquations.Count > 0)
             {
                 startQuery += " WHERE ";
-                if (andEquations.Count > 0)
-                    startQuery += $"{string.Join(" and ", andEquations)}";
-                if (orEquations.Count > 0)
+                foreach (var table in dict.Keys)
                 {
-                    if (andEquations.Count > 0)
-                        startQuery += " and ";
-                    startQuery += $"({string.Join(" or ", orEquations)})";
+                    startQuery += dict[table] + ") and ";
                 }
+                startQuery = startQuery.Remove(startQuery.Length - 5);
+                //if (andEquations.Count > 0)
+                //    startQuery += $"{string.Join(" and ", andEquations)}";
+                //if (orEquations.Count > 0)
+                //{
+                //    if (andEquations.Count > 0)
+                //        startQuery += " and ";
+                //    startQuery += $"({string.Join(" or ", orEquations)})";
+                //}
             }
             if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
 

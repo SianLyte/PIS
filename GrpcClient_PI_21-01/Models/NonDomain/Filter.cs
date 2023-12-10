@@ -15,12 +15,21 @@ namespace GrpcClient_PI_21_01.Models
 
             andEquations = new List<string>();
             orEquations = new List<string>();
-            innerEquations = new List<string>();
+            andInnerEquations = new List<string>();
+            orInnerEquations = new List<string>();
         }
+
+        private readonly List<string> andEquations;
+        private readonly List<string> orEquations;
+        private readonly List<string> andInnerEquations;
+        private readonly List<string> orInnerEquations;
+
 
         public IReadOnlyList<string> AndFilters => andEquations;
         public IReadOnlyList<string> OrFilters => orEquations;
-        public IReadOnlyList<string> InnerJoinFilters => innerEquations;
+        public IReadOnlyList<string> AndInnerJoinFilters => andInnerEquations;
+        public IReadOnlyList<string> OrInnerJoinFilters => orInnerEquations;
+
 
         /// <summary>
         /// Adds an 'and' filter.
@@ -70,7 +79,7 @@ namespace GrpcClient_PI_21_01.Models
         }
 
         
-        public void AddInnerJoinFilter<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector,
+        public void AndAddInnerJoinFilter<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector,
             string desiredValue, FilterType filterType = FilterType.Equals)
         {
             var column = GetColumnID(selector);
@@ -80,7 +89,19 @@ namespace GrpcClient_PI_21_01.Models
                 && typeof(TValue) != typeof(int) && typeof(TValue) != typeof(float)) desiredValue = $"'{desiredValue}'";
 
             var equation = $"{typeof(ObjectType).Name}.{column} {@operator} {desiredValue}";
-            innerEquations.Add(equation);
+            andInnerEquations.Add(equation);
+        }
+        public void OrAddInnerJoinFilter<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector,
+    string desiredValue, FilterType filterType = FilterType.Equals)
+        {
+            var column = GetColumnID(selector);
+            var @operator = GetOperator(filterType);
+
+            if (typeof(TValue) != typeof(decimal) && typeof(TValue) != typeof(double)
+                && typeof(TValue) != typeof(int) && typeof(TValue) != typeof(float)) desiredValue = $"'{desiredValue}'";
+
+            var equation = $"{typeof(ObjectType).Name}.{column} {@operator} {desiredValue}";
+            orInnerEquations.Add(equation);
         }
 
         private static string GetColumnID<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
@@ -128,7 +149,8 @@ namespace GrpcClient_PI_21_01.Models
         {
             andEquations.Clear();
             orEquations.Clear();
-            innerEquations.Clear();
+            andInnerEquations.Clear();
+            orInnerEquations.Clear();
         }
 
         private static PropertyInfo GetProperty<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
@@ -148,13 +170,11 @@ namespace GrpcClient_PI_21_01.Models
             var reply = new FilterReply();
             reply.AndEquations.AddRange(andEquations);
             reply.OrEquations.AddRange(orEquations);
-            reply.InnerEquations.AddRange(innerEquations);
+            reply.AndInnerEquations.AddRange(andInnerEquations);
+            reply.OrInnerEquations.AddRange(orInnerEquations);
+
             return reply;
         }
-
-        private readonly List<string> andEquations;
-        private readonly List<string> orEquations;
-        private readonly List<string> innerEquations;
     }
 
     [Flags] public enum FilterType
