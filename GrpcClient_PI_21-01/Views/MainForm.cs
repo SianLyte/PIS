@@ -102,7 +102,7 @@ namespace GrpcClient_PI_21_01
                 foreach (var act in acts.Select(a => ActService.ToDataArray(a)))
                     DataGridViewActs.Rows.Add(act);
                 _ActPageMax = await ActService.GetPageCount(_pageSize, null);
-                CheckPageButton(buttobPreviosActs, buttonNextActs, _ActPage, _ActPageMax); 
+                CheckPageButton(buttobPreviosActs, buttonNextActs, _ActPage, _ActPageMax);
             }
             finally
             {
@@ -171,7 +171,7 @@ namespace GrpcClient_PI_21_01
 
         private void OpenActFilters(object sender, EventArgs e) =>
             new ActFilter(actFilter, SetDataGridAct).Show();
-        
+
         private void buttonNextActs_Click(object sender, EventArgs e)
         {
             _ActPage++;
@@ -532,5 +532,42 @@ namespace GrpcClient_PI_21_01
             }
         }
 
+        private void buttonExportExel_Click(object sender, EventArgs e)
+        {
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0:
+                    {
+                        ExelService.ExportExel(DataGridViewActs, "act");
+                    }
+                    break;
+                case 1:
+                    {
+                        // для отчётов надо отдельно смотреть
+                    }
+                    break;
+                case 2:
+                    {
+                        ExelService.ExportExel(ContractTable, "contract");
+                    }
+                    break;
+                case 3:
+                    {
+                        ExelService.ExportExel(dataGridViewApp, "app");
+                    }
+                    break;
+                case 4:
+                    {
+                        ExelService.ExportExel(dataGridViewOrg, "org");
+                    }
+                    break;
+                case 5:
+                    {
+                        ExelService.ExportExel(dataGridViewHistory, "hist");
+                    }
+                    break;
+
+            }
+        }
     }
 }
