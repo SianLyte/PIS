@@ -88,6 +88,19 @@ namespace GrpcClient_PI_21_01.Views.Filters
             if (customerComboBox.SelectedItem is Organization customer)
                 Filter.AddFilter(c => c.Costumer, customer.idOrg.ToString());
 
+
+            //Раскомментировать, когда в фильтрах появятся города для выбора, listBox для городов назвать locations
+            //for (int i = 0; i < locations.Items.Count; i++)
+            //{
+            //    if (locations.Items[i] is Location l)
+            //    {
+            //        if (i == 0)
+            //            Filter.AndAddInnerJoinFilter<Location, int>(loc => loc.IdLocation, l.IdLocation.ToString(), FilterType.Equals);
+            //        else
+            //            Filter.OrAddInnerJoinFilter<Location, int>(loc => loc.IdLocation, l.IdLocation.ToString(), FilterType.Equals);
+            //    }
+            //}
+
             Apply();
         }
 
