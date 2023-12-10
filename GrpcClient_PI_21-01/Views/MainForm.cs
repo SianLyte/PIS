@@ -101,7 +101,7 @@ namespace GrpcClient_PI_21_01
                 var acts = await ActService.GetActs(_ActPage, actFilter);
                 foreach (var act in acts.Select(a => ActService.ToDataArray(a)))
                     DataGridViewActs.Rows.Add(act);
-                _ActPageMax = await ActService.GetPageCount(_pageSize, null);
+                _ActPageMax = await ActService.GetPageCount(_pageSize, actFilter);
                 CheckPageButton(buttobPreviosActs, buttonNextActs, _ActPage, _ActPageMax);
             }
             finally
@@ -211,7 +211,7 @@ namespace GrpcClient_PI_21_01
                     dsOrganization.Tables[0].Rows.Add(org);
                 }
                 dataGridViewOrg.DataSource = dsOrganization.Tables[0];
-                _OrgPageMax = await OrgService.GetPageCount(_pageSize, null);
+                _OrgPageMax = await OrgService.GetPageCount(_pageSize, orgFilter);
                 CheckPageButton(buttonPreviosOrganisations, buttonNextOrganisations, _OrgPage, _OrgPageMax);
             }
             finally { orgGridSemaphore.Release(); }
@@ -294,7 +294,7 @@ namespace GrpcClient_PI_21_01
                     dsApplication.Tables[0].Rows.Add(app);
                 }
                 dataGridViewApp.DataSource = dsApplication.Tables[0];
-                _AppPageMax = await AppService.GetPageCount(_pageSize, null);
+                _AppPageMax = await AppService.GetPageCount(_pageSize, appFilter);
                 CheckPageButton(buttonPreviosApps, buttonNextApps, _AppPage, _AppPageMax);
             }
             finally { appGridSemaphore.Release(); }
@@ -360,7 +360,7 @@ namespace GrpcClient_PI_21_01
             try
             {
                 CheckPageButton(buttonPreviosContract, buttonNextContract, _PageContract, _PageContractMax);
-                _PageContractMax = await ContractService.GetPageCount(_pageSize, null);
+                _PageContractMax = await ContractService.GetPageCount(_pageSize, contrFilter);
                 ContractTable.Rows.Clear();
                 var cont = await ContractService.GetContracts(_PageContract, contrFilter);
                 foreach (var i in cont.Select(c => ContractService.ToDataArray(c)))
@@ -484,8 +484,8 @@ namespace GrpcClient_PI_21_01
             _dbHistory.Tables[0].Columns.Add("Идетификационный номер экземляра объекта");
             _dbHistory.Tables[0].Columns.Add("Наименование таблицы, в которой произошло изменение");
 
-            var parceData = await OperationService.GetParceDataHistory(_data);
-            foreach (var data in parceData)
+            //var parceData = await OperationService.GetParceDataHistory(_data);
+            foreach (var data in _data.Select(x => OperationService.ToDataArray(x)))
                 _dbHistory.Tables[0].Rows.Add(data);
 
             dataGridViewHistory.DataSource = _dbHistory.Tables[0];
@@ -519,13 +519,14 @@ namespace GrpcClient_PI_21_01
             }
         }
 
-        private void buttonExportExel_Click(object sender, EventArgs e)
+        private async void buttonExportExel_Click(object sender, EventArgs e)
         {
             switch (tabControl1.SelectedIndex)
             {
                 case 0:
                     {
-                        ExelService.ExportExel(DataGridViewActs, "act");
+                        var acts = await ActService.GetActs(-1, actFilter);
+                        ExelService.ExportExel(DataGridViewActs, acts.Select(x => ActService.ToDataArray(x)).ToList(), "act");
                     }
                     break;
                 case 1:
@@ -535,22 +536,26 @@ namespace GrpcClient_PI_21_01
                     break;
                 case 2:
                     {
-                        ExelService.ExportExel(ContractTable, "contract");
+                        var cont = await ContractService.GetContracts(-1, contrFilter);
+                        ExelService.ExportExel(ContractTable, cont.Select(x => ContractService.ToDataArray(x)).ToList(), "contract");
                     }
                     break;
                 case 3:
                     {
-                        ExelService.ExportExel(dataGridViewApp, "app");
+                        var apps = await AppService.GetApplications(-1, appFilter);
+                        ExelService.ExportExel(dataGridViewApp, apps.Select(x => AppService.ToDataArray(x)).ToList(), "app");
                     }
                     break;
                 case 4:
                     {
-                        ExelService.ExportExel(dataGridViewOrg, "org");
+                        var orgs = await OrgService.GetOrganizations(-1, orgFilter);
+                        ExelService.ExportExel(dataGridViewOrg, orgs.Select(x => OrgService.ToDataArray(x)).ToList(), "org");
                     }
                     break;
                 case 5:
                     {
-                        ExelService.ExportExel(dataGridViewHistory, "hist");
+                        var historys = await OperationService.GetOperations(-1);
+                        ExelService.ExportExel(dataGridViewHistory, historys.Select(x => OperationService.ToDataArray(x)).ToList(), "hist");
                     }
                     break;
 

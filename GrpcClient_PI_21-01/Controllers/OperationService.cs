@@ -29,25 +29,19 @@ namespace GrpcClient_PI_21_01.Controllers
             return pageCount.Count;
         }
 
-        public static async Task<List<string[]>> GetParceDataHistory(List<Operation> dataNoParce)
+        public static string[] ToDataArray(Operation operation)
         {
-            var returnList = new List<string[]>();
+            return new string[10] { operation.Actor.Surname.ToString(),
+                                    operation.Actor.Name.ToString(),
+                                    operation.Actor.Patronymic.ToString(),
+                                    operation.Actor.Organization.name.ToString(),
+                                    operation.Actor.PrivelegeLevel.ToString(),
+                                    operation.Actor.Login.ToString(),
+                                    operation.ActionDate.ToString(),
+                                    operation.ModifiedObjectId.ToString(),
+                                    operation.ActionType.ToString(),
+                                    operation.ModifiedTableName.ToString()};
 
-            foreach (var data in dataNoParce)
-            {
-                var allDataParts = new string[10] { data.Actor.Surname.ToString(),
-                                                    data.Actor.Name.ToString(),
-                                                    data.Actor.Patronymic.ToString(),
-                                                    data.Actor.Organization.name.ToString(),
-                                                    data.Actor.PrivelegeLevel.ToString(),
-                                                    data.Actor.Login.ToString(),
-                                                    data.ActionDate.ToString(),
-                                                    data.ModifiedObjectId.ToString(),
-                                                    data.ActionType.ToString(),
-                                                    data.ModifiedTableName.ToString()};
-                returnList.Add(allDataParts);
-            }
-            return returnList;
         }
     }
 }
