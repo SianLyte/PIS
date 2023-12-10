@@ -74,8 +74,13 @@
             AppAdd=new Button();
             AppEdit=new Button();
             AppDelete=new Button();
+            buttonPreviosApps=new Button();
+            buttonNextApps=new Button();
+            //button2=new Button();
             dataGridViewApp=new DataGridView();
             tabPage5=new TabPage();
+            buttonPreviosOrganisations=new Button();
+            buttonNextOrganisations=new Button();
             organizationFiltersButton=new Button();
             dataGridViewOrg=new DataGridView();
             OrgAdd=new Button();
@@ -126,6 +131,8 @@
             // tabPage1
             // 
             tabPage1.BackColor=Color.Tan;
+            tabPage1.Controls.Add(buttobPreviosActs);
+            tabPage1.Controls.Add(buttonNextActs);
             tabPage1.Controls.Add(filterActButton);
             tabPage1.Controls.Add(buttonAnimalCard);
             tabPage1.Controls.Add(AddActButton);
@@ -141,6 +148,41 @@
             tabPage1.Size=new Size(1374, 715);
             tabPage1.TabIndex=0;
             tabPage1.Text="Акты";
+            // 
+            // buttobPreviosActs
+            // 
+            buttobPreviosActs.BackColor=Color.Cornsilk;
+            buttobPreviosActs.FlatStyle=FlatStyle.Popup;
+            buttobPreviosActs.Location=new Point(1242, 592);
+            buttobPreviosActs.Name="buttobPreviosActs";
+            buttobPreviosActs.RightToLeft=RightToLeft.No;
+            buttobPreviosActs.Size=new Size(53, 35);
+            buttobPreviosActs.TabIndex=12;
+            buttobPreviosActs.Text="<";
+            buttobPreviosActs.UseVisualStyleBackColor=false;
+            buttobPreviosActs.Click+=buttonPriviosPage_Click;
+            filterActButton.BackColor=Color.Cornsilk;
+            filterActButton.FlatStyle=FlatStyle.Popup;
+            filterActButton.Location=new Point(25, 592);
+            filterActButton.Name="filterActButton";
+            filterActButton.Size=new Size(137, 36);
+            filterActButton.TabIndex=10;
+            filterActButton.Text="Фильтры";
+            filterActButton.UseVisualStyleBackColor=false;
+            filterActButton.Click+=OpenActFilters;
+            // 
+            // buttonNextActs
+            // 
+            buttonNextActs.BackColor=Color.Cornsilk;
+            buttonNextActs.FlatStyle=FlatStyle.Popup;
+            buttonNextActs.Location=new Point(1301, 592);
+            buttonNextActs.Name="buttonNextActs";
+            buttonNextActs.RightToLeft=RightToLeft.No;
+            buttonNextActs.Size=new Size(53, 35);
+            buttonNextActs.TabIndex=11;
+            buttonNextActs.Text=">";
+            buttonNextActs.UseVisualStyleBackColor=false;
+            buttonNextActs.Click+=buttonNextPage_Click;
             // 
             // filterActButton
             // 
@@ -419,6 +461,8 @@
             // tabPage3
             // 
             tabPage3.BackColor=Color.Tan;
+            tabPage3.Controls.Add(buttonPreviosContract);
+            tabPage3.Controls.Add(buttonNextContract);
             tabPage3.Controls.Add(contractFiltersButton);
             tabPage3.Controls.Add(EditButton);
             tabPage3.Controls.Add(AddButton);
@@ -429,6 +473,32 @@
             tabPage3.Size=new Size(1374, 715);
             tabPage3.TabIndex=2;
             tabPage3.Text="Муниципальные контракты";
+            // 
+            // buttonPreviosContract
+            // 
+            buttonPreviosContract.BackColor=Color.Cornsilk;
+            buttonPreviosContract.FlatStyle=FlatStyle.Popup;
+            buttonPreviosContract.Location=new Point(1252, 609);
+            buttonPreviosContract.Name="buttonPreviosContract";
+            buttonPreviosContract.RightToLeft=RightToLeft.No;
+            buttonPreviosContract.Size=new Size(53, 35);
+            buttonPreviosContract.TabIndex=17;
+            buttonPreviosContract.Text="<";
+            buttonPreviosContract.UseVisualStyleBackColor=false;
+            buttonPreviosContract.Click+=buttonPreviousContracts_Click;
+            // 
+            // buttonNextContract
+            // 
+            buttonNextContract.BackColor=Color.Cornsilk;
+            buttonNextContract.FlatStyle=FlatStyle.Popup;
+            buttonNextContract.Location=new Point(1311, 609);
+            buttonNextContract.Name="buttonNextContract";
+            buttonNextContract.RightToLeft=RightToLeft.No;
+            buttonNextContract.Size=new Size(53, 35);
+            buttonNextContract.TabIndex=16;
+            buttonNextContract.Text=">";
+            buttonNextContract.UseVisualStyleBackColor=false;
+            buttonNextContract.Click+=buttonNextContracts_Click;
             // 
             // contractFiltersButton
             // 
@@ -538,7 +608,10 @@
             // tabPage4
             // 
             tabPage4.BackColor=Color.Tan;
+            tabPage4.Controls.Add(buttonPreviosApps);
             tabPage4.Controls.Add(applicationFiltersButton);
+            tabPage4.Controls.Add(buttonNextApps);
+            //tabPage4.Controls.Add(button2);
             tabPage4.Controls.Add(AppAdd);
             tabPage4.Controls.Add(AppEdit);
             tabPage4.Controls.Add(AppDelete);
@@ -548,6 +621,43 @@
             tabPage4.Size=new Size(1374, 715);
             tabPage4.TabIndex=3;
             tabPage4.Text="Реестр заявок";
+            // 
+            // buttonPreviosApps
+            // 
+            buttonPreviosApps.BackColor=Color.Cornsilk;
+            buttonPreviosApps.FlatStyle=FlatStyle.Popup;
+            buttonPreviosApps.Location=new Point(1237, 607);
+            buttonPreviosApps.Name="buttonPreviosApps";
+            buttonPreviosApps.RightToLeft=RightToLeft.No;
+            buttonPreviosApps.Size=new Size(53, 35);
+            buttonPreviosApps.TabIndex=25;
+            buttonPreviosApps.Text="<";
+            buttonPreviosApps.UseVisualStyleBackColor=false;
+            buttonPreviosApps.Click+=buttonPreviosApps_Click;
+            // 
+            // buttonNextApps
+            // 
+            buttonNextApps.BackColor=Color.Cornsilk;
+            buttonNextApps.FlatStyle=FlatStyle.Popup;
+            buttonNextApps.Location=new Point(1296, 607);
+            buttonNextApps.Name="buttonNextApps";
+            buttonNextApps.RightToLeft=RightToLeft.No;
+            buttonNextApps.Size=new Size(53, 35);
+            buttonNextApps.TabIndex=24;
+            buttonNextApps.Text=">";
+            buttonNextApps.UseVisualStyleBackColor=false;
+            buttonNextApps.Click+=buttonNextApps_Click;
+            // 
+            // button2
+            // 
+            //button2.BackColor=Color.Cornsilk;
+            //button2.FlatStyle=FlatStyle.Popup;
+            //button2.Location=new Point(18, 618);
+            //button2.Name="button2";
+            //button2.Size=new Size(137, 36);
+            //button2.TabIndex=23;
+            //button2.Text="Фильтры";
+            //button2.UseVisualStyleBackColor=false;
             // 
             // applicationFiltersButton
             // 
@@ -622,6 +732,8 @@
             // 
             tabPage5.BackColor=Color.Tan;
             tabPage5.Controls.Add(organizationFiltersButton);
+            tabPage5.Controls.Add(buttonPreviosOrganisations);
+            tabPage5.Controls.Add(buttonNextOrganisations);
             tabPage5.Controls.Add(dataGridViewOrg);
             tabPage5.Controls.Add(OrgAdd);
             tabPage5.Controls.Add(OrgEdit);
@@ -642,6 +754,32 @@
             organizationFiltersButton.TabIndex=24;
             organizationFiltersButton.Text="Фильтры";
             organizationFiltersButton.UseVisualStyleBackColor=false;
+            // 
+            // buttonPreviosOrganisations
+            // 
+            buttonPreviosOrganisations.BackColor=Color.Cornsilk;
+            buttonPreviosOrganisations.FlatStyle=FlatStyle.Popup;
+            buttonPreviosOrganisations.Location=new Point(1245, 616);
+            buttonPreviosOrganisations.Name="buttonPreviosOrganisations";
+            buttonPreviosOrganisations.RightToLeft=RightToLeft.No;
+            buttonPreviosOrganisations.Size=new Size(53, 35);
+            buttonPreviosOrganisations.TabIndex=27;
+            buttonPreviosOrganisations.Text="<";
+            buttonPreviosOrganisations.UseVisualStyleBackColor=false;
+            buttonPreviosOrganisations.Click+=buttonPreviosOrganisations_Click;
+            // 
+            // buttonNextOrganisations
+            // 
+            buttonNextOrganisations.BackColor=Color.Cornsilk;
+            buttonNextOrganisations.FlatStyle=FlatStyle.Popup;
+            buttonNextOrganisations.Location=new Point(1304, 616);
+            buttonNextOrganisations.Name="buttonNextOrganisations";
+            buttonNextOrganisations.RightToLeft=RightToLeft.No;
+            buttonNextOrganisations.Size=new Size(53, 35);
+            buttonNextOrganisations.TabIndex=26;
+            buttonNextOrganisations.Text=">";
+            buttonNextOrganisations.UseVisualStyleBackColor=false;
+            buttonNextOrganisations.Click+=buttonNextOrganisations_Click;
             // 
             // dataGridViewOrg
             // 
@@ -699,6 +837,8 @@
             // tabPage6
             // 
             tabPage6.BackColor=Color.Tan;
+            tabPage6.Controls.Add(buttonPriviosHistory);
+            tabPage6.Controls.Add(buttonNextHistory);
             tabPage6.Controls.Add(dataGridViewHistory);
             tabPage6.ForeColor=Color.Black;
             tabPage6.Location=new Point(4, 39);
@@ -793,6 +933,32 @@
             label7.Size=new Size(26, 16);
             label7.TabIndex=16;
             label7.Text="до:";
+            // 
+            // buttonPriviosHistory
+            // 
+            buttonPriviosHistory.BackColor=Color.Cornsilk;
+            buttonPriviosHistory.FlatStyle=FlatStyle.Popup;
+            buttonPriviosHistory.Location=new Point(1256, 619);
+            buttonPriviosHistory.Name="buttonPriviosHistory";
+            buttonPriviosHistory.RightToLeft=RightToLeft.No;
+            buttonPriviosHistory.Size=new Size(53, 35);
+            buttonPriviosHistory.TabIndex=29;
+            buttonPriviosHistory.Text="<";
+            buttonPriviosHistory.UseVisualStyleBackColor=false;
+            buttonPriviosHistory.Click+=buttonPriviosHistory_Click;
+            // 
+            // buttonNextHistory
+            // 
+            buttonNextHistory.BackColor=Color.Cornsilk;
+            buttonNextHistory.FlatStyle=FlatStyle.Popup;
+            buttonNextHistory.Location=new Point(1315, 619);
+            buttonNextHistory.Name="buttonNextHistory";
+            buttonNextHistory.RightToLeft=RightToLeft.No;
+            buttonNextHistory.Size=new Size(53, 35);
+            buttonNextHistory.TabIndex=28;
+            buttonNextHistory.Text=">";
+            buttonNextHistory.UseVisualStyleBackColor=false;
+            buttonNextHistory.Click+=buttonNextHistory_Click;
             // 
             // MainForm
             // 
@@ -890,6 +1056,16 @@
         private Button buttonNextPageAct;
         private Button buttonPreviousContracts;
         private Button buttonNextContracts;
+        private Button buttonNextActs;
+        private Button buttobPreviosActs;
+        private Button buttonPreviosContract;
+        private Button buttonNextContract;
+        private Button buttonPreviosApps;
+        private Button buttonNextApps;
+        private Button buttonPreviosOrganisations;
+        private Button buttonNextOrganisations;
+        private Button buttonPriviosHistory;
+        private Button buttonNextHistory;
         private Button organizationFiltersButton;
     }
 }
