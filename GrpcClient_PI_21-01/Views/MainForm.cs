@@ -303,6 +303,7 @@ namespace GrpcClient_PI_21_01
                 dsApplication.Tables[0].Columns.Add("Срочность исполнения");
                 dsApplication.Tables[0].Columns.Add("Описание животного");
                 dsApplication.Tables[0].Columns.Add("Категория заявителя");
+                dsApplication.Tables[0].Columns.Add("Статус заявки");
                 var apps = await AppService.GetApplications(_AppPage, appFilter);
                 foreach (var app in apps.Select(a => AppService.ToDataArray(a)))
                 {

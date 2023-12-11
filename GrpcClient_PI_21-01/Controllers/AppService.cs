@@ -80,7 +80,8 @@ namespace GrpcClient_PI_21_01.Controllers
                     app.animalHabiat,
                     app.urgencyOfExecution,
                     app.animaldescription,
-                    app.applicantCategory
+                    app.applicantCategory,
+                    app.status.ToString()
             };
         }
 
