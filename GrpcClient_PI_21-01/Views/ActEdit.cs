@@ -69,7 +69,7 @@ namespace GrpcClient_PI_21_01.Views
             var contractFilter = new Filter<Contract>();
             if (UserService.CurrentUser?.PrivelegeLevel != "Admin")
                 contractFilter.AddFilter(c => c.Executer, UserService.CurrentUser?.Organization.idOrg.ToString());
-            contractFilter.AddFilter(c => c.ActionDate, DateTime.Now.ToString(), FilterType.LesserThan | FilterType.Equals);
+            contractFilter.AddFilter(c => c.ActionDate, DateTime.Now.ToString(), FilterType.GreaterThan | FilterType.Equals);
 
             var contracts = await ContractService.GetContracts(-1, contractFilter);
             var applications = await AppService.GetApplications(-1, appFilter);
