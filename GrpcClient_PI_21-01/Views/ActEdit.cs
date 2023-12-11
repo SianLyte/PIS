@@ -75,7 +75,7 @@ namespace GrpcClient_PI_21_01.Views
             var organizations = contracts.Select(c => c.Costumer).Distinct().ToList();
 
             comboBoxOrganization.DataSource = new BindingSource(organizations
-                .Where(o => o.type == OrganizationType.Trapping || o.type == OrganizationType.TrappingAndShelter), null);
+                .Where(o => o.type == OrganizationType.Trapping || o.type == OrganizationType.TrappingAndShelter).ToList(), null);
             comboBoxOrganization.DisplayMember = "name";
             comboBoxOrganization.ValueMember = "idOrg";
 
