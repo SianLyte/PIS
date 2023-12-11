@@ -67,7 +67,8 @@ namespace GrpcClient_PI_21_01.Views
             //if (actToEdit) appFilter.AddOrFilter(app => app.status, AppStatus.Fulfilled.ToString());
 
             var contractFilter = new Filter<Contract>();
-            contractFilter.AddFilter(c => c.Executer, UserService.CurrentUser?.Organization.idOrg.ToString());
+            if (UserService.CurrentUser?.PrivelegeLevel != "Admin")
+                contractFilter.AddFilter(c => c.Executer, UserService.CurrentUser?.Organization.idOrg.ToString());
             contractFilter.AddFilter(c => c.ActionDate, DateTime.Now.ToString(), FilterType.LesserThan | FilterType.Equals);
 
             var contracts = await ContractService.GetContracts(-1, contractFilter);
