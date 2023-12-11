@@ -488,8 +488,8 @@ namespace GrpcClient_PI_21_01
             _dbHistory.Tables[0].Columns.Add("Должность");
             _dbHistory.Tables[0].Columns.Add("Логин");
             _dbHistory.Tables[0].Columns.Add("Дата и время");
-            _dbHistory.Tables[0].Columns.Add("Вид действия");
             _dbHistory.Tables[0].Columns.Add("Идетификационный номер экземляра объекта");
+            _dbHistory.Tables[0].Columns.Add("Вид действия");
             _dbHistory.Tables[0].Columns.Add("Наименование таблицы, в которой произошло изменение");
 
             //var parceData = await OperationService.GetParceDataHistory(_data);
