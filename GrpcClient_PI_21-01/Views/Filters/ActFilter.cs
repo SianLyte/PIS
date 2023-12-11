@@ -113,8 +113,8 @@ namespace GrpcClient_PI_21_01.Views.Filters
             if (contractComboBox.SelectedItem is Contract contr)
                 Filter.AddFilter(act => act.Contracts, contr.IdContract.ToString());
 
-            Filter.AddFilter(act => act.Date, fromDate.Value.ToString(), FilterType.GreaterThan);
-            Filter.AddFilter(act => act.Date, toDate.Value.ToString(), FilterType.LesserThan);
+            Filter.AddFilter(act => act.Date, fromDate.Value.ToString(), FilterType.GreaterThan | FilterType.Equals);
+            Filter.AddFilter(act => act.Date, toDate.Value.AddDays(1).ToString(), FilterType.LesserThan);
 
             for (int i = 0; i < applications.Items.Count; i++)
             {

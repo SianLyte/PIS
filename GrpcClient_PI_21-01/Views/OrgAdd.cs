@@ -57,6 +57,7 @@ namespace GrpcClient_PI_21_01.Views
             {
                 AdressReg.Items.Add(loc);
             }
+            AdressReg.DisplayMember = "City";
 
             orgTypes.Items.Clear();
             orgTypes.Items.AddRange(orgTypesArray.Select(ot => ot.Translate()).ToArray());

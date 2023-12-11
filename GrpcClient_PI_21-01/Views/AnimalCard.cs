@@ -8,6 +8,7 @@ namespace GrpcClient_PI_21_01.Views
         private readonly int actId;
         public AnimalCard? returnAnime;
         private readonly bool animalToEdit;
+        private AnimalCard? AnimalCardShowcase { get; }
         public AnimalCardForm(string act)
         {
             InitializeComponent();
@@ -16,12 +17,13 @@ namespace GrpcClient_PI_21_01.Views
             animalToEdit = true;
             InicilisateAll();
         }
-        public AnimalCardForm(int actIdi, string act)
+        public AnimalCardForm(AnimalCard animalCard)
         {
             InitializeComponent();
-            GITLER.Text = act;
-            actId = actIdi;
+            GITLER.Text = animalCard.ActCapture.ActNumber.ToString();
+            actId = animalCard.ActCapture.ActNumber;
             animalToEdit = false;
+            AnimalCardShowcase = animalCard;
             InicilisateAll();
         }
 
@@ -36,23 +38,10 @@ namespace GrpcClient_PI_21_01.Views
                 comboBoxLocation.DisplayMember = "City";
                 comboBoxLocation.ValueMember = "IdLocation";
             }
-            else
+            else if (AnimalCardShowcase != null)
             {
-                var animalCardFilter = new Filter<AnimalCard>();
-                animalCardFilter.AddFilter(ac => ac.ActCapture, actId.ToString());
-                animalCardFilter.AddFilter(ac => ac.Category, GITLER.Text);
+                var animalCard = AnimalCardShowcase;
                 var locs = await LocationService.GetLocations();
-                var animalCards = await AnimalCardService.GetAnimalCards(-1, animalCardFilter);
-                var animalCard = animalCards.SingleOrDefault();
-                if (animalCard is null)
-                {
-                    MessageBox.Show("The form could not load:\n" +
-                        "no act captures were found with id=" + actId + " or/and " +
-                        "no act captures were found with category=" + GITLER.Text,
-                        "Internal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                    return;
-                }
                 textBoxKategori.Text = animalCard.Category;
                 if (animalCard.Gender == "Ж") female.Checked = true;
                 textBoxPoroda.Text = animalCard.Breed;

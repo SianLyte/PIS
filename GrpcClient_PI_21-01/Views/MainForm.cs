@@ -150,17 +150,28 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.Act))
                 if (DataGridViewActs.CurrentRow != null)
                 {
-                    bool IsDog = int.Parse(DataGridViewActs.CurrentRow.Cells[1].Value.ToString()) > 0;
-                    bool IsCat = int.Parse(DataGridViewActs.CurrentRow.Cells[2].Value.ToString()) > 0;
+                    var actid = int.Parse(DataGridViewActs.CurrentRow.Cells[0].Value.ToString());
+                    var dogCount = int.Parse(DataGridViewActs.CurrentRow.Cells[1].Value.ToString());
+                    var catCount = int.Parse(DataGridViewActs.CurrentRow.Cells[2].Value.ToString());
 
-                    if (IsDog)
+                    var animalDogFilter = new Filter<AnimalCard>();
+                    animalDogFilter.AddFilter(ac => ac.Category, "Собака");
+                    animalDogFilter.AddFilter(ac => ac.ActCapture, actid.ToString());
+                    var animalDogCards = await AnimalCardService.GetAnimalCards(-1, animalDogFilter);
+
+                    var animalCatFilter = new Filter<AnimalCard>();
+                    animalCatFilter.AddFilter(ac => ac.Category, "Кот");
+                    animalCatFilter.AddFilter(ac => ac.ActCapture, actid.ToString());
+                    var animalCatCards = await AnimalCardService.GetAnimalCards(-1, animalCatFilter);
+
+                    for (int i = 0; i < animalDogCards.Count; i++)
                     {
-                        var otvet = new AnimalCardForm(int.Parse(DataGridViewActs.CurrentRow.Cells[0].Value.ToString()), "Собака");
+                        var otvet = new AnimalCardForm(animalDogCards[i]);
                         otvet.ShowDialog();
                     }
-                    if (IsCat)
+                    for (int i = 0; i < animalCatCards.Count; i++)
                     {
-                        var otvet = new AnimalCardForm(int.Parse(DataGridViewActs.CurrentRow.Cells[0].Value.ToString()), "Кот");
+                        var otvet = new AnimalCardForm(animalCatCards[i]);
                         otvet.ShowDialog();
                     }
                 }
