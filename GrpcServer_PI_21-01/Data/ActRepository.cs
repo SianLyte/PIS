@@ -348,13 +348,12 @@ namespace GrpcServer_PI_21_01.Data
             }
         }
 
-        public static Act? GetAct(int id, bool connectionAlreadyOpen = false)
+        public static Act? GetAct(int id)
         {
             try
             {
                 NpgsqlCommand cmd = new($"SELECT * FROM act WHERE id = {id}");
                 cmd.Connection = cn;
-                if (!connectionAlreadyOpen)
                     cn.Open();
 
                 var reader = cmd.ExecuteReader();
@@ -368,7 +367,6 @@ namespace GrpcServer_PI_21_01.Data
                 var contrId = reader.GetInt32(reader.GetOrdinal("municipal_contract_id"));
 
                 reader.Close();
-                if (!connectionAlreadyOpen)
                     cn.Close();
 
                 return new Act(id, dogCount, catCount,
