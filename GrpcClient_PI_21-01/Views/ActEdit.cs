@@ -30,6 +30,7 @@ namespace GrpcClient_PI_21_01.Views
             addApp.Click += AddApplication;
             deleteButton.Click += DeleteApplication;
             Isus.Text = "Редактирование акта";
+            dateAct.Value = DateTime.Now;
 
             if (actToEdit)
             {
