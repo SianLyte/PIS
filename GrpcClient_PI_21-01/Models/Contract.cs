@@ -9,6 +9,7 @@ namespace GrpcClient_PI_21_01.Models
     [FilterableModel]
     public class Contract
     {
+        [Filterable("id")]
         public int IdContract { get; set; }
 
         [Filterable("created_at")]

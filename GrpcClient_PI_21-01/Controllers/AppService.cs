@@ -2,6 +2,7 @@
 using GrpcClient_PI_21_01.Models;
 using Grpc.Net.Client;
 using Grpc.Core;
+using System.Linq.Expressions;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
@@ -82,6 +83,55 @@ namespace GrpcClient_PI_21_01.Controllers
                     app.animaldescription,
                     app.applicantCategory
             };
+        }
+
+        public static void FillDataGrid(List<App> apps, DataGridView dgv)
+        {
+            static Expression<Func<App, object>> exp(Expression<Func<App, object>> exp) => exp;
+            SortOrder memorizedSort = SortOrder.None;
+            DataGridViewColumn? memorizedColumn = null;
+
+            // memorizing current glyph direction
+            foreach (DataGridViewColumn c in dgv.Columns)
+                if (c.HeaderCell.SortGlyphDirection != SortOrder.None)
+                {
+                    memorizedSort = c.HeaderCell.SortGlyphDirection;
+                    memorizedColumn = c;
+                    break;
+                }
+
+            // clearing data grid
+            dgv.Rows.Clear();
+            dgv.Columns.Clear();
+
+            // creating columns
+            dgv.Columns.Add("ApplicationDate", "Дата подачи");
+            dgv.Columns.Add("ID", "Номер");
+            dgv.Columns.Add("Locality", "Населенный пункт");
+            dgv.Columns.Add("Territory", "Территория");
+            dgv.Columns.Add("Area", "Место обитания");
+            dgv.Columns.Add("Urgency", "Срочность исполнения");
+            dgv.Columns.Add("Description", "Описание животного");
+            dgv.Columns.Add("ApplicantCategory", "Категория заявителя");
+
+            // preparing columns
+            dgv.Columns["ApplicationDate"].Tag = exp(a => a.date);
+            dgv.Columns["ID"].Tag = exp(a => a.number);
+            dgv.Columns["Locality"].Tag = exp(a => a.locality);
+            dgv.Columns["Territory"].Tag = exp(a => a.territory);
+            dgv.Columns["Area"].Tag = exp(a => a.animalHabiat);
+            dgv.Columns["Urgency"].Tag = exp(a => a.urgencyOfExecution);
+            dgv.Columns["Description"].Tag = exp(a => a.animaldescription);
+            dgv.Columns["ApplicantCategory"].Tag = exp(a => a.applicantCategory);
+            foreach (DataGridViewColumn c in dgv.Columns)
+                c.SortMode = DataGridViewColumnSortMode.Programmatic;
+
+            // filling in data
+            apps.ForEach(a => dgv.Rows.Add(ToDataArray(a)));
+            
+            // setting the glyph direction
+            if (memorizedColumn != null)
+                dgv.Columns[memorizedColumn.Index].HeaderCell.SortGlyphDirection = memorizedSort;
         }
 
         public static async Task<List<App>> GetApplications(int page = -1, Filter<App>? filter = null)

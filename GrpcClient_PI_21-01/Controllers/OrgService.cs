@@ -2,6 +2,7 @@
 using GrpcClient_PI_21_01.Models;
 using Grpc.Core;
 using Grpc.Net.Client;
+using System.Linq.Expressions;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
@@ -72,6 +73,53 @@ namespace GrpcClient_PI_21_01.Controllers
                     org.type.Translate(),
                     org.status
             };
+        }
+
+        public static void FillDataGrid(List<Organization> orgs, DataGridView dgv)
+        {
+            static Expression<Func<Organization, object>> exp(Expression<Func<Organization, object>> exp) => exp;
+            SortOrder memorizedSort = SortOrder.None;
+            DataGridViewColumn? memorizedColumn = null;
+
+            // memorizing current glyph direction
+            foreach (DataGridViewColumn c in dgv.Columns)
+                if (c.HeaderCell.SortGlyphDirection != SortOrder.None)
+                {
+                    memorizedSort = c.HeaderCell.SortGlyphDirection;
+                    memorizedColumn = c;
+                    break;
+                }
+
+            // clearing datagrid
+            dgv.Rows.Clear();
+            dgv.Columns.Clear();
+
+            // creating columns
+            dgv.Columns.Add("ID", "Номер");
+            dgv.Columns.Add("Name", "Наименование");
+            dgv.Columns.Add("INN", "ИНН");
+            dgv.Columns.Add("KPP", "КПП");
+            dgv.Columns.Add("RegAddress", "Адрес регистрации");
+            dgv.Columns.Add("Type", "Тип");
+            dgv.Columns.Add("Status", "Статус");
+
+            // preparing columns
+            dgv.Columns["ID"].Tag = exp(o => o.idOrg);
+            dgv.Columns["Name"].Tag = exp(o => o.name);
+            dgv.Columns["INN"].Tag = exp(o => o.INN);
+            dgv.Columns["KPP"].Tag = exp(o => o.KPP);
+            dgv.Columns["RegAddress"].Tag = exp(o => o.registrationAdress);
+            dgv.Columns["Type"].Tag = exp(o => o.type);
+            dgv.Columns["Status"].Tag = exp(o => o.status);
+            foreach (DataGridViewColumn c in dgv.Columns)
+                c.SortMode = DataGridViewColumnSortMode.Programmatic;
+
+            // filling in data
+            orgs.ForEach(o => dgv.Rows.Add(ToDataArray(o)));
+
+            // setting the glyph direction
+            if (memorizedColumn != null)
+                dgv.Columns[memorizedColumn.Index].HeaderCell.SortGlyphDirection = memorizedSort;
         }
 
         public static async Task<List<Organization>> GetOrganizations(int page = -1, Filter<Organization>? filter = null)

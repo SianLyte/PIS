@@ -22,6 +22,7 @@ namespace GrpcServer_PI_21_01.Models
             andEquations = new List<string>();
             orEquations = new List<string>();
             tableName = filterableModelAttribute.TableName;
+            sort = string.Empty;
         }
 
         public Filter(FilterReply reply) : this()
@@ -56,8 +57,15 @@ namespace GrpcServer_PI_21_01.Models
                 }));
                 //default table.id_name
                 //asc.act.id
-
-
+                if (!string.IsNullOrEmpty(reply.Sort))
+                {
+                    var sortSplit = reply.Sort.Split('.');
+                    var type = Type.GetType("GrpcServer_PI_21_01.Models." + sortSplit[1]);
+                    var filterableModelAttribute = type?.GetCustomAttribute<FilterableModelAttribute>();
+                    if (filterableModelAttribute is null)
+                        throw new Exception(sortSplit[1] + " model cannot be filtered.");
+                    sort = $" ORDER BY {filterableModelAttribute.TableName}.{sortSplit[2]} {sortSplit[0]}";
+                }
             }
         }
 
@@ -238,7 +246,7 @@ namespace GrpcServer_PI_21_01.Models
                 //    startQuery += $"({string.Join(" or ", orEquations)})";
                 //}
             }
-            if (page != -1) startQuery += $" LIMIT 10 OFFSET {page * 10}";
+            if (page != -1) startQuery += sort + $" LIMIT 10 OFFSET {page * 10}";
 
             return startQuery + ";";
         }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GrpcServer_PI_21_01
+namespace GrpcServer_PI_21_01.Models
 {
     [FilterableModel("act")]
     public class Act

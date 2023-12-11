@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
@@ -71,6 +72,24 @@ namespace GrpcClient_PI_21_01.Controllers
                 contr.Costumer.name,
                 contr.Executer.name,
             };
+        }
+
+        public static void FillDataGrid(IEnumerable<Contract> contracts, DataGridView dgv)
+        {
+            static Expression<Func<Contract, object>> exp(Expression<Func<Contract, object>> exp) => exp;
+
+            // preparing columns
+            dgv.Columns[0].Tag = exp(c => c.IdContract);
+            dgv.Columns[1].Tag = exp(c => c.DateConclusion);
+            dgv.Columns[2].Tag = exp(c => c.ActionDate);
+            dgv.Columns[3].Tag = exp(c => c.Costumer);
+            dgv.Columns[4].Tag = exp(c => c.Executer);
+            foreach (DataGridViewColumn c in dgv.Columns)
+                c.SortMode = DataGridViewColumnSortMode.Programmatic;
+
+            // filling in data
+            foreach (var contract in contracts)
+                dgv.Rows.Add(ToDataArray(contract));
         }
 
         public static Contract GetContractFromReply(ContractReply reply)

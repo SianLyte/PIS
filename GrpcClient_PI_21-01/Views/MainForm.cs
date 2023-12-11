@@ -55,16 +55,14 @@ namespace GrpcClient_PI_21_01
             applicationFiltersButton.Click += OpenApplicationFilters;
             organizationFiltersButton.Click += OpenOrganizationFilters;
 
-            DataGridViewActs.ColumnSortModeChanged += SortActs;
-            dataGridViewApp.ColumnSortModeChanged += SortApps;
-            dataGridViewOrg.ColumnSortModeChanged += SortOrganizations;
-            ContractTable.ColumnSortModeChanged += SortContracts;
+            DataGridViewActs.ColumnHeaderMouseClick += SortActs;
+            dataGridViewApp.ColumnHeaderMouseClick += SortApps;
+            dataGridViewOrg.ColumnHeaderMouseClick += SortOrganizations;
+            ContractTable.ColumnHeaderMouseClick += SortContracts;
 
             Task.Run(Setup);
         }
 
-        readonly DataSet dsApplication = new();
-        readonly DataSet dsOrganization = new();
         readonly Filter<Act> actFilter = new();
         readonly Filter<App> appFilter = new();
         readonly Filter<Organization> orgFilter = new();
@@ -189,9 +187,12 @@ namespace GrpcClient_PI_21_01
             await SetDataGridAct();
         }
 
-        private async void SortActs(object sender, DataGridViewColumnEventArgs e)
+        private async void SortActs(object sender, DataGridViewCellMouseEventArgs e)
         {
-            ActService.SortByColumn(actFilter, e.Column);
+            var column = DataGridViewActs.Columns[e.ColumnIndex];
+            foreach (DataGridViewColumn c in DataGridViewActs.Columns)
+                if (column.Index != c.Index) c.HeaderCell.SortGlyphDirection = SortOrder.None;
+            SorterService.SortByColumn(actFilter, column);
             await SetDataGridAct();
         }
 
@@ -205,23 +206,8 @@ namespace GrpcClient_PI_21_01
             await orgGridSemaphore.WaitAsync();
             try
             {
-
-                /*-Organization-------------------------*/
-                dsOrganization.Tables.Clear();
-                dsOrganization.Tables.Add("Score");
-                dsOrganization.Tables[0].Columns.Add("Номер");
-                dsOrganization.Tables[0].Columns.Add("Наименование");
-                dsOrganization.Tables[0].Columns.Add("ИНН");
-                dsOrganization.Tables[0].Columns.Add("КПП");
-                dsOrganization.Tables[0].Columns.Add("Адрес регистрации");
-                dsOrganization.Tables[0].Columns.Add("Тип");
-                dsOrganization.Tables[0].Columns.Add("Статус");
                 var orgs = await OrgService.GetOrganizations(_OrgPage, orgFilter);
-                foreach (var org in orgs.Select(o => OrgService.ToDataArray(o)))
-                {
-                    dsOrganization.Tables[0].Rows.Add(org);
-                }
-                dataGridViewOrg.DataSource = dsOrganization.Tables[0];
+                OrgService.FillDataGrid(orgs, dataGridViewOrg);
                 _OrgPageMax = await OrgService.GetPageCount(_pageSize, orgFilter);
                 CheckPageButton(buttonPreviosOrganisations, buttonNextOrganisations, _OrgPage, _OrgPageMax);
             }
@@ -278,8 +264,13 @@ namespace GrpcClient_PI_21_01
             _OrgPage--;
         }
 
-        private async void SortOrganizations(object sender, DataGridViewColumnEventArgs e)
+        private async void SortOrganizations(object sender, DataGridViewCellMouseEventArgs e)
         {
+            var column = dataGridViewOrg.Columns[e.ColumnIndex];
+            foreach (DataGridViewColumn c in dataGridViewOrg.Columns)
+                if (column.Index != c.Index) c.HeaderCell.SortGlyphDirection = SortOrder.None;
+            SorterService.SortByColumn(orgFilter, column);
+            await SetDataGridOrg();
         }
 
         #endregion
@@ -292,23 +283,8 @@ namespace GrpcClient_PI_21_01
             await appGridSemaphore.WaitAsync();
             try
             {
-                /*-Applications-------------------------*/
-                dsApplication.Tables.Clear();
-                dsApplication.Tables.Add("Score");
-                dsApplication.Tables[0].Columns.Add("Дата подачи");
-                dsApplication.Tables[0].Columns.Add("Номер");
-                dsApplication.Tables[0].Columns.Add("Населенный пункт");
-                dsApplication.Tables[0].Columns.Add("Территория");
-                dsApplication.Tables[0].Columns.Add("Место обитания");
-                dsApplication.Tables[0].Columns.Add("Срочность исполнения");
-                dsApplication.Tables[0].Columns.Add("Описание животного");
-                dsApplication.Tables[0].Columns.Add("Категория заявителя");
                 var apps = await AppService.GetApplications(_AppPage, appFilter);
-                foreach (var app in apps.Select(a => AppService.ToDataArray(a)))
-                {
-                    dsApplication.Tables[0].Rows.Add(app);
-                }
-                dataGridViewApp.DataSource = dsApplication.Tables[0];
+                AppService.FillDataGrid(apps, dataGridViewApp);
                 _AppPageMax = await AppService.GetPageCount(_pageSize, appFilter);
                 CheckPageButton(buttonPreviosApps, buttonNextApps, _AppPage, _AppPageMax);
             }
@@ -364,8 +340,13 @@ namespace GrpcClient_PI_21_01
             await SetDataGridApp();
         }
 
-        private async void SortApps(object sender, DataGridViewColumnEventArgs e)
+        private async void SortApps(object sender, DataGridViewCellMouseEventArgs e)
         {
+            var column = dataGridViewApp.Columns[e.ColumnIndex];
+            foreach (DataGridViewColumn c in dataGridViewApp.Columns)
+                if (column.Index != c.Index) c.HeaderCell.SortGlyphDirection = SortOrder.None;
+            SorterService.SortByColumn(appFilter, column);
+            await SetDataGridApp();
         }
 
         #endregion
@@ -382,8 +363,7 @@ namespace GrpcClient_PI_21_01
                 _PageContractMax = await ContractService.GetPageCount(_pageSize, contrFilter);
                 ContractTable.Rows.Clear();
                 var cont = await ContractService.GetContracts(_PageContract, contrFilter);
-                foreach (var i in cont.Select(c => ContractService.ToDataArray(c)))
-                    ContractTable.Rows.Add(i);
+                ContractService.FillDataGrid(cont, ContractTable);
             }
             finally
             {
@@ -444,8 +424,13 @@ namespace GrpcClient_PI_21_01
             await ShowContract();
         }
 
-        private async void SortContracts(object sender, DataGridViewColumnEventArgs e)
+        private async void SortContracts(object sender, DataGridViewCellMouseEventArgs e)
         {
+            var column = ContractTable.Columns[e.ColumnIndex];
+            foreach (DataGridViewColumn c in ContractTable.Columns)
+                if (column.Index != c.Index) c.HeaderCell.SortGlyphDirection = SortOrder.None;
+            SorterService.SortByColumn(contrFilter, column);
+            await ShowContract();
         }
 
         #endregion

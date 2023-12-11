@@ -81,17 +81,18 @@ namespace GrpcClient_PI_21_01
 
         public static void FillDataGrid(List<Act> acts, DataGridView dgv)
         {
-            static Tuple<Expression<Func<Act, object>>, SortType> genTuple(Expression<Func<Act, object>> exp)
-                => new(exp, SortType.Asc);
+            static Expression<Func<Act, object>> exp(Expression<Func<Act, object>> exp) => exp;
 
             // preparting columns
-            dgv.Columns[0].Tag = genTuple(a => a.ActNumber);
-            dgv.Columns[1].Tag = genTuple(a => a.CountDogs);
-            dgv.Columns[2].Tag = genTuple(a => a.CountCats);
-            dgv.Columns[3].Tag = genTuple(a => a.Organization);
-            dgv.Columns[4].Tag = genTuple(a => a.Date);
-            dgv.Columns[5].Tag = genTuple(a => a.TargetCapture);
-            dgv.Columns[6].Tag = genTuple(a => a.Contracts);
+            dgv.Columns[0].Tag = exp(a => a.ActNumber);
+            dgv.Columns[1].Tag = exp(a => a.CountDogs);
+            dgv.Columns[2].Tag = exp(a => a.CountCats);
+            dgv.Columns[3].Tag = exp(a => a.Organization);
+            dgv.Columns[4].Tag = exp(a => a.Date);
+            dgv.Columns[5].Tag = exp(a => a.TargetCapture);
+            dgv.Columns[6].Tag = exp(a => a.Contracts);
+            foreach (DataGridViewColumn c in dgv.Columns)
+                c.SortMode = DataGridViewColumnSortMode.Programmatic;
 
             // filling in data
             acts.ForEach(a => dgv.Rows.Add(ToDataArray(a)));
@@ -236,17 +237,6 @@ namespace GrpcClient_PI_21_01
                 actApps.Add(response.FromReply());
             }
             return actApps;
-        }
-
-        public static void SortByColumn(Filter<Act> filter, DataGridViewColumn c)
-        {
-            if (c.Tag is not Tuple<Expression<Func<Act, object>>, SortType> tagTuple)
-                throw new Exception("Column entity tags were empty");
-            var exp = tagTuple.Item1;
-            filter.SetSort(exp, tagTuple.Item2);
-
-            c.Tag = new Tuple<Expression<Func<Act, object>>, SortType>(tagTuple.Item1,
-                tagTuple.Item2 == SortType.Asc ? SortType.Desc : SortType.Asc);
         }
     }
 }

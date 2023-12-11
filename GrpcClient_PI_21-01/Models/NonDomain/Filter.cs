@@ -173,6 +173,7 @@ namespace GrpcClient_PI_21_01.Models
             return body.NodeType switch
             {
                 ExpressionType.MemberAccess => (PropertyInfo)((MemberExpression)body).Member,
+                ExpressionType.Convert => (PropertyInfo)((MemberExpression)((UnaryExpression)body).Operand).Member,
                 _ => throw new InvalidOperationException(),
             };
         }

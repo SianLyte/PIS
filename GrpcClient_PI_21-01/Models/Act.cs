@@ -10,6 +10,7 @@ namespace GrpcClient_PI_21_01
     [FilterableModel]
     public class Act
     {
+        [Filterable("id")]
         public int ActNumber { get; set; }
         [Filterable("dog_count")]
         public int CountDogs { get; set; }
