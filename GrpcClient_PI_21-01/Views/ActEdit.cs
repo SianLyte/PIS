@@ -112,13 +112,10 @@ namespace GrpcClient_PI_21_01.Views
                 }
                 else
                 {
-                    bool IsDog = act.CountDogs > 0;
-                    bool IsCat = act.CountCats > 0;
-
                     bool flag = true;
                     List<AnimalCard> listAnimals = new();
 
-                    if (IsDog)
+                    for (int i = 0; i < act.CountDogs; i++)
                     {
                         var animForm = new AnimalCardForm("Собака");
                         DialogResult otvet = animForm.ShowDialog();
@@ -129,16 +126,18 @@ namespace GrpcClient_PI_21_01.Views
                             flag = false;
                     }
 
-                    if (IsCat & flag)
+                    if (flag)
                     {
-                        var animForm = new AnimalCardForm("Кот");
-                        DialogResult otvet = animForm.ShowDialog();
-                        if (otvet == DialogResult.OK)
-                            listAnimals.Add(animForm.returnAnime);
+                        for (int i = 0; i < act.CountCats; i++)
+                        {
+                            var animForm = new AnimalCardForm("Кот");
+                            DialogResult otvet = animForm.ShowDialog();
+                            if (otvet == DialogResult.OK)
+                                listAnimals.Add(animForm.returnAnime);
 
-                        if (otvet == DialogResult.Cancel)
-                            flag = false;
-
+                            if (otvet == DialogResult.Cancel)
+                                flag = false;
+                        }
                     }
 
                     if (flag)
