@@ -433,15 +433,17 @@ namespace GrpcServer_PI_21_01.Services
 
         public override Task<OperationResult> AddLocationContract(LocationContractReply request, ServerCallContext context)
         {
-            var successful = LocationRepository.AddLocationContract(request.FromReply());
-            Log(ActionType.ActionAdd, "Location Contract", request.Id, request.Actor);
+            var lc = request.FromReply();
+            var successful = LocationRepository.AddLocationContract(lc);
+            Log(ActionType.ActionAdd, "Location Contract", lc.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
 
         public override Task<OperationResult> UpdateLocationContract(LocationContractReply request, ServerCallContext context)
         {
-            var successful = LocationRepository.UpdateLocationContract(request.FromReply());
-            Log(ActionType.ActionUpdate, "Location Contract", request.Id, request.Actor);
+            var lc = request.FromReply();
+            var successful = LocationRepository.UpdateLocationContract(lc);
+            Log(ActionType.ActionUpdate, "Location Contract", lc.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
 
