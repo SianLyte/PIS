@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01.Data
 {
-    class AnimalRepository
+    class AnimalRepository : IRepository<AnimalCard>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
         public static int GetMaxPage(DataRequest req)
@@ -219,6 +219,11 @@ namespace GrpcServer_PI_21_01.Data
                 Console.WriteLine(e.Message);
                 throw ;
             }
+        }
+
+        public List<AnimalCard> GetAll(DataRequest request)
+        {
+            return GetAnimalCards(request);
         }
     }
 }

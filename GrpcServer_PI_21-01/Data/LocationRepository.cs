@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01.Data
 {
-    class LocationRepository
+    class LocationRepository : IRepository<Location>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
         public static int GetMaxPage(DataRequest req)
@@ -344,6 +344,11 @@ namespace GrpcServer_PI_21_01.Data
                 Console.WriteLine(e.Message);
                 throw ;
             }
+        }
+
+        public List<Location> GetAll(DataRequest request)
+        {
+            return GetLocations(request);
         }
     }
 }

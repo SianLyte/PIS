@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace GrpcServer_PI_21_01.Data
 {
-    public class OperationRepository
+    public class OperationRepository : IRepository<Operation>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
         public static int GetMaxPage(DataRequest req)
@@ -135,6 +135,11 @@ namespace GrpcServer_PI_21_01.Data
                 Console.WriteLine(e.Message);
                 throw;
             }
+        }
+
+        public List<Operation> GetAll(DataRequest request)
+        {
+            return GetOperations(request);
         }
     }
 }

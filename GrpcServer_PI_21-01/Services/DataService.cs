@@ -7,6 +7,7 @@ namespace GrpcServer_PI_21_01.Services
 {
     public class DataService : DataRetriever.DataRetrieverBase
     {
+        const int CacheDurationMs = 60000;
         private readonly ILogger<DataService> _logger;
         public DataService(ILogger<DataService> logger)
         {
@@ -51,9 +52,11 @@ namespace GrpcServer_PI_21_01.Services
                     " Action type: {actType}.",
                     string.Join(" ", actor.Surname, actor.Name, actor.Patronymic), tableName, modifId, actType);
             }
+            else operationProxy.Reset();
         }
 
         #region Contracts
+        private readonly DataCacheProxy<Contract> contractCacheProxy = new(new ContractRepository(), CacheDurationMs);
         public override Task<ContractReply> GetContract(IdRequest request, ServerCallContext context)
         {
             Contract? contr = ContractRepository.GetContract(request.Id);
@@ -73,7 +76,7 @@ namespace GrpcServer_PI_21_01.Services
                 filter.AddOrFilter(c => c.Executer, request.Actor.Organization.IdOrganization.ToString());
             }
             filter.ExtendReply(request.Filter);
-            var contracts = ContractRepository.GetContracts(request).Select(c => c.ToReply());
+            var contracts = contractCacheProxy.GetAll(request).Select(c => c.ToReply());
 
             var reply = new ContractsReply();
             reply.Contracts.AddRange(contracts);
@@ -87,31 +90,39 @@ namespace GrpcServer_PI_21_01.Services
         {
             var contract = request.FromReply();
             var successful = ContractRepository.AddContract(contract);
-            Log(ActionType.ActionAdd, "Contract", contract.IdContract, request.Actor);
+            if (successful)
+            {
+                contractCacheProxy.Reset();
+                Log(ActionType.ActionAdd, "Contract", contract.IdContract, request.Actor);
+            }
             return CRUD(contract.IdContract, successful);
         }
-        //public override Task<OperationResult> AddLocationContract(LocationContractReply request, ServerCallContext ctx)
-        //{
-        //    var locationcontract = request.FromReply();
-
-        //}
 
         public override Task<OperationResult> UpdateContract(ContractReply request, ServerCallContext ctx)
         {
             var contract = request.FromReply();
             var successful = ContractRepository.UpdateContract(contract);
-            Log(ActionType.ActionUpdate, "Contract", contract.IdContract, request.Actor);
+            if (successful)
+            {
+                contractCacheProxy.Reset();
+                Log(ActionType.ActionUpdate, "Contract", contract.IdContract, request.Actor);
+            }
             return CRUD(contract.IdContract, successful);
         }
 
         public override Task<OperationResult> RemoveContract(IdRequest id, ServerCallContext ctx)
         {
             var successful = ContractRepository.DeleteContract(id.Id);
-            Log(ActionType.ActionDelete, "Contract", id.Id, id.Actor);
+            if (successful)
+            {
+                contractCacheProxy.Reset();
+                Log(ActionType.ActionDelete, "Contract", id.Id, id.Actor);
+            }
             return CRUD(id.Id, successful);
         }
         #endregion
         #region Locations
+        private readonly DataCacheProxy<Location> locationCacheProxy = new(new LocationRepository(), CacheDurationMs);
         public override Task<LocationReply> GetLocation(IdRequest request, ServerCallContext context)
         {
             Location? loc = LocationRepository.GetLocation(request.Id);
@@ -126,7 +137,7 @@ namespace GrpcServer_PI_21_01.Services
             IServerStreamWriter<LocationReply> responseStream,
             ServerCallContext context)
         {
-            foreach (var loc in LocationRepository.GetLocations(r))
+            foreach (var loc in locationCacheProxy.GetAll(r))
             {
                 await responseStream.WriteAsync(loc.ToReply());
             }
@@ -139,14 +150,22 @@ namespace GrpcServer_PI_21_01.Services
         {
             var location = request.FromReply();
             var successful = LocationRepository.AddLocation(location);
-            Log(ActionType.ActionAdd, "Location", location.IdLocation, request.Actor);
+            if (successful)
+            {
+                locationCacheProxy.Reset();
+                Log(ActionType.ActionAdd, "Location", location.IdLocation, request.Actor);
+            }
             return CRUD(location.IdLocation, successful);
         }
 
         public override Task<OperationResult> RemoveLocation(IdRequest request, ServerCallContext ctx)
         {
             var successful = LocationRepository.RemoveLocation(request.Id);
-            Log(ActionType.ActionDelete, "Location", request.Id, request.Actor);
+            if (successful)
+            {
+                locationCacheProxy.Reset();
+                Log(ActionType.ActionDelete, "Location", request.Id, request.Actor);
+            }
             return CRUD(request.Id, successful);
         }
 
@@ -154,11 +173,16 @@ namespace GrpcServer_PI_21_01.Services
         {
             var location = request.FromReply();
             var successful = LocationRepository.UpdateLocation(location);
-            Log(ActionType.ActionUpdate, "Location", location.IdLocation, request.Actor);
+            if (successful)
+            {
+                locationCacheProxy.Reset();
+                Log(ActionType.ActionUpdate, "Location", location.IdLocation, request.Actor);
+            }
             return CRUD(location.IdLocation, successful);
         }
         #endregion
         #region Organizations
+        private readonly DataCacheProxy<Organization> orgCacheProxy = new(new OrgRepository(), CacheDurationMs);
         public override Task<OrganizationReply> GetOrganization(IdRequest request, ServerCallContext context)
         {
             Organization? org = OrgRepository.GetOrganization(request.Id);
@@ -173,8 +197,7 @@ namespace GrpcServer_PI_21_01.Services
             IServerStreamWriter<OrganizationReply> responseStream,
             ServerCallContext context)
         {
-            var filter = new Filter<Organization>(request.Filter);
-            foreach (var org in OrgRepository.GetOrganizations(request))
+            foreach (var org in orgCacheProxy.GetAll(request))
                 await responseStream.WriteAsync(org.ToReply());
         }
 
@@ -185,7 +208,11 @@ namespace GrpcServer_PI_21_01.Services
         {
             var org = reply.FromReply();
             var successful = OrgRepository.AddOrganization(org);
-            Log(ActionType.ActionAdd, "Organization", org.idOrg, reply.Actor);
+            if (successful)
+            {
+                orgCacheProxy.Reset();
+                Log(ActionType.ActionAdd, "Organization", org.idOrg, reply.Actor);
+            }
             return CRUD(org.idOrg, successful);
         }
 
@@ -193,18 +220,27 @@ namespace GrpcServer_PI_21_01.Services
         {
             var org = reply.FromReply();
             var successful = OrgRepository.UpdateOrganization(org);
-            Log(ActionType.ActionUpdate, "Organization", org.idOrg, reply.Actor);
+            if (successful)
+            {
+                orgCacheProxy.Reset();
+                Log(ActionType.ActionUpdate, "Organization", org.idOrg, reply.Actor);
+            }
             return CRUD(org.idOrg, successful);
         }
 
         public override Task<OperationResult> RemoveOrganization(IdRequest id, ServerCallContext ctx)
         {
             var successful = OrgRepository.RemoveOrganization(id.Id);
-            Log(ActionType.ActionDelete, "Organization", id.Id, id.Actor);
+            if (successful)
+            {
+                orgCacheProxy.Reset();
+                Log(ActionType.ActionDelete, "Organization", id.Id, id.Actor);
+            }
             return CRUD(id.Id, successful);
         }
         #endregion
         #region Acts
+        private readonly DataCacheProxy<Act> actCacheProxy = new(new ActRepository(), CacheDurationMs);
         public override Task<ActReply> GetAct(IdRequest request, ServerCallContext context)
         {
             Act? act = ActRepository.GetAct(request.Id);
@@ -223,9 +259,8 @@ namespace GrpcServer_PI_21_01.Services
             if (request.Actor.PrivelegeLevel != "Admin")
                 filter.AddFilter(act => act.Organization, request.Actor.Organization.IdOrganization.ToString());
             filter.ExtendReply(request.Filter);
-            foreach (var act in ActRepository.GetActs(request))
-                //.Where(a => user.PrivelegeLevel == "Admin"
-                //|| a.Organization.idOrg == user.Organization.IdOrganization))
+
+            foreach (var act in actCacheProxy.GetAll(request))
                 await responseStream.WriteAsync(act.ToReply());
         }
 
@@ -236,14 +271,22 @@ namespace GrpcServer_PI_21_01.Services
         {
             var act = request.FromReply();
             var successful = ActRepository.AddAct(act);
-            Log(ActionType.ActionAdd, "Act Capture", act.ActNumber, request.Actor);
+            if (successful)
+            {
+                actCacheProxy.Reset();
+                Log(ActionType.ActionAdd, "Act Capture", act.ActNumber, request.Actor);
+            }
             return CRUD(act.ActNumber, successful);
         }
 
         public override Task<OperationResult> RemoveAct(IdRequest request, ServerCallContext ctx)
         {
             var successful = ActRepository.RemoveAct(request.Id);
-            Log(ActionType.ActionDelete, "Act Capture", request.Id, request.Actor);
+            if (successful)
+            {
+                actCacheProxy.Reset();
+                Log(ActionType.ActionDelete, "Act Capture", request.Id, request.Actor);
+            }
             return CRUD(request.Id, successful);
         }
 
@@ -251,11 +294,16 @@ namespace GrpcServer_PI_21_01.Services
         {
             var act = request.FromReply();
             var successful = ActRepository.UpdateAct(act);
-            Log(ActionType.ActionUpdate, "Act Capture", act.ActNumber, request.Actor);
+            if (successful)
+            {
+                actCacheProxy.Reset();
+                Log(ActionType.ActionUpdate, "Act Capture", act.ActNumber, request.Actor);
+            }
             return CRUD(act.ActNumber, successful);
         }
         #endregion
         #region Applications
+        private readonly DataCacheProxy<App> appCacheProxy = new(new AppRepository(), CacheDurationMs);
         public override Task<ApplicationReply> GetApp(IdRequest request, ServerCallContext ctx)
         {
             App? app = AppRepository.GetApplication(request.Id);
@@ -271,7 +319,7 @@ namespace GrpcServer_PI_21_01.Services
             ServerCallContext ctx)
         {
             var filter = new Filter<App>(request.Filter);
-            foreach (var app in AppRepository.GetApplications(request))
+            foreach (var app in appCacheProxy.GetAll(request))
                 // у заявки на отлов нет организации, хотя по суди должна быть
                 // пока не меняю, но потом из этого могут вырасти проблемы
                 // например, сейчас не могу отфильтровать заявки для пользователя
@@ -285,7 +333,11 @@ namespace GrpcServer_PI_21_01.Services
         {
             var app = reply.FromReply();
             var successful = AppRepository.AddApplication(app);
-            Log(ActionType.ActionAdd, "Application", app.number, reply.Actor);
+            if (successful)
+            {
+                appCacheProxy.Reset();
+                Log(ActionType.ActionAdd, "Application", app.number, reply.Actor);
+            }
             return CRUD(app.number, successful);
         }
 
@@ -293,18 +345,27 @@ namespace GrpcServer_PI_21_01.Services
         {
             var app = reply.FromReply();
             var successful = AppRepository.UpdateApplication(app);
-            Log(ActionType.ActionUpdate, "Application", app.number, reply.Actor);
+            if (successful)
+            {
+                appCacheProxy.Reset();
+                Log(ActionType.ActionUpdate, "Application", app.number, reply.Actor);
+            }
             return CRUD(app.number, successful);
         }
 
         public override Task<OperationResult> RemoveApp(IdRequest request, ServerCallContext ctx)
         {
             var successful = AppRepository.RemoveApplication(request.Id);
-            Log(ActionType.ActionDelete, "Application", request.Id, request.Actor);
+            if (successful)
+            {
+                appCacheProxy.Reset();
+                Log(ActionType.ActionDelete, "Application", request.Id, request.Actor);
+            }
             return CRUD(request.Id, successful);
         }
         #endregion
         #region AnimalCards
+        private readonly DataCacheProxy<AnimalCard> animalCardCacheProxy = new(new AnimalRepository(), CacheDurationMs);
         public override Task<AnimalCardReply> GetAnimalCard(IdRequest request, ServerCallContext context)
         {
             AnimalCard? animalCard = AnimalRepository.GetAnimalCard(request.Id);
@@ -319,7 +380,7 @@ namespace GrpcServer_PI_21_01.Services
             IServerStreamWriter<AnimalCardReply> responseStream,
             ServerCallContext ctx)
         {
-            foreach (var animalCard in AnimalRepository.GetAnimalCards(r))
+            foreach (var animalCard in animalCardCacheProxy.GetAll(r))
                 await responseStream.WriteAsync(animalCard.ToReply());
         }
 
@@ -330,7 +391,11 @@ namespace GrpcServer_PI_21_01.Services
         {
             var animalCard = request.FromReply();
             var successful = AnimalRepository.AddAnimalCard(animalCard);
-            Log(ActionType.ActionAdd, "Animal Card", animalCard.IdAnimalCard, request.Actor);
+            if (successful)
+            {
+                animalCardCacheProxy.Reset();
+                Log(ActionType.ActionAdd, "Animal Card", animalCard.IdAnimalCard, request.Actor);
+            }
             return CRUD(animalCard.IdAnimalCard, successful);
         }
 
@@ -338,25 +403,34 @@ namespace GrpcServer_PI_21_01.Services
         {
             var animalCard = request.FromReply();
             var successful = AnimalRepository.UpdateAnimalCard(animalCard);
-            Log(ActionType.ActionUpdate, "Animal Card", animalCard.IdAnimalCard, request.Actor);
+            if (successful)
+            {
+                animalCardCacheProxy.Reset();
+                Log(ActionType.ActionUpdate, "Animal Card", animalCard.IdAnimalCard, request.Actor);
+            }
             return CRUD(animalCard.IdAnimalCard, successful);
         }
 
         public override Task<OperationResult> RemoveAnimalCard(IdRequest request, ServerCallContext ctx)
         {
             var successful = AnimalRepository.RemoveAnimalCard(request.Id);
-            Log(ActionType.ActionDelete, "Animal Card", request.Id, request.Actor);
+            if (successful)
+            {
+                animalCardCacheProxy.Reset();
+                Log(ActionType.ActionDelete, "Animal Card", request.Id, request.Actor);
+            }
             return CRUD(request.Id, successful);
         }
         #endregion
         #region Operations
+        private readonly DataCacheProxy<Operation> operationProxy = new(new OperationRepository(), CacheDurationMs);
         public override async Task GetOperations(DataRequest r,
             IServerStreamWriter<OperationReply> responseStream,
             ServerCallContext ctx)
         {
             if (r.Actor.PrivelegeLevel != "Admin")
                 throw new RpcException(new Status(StatusCode.PermissionDenied, "You are not permitted to watch operations."));
-            foreach (var op in OperationRepository.GetOperations(r))
+            foreach (var op in operationProxy.GetAll(r))
                 await responseStream.WriteAsync(op.ToReply());
         }
 

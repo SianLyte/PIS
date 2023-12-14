@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace GrpcServer_PI_21_01.Data
 {
-    internal class OrgRepository
+    internal class OrgRepository : IRepository<Organization>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
@@ -204,6 +204,11 @@ namespace GrpcServer_PI_21_01.Data
                 Console.WriteLine(e.Message);
                 throw;
             }
+        }
+
+        public List<Organization> GetAll(DataRequest request)
+        {
+            return GetOrganizations(request);
         }
     }
 }
