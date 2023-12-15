@@ -48,6 +48,31 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             static Expression<Func<Operation, object>> exp(Expression<Func<Operation, object>> exp) => exp;
 
+            SortOrder memorizedSort = SortOrder.None;
+            DataGridViewColumn? memorizedColumn = null;
+
+            // memorizing current glyph direction
+            foreach (DataGridViewColumn c in dgv.Columns)
+                if (c.HeaderCell.SortGlyphDirection != SortOrder.None)
+                {
+                    memorizedSort = c.HeaderCell.SortGlyphDirection;
+                    memorizedColumn = c;
+                    break;
+                }
+
+            // creating columns
+            dgv.Columns.Clear();
+            dgv.Columns.Add("Surname", "Фамилия");
+            dgv.Columns.Add("Name", "Имя");
+            dgv.Columns.Add("Patronymic", "Отчество");
+            dgv.Columns.Add("Organization","Организация");
+            dgv.Columns.Add("PrevilegeLevel", "Должность");
+            dgv.Columns.Add("Login", "Логин");
+            dgv.Columns.Add("ActionDate", "Дата и время");
+            dgv.Columns.Add("ModifiedObjectID", "Идетификационный номер экземляра объекта");
+            dgv.Columns.Add("ActionType", "Вид действия");
+            dgv.Columns.Add("ModifiedTableName", "Наименование таблицы, в которой произошло изменение");
+
             // preparting columns
             dgv.Columns[0].Tag = exp(a => a.Actor.Surname);
             dgv.Columns[1].Tag = exp(a => a.Actor.Name);
@@ -56,7 +81,7 @@ namespace GrpcClient_PI_21_01.Controllers
             dgv.Columns[4].Tag = exp(a => a.Actor.PrivelegeLevel);
             dgv.Columns[5].Tag = exp(a => a.Actor.Login);
             dgv.Columns[6].Tag = exp(a => a.ActionDate);
-            dgv.Columns[7].Tag = exp(a => a.IdOperation);
+            dgv.Columns[7].Tag = exp(a => a.ModifiedObjectId);
             dgv.Columns[8].Tag = exp(a => a.ActionType);
             dgv.Columns[9].Tag = exp(a => a.ModifiedTableName);
 
@@ -65,6 +90,10 @@ namespace GrpcClient_PI_21_01.Controllers
 
             // filling in data
             operations.ForEach(a => dgv.Rows.Add(ToDataArray(a)));
+
+            // setting the glyph direction
+            if (memorizedColumn != null)
+                dgv.Columns[memorizedColumn.Index].HeaderCell.SortGlyphDirection = memorizedSort;
         }
     }
 }

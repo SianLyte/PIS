@@ -29,6 +29,7 @@ namespace GrpcClient_PI_21_01
             // кончились
             //нормально вы тут чатитесь ребята, лампово сидите
             // ((
+            // и ведь никто даже не знает кто это пишет
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -51,17 +52,38 @@ namespace GrpcClient_PI_21_01
 
             button1.Click += button1_Click;
 
-            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
+            buttonNextContract.Click += buttonNextContract_Click;
+            buttonPreviosContract.Click += buttonPreviosContract_Click;
+            buttonNextApps.Click += buttonNextApps_Click;
+            buttonPreviosApps.Click += buttonPreviosApps_Click;
+            buttonNextActs.Click += buttonNextActs_Click;
+            buttonPriviosPageAct.Click += buttobPreviosActs_Click;
+            buttobPreviosActs.Click += buttobPreviosActs_Click;
+            buttonNextOrganisations.Click += buttonNextOrganisations_Click;
+            buttonPreviosOrganisations.Click += buttonPreviosOrganisations_Click;
+            buttonPriviosHistory.Click += buttonPriviosHistory_Click;
+            buttonNextHistory.Click += buttonNextHistory_Click;
 
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged_1;
+
+            filterActButton.Click += OpenActFilters;
             contractFiltersButton.Click += OpenContractFilters;
             applicationFiltersButton.Click += OpenApplicationFilters;
             organizationFiltersButton.Click += OpenOrganizationFilters;
+            historyFiltersButton.Click += OpenHistoryFilters;
 
             DataGridViewActs.ColumnHeaderMouseClick += SortActs;
             dataGridViewApp.ColumnHeaderMouseClick += SortApps;
             dataGridViewOrg.ColumnHeaderMouseClick += SortOrganizations;
             ContractTable.ColumnHeaderMouseClick += SortContracts;
             dataGridViewHistory.ColumnHeaderMouseClick += SortOperations;
+
+            buttonExportExelActs.Click += buttonExportExel_Click;
+            buttonExcelApp.Click += buttonExportExel_Click;
+            buttonExcelContract.Click += buttonExportExel_Click;
+            buttonExcelHistory.Click += buttonExportExel_Click;
+            buttonExcelOrg.Click += buttonExportExel_Click;
 
             Task.Run(Setup);
         }
@@ -513,52 +535,31 @@ namespace GrpcClient_PI_21_01
             foreach (DataGridViewColumn c in dataGridViewHistory.Columns)
                 if (column.Index != c.Index) c.HeaderCell.SortGlyphDirection = SortOrder.None;
             SorterService.SortByColumn(operationFilter, column);
-            //await SetDataGridAct();
             await InicilisationHistory();
         }
 
-        public async void CreateDataSet()
-        {
-            _dbHistory.Tables.Clear();
-            _dbHistory.Tables.Add("History");
-            _dbHistory.Tables[0].Columns.Add("Фамилия");
-            _dbHistory.Tables[0].Columns.Add("Имя");
-            _dbHistory.Tables[0].Columns.Add("Отчество");
-            _dbHistory.Tables[0].Columns.Add("Организация");
-            _dbHistory.Tables[0].Columns.Add("Должность");
-            _dbHistory.Tables[0].Columns.Add("Логин");
-            _dbHistory.Tables[0].Columns.Add("Дата и время");
-            _dbHistory.Tables[0].Columns.Add("Идетификационный номер экземляра объекта");
-            _dbHistory.Tables[0].Columns.Add("Вид действия");
-            _dbHistory.Tables[0].Columns.Add("Наименование таблицы, в которой произошло изменение");
-
-            //var parceData = await OperationService.GetParceDataHistory(_data);
-            foreach (var data in _data.Select(x => OperationService.ToDataArray(x)))
-                _dbHistory.Tables[0].Rows.Add(data);
-
-            dataGridViewHistory.DataSource = _dbHistory.Tables[0];
-        }
-
-        private void buttonPriviosHistory_Click(object sender, EventArgs e)
+        private async void buttonPriviosHistory_Click(object sender, EventArgs e)
         {
             _HistoryPage--;
-            InicilisationHistory();
+            await InicilisationHistory();
         }
 
-        private void buttonNextHistory_Click(object sender, EventArgs e)
+        private async void buttonNextHistory_Click(object sender, EventArgs e)
         {
             _HistoryPage++;
-            InicilisationHistory();
+            await InicilisationHistory();
         }
         
-        private void tabControl1_SelectedIndexChanged_1(object sender, EventArgs e)
+        private async void tabControl1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == tabPage6)
             {
-                InicilisationHistory();
+                await InicilisationHistory();
             }
         }
 
+        private void OpenHistoryFilters(object sender, EventArgs e) =>
+            new OperationFilter(operationFilter, InicilisationHistory).Show();
         #endregion
 
         private static void CheckPageButton(Button buttonPrevious, Button buttonNext, int page, int pageMax)

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace GrpcClient_PI_21_01.Models
 {
-    class Role
+    public class Previlege
     {
-        public string Name { get; set; }
-        public Dictionary<NameMdels, bool> CheckPosibilitis { get; set; }
+        public string DisplayName { get; }
+        public string Name { get; }
 
-        public Role(string name, Dictionary<NameMdels, bool> checkPosibilitis)
+        public Previlege(string name, string displayName)
         {
-            CheckPosibilitis = checkPosibilitis;
+            DisplayName = displayName;
             Name = name;
         }
     }
