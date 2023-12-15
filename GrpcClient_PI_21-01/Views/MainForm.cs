@@ -28,6 +28,7 @@ namespace GrpcClient_PI_21_01
             // именно, где мои кнопки?!)
             // кончились
             //нормально вы тут чатитесь ребята, лампово сидите
+            // ((
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -471,6 +472,7 @@ namespace GrpcClient_PI_21_01
                 OpenReport();
             }
         }
+
         #endregion
         #region Related: Operation History
         private List<Operation>? _data;
@@ -548,6 +550,14 @@ namespace GrpcClient_PI_21_01
             _HistoryPage++;
             InicilisationHistory();
         }
+        
+        private void tabControl1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabPage6)
+            {
+                InicilisationHistory();
+            }
+        }
 
         #endregion
 
@@ -607,5 +617,6 @@ namespace GrpcClient_PI_21_01
 
             }
         }
+
     }
 }
