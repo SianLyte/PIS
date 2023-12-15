@@ -85,7 +85,7 @@ namespace GrpcServer_PI_21_01.Data
                     $"(created_at, territory, habitat, urgency, descr, client_category, cityid, status)" +
                     $"VALUES ('{app.date}', '{app.territory}', '{app.animalHabiat}', {app.urgencyOfExecution}, " +
                     $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality.IdLocation}'," +
-                    $" '{app.status}') RETURNING id")
+                    $" '{AppStatus.Registered}') RETURNING id")
                 { Connection = cn };
                 {
                     cn.Open();
@@ -218,7 +218,7 @@ namespace GrpcServer_PI_21_01.Data
                     arr[6] = reader[6].ToString();
                     arr[7] = reader[8].ToString();
                 }
-                var status = App.StringToEnum(arr[7]);
+                var status = Enum.Parse<AppStatus>(arr[7]);
                 reader.Close();
                 if (!connectionAlreadyOpen)
                     cn.Close();

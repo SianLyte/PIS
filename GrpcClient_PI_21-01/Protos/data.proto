@@ -219,7 +219,7 @@ message LocationContractReply {
 }
 
 enum AppStatus {
-    Awaiting_Registration = 0;
+    AwaitingRegistration = 0;
     Registered = 1;
     Performed = 2;
     Fulfilled = 3;

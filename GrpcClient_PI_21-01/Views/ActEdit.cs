@@ -73,7 +73,7 @@ namespace GrpcClient_PI_21_01.Views
 
             var contracts = await ContractService.GetContracts(-1, contractFilter);
             var applications = await AppService.GetApplications(-1, appFilter);
-            var organizations = contracts.Select(c => c.Costumer).Distinct().ToList();
+            var organizations = contracts.Select(c => c.Executer).Distinct().ToList();
 
             comboBoxOrganization.DataSource = new BindingSource(organizations
                 .Where(o => o.type == OrganizationType.Trapping || o.type == OrganizationType.TrappingAndShelter).ToList(), null);
