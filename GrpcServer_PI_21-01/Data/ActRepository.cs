@@ -1,19 +1,9 @@
 ﻿using GrpcServer_PI_21_01.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Npgsql;
-using Microsoft.Extensions.Hosting;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
-using System.Xml.Linq;
-using System.Collections;
 
 namespace GrpcServer_PI_21_01.Data
 {
-    class ActRepository
-
+    public class ActRepository : IRepository<Act>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
@@ -380,6 +370,11 @@ namespace GrpcServer_PI_21_01.Data
                 Console.WriteLine(e.Message);
                 throw ;
             }
+        }
+
+        public List<Act> GetAll(DataRequest request)
+        {
+            return GetActs(request);
         }
     }
 }

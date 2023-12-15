@@ -10,7 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace GrpcServer_PI_21_01.Data
 {
 
-    internal class AppRepository
+    internal class AppRepository : IRepository<App>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
@@ -231,6 +231,11 @@ namespace GrpcServer_PI_21_01.Data
                 Console.WriteLine(e.Message);
                 throw ;
             }
+        }
+
+        public List<App> GetAll(DataRequest request)
+        {
+            return GetApplications(request);
         }
     }
 }

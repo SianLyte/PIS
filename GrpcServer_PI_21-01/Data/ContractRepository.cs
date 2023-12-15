@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01.Data
 {
-    class ContractRepository
+    class ContractRepository : IRepository<Contract>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
 
@@ -193,6 +193,11 @@ namespace GrpcServer_PI_21_01.Data
                 Console.WriteLine(e.Message);
                 throw ;
             }
+        }
+
+        public List<Contract> GetAll(DataRequest request)
+        {
+            return GetContracts(request);
         }
     }
 }

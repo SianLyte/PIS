@@ -280,6 +280,24 @@ namespace GrpcServer_PI_21_01.Models
             }
         }
 
+        public override bool Equals(object? obj)
+        {
+            if (obj is Filter<T> filter)
+                return filter.andEquations.Count == andEquations.Count &&
+                    filter.orEquations.Count == orEquations.Count &&
+                    filter.sort == sort &&
+                    filter.tableName == tableName &&
+                    filter.orEquations.SequenceEqual(orEquations) &&
+                    filter.andEquations.SequenceEqual(andEquations);
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return unchecked(andEquations.Count.GetHashCode() * orEquations.Count.GetHashCode()
+                - sort.GetHashCode() - tableName.GetHashCode()
+                - orEquations.GetHashCode() ^ andEquations.GetHashCode());
+        }
     }
 
     [Flags] public enum FilterType
