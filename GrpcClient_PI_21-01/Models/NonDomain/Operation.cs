@@ -3,6 +3,7 @@ namespace GrpcClient_PI_21_01.Models
     [FilterableModel]
     public class Operation
     {
+        [Filterable("operationid")]
         public int IdOperation { get; set; }
         [Filterable("actiontype")]
         public ActionType ActionType { get; set; }

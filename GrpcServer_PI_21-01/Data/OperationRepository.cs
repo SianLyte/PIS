@@ -45,7 +45,7 @@ namespace GrpcServer_PI_21_01.Data
 
                 using (NpgsqlCommand cmd = new(query) { Connection = cn })
                 {
-                    cn.Open();
+                    cn.Open();  
                     NpgsqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {

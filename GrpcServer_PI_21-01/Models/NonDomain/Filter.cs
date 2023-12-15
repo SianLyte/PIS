@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq.Expressions;
+using System.Net.Sockets;
 using System.Reflection;
 
 namespace GrpcServer_PI_21_01.Models
@@ -57,6 +58,7 @@ namespace GrpcServer_PI_21_01.Models
                 }));
                 //default table.id_name
                 //asc.act.id
+                
                 if (!string.IsNullOrEmpty(reply.Sort))
                 {
                     var sortSplit = reply.Sort.Split('.');
@@ -65,6 +67,15 @@ namespace GrpcServer_PI_21_01.Models
                     if (filterableModelAttribute is null)
                         throw new Exception(sortSplit[1] + " model cannot be filtered.");
                     sort = $" ORDER BY {filterableModelAttribute.TableName}.{sortSplit[2]} {sortSplit[0]}";
+                }
+            }
+            else
+            {
+                sort = $" ORDER BY {tableName}.id ASC";
+                if (tableName == "operation")
+                {
+                    sort = $" ORDER BY {tableName}.operationid DESC";
+
                 }
             }
         }

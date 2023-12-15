@@ -27,6 +27,7 @@ namespace GrpcClient_PI_21_01
             // где?
             // именно, где мои кнопки?!)
             // кончились
+            //нормально вы тут чатитесь ребята, лампово сидите
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -59,6 +60,7 @@ namespace GrpcClient_PI_21_01
             dataGridViewApp.ColumnHeaderMouseClick += SortApps;
             dataGridViewOrg.ColumnHeaderMouseClick += SortOrganizations;
             ContractTable.ColumnHeaderMouseClick += SortContracts;
+            dataGridViewHistory.ColumnHeaderMouseClick += SortOperations;
 
             Task.Run(Setup);
         }
@@ -67,6 +69,7 @@ namespace GrpcClient_PI_21_01
         readonly Filter<App> appFilter = new();
         readonly Filter<Organization> orgFilter = new();
         readonly Filter<Contract> contrFilter = new();
+        readonly Filter<Operation> operationFilter = new();
         static private int _pageSize = 10;
 
         private async Task Setup()
@@ -474,18 +477,42 @@ namespace GrpcClient_PI_21_01
         readonly DataSet _dbHistory = new();
         private int _HistoryPage = 0;
         private int _HistoryPageMax = 0;
+        private readonly SemaphoreSlim operationGridSemaphore = new(1, 1);
+
 
         public async Task InicilisationHistory()
         {
+            
             if (await CheckPrivilege(NameMdels.History))
             {
-                _data = await OperationService.GetOperations(_HistoryPage);
-                CreateDataSet();
-                _HistoryPageMax = await OperationService.GetPageCount(_pageSize);
-                CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
+                await operationGridSemaphore.WaitAsync();
+                try
+                {
+                    var operations = await OperationService.GetOperations(_HistoryPage, operationFilter);
+                    OperationService.FillDataGrid(operations, dataGridViewHistory);
+                    _HistoryPageMax = await OperationService.GetPageCount(_pageSize, operationFilter);
+                    CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
+                }
+                finally { operationGridSemaphore.Release(); }
+                //_data = await OperationService.GetOperations(_HistoryPage);
+                ////CreateDataSet();
+                //OperationService.FillDataGrid(_data, dataGridViewHistory);
+
+                //_HistoryPageMax = await OperationService.GetPageCount(_pageSize);
+                //CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
 
             }
             else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private async void SortOperations(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var column = dataGridViewHistory.Columns[e.ColumnIndex];
+            foreach (DataGridViewColumn c in dataGridViewHistory.Columns)
+                if (column.Index != c.Index) c.HeaderCell.SortGlyphDirection = SortOrder.None;
+            SorterService.SortByColumn(operationFilter, column);
+            //await SetDataGridAct();
+            await InicilisationHistory();
         }
 
         public async void CreateDataSet()
