@@ -62,6 +62,7 @@
             label2=new Label();
             dataGridView2=new DataGridView();
             tabPage3=new TabPage();
+            buttonExcelContract=new Button();
             buttonPreviosContract=new Button();
             buttonNextContract=new Button();
             contractFiltersButton=new Button();
@@ -75,6 +76,7 @@
             Column5=new DataGridViewTextBoxColumn();
             Column6=new DataGridViewTextBoxColumn();
             tabPage4=new TabPage();
+            buttonExcelApp=new Button();
             buttonPreviosApps=new Button();
             buttonNextApps=new Button();
             applicationFiltersButton=new Button();
@@ -83,6 +85,7 @@
             AppDelete=new Button();
             dataGridViewApp=new DataGridView();
             tabPage5=new TabPage();
+            buttonExcelOrg=new Button();
             buttonPreviosOrganisations=new Button();
             buttonNextOrganisations=new Button();
             organizationFiltersButton=new Button();
@@ -91,6 +94,7 @@
             OrgEdit=new Button();
             OrgDelete=new Button();
             tabPage6=new TabPage();
+            buttonExcelHistory=new Button();
             buttonPriviosHistory=new Button();
             buttonNextHistory=new Button();
             dataGridViewHistory=new DataGridView();
@@ -100,10 +104,6 @@
             buttonNextContracts=new Button();
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
-            buttonExcelContract=new Button();
-            buttonExcelApp=new Button();
-            buttonExcelOrg=new Button();
-            buttonExcelHistory=new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
@@ -137,6 +137,7 @@
             tabControl1.SelectedIndex=0;
             tabControl1.Size=new Size(1382, 758);
             tabControl1.TabIndex=0;
+            tabControl1.SelectedIndexChanged+=tabControl1_SelectedIndexChanged_1;
             // 
             // tabPage1
             // 
@@ -489,6 +490,18 @@
             tabPage3.TabIndex=2;
             tabPage3.Text="Муниципальные контракты";
             // 
+            // buttonExcelContract
+            // 
+            buttonExcelContract.BackColor=Color.Cornsilk;
+            buttonExcelContract.FlatStyle=FlatStyle.Popup;
+            buttonExcelContract.Location=new Point(243, 633);
+            buttonExcelContract.Name="buttonExcelContract";
+            buttonExcelContract.Size=new Size(132, 76);
+            buttonExcelContract.TabIndex=23;
+            buttonExcelContract.Text="Экспорт в \r\nэксель";
+            buttonExcelContract.UseVisualStyleBackColor=false;
+            buttonExcelContract.Click+=buttonExportExel_Click;
+            // 
             // buttonPreviosContract
             // 
             buttonPreviosContract.BackColor=Color.Cornsilk;
@@ -637,6 +650,18 @@
             tabPage4.TabIndex=3;
             tabPage4.Text="Реестр заявок";
             // 
+            // buttonExcelApp
+            // 
+            buttonExcelApp.BackColor=Color.Cornsilk;
+            buttonExcelApp.FlatStyle=FlatStyle.Popup;
+            buttonExcelApp.Location=new Point(243, 618);
+            buttonExcelApp.Name="buttonExcelApp";
+            buttonExcelApp.Size=new Size(132, 76);
+            buttonExcelApp.TabIndex=26;
+            buttonExcelApp.Text="Экспорт в \r\nэксель";
+            buttonExcelApp.UseVisualStyleBackColor=false;
+            buttonExcelApp.Click+=buttonExportExel_Click;
+            // 
             // buttonPreviosApps
             // 
             buttonPreviosApps.BackColor=Color.Cornsilk;
@@ -749,6 +774,18 @@
             tabPage5.TabIndex=4;
             tabPage5.Text="Реестр организаций";
             // 
+            // buttonExcelOrg
+            // 
+            buttonExcelOrg.BackColor=Color.Cornsilk;
+            buttonExcelOrg.FlatStyle=FlatStyle.Popup;
+            buttonExcelOrg.Location=new Point(211, 627);
+            buttonExcelOrg.Name="buttonExcelOrg";
+            buttonExcelOrg.Size=new Size(132, 76);
+            buttonExcelOrg.TabIndex=28;
+            buttonExcelOrg.Text="Экспорт в \r\nэксель";
+            buttonExcelOrg.UseVisualStyleBackColor=false;
+            buttonExcelOrg.Click+=buttonExportExel_Click;
+            // 
             // buttonPreviosOrganisations
             // 
             buttonPreviosOrganisations.BackColor=Color.Cornsilk;
@@ -853,6 +890,18 @@
             tabPage6.Size=new Size(1374, 715);
             tabPage6.TabIndex=5;
             tabPage6.Text="История";
+            // 
+            // buttonExcelHistory
+            // 
+            buttonExcelHistory.BackColor=Color.Cornsilk;
+            buttonExcelHistory.FlatStyle=FlatStyle.Popup;
+            buttonExcelHistory.Location=new Point(6, 619);
+            buttonExcelHistory.Name="buttonExcelHistory";
+            buttonExcelHistory.Size=new Size(132, 76);
+            buttonExcelHistory.TabIndex=21;
+            buttonExcelHistory.Text="Экспорт в \r\nэксель";
+            buttonExcelHistory.UseVisualStyleBackColor=false;
+            buttonExcelHistory.Click+=buttonExportExel_Click;
             // 
             // buttonPriviosHistory
             // 
@@ -965,54 +1014,6 @@
             label7.Size=new Size(26, 16);
             label7.TabIndex=16;
             label7.Text="до:";
-            // 
-            // buttonExcelContract
-            // 
-            buttonExcelContract.BackColor=Color.Cornsilk;
-            buttonExcelContract.FlatStyle=FlatStyle.Popup;
-            buttonExcelContract.Location=new Point(243, 633);
-            buttonExcelContract.Name="buttonExcelContract";
-            buttonExcelContract.Size=new Size(132, 76);
-            buttonExcelContract.TabIndex=23;
-            buttonExcelContract.Text="Экспорт в \r\nэксель";
-            buttonExcelContract.UseVisualStyleBackColor=false;
-            buttonExcelContract.Click+=buttonExportExel_Click;
-            // 
-            // buttonExcelApp
-            // 
-            buttonExcelApp.BackColor=Color.Cornsilk;
-            buttonExcelApp.FlatStyle=FlatStyle.Popup;
-            buttonExcelApp.Location=new Point(243, 618);
-            buttonExcelApp.Name="buttonExcelApp";
-            buttonExcelApp.Size=new Size(132, 76);
-            buttonExcelApp.TabIndex=26;
-            buttonExcelApp.Text="Экспорт в \r\nэксель";
-            buttonExcelApp.UseVisualStyleBackColor=false;
-            buttonExcelApp.Click+=buttonExportExel_Click;
-            // 
-            // buttonExcelOrg
-            // 
-            buttonExcelOrg.BackColor=Color.Cornsilk;
-            buttonExcelOrg.FlatStyle=FlatStyle.Popup;
-            buttonExcelOrg.Location=new Point(211, 627);
-            buttonExcelOrg.Name="buttonExcelOrg";
-            buttonExcelOrg.Size=new Size(132, 76);
-            buttonExcelOrg.TabIndex=28;
-            buttonExcelOrg.Text="Экспорт в \r\nэксель";
-            buttonExcelOrg.UseVisualStyleBackColor=false;
-            buttonExcelOrg.Click+=buttonExportExel_Click;
-            // 
-            // buttonExcelHistory
-            // 
-            buttonExcelHistory.BackColor=Color.Cornsilk;
-            buttonExcelHistory.FlatStyle=FlatStyle.Popup;
-            buttonExcelHistory.Location=new Point(6, 619);
-            buttonExcelHistory.Name="buttonExcelHistory";
-            buttonExcelHistory.Size=new Size(132, 76);
-            buttonExcelHistory.TabIndex=21;
-            buttonExcelHistory.Text="Экспорт в \r\nэксель";
-            buttonExcelHistory.UseVisualStyleBackColor=false;
-            buttonExcelHistory.Click+=buttonExportExel_Click;
             // 
             // MainForm
             // 
