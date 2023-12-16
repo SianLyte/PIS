@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net.Sockets;
 using System.Reflection;
@@ -205,9 +206,11 @@ namespace GrpcServer_PI_21_01.Models
 
         public string GenerateSQLOperation(int page = -1)
         {
+
             var startQuery = $"SELECT DISTINCT operation.operationid, operation.actiontype, operation.modifiedobjectid, operation.modifiedtablename," +
-                $" operation.userid, operation.date FROM {tableName} " +
-                $"left join userr on operation.userid = userr.userid ";
+                $" operation.userid, operation.date, userr.name, userr.surname, userr.patronymic, userr.organizationid, userr.login, userr.privelegelevel, organization.namee FROM {tableName} " +
+                $"left join userr on operation.userid = userr.userid " +
+                $"left join organization on organization.id = userr.organizationid ";
             return GenerateSQL(page, startQuery);
         }
         //TODO
@@ -222,6 +225,14 @@ namespace GrpcServer_PI_21_01.Models
         public string GenerateSQLForCount()
         {
             var startQuery = $"SELECT count(*) FROM {tableName}";
+            return GenerateSQL(-1, startQuery);
+        }
+
+        public string GenerateSQLForActCount()
+        {
+            var startQuery = $"SELECT count(*) FROM {tableName} " +
+                $"left join act_catch_request on act.id = act_catch_request.act_id " +
+                $"left join catch_request on catch_request.id = act_catch_request.catch_request_id"; ;
             return GenerateSQL(-1, startQuery);
         }
 

@@ -105,7 +105,7 @@ namespace GrpcServer_PI_21_01.Data
         {
             try
             {
-                var query = new Filter<Act>(req.Filter).GenerateSQLForCount();
+                var query = new Filter<Act>(req.Filter).GenerateSQLForActCount();
                 using (NpgsqlCommand cmd = new(query) { Connection = cn })
                 {
 
