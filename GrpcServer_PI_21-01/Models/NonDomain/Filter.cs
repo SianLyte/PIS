@@ -68,16 +68,17 @@ namespace GrpcServer_PI_21_01.Models
                         throw new Exception(sortSplit[1] + " model cannot be filtered.");
                     sort = $" ORDER BY {filterableModelAttribute.TableName}.{sortSplit[2]} {sortSplit[0]}";
                 }
-            }
-            else
-            {
-                sort = $" ORDER BY {tableName}.id ASC";
-                if (tableName == "operation")
+                else
                 {
-                    sort = $" ORDER BY {tableName}.operationid DESC";
+                    sort = $" ORDER BY {tableName}.id ASC";
+                    if (tableName == "operation")
+                    {
+                        sort = $" ORDER BY {tableName}.operationid DESC";
 
+                    }
                 }
             }
+
         }
 
         public IReadOnlyList<string> AndFilters => andEquations;
@@ -233,29 +234,37 @@ namespace GrpcServer_PI_21_01.Models
         private string GenerateSQL(int page, string startQuery)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
+
             for (int i = 0; i < andEquations.Count; i++)
             {
-                var table = andEquations[i].Split('.', 2)[0];
-                var expression = andEquations[i].Split('.', 2)[1];
-                if (!dict.ContainsKey(table)) 
-                    dict.Add(table, $"({table}.{expression}");
+                var tableColumn = andEquations[i].Split(' ', 2)[0];
+                var expression = andEquations[i].Split(' ', 2)[1];
+                if (!dict.ContainsKey(tableColumn)) 
+                    dict.Add(tableColumn, $"({tableColumn} {expression} ");
                 else
-                    dict[table] += $" and {table}.{expression}";
+                    dict[tableColumn] += $" and {tableColumn} {expression} ";
             }
             for (int i = 0; i < orEquations.Count; i++)
             {
-                var table = orEquations[i].Split('.', 2)[0];
-                var expression = orEquations[i].Split('.', 2)[1];
-                if (andEquations.Count == 0 && !dict.ContainsKey(table))
-                    dict.Add(table, $"({table}.{expression}");
-                dict[table] += $" or {table}.{expression}";
+                var tableColumn = orEquations[i].Split(' ', 2)[0];
+                var expression = orEquations[i].Split(' ', 2)[1];
+                if (dict.ContainsKey(tableColumn))
+                    dict[tableColumn] += $" or {tableColumn} {expression}";
+                if (dict.ContainsKey(tableColumn) && andEquations.Count == 0)
+                {
+                    dict[tableColumn] += $" or {tableColumn} {expression}";
+                }
+
+                if (!dict.ContainsKey(tableColumn) || andEquations.Count == 0 )
+                    dict.Add(tableColumn, $"( {tableColumn} {expression}");
             }
             if (andEquations.Count > 0 || orEquations.Count > 0)
             {
                 startQuery += " WHERE ";
                 foreach (var table in dict.Keys)
                     startQuery += dict[table] + ") and ";
-                startQuery = startQuery.Remove(startQuery.Length - 5);
+                startQuery = startQuery.Remove(startQuery.Length - 6);
+                if (startQuery.Contains("(")) startQuery += ")";
                 //if (andEquations.Count > 0)
                 //    startQuery += $"{string.Join(" and ", andEquations)}";
                 //if (orEquations.Count > 0)

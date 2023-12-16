@@ -542,7 +542,7 @@ namespace GrpcServer_PI_21_01.Services
             return new OperationReply
             {
                 OperationId = operation.IdOperation,
-                Action = ActionType.ActionAdd, 
+                Action = operation.ActionType, 
                 ModifiedObjectId = int.Parse(operation.ModifiedObjectId), 
                 ModifiedTableName = operation.ModifiedTableName,
                 User = operation.Actor.ToReply(),

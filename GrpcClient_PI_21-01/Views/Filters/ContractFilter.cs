@@ -94,9 +94,7 @@ namespace GrpcClient_PI_21_01.Views.Filters
             //{
             //    if (locations.Items[i] is Location l)
             //    {
-            //        if (i == 0)
-            //            Filter.AndAddInnerJoinFilter<Location, int>(loc => loc.IdLocation, l.IdLocation.ToString(), FilterType.Equals);
-            //        else
+            //        
             //            Filter.OrAddInnerJoinFilter<Location, int>(loc => loc.IdLocation, l.IdLocation.ToString(), FilterType.Equals);
             //    }
             //}

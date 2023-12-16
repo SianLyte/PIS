@@ -120,9 +120,9 @@ namespace GrpcClient_PI_21_01.Views.Filters
             {
                 if (applications.Items[i] is App a)
                 {
-                    if (i == 0)
-                        Filter.AndAddInnerJoinFilter<App, int>(app => app.number, a.number.ToString(), FilterType.Equals);
-                    else
+                    //if (i == 0)
+                    //    Filter.AndAddInnerJoinFilter<App, int>(app => app.number, a.number.ToString(), FilterType.Equals);
+                    //else
                         Filter.OrAddInnerJoinFilter<App, int>(app => app.number, a.number.ToString(), FilterType.Equals);
                 }
             }
