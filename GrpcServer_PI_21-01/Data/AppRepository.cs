@@ -85,7 +85,7 @@ namespace GrpcServer_PI_21_01.Data
                     $"(created_at, territory, habitat, urgency, descr, client_category, cityid, status, organization_id)" +
                     $"VALUES ('{app.date}', '{app.territory}', '{app.animalHabiat}', {app.urgencyOfExecution}, " +
                     $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality.IdLocation}'," +
-                    $" '{AppStatus.Registered}') RETURNING id")
+                    $" '{AppStatus.Registered}', {app.organization.idOrg}) RETURNING id")
                 { Connection = cn };
                 {
                     cn.Open();

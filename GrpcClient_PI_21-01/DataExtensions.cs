@@ -77,6 +77,7 @@ namespace GrpcClient_PI_21_01
                 Territory = app.territory,
                 UrgencyOfExecution = app.urgencyOfExecution,
                 Actor = UserService.CurrentUser?.ToReply(),
+                Organization = app.organization.ToReply()
             };
         }
 
