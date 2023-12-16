@@ -19,7 +19,8 @@ namespace GrpcClient_PI_21_01.Controllers
                 reply.UrgencyOfExecution,
                 reply.AnimalDescription,
                 reply.ApplicantCategory,
-                reply.Status);
+                reply.Status,
+                reply.Organization.FromReply());
         }
 
         public static string[] ToDataArray(App app)

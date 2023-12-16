@@ -82,7 +82,7 @@ namespace GrpcServer_PI_21_01.Data
                 // этому ссылочному значению новое Id, которое было присвоено самой БД
                 //Applications.Add(app);
                 using NpgsqlCommand cmd = new($"INSERT INTO catch_request " +
-                    $"(created_at, territory, habitat, urgency, descr, client_category, cityid, status)" +
+                    $"(created_at, territory, habitat, urgency, descr, client_category, cityid, status, organization_id)" +
                     $"VALUES ('{app.date}', '{app.territory}', '{app.animalHabiat}', {app.urgencyOfExecution}, " +
                     $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality.IdLocation}'," +
                     $" '{AppStatus.Registered}') RETURNING id")
@@ -166,16 +166,17 @@ namespace GrpcServer_PI_21_01.Data
                     NpgsqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        appsEmpty.Add(new string[9] {
-                    reader[0].ToString(), //id
-                    reader[1].ToString(), //date
-                    reader[2].ToString(), //territory
-                    reader[3].ToString(), //habitat
-                    reader[4].ToString(), //urgency
-                    reader[5].ToString(), //descr
-                    reader[6].ToString(), //client_category
-                    reader[7].ToString(), //locality
-                    reader[8].ToString() //status
+                        appsEmpty.Add(new string[10] {
+                        reader[0].ToString(), //id
+                        reader[1].ToString(), //date
+                        reader[2].ToString(), //territory
+                        reader[3].ToString(), //habitat
+                        reader[4].ToString(), //urgency
+                        reader[5].ToString(), //descr
+                        reader[6].ToString(), //client_category
+                        reader[7].ToString(), //locality
+                        reader[8].ToString(), //status
+                        reader[9].ToString() //orgid
                     });
                     }
                     reader.Close();
@@ -183,8 +184,10 @@ namespace GrpcServer_PI_21_01.Data
                     for (int i = 0; i < appsEmpty.Count; i++)
                     {
                         var a = appsEmpty[i];
-                        App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), LocationRepository.GetLocation(int.Parse(a[7])), a[2], a[3], a[4], a[5], a[6], Enum.Parse<AppStatus>(a[8]));
+                        App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), LocationRepository.GetLocation(int.Parse(a[7])), a[2], a[3], a[4], a[5], a[6], Enum.Parse<AppStatus>(a[8]), OrgRepository.GetOrganization(int.Parse(a[9])));
                         apps.Add(app);
+                        
+                        
                     }
                 }
                 return apps;
@@ -217,13 +220,22 @@ namespace GrpcServer_PI_21_01.Data
                     arr[5] = reader[5].ToString();
                     arr[6] = reader[6].ToString();
                     arr[7] = reader[8].ToString();
+                    arr[8] = reader[9].ToString(); //orgid
                 }
                 var status = Enum.Parse<AppStatus>(arr[7]);
                 reader.Close();
                 if (!connectionAlreadyOpen)
                     cn.Close();
-                return new App(DateTime.Parse(arr[0]), id, LocationRepository.GetLocation(int.Parse(arr[1])),
-                    arr[2], arr[3], arr[4], arr[5], arr[6], status);
+                if (arr[8] != null) {
+                    return new App(DateTime.Parse(arr[0]), id, LocationRepository.GetLocation(int.Parse(arr[1])),
+                    arr[2], arr[3], arr[4], arr[5], arr[6], status, OrgRepository.GetOrganization(int.Parse(arr[8])));
+                }
+                else
+                {
+                    return new App(DateTime.Parse(arr[0]), id, LocationRepository.GetLocation(int.Parse(arr[1])),
+                arr[2], arr[3], arr[4], arr[5], arr[6], status, null);
+                }
+                
             }
             catch (Exception e)
             {

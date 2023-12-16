@@ -159,6 +159,8 @@ message ApplicationReply {
 	string applicantCategory = 8;
 	AppStatus status = 9;
 	UserReply actor = 10;
+	OrganizationReply organization = 11;
+
 }
 
 message AnimalCardReply {

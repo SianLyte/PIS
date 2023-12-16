@@ -39,7 +39,7 @@ namespace GrpcServer_PI_21_01.Data
         {
             try
             {
-                var query = new Filter<Operation>(r.Filter).GenerateSQL(r.Page);
+                var query = new Filter<Operation>(r.Filter).GenerateSQLOperation(r.Page);
                 List<Operation> operations = new();
                 List<string?[]> operationsEmpty = new();
 

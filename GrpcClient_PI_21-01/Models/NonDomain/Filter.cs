@@ -114,9 +114,11 @@ namespace GrpcClient_PI_21_01.Models
             sort = $"{sortType}.{typeof(ObjectType).Name}.{column}"; 
         }
 
+
         private static string GetColumnID<ObjectType, TValue>(Expression<Func<ObjectType, TValue>> selector)
         {
             var property = Filter<T>.GetProperty(selector);
+            
             var filterable = property.GetCustomAttributes<FilterableAttribute>().SingleOrDefault();
             if (filterable is null)
                 throw new InvalidFilterCriteriaException("Cannot filter property " + property.Name);
