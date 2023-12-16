@@ -9,6 +9,17 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             if (c.Tag is not Expression<Func<T, object>> exp)
                 throw new Exception("Column entity tags were empty");
+            ApplySorter(exp, filter, c);
+        }
+
+        public static void SortByColumnInnerJoin<ObjectType, T>(Expression<Func<ObjectType, object>> exp,
+            Filter<T> filter, DataGridViewColumn c)
+        {
+            ApplySorter(exp, filter, c);
+        }
+
+        static void ApplySorter<ObjectType, T>(Expression<Func<ObjectType, object>> exp, Filter<T> filter, DataGridViewColumn c)
+        {
             var currentSort = c.HeaderCell.SortGlyphDirection;
             c.HeaderCell.SortGlyphDirection =
                 currentSort == SortOrder.None ? SortOrder.Ascending :

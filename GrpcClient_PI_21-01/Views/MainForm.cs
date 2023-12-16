@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -534,7 +535,14 @@ namespace GrpcClient_PI_21_01
             var column = dataGridViewHistory.Columns[e.ColumnIndex];
             foreach (DataGridViewColumn c in dataGridViewHistory.Columns)
                 if (column.Index != c.Index) c.HeaderCell.SortGlyphDirection = SortOrder.None;
-            SorterService.SortByColumn(operationFilter, column);
+
+            if (column.Tag is not Expression<Func<Operation, object>> exp)
+            {
+                if (column.Tag is not Expression<Func<User, object>> expActor)
+                    throw new Exception("Column entity tags were empty");
+                else SorterService.SortByColumnInnerJoin(expActor, operationFilter, column);
+            }
+            else SorterService.SortByColumn(operationFilter, column);
             await InicilisationHistory();
         }
 
