@@ -615,6 +615,7 @@ namespace GrpcServer_PI_21_01.Services
                 Number = app.number,
                 Territory = app.territory,
                 UrgencyOfExecution = app.urgencyOfExecution,
+                Organization = app.organization.ToReply()
             };
         }
 
@@ -704,7 +705,8 @@ namespace GrpcServer_PI_21_01.Services
                 reply.UrgencyOfExecution,
                 reply.AnimalDescription,
                 reply.ApplicantCategory,
-                reply.Status);
+                reply.Status,
+                reply.Organization.FromReply());
         }
 
         public static AnimalCard FromReply(this AnimalCardReply reply)

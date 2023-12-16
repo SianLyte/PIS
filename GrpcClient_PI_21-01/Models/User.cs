@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace GrpcClient_PI_21_01.Models
 {
+    [FilterableModel]
     public class User
     {
+        [Filterable("userid")]
         public int IdUser { get; set; }
         //public string Login {get; set;}
         //public string Password { get; set; }
@@ -20,11 +22,23 @@ namespace GrpcClient_PI_21_01.Models
         //    Password = password;
         //    Role = role;
         //}
+        [Filterable("privelegelevel")]
+
         public string PrivelegeLevel { get; }
+        [Filterable("login")]
+
         public string Login { get; }
+        [Filterable("organizationid")]
+
         public Organization Organization { get; }
+        [Filterable("name")]
+
         public string Name { get; }
+        [Filterable("surname")]
+
         public string Surname { get; }
+        [Filterable("patronymic")]
+
         public string Patronymic { get; }
 
         public User(int idUser, string login, string privelegeLevel,

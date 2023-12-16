@@ -11,6 +11,7 @@ namespace GrpcClient_PI_21_01.Models
         public int ModifiedObjectId { get; set; }
         [Filterable("modifiedtablename")]
         public string ModifiedTableName { get; set; }
+
         [Filterable("user_id")]
         public User Actor { get; set; }
         [Filterable("date")]

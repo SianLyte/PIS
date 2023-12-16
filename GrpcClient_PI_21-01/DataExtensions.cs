@@ -168,7 +168,8 @@ namespace GrpcClient_PI_21_01
                 reply.UrgencyOfExecution,
                 reply.AnimalDescription,
                 reply.ApplicantCategory,
-                reply.Status);
+                reply.Status,
+                reply.Organization.FromReply());
         }
 
         public static AnimalCard FromReply(this AnimalCardReply reply)

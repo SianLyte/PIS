@@ -196,9 +196,17 @@ namespace GrpcServer_PI_21_01.Models
 
         public string GenerateSQLAct(int page = -1)
         {
-            var startQuery = $"SELECT DISTINCT act.id, dog_count, cat_count, organization_id, act.created_at, goal, municipal_contract_id FROM {tableName} " +
+            var startQuery = $"SELECT DISTINCT act.id, dog_count, cat_count, act.organization_id, act.created_at, goal, municipal_contract_id FROM {tableName} " +
                 $"left join act_catch_request on act.id = act_catch_request.act_id " +
                 $"left join catch_request on catch_request.id = act_catch_request.catch_request_id";
+            return GenerateSQL(page, startQuery);
+        }
+
+        public string GenerateSQLOperation(int page = -1)
+        {
+            var startQuery = $"SELECT DISTINCT operation.operationid, operation.actiontype, operation.modifiedobjectid, operation.modifiedtablename," +
+                $" operation.userid, operation.date FROM {tableName} " +
+                $"left join userr on operation.userid = userr.userid ";
             return GenerateSQL(page, startQuery);
         }
         //TODO

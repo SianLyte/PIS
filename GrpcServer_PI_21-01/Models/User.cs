@@ -9,15 +9,33 @@ using Npgsql;
 
 namespace GrpcServer_PI_21_01.Models
 {
+    [FilterableModel("userr")]
+
     public class User
     {
+        [Filterable("userid")]
+
         public int IdUser { get; set; }
+        [Filterable("login")]
+
         public string Login {get; set;}
+        [Filterable("password")]
+
         public string Password { get; set; }
+        [Filterable("privelefelevel")]
+
         public Roles PrivelegeLevel { get; }
+        [Filterable("name")]
+
         public string Name { get; }
+        [Filterable("surname")]
+
         public string Surname { get; }
+        [Filterable("patronymic")]
+
         public string Patronymic { get; }
+        [Filterable("organizationid")]
+
         public Organization Organization { get; }
 
         public User(int idUser, string login, string password, Roles privelegeLevel,

@@ -38,7 +38,10 @@ namespace GrpcServer_PI_21_01.Models
         [Filterable("status")]
         public AppStatus status { get; set; }
 
-        public App(DateTime date, int number, Location locality, string territory, string animalHabiat, string urgencyOfExecution, string animaldescription, string applicantCategory, AppStatus status)
+        [Filterable("organization_id")]
+        public Organization organization { get; set; }
+
+        public App(DateTime date, int number, Location locality, string territory, string animalHabiat, string urgencyOfExecution, string animaldescription, string applicantCategory, AppStatus status, Organization organization)
         {
             this.date = date;
             this.number = number;
@@ -49,6 +52,7 @@ namespace GrpcServer_PI_21_01.Models
             this.animaldescription = animaldescription;
             this.applicantCategory = applicantCategory;
             this.status = status;
+            this.organization = organization;
         }
         public override bool Equals(object? obj)
         {
