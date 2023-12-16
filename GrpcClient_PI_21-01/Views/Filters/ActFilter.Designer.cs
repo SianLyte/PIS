@@ -79,32 +79,40 @@
             // 
             // orgBox
             // 
+            orgBox.BackColor=Color.Wheat;
             orgBox.Controls.Add(orgComboBox);
+            orgBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             orgBox.Location=new Point(21, 12);
             orgBox.Name="orgBox";
-            orgBox.Size=new Size(606, 69);
+            orgBox.Size=new Size(753, 77);
             orgBox.TabIndex=2;
             orgBox.TabStop=false;
             orgBox.Text="По организации";
             // 
             // orgComboBox
             // 
+            orgComboBox.BackColor=Color.OldLace;
+            orgComboBox.Cursor=Cursors.PanNW;
             orgComboBox.DropDownStyle=ComboBoxStyle.DropDownList;
+            orgComboBox.FlatStyle=FlatStyle.Popup;
+            orgComboBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             orgComboBox.FormattingEnabled=true;
             orgComboBox.Location=new Point(15, 26);
             orgComboBox.Name="orgComboBox";
-            orgComboBox.Size=new Size(572, 28);
+            orgComboBox.Size=new Size(729, 38);
             orgComboBox.TabIndex=0;
             // 
             // animalBox
             // 
+            animalBox.BackColor=Color.Wheat;
             animalBox.Controls.Add(enableCatFilter);
             animalBox.Controls.Add(enableDogFilter);
             animalBox.Controls.Add(catBox);
             animalBox.Controls.Add(dogBox);
+            animalBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             animalBox.Location=new Point(21, 103);
             animalBox.Name="animalBox";
-            animalBox.Size=new Size(606, 313);
+            animalBox.Size=new Size(753, 312);
             animalBox.TabIndex=3;
             animalBox.TabStop=false;
             animalBox.Text="По количеству отловленных животных";
@@ -112,9 +120,10 @@
             // enableCatFilter
             // 
             enableCatFilter.AutoSize=true;
-            enableCatFilter.Location=new Point(325, 43);
+            enableCatFilter.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            enableCatFilter.Location=new Point(399, 43);
             enableCatFilter.Name="enableCatFilter";
-            enableCatFilter.Size=new Size(152, 24);
+            enableCatFilter.Size=new Size(207, 34);
             enableCatFilter.TabIndex=7;
             enableCatFilter.Text="Включить фильтр";
             enableCatFilter.UseVisualStyleBackColor=true;
@@ -122,15 +131,17 @@
             // enableDogFilter
             // 
             enableDogFilter.AutoSize=true;
-            enableDogFilter.Location=new Point(15, 43);
+            enableDogFilter.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            enableDogFilter.Location=new Point(16, 43);
             enableDogFilter.Name="enableDogFilter";
-            enableDogFilter.Size=new Size(152, 24);
+            enableDogFilter.Size=new Size(207, 34);
             enableDogFilter.TabIndex=4;
             enableDogFilter.Text="Включить фильтр";
             enableDogFilter.UseVisualStyleBackColor=true;
             // 
             // catBox
             // 
+            catBox.BackColor=Color.Wheat;
             catBox.Controls.Add(catNotLess);
             catBox.Controls.Add(catNotMore);
             catBox.Controls.Add(catLess);
@@ -138,9 +149,10 @@
             catBox.Controls.Add(catEqual);
             catBox.Controls.Add(catCount);
             catBox.Enabled=false;
-            catBox.Location=new Point(325, 73);
+            catBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            catBox.Location=new Point(399, 73);
             catBox.Name="catBox";
-            catBox.Size=new Size(262, 221);
+            catBox.Size=new Size(345, 233);
             catBox.TabIndex=6;
             catBox.TabStop=false;
             catBox.Text="Количество отловленных кошек";
@@ -148,9 +160,10 @@
             // catNotLess
             // 
             catNotLess.AutoSize=true;
-            catNotLess.Location=new Point(20, 179);
+            catNotLess.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            catNotLess.Location=new Point(20, 197);
             catNotLess.Name="catNotLess";
-            catNotLess.Size=new Size(97, 24);
+            catNotLess.Size=new Size(116, 34);
             catNotLess.TabIndex=5;
             catNotLess.TabStop=true;
             catNotLess.Text="Не менее";
@@ -159,9 +172,10 @@
             // catNotMore
             // 
             catNotMore.AutoSize=true;
-            catNotMore.Location=new Point(20, 149);
+            catNotMore.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            catNotMore.Location=new Point(20, 167);
             catNotMore.Name="catNotMore";
-            catNotMore.Size=new Size(95, 24);
+            catNotMore.Size=new Size(111, 34);
             catNotMore.TabIndex=4;
             catNotMore.TabStop=true;
             catNotMore.Text="Не более";
@@ -170,9 +184,10 @@
             // catLess
             // 
             catLess.AutoSize=true;
-            catLess.Location=new Point(20, 119);
+            catLess.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            catLess.Location=new Point(20, 137);
             catLess.Name="catLess";
-            catLess.Size=new Size(88, 24);
+            catLess.Size=new Size(103, 34);
             catLess.TabIndex=3;
             catLess.TabStop=true;
             catLess.Text="Меньше";
@@ -181,9 +196,10 @@
             // catMore
             // 
             catMore.AutoSize=true;
-            catMore.Location=new Point(20, 89);
+            catMore.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            catMore.Location=new Point(20, 107);
             catMore.Name="catMore";
-            catMore.Size=new Size(84, 24);
+            catMore.Size=new Size(99, 34);
             catMore.TabIndex=2;
             catMore.TabStop=true;
             catMore.Text="Больше";
@@ -192,9 +208,10 @@
             // catEqual
             // 
             catEqual.AutoSize=true;
-            catEqual.Location=new Point(20, 59);
+            catEqual.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            catEqual.Location=new Point(20, 77);
             catEqual.Name="catEqual";
-            catEqual.Size=new Size(72, 24);
+            catEqual.Size=new Size(85, 34);
             catEqual.TabIndex=1;
             catEqual.TabStop=true;
             catEqual.Text="Равно";
@@ -202,13 +219,16 @@
             // 
             // catCount
             // 
-            catCount.Location=new Point(20, 26);
+            catCount.BackColor=Color.OldLace;
+            catCount.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            catCount.Location=new Point(20, 36);
             catCount.Name="catCount";
-            catCount.Size=new Size(211, 27);
+            catCount.Size=new Size(211, 37);
             catCount.TabIndex=0;
             // 
             // dogBox
             // 
+            dogBox.BackColor=Color.Wheat;
             dogBox.Controls.Add(dogNotLess);
             dogBox.Controls.Add(dogNotMore);
             dogBox.Controls.Add(dogLess);
@@ -216,9 +236,10 @@
             dogBox.Controls.Add(dogEqual);
             dogBox.Controls.Add(dogCount);
             dogBox.Enabled=false;
-            dogBox.Location=new Point(15, 73);
+            dogBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dogBox.Location=new Point(6, 73);
             dogBox.Name="dogBox";
-            dogBox.Size=new Size(262, 221);
+            dogBox.Size=new Size(345, 231);
             dogBox.TabIndex=1;
             dogBox.TabStop=false;
             dogBox.Text="Количество отловленных собак";
@@ -226,9 +247,10 @@
             // dogNotLess
             // 
             dogNotLess.AutoSize=true;
-            dogNotLess.Location=new Point(20, 179);
+            dogNotLess.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dogNotLess.Location=new Point(20, 199);
             dogNotLess.Name="dogNotLess";
-            dogNotLess.Size=new Size(97, 24);
+            dogNotLess.Size=new Size(116, 34);
             dogNotLess.TabIndex=5;
             dogNotLess.TabStop=true;
             dogNotLess.Text="Не менее";
@@ -237,9 +259,10 @@
             // dogNotMore
             // 
             dogNotMore.AutoSize=true;
-            dogNotMore.Location=new Point(20, 149);
+            dogNotMore.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dogNotMore.Location=new Point(20, 169);
             dogNotMore.Name="dogNotMore";
-            dogNotMore.Size=new Size(95, 24);
+            dogNotMore.Size=new Size(111, 34);
             dogNotMore.TabIndex=4;
             dogNotMore.TabStop=true;
             dogNotMore.Text="Не более";
@@ -248,9 +271,10 @@
             // dogLess
             // 
             dogLess.AutoSize=true;
-            dogLess.Location=new Point(20, 119);
+            dogLess.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dogLess.Location=new Point(20, 139);
             dogLess.Name="dogLess";
-            dogLess.Size=new Size(88, 24);
+            dogLess.Size=new Size(103, 34);
             dogLess.TabIndex=3;
             dogLess.TabStop=true;
             dogLess.Text="Меньше";
@@ -259,9 +283,10 @@
             // dogMore
             // 
             dogMore.AutoSize=true;
-            dogMore.Location=new Point(20, 89);
+            dogMore.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dogMore.Location=new Point(20, 109);
             dogMore.Name="dogMore";
-            dogMore.Size=new Size(84, 24);
+            dogMore.Size=new Size(99, 34);
             dogMore.TabIndex=2;
             dogMore.TabStop=true;
             dogMore.Text="Больше";
@@ -270,9 +295,10 @@
             // dogEqual
             // 
             dogEqual.AutoSize=true;
-            dogEqual.Location=new Point(20, 59);
+            dogEqual.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dogEqual.Location=new Point(20, 79);
             dogEqual.Name="dogEqual";
-            dogEqual.Size=new Size(72, 24);
+            dogEqual.Size=new Size(85, 34);
             dogEqual.TabIndex=1;
             dogEqual.TabStop=true;
             dogEqual.Text="Равно";
@@ -280,38 +306,46 @@
             // 
             // dogCount
             // 
-            dogCount.Location=new Point(20, 26);
+            dogCount.BackColor=Color.OldLace;
+            dogCount.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dogCount.Location=new Point(20, 36);
             dogCount.Name="dogCount";
-            dogCount.Size=new Size(211, 27);
+            dogCount.Size=new Size(211, 37);
             dogCount.TabIndex=0;
             // 
             // goalBox
             // 
+            goalBox.BackColor=Color.Wheat;
             goalBox.Controls.Add(goalTextBox);
+            goalBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             goalBox.Location=new Point(21, 434);
             goalBox.Name="goalBox";
-            goalBox.Size=new Size(606, 78);
+            goalBox.Size=new Size(753, 77);
             goalBox.TabIndex=4;
             goalBox.TabStop=false;
             goalBox.Text="По цели отлова";
             // 
             // goalTextBox
             // 
+            goalTextBox.BackColor=Color.OldLace;
+            goalTextBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             goalTextBox.Location=new Point(15, 35);
             goalTextBox.Name="goalTextBox";
             goalTextBox.PlaceholderText="Если окно ввода текста пустое, то фильтр не применяется";
-            goalTextBox.Size=new Size(572, 27);
+            goalTextBox.Size=new Size(729, 37);
             goalTextBox.TabIndex=0;
             // 
             // groupBox1
             // 
+            groupBox1.BackColor=Color.Wheat;
             groupBox1.Controls.Add(toDateLabel);
             groupBox1.Controls.Add(toDate);
             groupBox1.Controls.Add(fromDateLabel);
             groupBox1.Controls.Add(fromDate);
+            groupBox1.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox1.Location=new Point(21, 529);
             groupBox1.Name="groupBox1";
-            groupBox1.Size=new Size(606, 88);
+            groupBox1.Size=new Size(753, 76);
             groupBox1.TabIndex=5;
             groupBox1.TabStop=false;
             groupBox1.Text="По дате отлова";
@@ -319,64 +353,77 @@
             // toDateLabel
             // 
             toDateLabel.AutoSize=true;
-            toDateLabel.Location=new Point(310, 42);
+            toDateLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            toDateLabel.Location=new Point(476, 24);
             toDateLabel.Name="toDateLabel";
-            toDateLabel.Size=new Size(31, 20);
+            toDateLabel.Size=new Size(44, 30);
             toDateLabel.TabIndex=3;
             toDateLabel.Text="До:";
             // 
             // toDate
             // 
-            toDate.Location=new Point(345, 39);
+            toDate.CalendarMonthBackground=Color.OldLace;
+            toDate.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            toDate.Location=new Point(526, 19);
             toDate.Name="toDate";
-            toDate.Size=new Size(221, 27);
+            toDate.Size=new Size(221, 37);
             toDate.TabIndex=2;
             // 
             // fromDateLabel
             // 
             fromDateLabel.AutoSize=true;
-            fromDateLabel.Location=new Point(37, 42);
+            fromDateLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            fromDateLabel.Location=new Point(6, 33);
             fromDateLabel.Name="fromDateLabel";
-            fromDateLabel.Size=new Size(29, 20);
+            fromDateLabel.Size=new Size(50, 30);
             fromDateLabel.TabIndex=1;
             fromDateLabel.Text="От:";
             // 
             // fromDate
             // 
-            fromDate.Location=new Point(70, 39);
+            fromDate.CalendarMonthBackground=Color.OldLace;
+            fromDate.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            fromDate.Location=new Point(62, 28);
             fromDate.Name="fromDate";
-            fromDate.Size=new Size(221, 27);
+            fromDate.Size=new Size(221, 37);
             fromDate.TabIndex=0;
             // 
             // contractBox
             // 
+            contractBox.BackColor=Color.Wheat;
             contractBox.Controls.Add(contractComboBox);
+            contractBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             contractBox.Location=new Point(21, 633);
             contractBox.Name="contractBox";
-            contractBox.Size=new Size(606, 72);
+            contractBox.Size=new Size(753, 77);
             contractBox.TabIndex=6;
             contractBox.TabStop=false;
             contractBox.Text="По муниципальному контракту";
             // 
             // contractComboBox
             // 
+            contractComboBox.BackColor=Color.OldLace;
             contractComboBox.DropDownStyle=ComboBoxStyle.DropDownList;
+            contractComboBox.FlatStyle=FlatStyle.Popup;
+            contractComboBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             contractComboBox.FormattingEnabled=true;
             contractComboBox.Location=new Point(16, 26);
             contractComboBox.Name="contractComboBox";
-            contractComboBox.Size=new Size(571, 28);
+            contractComboBox.Size=new Size(728, 38);
             contractComboBox.TabIndex=0;
             // 
             // applicationBox
             // 
+            applicationBox.BackColor=Color.Wheat;
+            applicationBox.Controls.Add(addApplication);
             applicationBox.Controls.Add(appListLabel);
             applicationBox.Controls.Add(removeApplication);
-            applicationBox.Controls.Add(addApplication);
             applicationBox.Controls.Add(appComboBox);
             applicationBox.Controls.Add(applications);
+            applicationBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             applicationBox.Location=new Point(21, 723);
             applicationBox.Name="applicationBox";
-            applicationBox.Size=new Size(606, 165);
+            applicationBox.Size=new Size(753, 224);
             applicationBox.TabIndex=7;
             applicationBox.TabStop=false;
             applicationBox.Text="По заявкам";
@@ -384,77 +431,94 @@
             // appListLabel
             // 
             appListLabel.AutoSize=true;
-            appListLabel.Location=new Point(190, 26);
+            appListLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            appListLabel.Location=new Point(399, 33);
             appListLabel.Name="appListLabel";
-            appListLabel.Size=new Size(129, 20);
+            appListLabel.Size=new Size(155, 30);
             appListLabel.TabIndex=4;
             appListLabel.Text="Перечень заявок";
             // 
             // removeApplication
             // 
-            removeApplication.Location=new Point(16, 121);
+            removeApplication.BackColor=Color.Cornsilk;
+            removeApplication.FlatStyle=FlatStyle.Popup;
+            removeApplication.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            removeApplication.ForeColor=Color.Black;
+            removeApplication.Location=new Point(6, 180);
             removeApplication.Name="removeApplication";
-            removeApplication.Size=new Size(149, 29);
+            removeApplication.Size=new Size(141, 38);
             removeApplication.TabIndex=3;
             removeApplication.Text="Убрать заявку";
-            removeApplication.UseVisualStyleBackColor=true;
+            removeApplication.UseVisualStyleBackColor=false;
             // 
             // addApplication
             // 
-            addApplication.Location=new Point(430, 83);
+            addApplication.BackColor=Color.Cornsilk;
+            addApplication.FlatStyle=FlatStyle.Popup;
+            addApplication.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            addApplication.ForeColor=Color.Black;
+            addApplication.Location=new Point(603, 178);
             addApplication.Name="addApplication";
-            addApplication.Size=new Size(157, 29);
+            addApplication.Size=new Size(141, 40);
             addApplication.TabIndex=2;
             addApplication.Text="Добавить заявку";
-            addApplication.UseVisualStyleBackColor=true;
+            addApplication.UseVisualStyleBackColor=false;
             // 
             // appComboBox
             // 
+            appComboBox.BackColor=Color.OldLace;
             appComboBox.DropDownStyle=ComboBoxStyle.DropDownList;
+            appComboBox.FlatStyle=FlatStyle.Popup;
+            appComboBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             appComboBox.FormattingEnabled=true;
-            appComboBox.Location=new Point(190, 49);
+            appComboBox.Location=new Point(399, 66);
             appComboBox.Name="appComboBox";
-            appComboBox.Size=new Size(397, 28);
+            appComboBox.Size=new Size(348, 38);
             appComboBox.TabIndex=1;
             // 
             // applications
             // 
+            applications.BackColor=Color.OldLace;
+            applications.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
             applications.FormattingEnabled=true;
-            applications.ItemHeight=20;
-            applications.Location=new Point(15, 26);
+            applications.ItemHeight=30;
+            applications.Location=new Point(6, 33);
             applications.Name="applications";
-            applications.Size=new Size(150, 84);
+            applications.Size=new Size(345, 124);
             applications.TabIndex=0;
             // 
             // apply
             // 
-            apply.BackColor=Color.FromArgb(200, 255, 200);
+            apply.BackColor=Color.Wheat;
             apply.FlatStyle=FlatStyle.Flat;
-            apply.Location=new Point(21, 905);
+            apply.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            apply.Location=new Point(27, 974);
             apply.Name="apply";
-            apply.Size=new Size(141, 29);
+            apply.Size=new Size(141, 40);
             apply.TabIndex=8;
             apply.Text="Применить";
             apply.UseVisualStyleBackColor=false;
             // 
             // reset
             // 
-            reset.BackColor=Color.FromArgb(255, 255, 200);
+            reset.BackColor=Color.Wheat;
             reset.FlatStyle=FlatStyle.Flat;
-            reset.Location=new Point(257, 905);
+            reset.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            reset.Location=new Point(313, 974);
             reset.Name="reset";
-            reset.Size=new Size(141, 29);
+            reset.Size=new Size(141, 40);
             reset.TabIndex=9;
             reset.Text="Сбросить";
             reset.UseVisualStyleBackColor=false;
             // 
             // close
             // 
-            close.BackColor=Color.FromArgb(255, 200, 200);
+            close.BackColor=Color.Wheat;
             close.FlatStyle=FlatStyle.Flat;
-            close.Location=new Point(486, 905);
+            close.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            close.Location=new Point(624, 974);
             close.Name="close";
-            close.Size=new Size(141, 29);
+            close.Size=new Size(141, 40);
             close.TabIndex=10;
             close.Text="Закрыть";
             close.UseVisualStyleBackColor=false;
@@ -463,7 +527,8 @@
             // 
             AutoScaleDimensions=new SizeF(8F, 20F);
             AutoScaleMode=AutoScaleMode.Font;
-            ClientSize=new Size(646, 946);
+            BackColor=Color.Tan;
+            ClientSize=new Size(789, 1026);
             Controls.Add(close);
             Controls.Add(reset);
             Controls.Add(apply);

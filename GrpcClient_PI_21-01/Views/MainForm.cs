@@ -435,7 +435,10 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.Contract))
                 if (ContractTable.CurrentRow != null)
                 {
-                    await ContractService.RemoveContract(int.Parse(ContractTable.CurrentRow.Cells[0].Value.ToString()));
+                    foreach (DataGridViewRow row in ContractTable.SelectedRows)
+                    {
+                        await ContractService.RemoveContract(int.Parse(row.Cells[0].Value.ToString()));
+                    }
                     await ShowContract();
                 }
         }
@@ -507,7 +510,7 @@ namespace GrpcClient_PI_21_01
 
         public async Task InicilisationHistory()
         {
-            
+
             if (await CheckPrivilege(NameMdels.History))
             {
                 await operationGridSemaphore.WaitAsync();
@@ -557,7 +560,7 @@ namespace GrpcClient_PI_21_01
             _HistoryPage++;
             await InicilisationHistory();
         }
-        
+
         private async void tabControl1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == tabPage6)
@@ -626,6 +629,7 @@ namespace GrpcClient_PI_21_01
 
             }
         }
+
 
     }
 }
