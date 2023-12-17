@@ -211,7 +211,9 @@ message ActAppReply {
 	int32 id = 1;
 	ActReply act = 2;
 	ApplicationReply app = 3;
-	UserReply actor = 4;
+	int32 countDogs = 4;
+	int32 countCats = 5;
+	UserReply actor = 6;
 }
 
 message LocationContractReply {

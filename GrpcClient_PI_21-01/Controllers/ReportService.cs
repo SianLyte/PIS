@@ -2,12 +2,13 @@
 using Grpc.Net.Client;
 using GrpcClient_PI_21_01.Models;
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.Office.Interop.Excel;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
     public static class ReportService
     {
-        private static async Task<List<Report>> GetReports(int page = -1, Filter<Report>? filter = null)
+        public static async Task<List<Report>> GetReports(int page = -1, Filter<Report>? filter = null)
         {
             var reports = new List<Report>();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
@@ -56,6 +57,37 @@ namespace GrpcClient_PI_21_01.Controllers
             //    otvRep.Add(old);
             //}
             //return otvRep;
+        }
+        public static async Task<bool> RemoveReport(int reportId)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+            var response = await client.RemoveReportAsync(new IdRequest()
+            {
+                Id = reportId,
+                Actor = UserService.CurrentUser?.ToReply()
+            });
+            return response.Successful;
+        }
+
+        public static async Task<bool> AddReport(Report rep)
+        {
+            rep.Id = -1;
+            var reply = rep.ToReply();
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+            var response = await client.AddReportAsync(reply);
+            rep.Id= response.ModifiedId ?? -1;
+            return response.Successful;
+        }
+
+        public static async Task<bool> UpdateReport(Report rep)
+        {
+            var reply = rep.ToReply();
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+            var response = await client.UpdateReportAsync(reply);
+            return response.Successful;
         }
     }
 }
