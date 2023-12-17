@@ -52,11 +52,19 @@
             pictureBox1=new PictureBox();
             tabPage2=new TabPage();
             button5=new Button();
-            button6=new Button();
-            button7=new Button();
-            dateTimePicker2=new DateTimePicker();
-            label2=new Label();
+            buttonAddReport=new Button();
+            buttonDeleteReport=new Button();
             dataGridViewReport=new DataGridView();
+            IdReport=new DataGridViewTextBoxColumn();
+            CreatedAt=new DataGridViewTextBoxColumn();
+            UpdateAt=new DataGridViewTextBoxColumn();
+            StartDate=new DataGridViewTextBoxColumn();
+            EndDate=new DataGridViewTextBoxColumn();
+            Profit=new DataGridViewTextBoxColumn();
+            AnimalsCount=new DataGridViewTextBoxColumn();
+            ClosedAppsCount=new DataGridViewTextBoxColumn();
+            User=new DataGridViewTextBoxColumn();
+            Status=new DataGridViewTextBoxColumn();
             checkBox1=new CheckBox();
             tabPage3=new TabPage();
             buttonExcelContract=new Button();
@@ -102,16 +110,6 @@
             buttonNextContracts=new Button();
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
-            IdReport=new DataGridViewTextBoxColumn();
-            CreatedAt=new DataGridViewTextBoxColumn();
-            UpdateAt=new DataGridViewTextBoxColumn();
-            StartDate=new DataGridViewTextBoxColumn();
-            EndDate=new DataGridViewTextBoxColumn();
-            Profit=new DataGridViewTextBoxColumn();
-            AnimalsCount=new DataGridViewTextBoxColumn();
-            ClosedAppsCount=new DataGridViewTextBoxColumn();
-            User=new DataGridViewTextBoxColumn();
-            Status=new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
@@ -360,10 +358,8 @@
             // 
             tabPage2.BackColor=Color.Tan;
             tabPage2.Controls.Add(button5);
-            tabPage2.Controls.Add(button6);
-            tabPage2.Controls.Add(button7);
-            tabPage2.Controls.Add(dateTimePicker2);
-            tabPage2.Controls.Add(label2);
+            tabPage2.Controls.Add(buttonAddReport);
+            tabPage2.Controls.Add(buttonDeleteReport);
             tabPage2.Controls.Add(dataGridViewReport);
             tabPage2.Controls.Add(checkBox1);
             tabPage2.Location=new Point(4, 39);
@@ -383,45 +379,28 @@
             button5.Text="Добавить";
             button5.UseVisualStyleBackColor=true;
             // 
-            // button6
+            // buttonAddReport
             // 
-            button6.BackColor=Color.Cornsilk;
-            button6.FlatStyle=FlatStyle.Popup;
-            button6.ForeColor=Color.Black;
-            button6.Location=new Point(1078, 639);
-            button6.Name="button6";
-            button6.Size=new Size(148, 45);
-            button6.TabIndex=11;
-            button6.Text="Изменить";
-            button6.UseVisualStyleBackColor=false;
+            buttonAddReport.BackColor=Color.Cornsilk;
+            buttonAddReport.FlatStyle=FlatStyle.Popup;
+            buttonAddReport.ForeColor=Color.Black;
+            buttonAddReport.Location=new Point(1003, 639);
+            buttonAddReport.Name="buttonAddReport";
+            buttonAddReport.Size=new Size(148, 45);
+            buttonAddReport.TabIndex=11;
+            buttonAddReport.Text="Добавить";
+            buttonAddReport.UseVisualStyleBackColor=false;
             // 
-            // button7
+            // buttonDeleteReport
             // 
-            button7.BackColor=Color.Cornsilk;
-            button7.FlatStyle=FlatStyle.Popup;
-            button7.Location=new Point(1233, 639);
-            button7.Name="button7";
-            button7.Size=new Size(132, 45);
-            button7.TabIndex=10;
-            button7.Text="Удалить";
-            button7.UseVisualStyleBackColor=false;
-            // 
-            // dateTimePicker2
-            // 
-            dateTimePicker2.Location=new Point(304, 644);
-            dateTimePicker2.Name="dateTimePicker2";
-            dateTimePicker2.Size=new Size(172, 37);
-            dateTimePicker2.TabIndex=9;
-            // 
-            // label2
-            // 
-            label2.AutoSize=true;
-            label2.BackColor=Color.SeaShell;
-            label2.Location=new Point(15, 646);
-            label2.Name="label2";
-            label2.Size=new Size(233, 30);
-            label2.TabIndex=8;
-            label2.Text="Реестр организаций от:";
+            buttonDeleteReport.BackColor=Color.Cornsilk;
+            buttonDeleteReport.FlatStyle=FlatStyle.Popup;
+            buttonDeleteReport.Location=new Point(1233, 639);
+            buttonDeleteReport.Name="buttonDeleteReport";
+            buttonDeleteReport.Size=new Size(132, 45);
+            buttonDeleteReport.TabIndex=10;
+            buttonDeleteReport.Text="Удалить";
+            buttonDeleteReport.UseVisualStyleBackColor=false;
             // 
             // dataGridViewReport
             // 
@@ -439,8 +418,80 @@
             dataGridViewReport.RowHeadersVisible=false;
             dataGridViewReport.RowHeadersWidth=51;
             dataGridViewReport.RowTemplate.Height=24;
-            dataGridViewReport.Size=new Size(1335, 599);
+            dataGridViewReport.Size=new Size(1359, 599);
             dataGridViewReport.TabIndex=7;
+            // 
+            // IdReport
+            // 
+            IdReport.HeaderText="Номер контракта";
+            IdReport.MinimumWidth=6;
+            IdReport.Name="IdReport";
+            IdReport.ReadOnly=true;
+            IdReport.Visible=false;
+            // 
+            // CreatedAt
+            // 
+            CreatedAt.HeaderText="Дата создания";
+            CreatedAt.MinimumWidth=6;
+            CreatedAt.Name="CreatedAt";
+            CreatedAt.ReadOnly=true;
+            CreatedAt.Visible=false;
+            // 
+            // UpdateAt
+            // 
+            UpdateAt.HeaderText="Обновлён";
+            UpdateAt.MinimumWidth=6;
+            UpdateAt.Name="UpdateAt";
+            UpdateAt.ReadOnly=true;
+            // 
+            // StartDate
+            // 
+            StartDate.HeaderText="Дата старта";
+            StartDate.MinimumWidth=6;
+            StartDate.Name="StartDate";
+            StartDate.ReadOnly=true;
+            // 
+            // EndDate
+            // 
+            EndDate.HeaderText="Дата окончания";
+            EndDate.MinimumWidth=6;
+            EndDate.Name="EndDate";
+            EndDate.ReadOnly=true;
+            // 
+            // Profit
+            // 
+            Profit.HeaderText="Доход";
+            Profit.MinimumWidth=6;
+            Profit.Name="Profit";
+            Profit.ReadOnly=true;
+            // 
+            // AnimalsCount
+            // 
+            AnimalsCount.HeaderText="Количество животных";
+            AnimalsCount.MinimumWidth=6;
+            AnimalsCount.Name="AnimalsCount";
+            AnimalsCount.ReadOnly=true;
+            // 
+            // ClosedAppsCount
+            // 
+            ClosedAppsCount.HeaderText="Количество закрытых заявок";
+            ClosedAppsCount.MinimumWidth=6;
+            ClosedAppsCount.Name="ClosedAppsCount";
+            ClosedAppsCount.ReadOnly=true;
+            // 
+            // User
+            // 
+            User.HeaderText="Пользователь";
+            User.MinimumWidth=6;
+            User.Name="User";
+            User.ReadOnly=true;
+            // 
+            // Status
+            // 
+            Status.HeaderText="Статус";
+            Status.MinimumWidth=6;
+            Status.Name="Status";
+            Status.ReadOnly=true;
             // 
             // checkBox1
             // 
@@ -995,78 +1046,6 @@
             label7.TabIndex=16;
             label7.Text="до:";
             // 
-            // IdReport
-            // 
-            IdReport.HeaderText="Номер контракта";
-            IdReport.MinimumWidth=6;
-            IdReport.Name="IdReport";
-            IdReport.ReadOnly=true;
-            IdReport.Visible=false;
-            // 
-            // CreatedAt
-            // 
-            CreatedAt.HeaderText="Дата создания";
-            CreatedAt.MinimumWidth=6;
-            CreatedAt.Name="CreatedAt";
-            CreatedAt.ReadOnly=true;
-            CreatedAt.Visible=false;
-            // 
-            // UpdateAt
-            // 
-            UpdateAt.HeaderText="Обновлён";
-            UpdateAt.MinimumWidth=6;
-            UpdateAt.Name="UpdateAt";
-            UpdateAt.ReadOnly=true;
-            // 
-            // StartDate
-            // 
-            StartDate.HeaderText="Дата старта";
-            StartDate.MinimumWidth=6;
-            StartDate.Name="StartDate";
-            StartDate.ReadOnly=true;
-            // 
-            // EndDate
-            // 
-            EndDate.HeaderText="Дата окончания";
-            EndDate.MinimumWidth=6;
-            EndDate.Name="EndDate";
-            EndDate.ReadOnly=true;
-            // 
-            // Profit
-            // 
-            Profit.HeaderText="Доход";
-            Profit.MinimumWidth=6;
-            Profit.Name="Profit";
-            Profit.ReadOnly=true;
-            // 
-            // AnimalsCount
-            // 
-            AnimalsCount.HeaderText="Количество животных";
-            AnimalsCount.MinimumWidth=6;
-            AnimalsCount.Name="AnimalsCount";
-            AnimalsCount.ReadOnly=true;
-            // 
-            // ClosedAppsCount
-            // 
-            ClosedAppsCount.HeaderText="Количество закрытых заявок";
-            ClosedAppsCount.MinimumWidth=6;
-            ClosedAppsCount.Name="ClosedAppsCount";
-            ClosedAppsCount.ReadOnly=true;
-            // 
-            // User
-            // 
-            User.HeaderText="Пользователь";
-            User.MinimumWidth=6;
-            User.Name="User";
-            User.ReadOnly=true;
-            // 
-            // Status
-            // 
-            Status.HeaderText="Статус";
-            Status.MinimumWidth=6;
-            Status.Name="Status";
-            Status.ReadOnly=true;
-            // 
             // MainForm
             // 
             AutoScaleMode=AutoScaleMode.Inherit;
@@ -1113,10 +1092,8 @@
         private DataGridView DataGridViewActs;
         private TabPage tabPage2;
         private Button button5;
-        private Button button6;
-        private Button button7;
-        private DateTimePicker dateTimePicker2;
-        private Label label2;
+        private Button buttonAddReport;
+        private Button buttonDeleteReport;
         private DataGridView dataGridViewReport;
         private TabPage tabPage3;
         private DataGridView ContractTable;

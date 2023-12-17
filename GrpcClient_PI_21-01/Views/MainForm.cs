@@ -53,6 +53,7 @@ namespace GrpcClient_PI_21_01
             ContractTable.CellMouseDoubleClick += ContractTable_CellMouseDoubleClick;
 
             //button1.Click += button1_Click;
+            buttonAddReport.Click += buttonAddReport_Click;
 
             buttonNextContract.Click += buttonNextContract_Click;
             buttonPreviosContract.Click += buttonPreviosContract_Click;
@@ -513,6 +514,11 @@ namespace GrpcClient_PI_21_01
                 var rep = new ReportForm();
                 rep.ShowDialog();
             }
+        }
+
+        private async void buttonAddReport_Click(object sender, EventArgs e)
+        {
+            OpenReport();
         }
 
         private async void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
