@@ -140,5 +140,9 @@ namespace GrpcClient_PI_21_01.Views.Filters
                             return ft;
             throw new Exception("Filter Type was null at checked radio button");
         }
+
+        private void enableExpirationDateFilter_CheckedChanged_1(object sender, EventArgs e)
+        {
+        }
     }
 }

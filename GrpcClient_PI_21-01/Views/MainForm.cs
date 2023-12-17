@@ -31,6 +31,7 @@ namespace GrpcClient_PI_21_01
             //нормально вы тут чатитесь ребята, лампово сидите
             // ((
             // и ведь никто даже не знает кто это пишет
+            // пам пам паааам (тревожные звуки)
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -167,7 +168,10 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.Act))
                 if (DataGridViewActs.CurrentRow != null)
                 {
-                    await ActService.RemoveAct(int.Parse(DataGridViewActs.CurrentRow.Cells[0].Value.ToString()));
+                    foreach (DataGridViewRow row in DataGridViewActs.SelectedRows)
+                    {
+                        await ActService.RemoveAct(int.Parse(row.Cells[0].Value.ToString()));
+                    }
                     await SetDataGridAct();
                 }
         }
@@ -257,11 +261,14 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.Org))
                 if (dataGridViewOrg.CurrentRow != null)
                 {
-                    var org = int.Parse(dataGridViewOrg.CurrentRow.Cells[0].Value.ToString());
-                    var a = await OrgService.RemoveOrganization(org);
-                    if (!a)
+                    foreach (DataGridViewRow row in dataGridViewOrg.SelectedRows)
                     {
-                        MessageBox.Show("Произошла ошибка");
+                        var org = int.Parse(row.Cells[0].Value.ToString());
+                        var a = await OrgService.RemoveOrganization(org);
+                        if (!a)
+                        {
+                            MessageBox.Show("Произошла ошибка");
+                        }
                     }
                     await SetDataGridOrg();
                 }
@@ -335,8 +342,11 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.App))
                 if (dataGridViewApp.CurrentRow != null)
                 {
-                    int app = Convert.ToInt32(dataGridViewApp.CurrentRow.Cells[1].Value.ToString());
-                    await AppService.RemoveApplication(app);
+                    foreach (DataGridViewRow row in dataGridViewApp.SelectedRows)
+                    {
+                        int app = Convert.ToInt32(row.Cells[1].Value.ToString());
+                        await AppService.RemoveApplication(app);
+                    }
                     await SetDataGridApp();
                 }
         }

@@ -57,9 +57,9 @@
             contractBox=new GroupBox();
             contractComboBox=new ComboBox();
             applicationBox=new GroupBox();
+            addApplication=new Button();
             appListLabel=new Label();
             removeApplication=new Button();
-            addApplication=new Button();
             appComboBox=new ComboBox();
             applications=new ListBox();
             apply=new Button();
@@ -428,6 +428,19 @@
             applicationBox.TabStop=false;
             applicationBox.Text="По заявкам";
             // 
+            // addApplication
+            // 
+            addApplication.BackColor=Color.Cornsilk;
+            addApplication.FlatStyle=FlatStyle.Popup;
+            addApplication.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            addApplication.ForeColor=Color.Black;
+            addApplication.Location=new Point(603, 178);
+            addApplication.Name="addApplication";
+            addApplication.Size=new Size(141, 40);
+            addApplication.TabIndex=2;
+            addApplication.Text="Добавить заявку";
+            addApplication.UseVisualStyleBackColor=false;
+            // 
             // appListLabel
             // 
             appListLabel.AutoSize=true;
@@ -450,19 +463,6 @@
             removeApplication.TabIndex=3;
             removeApplication.Text="Убрать заявку";
             removeApplication.UseVisualStyleBackColor=false;
-            // 
-            // addApplication
-            // 
-            addApplication.BackColor=Color.Cornsilk;
-            addApplication.FlatStyle=FlatStyle.Popup;
-            addApplication.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            addApplication.ForeColor=Color.Black;
-            addApplication.Location=new Point(603, 178);
-            addApplication.Name="addApplication";
-            addApplication.Size=new Size(141, 40);
-            addApplication.TabIndex=2;
-            addApplication.Text="Добавить заявку";
-            addApplication.UseVisualStyleBackColor=false;
             // 
             // appComboBox
             // 

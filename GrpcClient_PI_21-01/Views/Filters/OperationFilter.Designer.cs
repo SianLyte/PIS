@@ -28,421 +28,469 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.close = new System.Windows.Forms.Button();
-            this.reset = new System.Windows.Forms.Button();
-            this.apply = new System.Windows.Forms.Button();
-            this.actorBox = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.name = new System.Windows.Forms.TextBox();
-            this.surname = new System.Windows.Forms.TextBox();
-            this.patronymic = new System.Windows.Forms.TextBox();
-            this.patronymicLabel = new System.Windows.Forms.Label();
-            this.surnameLabel = new System.Windows.Forms.Label();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.orgComboBox = new System.Windows.Forms.ComboBox();
-            this.orgComboBoxLabel = new System.Windows.Forms.Label();
-            this.privelegeLabel = new System.Windows.Forms.Label();
-            this.privelegeComboBox = new System.Windows.Forms.ComboBox();
-            this.login = new System.Windows.Forms.TextBox();
-            this.loginLabel = new System.Windows.Forms.Label();
-            this.dateBox = new System.Windows.Forms.GroupBox();
-            this.fromDate = new System.Windows.Forms.DateTimePicker();
-            this.toDate = new System.Windows.Forms.DateTimePicker();
-            this.fromLabel = new System.Windows.Forms.Label();
-            this.toLabel = new System.Windows.Forms.Label();
-            this.idBox = new System.Windows.Forms.GroupBox();
-            this.id = new System.Windows.Forms.NumericUpDown();
-            this.idEqual = new System.Windows.Forms.RadioButton();
-            this.idMore = new System.Windows.Forms.RadioButton();
-            this.idLess = new System.Windows.Forms.RadioButton();
-            this.typeBox = new System.Windows.Forms.GroupBox();
-            this.actionAdd = new System.Windows.Forms.CheckBox();
-            this.actionUpdate = new System.Windows.Forms.CheckBox();
-            this.actionDelete = new System.Windows.Forms.CheckBox();
-            this.tableBox = new System.Windows.Forms.GroupBox();
-            this.tableComboBox = new System.Windows.Forms.ComboBox();
-            this.actorBox.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.dateBox.SuspendLayout();
-            this.idBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.id)).BeginInit();
-            this.typeBox.SuspendLayout();
-            this.tableBox.SuspendLayout();
-            this.SuspendLayout();
+            close=new Button();
+            reset=new Button();
+            apply=new Button();
+            actorBox=new GroupBox();
+            loginLabel=new Label();
+            login=new TextBox();
+            privelegeComboBox=new ComboBox();
+            privelegeLabel=new Label();
+            orgComboBoxLabel=new Label();
+            orgComboBox=new ComboBox();
+            groupBox2=new GroupBox();
+            nameLabel=new Label();
+            surnameLabel=new Label();
+            patronymicLabel=new Label();
+            patronymic=new TextBox();
+            surname=new TextBox();
+            name=new TextBox();
+            dateBox=new GroupBox();
+            toLabel=new Label();
+            fromLabel=new Label();
+            toDate=new DateTimePicker();
+            fromDate=new DateTimePicker();
+            idBox=new GroupBox();
+            idLess=new RadioButton();
+            idMore=new RadioButton();
+            idEqual=new RadioButton();
+            id=new NumericUpDown();
+            typeBox=new GroupBox();
+            actionDelete=new CheckBox();
+            actionUpdate=new CheckBox();
+            actionAdd=new CheckBox();
+            tableBox=new GroupBox();
+            tableComboBox=new ComboBox();
+            actorBox.SuspendLayout();
+            groupBox2.SuspendLayout();
+            dateBox.SuspendLayout();
+            idBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)id).BeginInit();
+            typeBox.SuspendLayout();
+            tableBox.SuspendLayout();
+            SuspendLayout();
             // 
             // close
             // 
-            this.close.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.close.Location = new System.Drawing.Point(495, 885);
-            this.close.Name = "close";
-            this.close.Size = new System.Drawing.Size(141, 29);
-            this.close.TabIndex = 16;
-            this.close.Text = "Закрыть";
-            this.close.UseVisualStyleBackColor = false;
+            close.BackColor=Color.Wheat;
+            close.FlatStyle=FlatStyle.Flat;
+            close.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            close.Location=new Point(561, 926);
+            close.Name="close";
+            close.Size=new Size(141, 37);
+            close.TabIndex=16;
+            close.Text="Закрыть";
+            close.UseVisualStyleBackColor=false;
             // 
             // reset
             // 
-            this.reset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(200)))));
-            this.reset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.reset.Location = new System.Drawing.Point(253, 885);
-            this.reset.Name = "reset";
-            this.reset.Size = new System.Drawing.Size(141, 29);
-            this.reset.TabIndex = 15;
-            this.reset.Text = "Сбросить";
-            this.reset.UseVisualStyleBackColor = false;
+            reset.BackColor=Color.Wheat;
+            reset.FlatStyle=FlatStyle.Flat;
+            reset.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            reset.Location=new Point(280, 926);
+            reset.Name="reset";
+            reset.Size=new Size(141, 37);
+            reset.TabIndex=15;
+            reset.Text="Сбросить";
+            reset.UseVisualStyleBackColor=false;
             // 
             // apply
             // 
-            this.apply.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(255)))), ((int)(((byte)(200)))));
-            this.apply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.apply.Location = new System.Drawing.Point(12, 885);
-            this.apply.Name = "apply";
-            this.apply.Size = new System.Drawing.Size(141, 29);
-            this.apply.TabIndex = 14;
-            this.apply.Text = "Применить";
-            this.apply.UseVisualStyleBackColor = false;
+            apply.BackColor=Color.Wheat;
+            apply.FlatStyle=FlatStyle.Flat;
+            apply.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            apply.Location=new Point(14, 926);
+            apply.Name="apply";
+            apply.Size=new Size(141, 37);
+            apply.TabIndex=14;
+            apply.Text="Применить";
+            apply.UseVisualStyleBackColor=false;
             // 
             // actorBox
             // 
-            this.actorBox.Controls.Add(this.loginLabel);
-            this.actorBox.Controls.Add(this.login);
-            this.actorBox.Controls.Add(this.privelegeComboBox);
-            this.actorBox.Controls.Add(this.privelegeLabel);
-            this.actorBox.Controls.Add(this.orgComboBoxLabel);
-            this.actorBox.Controls.Add(this.orgComboBox);
-            this.actorBox.Controls.Add(this.groupBox2);
-            this.actorBox.Location = new System.Drawing.Point(12, 12);
-            this.actorBox.Name = "actorBox";
-            this.actorBox.Size = new System.Drawing.Size(624, 450);
-            this.actorBox.TabIndex = 17;
-            this.actorBox.TabStop = false;
-            this.actorBox.Text = "По исполнителю операции";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.nameLabel);
-            this.groupBox2.Controls.Add(this.surnameLabel);
-            this.groupBox2.Controls.Add(this.patronymicLabel);
-            this.groupBox2.Controls.Add(this.patronymic);
-            this.groupBox2.Controls.Add(this.surname);
-            this.groupBox2.Controls.Add(this.name);
-            this.groupBox2.Location = new System.Drawing.Point(17, 26);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(587, 184);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "По ФИО";
-            // 
-            // name
-            // 
-            this.name.Location = new System.Drawing.Point(98, 35);
-            this.name.Name = "name";
-            this.name.PlaceholderText = "Если окно пустое, то фильтр не применяется";
-            this.name.Size = new System.Drawing.Size(468, 27);
-            this.name.TabIndex = 0;
-            // 
-            // surname
-            // 
-            this.surname.Location = new System.Drawing.Point(98, 86);
-            this.surname.Name = "surname";
-            this.surname.PlaceholderText = "Если окно пустое, то фильтр не применяется";
-            this.surname.Size = new System.Drawing.Size(468, 27);
-            this.surname.TabIndex = 1;
-            // 
-            // patronymic
-            // 
-            this.patronymic.Location = new System.Drawing.Point(98, 135);
-            this.patronymic.Name = "patronymic";
-            this.patronymic.PlaceholderText = "Если окно пустое, то фильтр не применяется";
-            this.patronymic.Size = new System.Drawing.Size(468, 27);
-            this.patronymic.TabIndex = 2;
-            // 
-            // patronymicLabel
-            // 
-            this.patronymicLabel.AutoSize = true;
-            this.patronymicLabel.Location = new System.Drawing.Point(6, 138);
-            this.patronymicLabel.Name = "patronymicLabel";
-            this.patronymicLabel.Size = new System.Drawing.Size(72, 20);
-            this.patronymicLabel.TabIndex = 3;
-            this.patronymicLabel.Text = "Отчество";
-            // 
-            // surnameLabel
-            // 
-            this.surnameLabel.AutoSize = true;
-            this.surnameLabel.Location = new System.Drawing.Point(6, 89);
-            this.surnameLabel.Name = "surnameLabel";
-            this.surnameLabel.Size = new System.Drawing.Size(73, 20);
-            this.surnameLabel.TabIndex = 4;
-            this.surnameLabel.Text = "Фамилия";
-            // 
-            // nameLabel
-            // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(6, 38);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(39, 20);
-            this.nameLabel.TabIndex = 5;
-            this.nameLabel.Text = "Имя";
-            // 
-            // orgComboBox
-            // 
-            this.orgComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.orgComboBox.FormattingEnabled = true;
-            this.orgComboBox.Location = new System.Drawing.Point(17, 244);
-            this.orgComboBox.Name = "orgComboBox";
-            this.orgComboBox.Size = new System.Drawing.Size(587, 28);
-            this.orgComboBox.TabIndex = 1;
-            // 
-            // orgComboBoxLabel
-            // 
-            this.orgComboBoxLabel.AutoSize = true;
-            this.orgComboBoxLabel.Location = new System.Drawing.Point(17, 221);
-            this.orgComboBoxLabel.Name = "orgComboBoxLabel";
-            this.orgComboBoxLabel.Size = new System.Drawing.Size(125, 20);
-            this.orgComboBoxLabel.TabIndex = 2;
-            this.orgComboBoxLabel.Text = "По организации";
-            // 
-            // privelegeLabel
-            // 
-            this.privelegeLabel.AutoSize = true;
-            this.privelegeLabel.Location = new System.Drawing.Point(17, 301);
-            this.privelegeLabel.Name = "privelegeLabel";
-            this.privelegeLabel.Size = new System.Drawing.Size(109, 20);
-            this.privelegeLabel.TabIndex = 3;
-            this.privelegeLabel.Text = "По должности";
-            // 
-            // privelegeComboBox
-            // 
-            this.privelegeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.privelegeComboBox.FormattingEnabled = true;
-            this.privelegeComboBox.Location = new System.Drawing.Point(17, 324);
-            this.privelegeComboBox.Name = "privelegeComboBox";
-            this.privelegeComboBox.Size = new System.Drawing.Size(587, 28);
-            this.privelegeComboBox.TabIndex = 4;
-            // 
-            // login
-            // 
-            this.login.Location = new System.Drawing.Point(16, 402);
-            this.login.Name = "login";
-            this.login.PlaceholderText = "Если окно пустое, то фильтр не применяется";
-            this.login.Size = new System.Drawing.Size(588, 27);
-            this.login.TabIndex = 5;
+            actorBox.BackColor=Color.Wheat;
+            actorBox.Controls.Add(loginLabel);
+            actorBox.Controls.Add(login);
+            actorBox.Controls.Add(privelegeComboBox);
+            actorBox.Controls.Add(privelegeLabel);
+            actorBox.Controls.Add(orgComboBoxLabel);
+            actorBox.Controls.Add(orgComboBox);
+            actorBox.Controls.Add(groupBox2);
+            actorBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            actorBox.Location=new Point(12, 12);
+            actorBox.Name="actorBox";
+            actorBox.Size=new Size(690, 474);
+            actorBox.TabIndex=17;
+            actorBox.TabStop=false;
+            actorBox.Text="По исполнителю операции";
             // 
             // loginLabel
             // 
-            this.loginLabel.AutoSize = true;
-            this.loginLabel.Location = new System.Drawing.Point(17, 379);
-            this.loginLabel.Name = "loginLabel";
-            this.loginLabel.Size = new System.Drawing.Size(81, 20);
-            this.loginLabel.TabIndex = 6;
-            this.loginLabel.Text = "По логину";
+            loginLabel.AutoSize=true;
+            loginLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            loginLabel.Location=new Point(16, 386);
+            loginLabel.Name="loginLabel";
+            loginLabel.Size=new Size(101, 30);
+            loginLabel.TabIndex=6;
+            loginLabel.Text="По логину";
+            // 
+            // login
+            // 
+            login.BackColor=Color.OldLace;
+            login.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            login.Location=new Point(16, 419);
+            login.Name="login";
+            login.PlaceholderText="Если окно пустое, то фильтр не применяется";
+            login.Size=new Size(668, 37);
+            login.TabIndex=5;
+            // 
+            // privelegeComboBox
+            // 
+            privelegeComboBox.BackColor=Color.OldLace;
+            privelegeComboBox.DropDownStyle=ComboBoxStyle.DropDownList;
+            privelegeComboBox.FlatStyle=FlatStyle.Popup;
+            privelegeComboBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            privelegeComboBox.FormattingEnabled=true;
+            privelegeComboBox.Location=new Point(17, 333);
+            privelegeComboBox.Name="privelegeComboBox";
+            privelegeComboBox.Size=new Size(667, 38);
+            privelegeComboBox.TabIndex=4;
+            // 
+            // privelegeLabel
+            // 
+            privelegeLabel.AutoSize=true;
+            privelegeLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            privelegeLabel.Location=new Point(16, 300);
+            privelegeLabel.Name="privelegeLabel";
+            privelegeLabel.Size=new Size(143, 30);
+            privelegeLabel.TabIndex=3;
+            privelegeLabel.Text="По должности";
+            // 
+            // orgComboBoxLabel
+            // 
+            orgComboBoxLabel.AutoSize=true;
+            orgComboBoxLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            orgComboBoxLabel.Location=new Point(16, 213);
+            orgComboBoxLabel.Name="orgComboBoxLabel";
+            orgComboBoxLabel.Size=new Size(150, 30);
+            orgComboBoxLabel.TabIndex=2;
+            orgComboBoxLabel.Text="По организации";
+            // 
+            // orgComboBox
+            // 
+            orgComboBox.BackColor=Color.OldLace;
+            orgComboBox.DropDownStyle=ComboBoxStyle.DropDownList;
+            orgComboBox.FlatStyle=FlatStyle.Popup;
+            orgComboBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            orgComboBox.FormattingEnabled=true;
+            orgComboBox.Location=new Point(16, 246);
+            orgComboBox.Name="orgComboBox";
+            orgComboBox.Size=new Size(667, 38);
+            orgComboBox.TabIndex=1;
+            // 
+            // groupBox2
+            // 
+            groupBox2.BackColor=Color.Wheat;
+            groupBox2.Controls.Add(nameLabel);
+            groupBox2.Controls.Add(surnameLabel);
+            groupBox2.Controls.Add(patronymicLabel);
+            groupBox2.Controls.Add(patronymic);
+            groupBox2.Controls.Add(surname);
+            groupBox2.Controls.Add(name);
+            groupBox2.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBox2.Location=new Point(17, 26);
+            groupBox2.Name="groupBox2";
+            groupBox2.Size=new Size(667, 184);
+            groupBox2.TabIndex=0;
+            groupBox2.TabStop=false;
+            groupBox2.Text="По ФИО";
+            // 
+            // nameLabel
+            // 
+            nameLabel.AutoSize=true;
+            nameLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            nameLabel.Location=new Point(6, 38);
+            nameLabel.Name="nameLabel";
+            nameLabel.Size=new Size(53, 30);
+            nameLabel.TabIndex=5;
+            nameLabel.Text="Имя";
+            // 
+            // surnameLabel
+            // 
+            surnameLabel.AutoSize=true;
+            surnameLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            surnameLabel.Location=new Point(6, 89);
+            surnameLabel.Name="surnameLabel";
+            surnameLabel.Size=new Size(92, 30);
+            surnameLabel.TabIndex=4;
+            surnameLabel.Text="Фамилия";
+            // 
+            // patronymicLabel
+            // 
+            patronymicLabel.AutoSize=true;
+            patronymicLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            patronymicLabel.Location=new Point(6, 138);
+            patronymicLabel.Name="patronymicLabel";
+            patronymicLabel.Size=new Size(108, 30);
+            patronymicLabel.TabIndex=3;
+            patronymicLabel.Text="Отчество";
+            // 
+            // patronymic
+            // 
+            patronymic.BackColor=Color.OldLace;
+            patronymic.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            patronymic.Location=new Point(120, 135);
+            patronymic.Name="patronymic";
+            patronymic.PlaceholderText="Если окно пустое, то фильтр не применяется";
+            patronymic.Size=new Size(541, 37);
+            patronymic.TabIndex=2;
+            // 
+            // surname
+            // 
+            surname.BackColor=Color.OldLace;
+            surname.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            surname.Location=new Point(120, 86);
+            surname.Name="surname";
+            surname.PlaceholderText="Если окно пустое, то фильтр не применяется";
+            surname.Size=new Size(541, 37);
+            surname.TabIndex=1;
+            // 
+            // name
+            // 
+            name.BackColor=Color.OldLace;
+            name.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            name.Location=new Point(120, 35);
+            name.Name="name";
+            name.PlaceholderText="Если окно пустое, то фильтр не применяется";
+            name.Size=new Size(541, 37);
+            name.TabIndex=0;
             // 
             // dateBox
             // 
-            this.dateBox.Controls.Add(this.toLabel);
-            this.dateBox.Controls.Add(this.fromLabel);
-            this.dateBox.Controls.Add(this.toDate);
-            this.dateBox.Controls.Add(this.fromDate);
-            this.dateBox.Location = new System.Drawing.Point(12, 479);
-            this.dateBox.Name = "dateBox";
-            this.dateBox.Size = new System.Drawing.Size(624, 96);
-            this.dateBox.TabIndex = 7;
-            this.dateBox.TabStop = false;
-            this.dateBox.Text = "По дате";
-            // 
-            // fromDate
-            // 
-            this.fromDate.CustomFormat = "dd/MM/yyyy HH:mm:ss";
-            this.fromDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.fromDate.Location = new System.Drawing.Point(75, 40);
-            this.fromDate.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
-            this.fromDate.Name = "fromDate";
-            this.fromDate.Size = new System.Drawing.Size(193, 27);
-            this.fromDate.TabIndex = 0;
-            // 
-            // toDate
-            // 
-            this.toDate.CustomFormat = "dd/MM/yyyy HH:mm:ss";
-            this.toDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.toDate.Location = new System.Drawing.Point(380, 40);
-            this.toDate.Name = "toDate";
-            this.toDate.Size = new System.Drawing.Size(193, 27);
-            this.toDate.TabIndex = 1;
-            // 
-            // fromLabel
-            // 
-            this.fromLabel.AutoSize = true;
-            this.fromLabel.Location = new System.Drawing.Point(42, 43);
-            this.fromLabel.Name = "fromLabel";
-            this.fromLabel.Size = new System.Drawing.Size(26, 20);
-            this.fromLabel.TabIndex = 2;
-            this.fromLabel.Text = "От";
+            dateBox.BackColor=Color.Wheat;
+            dateBox.Controls.Add(toLabel);
+            dateBox.Controls.Add(fromLabel);
+            dateBox.Controls.Add(toDate);
+            dateBox.Controls.Add(fromDate);
+            dateBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dateBox.Location=new Point(12, 504);
+            dateBox.Name="dateBox";
+            dateBox.Size=new Size(690, 96);
+            dateBox.TabIndex=7;
+            dateBox.TabStop=false;
+            dateBox.Text="По дате";
             // 
             // toLabel
             // 
-            this.toLabel.AutoSize = true;
-            this.toLabel.Location = new System.Drawing.Point(346, 43);
-            this.toLabel.Name = "toLabel";
-            this.toLabel.Size = new System.Drawing.Size(28, 20);
-            this.toLabel.TabIndex = 3;
-            this.toLabel.Text = "До";
+            toLabel.AutoSize=true;
+            toLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            toLabel.Location=new Point(346, 45);
+            toLabel.Name="toLabel";
+            toLabel.Size=new Size(39, 30);
+            toLabel.TabIndex=3;
+            toLabel.Text="До";
+            // 
+            // fromLabel
+            // 
+            fromLabel.AutoSize=true;
+            fromLabel.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            fromLabel.Location=new Point(6, 45);
+            fromLabel.Name="fromLabel";
+            fromLabel.Size=new Size(45, 30);
+            fromLabel.TabIndex=2;
+            fromLabel.Text="От";
+            // 
+            // toDate
+            // 
+            toDate.CalendarMonthBackground=Color.OldLace;
+            toDate.CustomFormat="dd/MM/yyyy";
+            toDate.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            toDate.Format=DateTimePickerFormat.Custom;
+            toDate.Location=new Point(391, 40);
+            toDate.Name="toDate";
+            toDate.Size=new Size(287, 37);
+            toDate.TabIndex=1;
+            // 
+            // fromDate
+            // 
+            fromDate.CalendarMonthBackground=Color.OldLace;
+            fromDate.CustomFormat="dd/MM/yyyy";
+            fromDate.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            fromDate.Format=DateTimePickerFormat.Custom;
+            fromDate.Location=new Point(57, 40);
+            fromDate.MinDate=new DateTime(2020, 1, 1, 0, 0, 0, 0);
+            fromDate.Name="fromDate";
+            fromDate.Size=new Size(274, 37);
+            fromDate.TabIndex=0;
             // 
             // idBox
             // 
-            this.idBox.Controls.Add(this.idLess);
-            this.idBox.Controls.Add(this.idMore);
-            this.idBox.Controls.Add(this.idEqual);
-            this.idBox.Controls.Add(this.id);
-            this.idBox.Location = new System.Drawing.Point(12, 595);
-            this.idBox.Name = "idBox";
-            this.idBox.Size = new System.Drawing.Size(297, 172);
-            this.idBox.TabIndex = 18;
-            this.idBox.TabStop = false;
-            this.idBox.Text = "По идентификационному номеру";
-            // 
-            // id
-            // 
-            this.id.Location = new System.Drawing.Point(23, 35);
-            this.id.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.id.Name = "id";
-            this.id.Size = new System.Drawing.Size(245, 27);
-            this.id.TabIndex = 0;
-            // 
-            // idEqual
-            // 
-            this.idEqual.AutoSize = true;
-            this.idEqual.Location = new System.Drawing.Point(23, 68);
-            this.idEqual.Name = "idEqual";
-            this.idEqual.Size = new System.Drawing.Size(72, 24);
-            this.idEqual.TabIndex = 1;
-            this.idEqual.TabStop = true;
-            this.idEqual.Tag = "Equals";
-            this.idEqual.Text = "Равно";
-            this.idEqual.UseVisualStyleBackColor = true;
-            // 
-            // idMore
-            // 
-            this.idMore.AutoSize = true;
-            this.idMore.Location = new System.Drawing.Point(23, 98);
-            this.idMore.Name = "idMore";
-            this.idMore.Size = new System.Drawing.Size(84, 24);
-            this.idMore.TabIndex = 2;
-            this.idMore.TabStop = true;
-            this.idMore.Tag = "GreaterThan";
-            this.idMore.Text = "Больше";
-            this.idMore.UseVisualStyleBackColor = true;
+            idBox.BackColor=Color.Wheat;
+            idBox.Controls.Add(idLess);
+            idBox.Controls.Add(idMore);
+            idBox.Controls.Add(idEqual);
+            idBox.Controls.Add(id);
+            idBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            idBox.Location=new Point(14, 612);
+            idBox.Name="idBox";
+            idBox.Size=new Size(331, 193);
+            idBox.TabIndex=18;
+            idBox.TabStop=false;
+            idBox.Text="По идентификационному номеру";
             // 
             // idLess
             // 
-            this.idLess.AutoSize = true;
-            this.idLess.Location = new System.Drawing.Point(23, 128);
-            this.idLess.Name = "idLess";
-            this.idLess.Size = new System.Drawing.Size(88, 24);
-            this.idLess.TabIndex = 3;
-            this.idLess.TabStop = true;
-            this.idLess.Tag = "LesserThan";
-            this.idLess.Text = "Меньше";
-            this.idLess.UseVisualStyleBackColor = true;
+            idLess.AutoSize=true;
+            idLess.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            idLess.Location=new Point(21, 153);
+            idLess.Name="idLess";
+            idLess.Size=new Size(103, 34);
+            idLess.TabIndex=3;
+            idLess.TabStop=true;
+            idLess.Tag="LesserThan";
+            idLess.Text="Меньше";
+            idLess.UseVisualStyleBackColor=true;
+            // 
+            // idMore
+            // 
+            idMore.AutoSize=true;
+            idMore.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            idMore.Location=new Point(21, 113);
+            idMore.Name="idMore";
+            idMore.Size=new Size(99, 34);
+            idMore.TabIndex=2;
+            idMore.TabStop=true;
+            idMore.Tag="GreaterThan";
+            idMore.Text="Больше";
+            idMore.UseVisualStyleBackColor=true;
+            // 
+            // idEqual
+            // 
+            idEqual.AutoSize=true;
+            idEqual.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            idEqual.Location=new Point(21, 78);
+            idEqual.Name="idEqual";
+            idEqual.Size=new Size(85, 34);
+            idEqual.TabIndex=1;
+            idEqual.TabStop=true;
+            idEqual.Tag="Equals";
+            idEqual.Text="Равно";
+            idEqual.UseVisualStyleBackColor=true;
+            // 
+            // id
+            // 
+            id.BackColor=Color.OldLace;
+            id.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            id.Location=new Point(21, 35);
+            id.Maximum=new decimal(new int[] { 10000000, 0, 0, 0 });
+            id.Name="id";
+            id.Size=new Size(245, 37);
+            id.TabIndex=0;
             // 
             // typeBox
             // 
-            this.typeBox.Controls.Add(this.actionDelete);
-            this.typeBox.Controls.Add(this.actionUpdate);
-            this.typeBox.Controls.Add(this.actionAdd);
-            this.typeBox.Location = new System.Drawing.Point(335, 595);
-            this.typeBox.Name = "typeBox";
-            this.typeBox.Size = new System.Drawing.Size(301, 172);
-            this.typeBox.TabIndex = 19;
-            this.typeBox.TabStop = false;
-            this.typeBox.Text = "По типу операции";
-            // 
-            // actionAdd
-            // 
-            this.actionAdd.AutoSize = true;
-            this.actionAdd.Location = new System.Drawing.Point(23, 39);
-            this.actionAdd.Name = "actionAdd";
-            this.actionAdd.Size = new System.Drawing.Size(191, 24);
-            this.actionAdd.TabIndex = 0;
-            this.actionAdd.Text = "Операции добавления";
-            this.actionAdd.UseVisualStyleBackColor = true;
-            // 
-            // actionUpdate
-            // 
-            this.actionUpdate.AutoSize = true;
-            this.actionUpdate.Location = new System.Drawing.Point(23, 69);
-            this.actionUpdate.Name = "actionUpdate";
-            this.actionUpdate.Size = new System.Drawing.Size(193, 24);
-            this.actionUpdate.TabIndex = 1;
-            this.actionUpdate.Text = "Операции обновления";
-            this.actionUpdate.UseVisualStyleBackColor = true;
+            typeBox.BackColor=Color.Wheat;
+            typeBox.Controls.Add(actionDelete);
+            typeBox.Controls.Add(actionUpdate);
+            typeBox.Controls.Add(actionAdd);
+            typeBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            typeBox.Location=new Point(358, 612);
+            typeBox.Name="typeBox";
+            typeBox.Size=new Size(344, 193);
+            typeBox.TabIndex=19;
+            typeBox.TabStop=false;
+            typeBox.Text="По типу операции";
             // 
             // actionDelete
             // 
-            this.actionDelete.AutoSize = true;
-            this.actionDelete.Location = new System.Drawing.Point(23, 99);
-            this.actionDelete.Name = "actionDelete";
-            this.actionDelete.Size = new System.Drawing.Size(172, 24);
-            this.actionDelete.TabIndex = 2;
-            this.actionDelete.Text = "Операции удаления";
-            this.actionDelete.UseVisualStyleBackColor = true;
+            actionDelete.AutoSize=true;
+            actionDelete.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            actionDelete.Location=new Point(22, 116);
+            actionDelete.Name="actionDelete";
+            actionDelete.Size=new Size(205, 34);
+            actionDelete.TabIndex=2;
+            actionDelete.Text="Операции удаления";
+            actionDelete.UseVisualStyleBackColor=true;
+            // 
+            // actionUpdate
+            // 
+            actionUpdate.AutoSize=true;
+            actionUpdate.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            actionUpdate.Location=new Point(21, 76);
+            actionUpdate.Name="actionUpdate";
+            actionUpdate.Size=new Size(224, 34);
+            actionUpdate.TabIndex=1;
+            actionUpdate.Text="Операции обновления";
+            actionUpdate.UseVisualStyleBackColor=true;
+            // 
+            // actionAdd
+            // 
+            actionAdd.AutoSize=true;
+            actionAdd.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            actionAdd.Location=new Point(22, 36);
+            actionAdd.Name="actionAdd";
+            actionAdd.Size=new Size(223, 34);
+            actionAdd.TabIndex=0;
+            actionAdd.Text="Операции добавления";
+            actionAdd.UseVisualStyleBackColor=true;
             // 
             // tableBox
             // 
-            this.tableBox.Controls.Add(this.tableComboBox);
-            this.tableBox.Location = new System.Drawing.Point(12, 784);
-            this.tableBox.Name = "tableBox";
-            this.tableBox.Size = new System.Drawing.Size(626, 79);
-            this.tableBox.TabIndex = 20;
-            this.tableBox.TabStop = false;
-            this.tableBox.Text = "По таблице операции";
+            tableBox.BackColor=Color.Wheat;
+            tableBox.Controls.Add(tableComboBox);
+            tableBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            tableBox.Location=new Point(12, 819);
+            tableBox.Name="tableBox";
+            tableBox.Size=new Size(690, 92);
+            tableBox.TabIndex=20;
+            tableBox.TabStop=false;
+            tableBox.Text="По таблице операции";
             // 
             // tableComboBox
             // 
-            this.tableComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.tableComboBox.FormattingEnabled = true;
-            this.tableComboBox.Location = new System.Drawing.Point(17, 35);
-            this.tableComboBox.Name = "tableComboBox";
-            this.tableComboBox.Size = new System.Drawing.Size(587, 28);
-            this.tableComboBox.TabIndex = 0;
+            tableComboBox.BackColor=Color.OldLace;
+            tableComboBox.DropDownStyle=ComboBoxStyle.DropDownList;
+            tableComboBox.FlatStyle=FlatStyle.Popup;
+            tableComboBox.Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            tableComboBox.FormattingEnabled=true;
+            tableComboBox.Location=new Point(17, 35);
+            tableComboBox.Name="tableComboBox";
+            tableComboBox.Size=new Size(661, 38);
+            tableComboBox.TabIndex=0;
             // 
             // OperationFilter
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(648, 926);
-            this.Controls.Add(this.tableBox);
-            this.Controls.Add(this.typeBox);
-            this.Controls.Add(this.idBox);
-            this.Controls.Add(this.dateBox);
-            this.Controls.Add(this.actorBox);
-            this.Controls.Add(this.close);
-            this.Controls.Add(this.reset);
-            this.Controls.Add(this.apply);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.Name = "OperationFilter";
-            this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Фильтры: Журнал операций";
-            this.actorBox.ResumeLayout(false);
-            this.actorBox.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.dateBox.ResumeLayout(false);
-            this.dateBox.PerformLayout();
-            this.idBox.ResumeLayout(false);
-            this.idBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.id)).EndInit();
-            this.typeBox.ResumeLayout(false);
-            this.typeBox.PerformLayout();
-            this.tableBox.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions=new SizeF(8F, 20F);
+            AutoScaleMode=AutoScaleMode.Font;
+            BackColor=Color.Tan;
+            ClientSize=new Size(714, 975);
+            Controls.Add(tableBox);
+            Controls.Add(typeBox);
+            Controls.Add(idBox);
+            Controls.Add(dateBox);
+            Controls.Add(actorBox);
+            Controls.Add(close);
+            Controls.Add(reset);
+            Controls.Add(apply);
+            FormBorderStyle=FormBorderStyle.FixedSingle;
+            MaximizeBox=false;
+            Name="OperationFilter";
+            ShowIcon=false;
+            StartPosition=FormStartPosition.CenterParent;
+            Text="Фильтры: Журнал операций";
+            actorBox.ResumeLayout(false);
+            actorBox.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            dateBox.ResumeLayout(false);
+            dateBox.PerformLayout();
+            idBox.ResumeLayout(false);
+            idBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)id).EndInit();
+            typeBox.ResumeLayout(false);
+            typeBox.PerformLayout();
+            tableBox.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
