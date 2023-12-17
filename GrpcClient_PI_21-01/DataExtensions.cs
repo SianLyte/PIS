@@ -213,5 +213,20 @@ namespace GrpcClient_PI_21_01
                 User.FromReply(r.User),
                 r.Date.ToDateTime());
         }
+
+        public static Report FromReply(this ReportReply r)
+        {
+            return new Report(
+                r.Id,
+                r.CreatedAt.ToDateTime(),
+                r.UpdatedAt.ToDateTime(),
+                r.StartDate.ToDateTime(),
+                r.EndDate.ToDateTime(),
+                r.Profit,
+                r.ClosedAppsCount,
+                r.AnimalsCount,
+                User.FromReply(r.User),
+                r.Status);
+        }
     }
 }

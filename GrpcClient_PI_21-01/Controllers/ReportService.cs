@@ -20,31 +20,31 @@ namespace GrpcClient_PI_21_01.Controllers
             //});
             var responseStream = serverData.ResponseStream;
             await foreach (var response in responseStream.ReadAllAsync())
-                reports.Add(response);
+                reports.Add(response.FromReply());
             return reports;
-
         }
 
 
 
         public static async Task<List<string[]>> GenereteReport(DateTime start, DateTime finish)
         {
-            var rep = await GetReports(start, finish);
-            var otvRep = new List<string[]>();
-            foreach (var item in rep)
-            {
-                var old = new string[]
-                {
-                    //item.DateStart.ToString(),
-                    //item.DateFinish.ToString(),
-                    item.Locality.City,
-                    item.ClosedAppCount.ToString(),
-                    item.CapturedAnimalsCount.ToString(),
-                    item.Summary.ToString("F2")
-                };
-                otvRep.Add(old);
-            }
-            return otvRep;
+            throw new NotImplementedException();
+            //var rep = await GetReports(start, finish);
+            //var otvRep = new List<string[]>();
+            //foreach (var item in rep)
+            //{
+            //    var old = new string[]
+            //    {
+            //        //item.DateStart.ToString(),
+            //        //item.DateFinish.ToString(),
+            //        item.Locality.City,
+            //        item.ClosedAppCount.ToString(),
+            //        item.CapturedAnimalsCount.ToString(),
+            //        item.Summary.ToString("F2")
+            //    };
+            //    otvRep.Add(old);
+            //}
+            //return otvRep;
         }
     }
 }
