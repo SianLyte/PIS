@@ -8,6 +8,8 @@ namespace GrpcClient_PI_21_01.Controllers
 {
     public static class ReportService
     {
+
+
         public static async Task<List<Report>> GetReports(int page = -1, Filter<Report>? filter = null)
         {
             var reports = new List<Report>();
@@ -25,6 +27,13 @@ namespace GrpcClient_PI_21_01.Controllers
             return reports;
         }
 
+        public static async Task<int> GetPageCount(int pageSize, Filter<Organization>? filter)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+            var pageCount = await client.GetReportsPageCountAsync(UserService.GenerateDataRequest(pageSize, filter));
+            return pageCount.Count;
+        }
 
 
         public static async Task<Report> GenereteReport(DateTime start, DateTime finish)

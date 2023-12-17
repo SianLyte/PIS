@@ -285,8 +285,46 @@ namespace GrpcServer_PI_21_01.Data
             }
         }
 
+        public static bool CheckCatchedAnimals(App app)
+        {
+            try
+            {
+                using NpgsqlCommand cmd = new($"SELECT count_dogs, count_cats FROM act_catch_request WHERE catch_request_id = {app.number} ")
+                { Connection = cn };
+                {
+                    var AppCatchedAnimals = 0;
+                    cn.Open();
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        AppCatchedAnimals += int.Parse(reader[3].ToString());
+                        AppCatchedAnimals += int.Parse(reader[4].ToString());
+                    };
+                    reader.Close();
+                    cn.Close();
+                    if (AppCatchedAnimals >= app.animalCount)
+                    {
+                        var a = new App(app.date, app.number, app.locality, app.territory, app.animalHabiat, app.urgencyOfExecution,
+                            app.animaldescription, app.applicantCategory, AppStatus.Fulfilled, app.organization, app.animalCount);
+                        AppRepository.UpdateApplication(a);
+                        return true;
+                    }
+                    return false;
+                }
+                
+            }
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                return false;
+                throw;
+            }
+        }
+
         public static bool AddActApp(ActApp actApp)
         {
+
             try
             {
                 using NpgsqlCommand cmd = new($"INSERT INTO act_catch_request " +
@@ -299,6 +337,8 @@ namespace GrpcServer_PI_21_01.Data
                     actApp.ActAppNumber = returnValue;
                     cn.Close();
                 }
+                CheckCatchedAnimals(actApp.Application);
+                
                 // 'A' подаётся с Id = -1. После добавления в БД нужно присвоить
                 // этому ссылочному значению новое Id, которое было присвоено самой БД
 
@@ -331,6 +371,7 @@ namespace GrpcServer_PI_21_01.Data
                     cmd.ExecuteNonQuery();
                     cn.Close();
                 }
+                CheckCatchedAnimals(actApp.Application);
                 return true;
             }
             catch (Exception e)

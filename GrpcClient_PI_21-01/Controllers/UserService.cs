@@ -20,7 +20,7 @@ namespace GrpcClient_PI_21_01.Controllers
             }
             return null;
         }
-
+        
         public static void LogIn(User? user)
         {
             CurrentUser = user;

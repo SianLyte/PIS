@@ -33,8 +33,16 @@ namespace GrpcServer_PI_21_01.Models
             {
                 if (!CheckCorrectFormat()) // проверка на попытки нежелаемых SQL инжектов
                     throw new Exception("Incorrect reply format recieved. Filter reply is corrupted");
-                andEquations.AddRange(reply.AndEquations.Select(eq => tableName + "." + eq));
-                orEquations.AddRange(reply.OrEquations.Select(eq => tableName + "." + eq));
+                andEquations.AddRange(reply.AndEquations.Select(eq => 
+                {
+                    if (eq.Contains(tableName)) return eq;
+                    else return tableName + "." + eq;
+                }));
+                orEquations.AddRange(reply.OrEquations.Select(eq =>
+                {
+                    if (eq.Contains(tableName)) return eq;
+                    else return tableName + "." + eq;
+                }));
                 andEquations.AddRange(reply.AndInnerEquations.Select(eq =>
                 {
                     var typeName = eq[..eq.IndexOf('.')];
@@ -241,7 +249,7 @@ namespace GrpcServer_PI_21_01.Models
             var startQuery = $"SELECT * FROM {tableName}";
             return GenerateSQL(page, startQuery);
         }
-
+        
         private string GenerateSQL(int page, string startQuery)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
