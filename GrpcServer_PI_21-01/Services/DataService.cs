@@ -542,10 +542,10 @@ namespace GrpcServer_PI_21_01.Services
             return new ReportReply()
             {
                 Id = rep.Id,
-                CreatedAt = rep.CreatedAt.ToTimestamp(),
-                UpdatedAt = rep.UpdatedAt.ToTimestamp(),
-                StartDate = rep.StartDate.ToTimestamp(),
-                EndDate = rep.EndDate.ToTimestamp(),
+                CreatedAt = rep.CreatedAt.ToUtc().ToTimestamp(),
+                UpdatedAt = rep.UpdatedAt.ToUtc().ToTimestamp(),
+                StartDate = rep.StartDate.ToUtc().ToTimestamp(),
+                EndDate = rep.EndDate.ToUtc().ToTimestamp(),
                 Profit
                 = rep.Profit,
                 ClosedAppsCount = rep.ClosedAppsCount,
