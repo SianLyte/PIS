@@ -26,9 +26,20 @@ namespace GrpcClient_PI_21_01.Controllers
 
 
 
-        public static async Task<List<string[]>> GenereteReport(DateTime start, DateTime finish)
+        public static async Task<Report> GenereteReport(DateTime start, DateTime finish)
         {
-            throw new NotImplementedException();
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+
+            var request = new Report_FilterReply()
+            {
+                Id = -1,
+                BeginDate = start.ToTimestamp(),
+                EndDate = finish.ToTimestamp(),
+                Actor = UserService.CurrentUser?.ToReply(),
+            };
+            var report = await client.GenerateReportAsync(request);
+            return report.FromReply();
             //var rep = await GetReports(start, finish);
             //var otvRep = new List<string[]>();
             //foreach (var item in rep)
