@@ -132,7 +132,31 @@ namespace GrpcServer_PI_21_01.Data
 
         public static int GetActAppMaxPage(DataRequest xXxXxThe_request420xXxXx)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = new Filter<ActApp>(xXxXxThe_request420xXxXx.Filter).GenerateSQLForActCount();
+                using (NpgsqlCommand cmd = new(query) { Connection = cn })
+                {
+
+                    cn.Open();
+                    string count = "";
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        count = reader[0].ToString();
+                    }
+                    reader.Close();
+                    cn.Close();
+                    var a = Math.Ceiling((decimal)int.Parse(count) / xXxXxThe_request420xXxXx.Page);
+                    return (int)a;
+                };
+            }
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public static List<Act> GetActs(DataRequest request)
@@ -203,10 +227,12 @@ namespace GrpcServer_PI_21_01.Data
                         arr[0] = reader[0].ToString();
                         arr[1] = reader[1].ToString();
                         arr[2] = reader[2].ToString();
+                        arr[3] = reader[3].ToString();
+                        arr[4] = reader[4].ToString();
                     }
                     reader.Close();
                     cn.Close();
-                    return new ActApp(int.Parse(arr[0]), GetAct(int.Parse(arr[1])), AppRepository.GetApplication(int.Parse(arr[2])));
+                    return new ActApp(int.Parse(arr[0]), GetAct(int.Parse(arr[1])), AppRepository.GetApplication(int.Parse(arr[2])), int.Parse(arr[3]), int.Parse(arr[4]));
                 };
             }
             catch (Exception e)
@@ -231,10 +257,12 @@ namespace GrpcServer_PI_21_01.Data
                     NpgsqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        actsEmpty.Add(new string[3] {
+                        actsEmpty.Add(new string[5] {
                         reader[0].ToString(), //id
                         reader[1].ToString(), //act_id
-                        reader[2].ToString()  //app_id
+                        reader[2].ToString(),  //app_id
+                        reader[3].ToString(), //dogs
+                        reader[4].ToString()  //cats
                     });
                     }
                     reader.Close();
@@ -244,7 +272,7 @@ namespace GrpcServer_PI_21_01.Data
                         var actEmpty = actsEmpty[i];
                         App app = AppRepository.GetApplication(int.Parse(actEmpty[2].ToString()));
                         Act act = GetAct(int.Parse(actEmpty[1]));
-                        actsApps.Add(new ActApp(int.Parse(actEmpty[0]), act, app));
+                        actsApps.Add(new ActApp(int.Parse(actEmpty[0]), act, app, int.Parse(actEmpty[3]), int.Parse(actEmpty[4])));
                     }
                 };
                 return actsApps;
@@ -262,8 +290,8 @@ namespace GrpcServer_PI_21_01.Data
             try
             {
                 using NpgsqlCommand cmd = new($"INSERT INTO act_catch_request " +
-                $"(act_id, catch_request_id) " +
-                $"VALUES ({actApp.Act.ActNumber}, {actApp.Application.number}) RETURNING id")
+                $"(act_id, catch_request_id, count_dogs, count_cats) " +
+                $"VALUES ({actApp.Act.ActNumber}, {actApp.Application.number}, {actApp.CountDogs}, {actApp.CountCats}) RETURNING id")
                 { Connection = cn };
                 {
                     cn.Open();
@@ -293,7 +321,9 @@ namespace GrpcServer_PI_21_01.Data
             {
                 using NpgsqlCommand cmd = new($"UPDATE act_catch_request SET " +
                 $"act_id = {actApp.Act.ActNumber}," +
-                $"catch_request_id = {actApp.Application.number}" +
+                $"catch_request_id = {actApp.Application.number}," +
+                $"count_dogs = {actApp.CountDogs}," +
+                $"count_cats = {actApp.CountCats}" +
                 $" WHERE id = {actApp.ActAppNumber}")
                 { Connection = cn };
                 {

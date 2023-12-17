@@ -209,17 +209,17 @@ namespace GrpcServer_PI_21_01.Data
                 if (!connectionAlreadyOpen)
                     cn.Open();
                 var reader = cmd.ExecuteReader();
-                string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0" };
+                string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0", "0" };
                 while (reader.Read())
                 {
-                    arr[0] = (reader[1].ToString());
-                    arr[1] = reader[7].ToString();
-                    arr[2] = reader[2].ToString();
-                    arr[3] = reader[3].ToString();
-                    arr[4] = reader[4].ToString();
-                    arr[5] = reader[5].ToString();
-                    arr[6] = reader[6].ToString();
-                    arr[7] = reader[8].ToString();
+                    arr[0] = (reader[1].ToString()); //created at
+                    arr[1] = reader[7].ToString(); //cityid
+                    arr[2] = reader[2].ToString(); //TERRITOY
+                    arr[3] = reader[3].ToString(); //habitat
+                    arr[4] = reader[4].ToString(); //urgency
+                    arr[5] = reader[5].ToString(); //descr
+                    arr[6] = reader[6].ToString(); //client category
+                    arr[7] = reader[8].ToString(); //status
                     arr[8] = reader[9].ToString(); //orgid
                 }
                 var status = Enum.Parse<AppStatus>(arr[7]);

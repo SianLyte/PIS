@@ -729,7 +729,9 @@ namespace GrpcServer_PI_21_01.Services
             return new ActApp(
                 reply.Id,
                 reply.Act.FromReply(),
-                reply.App.FromReply());
+                reply.App.FromReply(),
+                reply.CountDogs,
+                reply.CountCats);
         }
 
         public static App FromReply(this ApplicationReply reply)
