@@ -16,7 +16,7 @@ namespace GrpcServer_PI_21_01.Models
     //    ApprovedByOMSY
     //}
     [FilterableModel("report")]
-    class Report
+    public class Report
     {
         [Filterable("id")]
         public int Id { get; set; }

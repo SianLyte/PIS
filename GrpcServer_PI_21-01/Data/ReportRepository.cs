@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GrpcServer_PI_21_01.Data
 {
-    class ReportRepository
+    internal class ReportRepository : IRepository<Report>
     {
         private static List<Report> reports = new();
 
@@ -43,8 +43,9 @@ namespace GrpcServer_PI_21_01.Data
         }
 
 
-        public static Report GenereteReport(DateTime start, DateTime finish)
+        public static Report GenereteReport(DateTime start, DateTime finish, int id = -1)
         {
+            //при создании id=-1, при редактировании - id из бд
             double profit = 0;
             int animalsCount = 0;
             int closedAppsCount = 0;
@@ -96,7 +97,7 @@ namespace GrpcServer_PI_21_01.Data
                 //if (summ != 0)
                 //    reports.Add(new Report(start, finish, loc, apps.Count(), acts.Sum(x => x.Sum), summ, ReportStatus.Revision, DateTime.Now));
             }
-            return new Report(-1, DateTime.Now, DateTime.Now, start, finish, profit, closedAppsCount,
+            return new Report(id, DateTime.Now, DateTime.Now, start, finish, profit, closedAppsCount,
                 animalsCount, UserRepository.GetUserById(request.Actor.UserId), ReportStatus.ApprovalFromMunicipalContractExecutor);
         }
 
@@ -148,6 +149,10 @@ namespace GrpcServer_PI_21_01.Data
                 throw;
             }
         }
+        public List<Report> GetAll(DataRequest request)
+        {
+            return GetReports(request);
+        }
 
         public static bool AddReport(Report rep)
         {
@@ -173,6 +178,42 @@ namespace GrpcServer_PI_21_01.Data
                 cn.Close();
                 Console.WriteLine(e.Message);
                 return false;
+                throw;
+            }
+        }
+
+        public static Report? GetReport(int id, bool connectionAlreadyOpen = false)
+        {
+            try
+            {
+                NpgsqlCommand cmd = new($"SELECT * FROM report WHERE id = {id}");
+                cmd.Connection = cn;
+                cn.Open();
+                var reader = cmd.ExecuteReader();
+                string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0" };
+                while (reader.Read())
+                {
+                    arr[0] = (reader[1].ToString()); //createdat
+                    arr[1] = reader[7].ToString(); //updatedat
+                    arr[2] = reader[2].ToString(); //startdate
+                    arr[3] = reader[3].ToString(); //enddate
+                    arr[4] = reader[4].ToString(); //profit
+                    arr[5] = reader[5].ToString(); //closed_apps_count
+                    arr[6] = reader[6].ToString(); //animals_sount
+                    arr[7] = reader[8].ToString(); //userId
+                    arr[8] = reader[9].ToString(); //status
+                }
+                var status = Enum.Parse<AppStatus>(arr[7]);
+                reader.Close();
+                    cn.Close();
+                return new Report(id, DateTime.Parse(arr[0]), DateTime.Parse(arr[1]), DateTime.Parse(arr[2]), DateTime.Parse(arr[3]), double.Parse(arr[4]),
+                    int.Parse(arr[5]), int.Parse(arr[6]), UserRepository.GetUserById(int.Parse(arr[7])), Enum.Parse<ReportStatus>(arr[8]));
+
+            }
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
                 throw;
             }
         }

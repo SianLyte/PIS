@@ -7,17 +7,17 @@ namespace GrpcClient_PI_21_01.Controllers
 {
     public static class ReportService
     {
-        private static async Task<List<Report_ActCapture>> GetReports(DateTime start, DateTime finish)
+        private static async Task<List<Report>> GetReports(int page = -1, Filter<Report>? filter = null)
         {
-            var reports = new List<Report_ActCapture>();
+            var reports = new List<Report>();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new ReportGenerator.ReportGeneratorClient(channel);
-            var serverData = client.Generate_ActCaptureReport(new Report_FilterReply()
-            {
-                Actor = UserService.CurrentUser?.ToReply(),
-                BeginDate = start.ToUtc().ToTimestamp(),
-                EndDate = finish.ToUtc().ToTimestamp(),
-            });
+            var serverData = client.GetReports(UserService.GenerateDataRequest(page, filter));
+            //{
+            //    Actor = UserService.CurrentUser?.ToReply(),
+            //    BeginDate = start.ToUtc().ToTimestamp(),
+            //    EndDate = finish.ToUtc().ToTimestamp(),
+            //});
             var responseStream = serverData.ResponseStream;
             await foreach (var response in responseStream.ReadAllAsync())
                 reports.Add(response);
