@@ -52,7 +52,7 @@ namespace GrpcClient_PI_21_01
             DeleteButton.Click += DeleteButton_Click;
             ContractTable.CellMouseDoubleClick += ContractTable_CellMouseDoubleClick;
 
-            button1.Click += button1_Click;
+            //button1.Click += button1_Click;
 
             buttonNextContract.Click += buttonNextContract_Click;
             buttonPreviosContract.Click += buttonPreviosContract_Click;
@@ -105,6 +105,7 @@ namespace GrpcClient_PI_21_01
             await SetDataGridApp();
             await SetDataGridOrg();
             await InicilisationHistory();
+            await InicilisationReports();
         }
 
         private static async Task<bool> CheckPrivilege(NameMdels model)
@@ -486,6 +487,20 @@ namespace GrpcClient_PI_21_01
 
         #endregion
         #region Related: Reports
+        private int _ReportPage = 0;
+        private int _ReportPageMax = 0;
+
+        private async Task InicilisationReports()
+        {
+            if (await CheckPrivilege(NameMdels.Report))
+            {
+                dataGridViewReport.Rows.Clear();
+                var report = await ReportService.GetReports(_ReportPage);
+                ReportService.FillDataGrid(report, dataGridViewReport);
+                //_ReportPageMax = ReportService.GetPageCount(_pageSize, reportFilter);
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             OpenReport();
@@ -500,13 +515,13 @@ namespace GrpcClient_PI_21_01
             }
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        private async void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedTab == tabPage2)
-            {
-                tabControl1.SelectedTab = tabPage1;
-                OpenReport();
-            }
+            //if (tabControl1.SelectedTab == tabPage2)
+            //{
+            //    tabControl1.SelectedTab = tabPage1;
+            //    OpenReport();
+            //}
         }
 
         #endregion
@@ -540,7 +555,7 @@ namespace GrpcClient_PI_21_01
                 //CheckPageButton(buttonPriviosHistory, buttonNextHistory, _HistoryPage, _HistoryPageMax);
 
             }
-            else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //else MessageBox.Show("У вас недостаточно прав, чтобы просматривать историю операций", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private async void SortOperations(object sender, DataGridViewCellMouseEventArgs e)

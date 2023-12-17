@@ -51,16 +51,13 @@
             Kontracts=new DataGridViewTextBoxColumn();
             pictureBox1=new PictureBox();
             tabPage2=new TabPage();
-            checkBox1=new CheckBox();
-            label5=new Label();
-            pictureBox2=new PictureBox();
-            button1=new Button();
             button5=new Button();
             button6=new Button();
             button7=new Button();
             dateTimePicker2=new DateTimePicker();
             label2=new Label();
-            dataGridView2=new DataGridView();
+            dataGridViewReport=new DataGridView();
+            checkBox1=new CheckBox();
             tabPage3=new TabPage();
             buttonExcelContract=new Button();
             buttonPreviosContract=new Button();
@@ -105,13 +102,22 @@
             buttonNextContracts=new Button();
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
+            IdReport=new DataGridViewTextBoxColumn();
+            CreatedAt=new DataGridViewTextBoxColumn();
+            UpdateAt=new DataGridViewTextBoxColumn();
+            StartDate=new DataGridViewTextBoxColumn();
+            EndDate=new DataGridViewTextBoxColumn();
+            Profit=new DataGridViewTextBoxColumn();
+            AnimalsCount=new DataGridViewTextBoxColumn();
+            ClosedAppsCount=new DataGridViewTextBoxColumn();
+            User=new DataGridViewTextBoxColumn();
+            Status=new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewReport).BeginInit();
             tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ContractTable).BeginInit();
             tabPage4.SuspendLayout();
@@ -281,7 +287,7 @@
             DataGridViewActs.BackgroundColor=Color.OldLace;
             DataGridViewActs.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DataGridViewActs.Columns.AddRange(new DataGridViewColumn[] { Id, CountDogs, CountCats, Organization, Date, Target, Kontracts });
-            DataGridViewActs.Location=new Point(25, 6);
+            DataGridViewActs.Location=new Point(6, 6);
             DataGridViewActs.MultiSelect=false;
             DataGridViewActs.Name="DataGridViewActs";
             DataGridViewActs.ReadOnly=true;
@@ -353,60 +359,19 @@
             // tabPage2
             // 
             tabPage2.BackColor=Color.Tan;
-            tabPage2.Controls.Add(checkBox1);
-            tabPage2.Controls.Add(label5);
-            tabPage2.Controls.Add(pictureBox2);
-            tabPage2.Controls.Add(button1);
             tabPage2.Controls.Add(button5);
             tabPage2.Controls.Add(button6);
             tabPage2.Controls.Add(button7);
             tabPage2.Controls.Add(dateTimePicker2);
             tabPage2.Controls.Add(label2);
-            tabPage2.Controls.Add(dataGridView2);
+            tabPage2.Controls.Add(dataGridViewReport);
+            tabPage2.Controls.Add(checkBox1);
             tabPage2.Location=new Point(4, 39);
             tabPage2.Name="tabPage2";
             tabPage2.Padding=new Padding(3);
             tabPage2.Size=new Size(1374, 715);
             tabPage2.TabIndex=1;
             tabPage2.Text="Отчёт";
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize=true;
-            checkBox1.Checked=true;
-            checkBox1.CheckState=CheckState.Checked;
-            checkBox1.Location=new Point(298, 387);
-            checkBox1.Name="checkBox1";
-            checkBox1.Size=new Size(220, 34);
-            checkBox1.TabIndex=16;
-            checkBox1.Text="Работа без вылетов";
-            checkBox1.UseVisualStyleBackColor=true;
-            // 
-            // label5
-            // 
-            label5.AutoSize=true;
-            label5.Location=new Point(353, 213);
-            label5.Name="label5";
-            label5.Size=new Size(332, 30);
-            label5.TabIndex=15;
-            label5.Text="Представте, что тут ничего нет";
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Location=new Point(206, 132);
-            pictureBox2.Name="pictureBox2";
-            pictureBox2.Size=new Size(542, 192);
-            pictureBox2.TabIndex=14;
-            pictureBox2.TabStop=false;
-            // 
-            // button1
-            // 
-            button1.Location=new Point(77, 76);
-            button1.Name="button1";
-            button1.Size=new Size(75, 32);
-            button1.TabIndex=13;
-            button1.Text="button1";
-            button1.UseVisualStyleBackColor=true;
             // 
             // button5
             // 
@@ -452,22 +417,42 @@
             // 
             label2.AutoSize=true;
             label2.BackColor=Color.SeaShell;
-            label2.Location=new Point(26, 644);
+            label2.Location=new Point(15, 646);
             label2.Name="label2";
             label2.Size=new Size(233, 30);
             label2.TabIndex=8;
             label2.Text="Реестр организаций от:";
             // 
-            // dataGridView2
+            // dataGridViewReport
             // 
-            dataGridView2.BackgroundColor=Color.OldLace;
-            dataGridView2.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location=new Point(15, 6);
-            dataGridView2.Name="dataGridView2";
-            dataGridView2.RowHeadersWidth=51;
-            dataGridView2.RowTemplate.Height=24;
-            dataGridView2.Size=new Size(1335, 599);
-            dataGridView2.TabIndex=7;
+            dataGridViewReport.AllowUserToAddRows=false;
+            dataGridViewReport.AllowUserToDeleteRows=false;
+            dataGridViewReport.AllowUserToResizeColumns=false;
+            dataGridViewReport.AllowUserToResizeRows=false;
+            dataGridViewReport.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewReport.BackgroundColor=Color.OldLace;
+            dataGridViewReport.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewReport.Columns.AddRange(new DataGridViewColumn[] { IdReport, CreatedAt, UpdateAt, StartDate, EndDate, Profit, AnimalsCount, ClosedAppsCount, User, Status });
+            dataGridViewReport.Location=new Point(6, 6);
+            dataGridViewReport.Name="dataGridViewReport";
+            dataGridViewReport.ReadOnly=true;
+            dataGridViewReport.RowHeadersVisible=false;
+            dataGridViewReport.RowHeadersWidth=51;
+            dataGridViewReport.RowTemplate.Height=24;
+            dataGridViewReport.Size=new Size(1335, 599);
+            dataGridViewReport.TabIndex=7;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize=true;
+            checkBox1.Checked=true;
+            checkBox1.CheckState=CheckState.Checked;
+            checkBox1.Location=new Point(94, 495);
+            checkBox1.Name="checkBox1";
+            checkBox1.Size=new Size(220, 34);
+            checkBox1.TabIndex=16;
+            checkBox1.Text="Работа без вылетов";
+            checkBox1.UseVisualStyleBackColor=true;
             // 
             // tabPage3
             // 
@@ -1010,6 +995,78 @@
             label7.TabIndex=16;
             label7.Text="до:";
             // 
+            // IdReport
+            // 
+            IdReport.HeaderText="Номер контракта";
+            IdReport.MinimumWidth=6;
+            IdReport.Name="IdReport";
+            IdReport.ReadOnly=true;
+            IdReport.Visible=false;
+            // 
+            // CreatedAt
+            // 
+            CreatedAt.HeaderText="Дата создания";
+            CreatedAt.MinimumWidth=6;
+            CreatedAt.Name="CreatedAt";
+            CreatedAt.ReadOnly=true;
+            CreatedAt.Visible=false;
+            // 
+            // UpdateAt
+            // 
+            UpdateAt.HeaderText="Обновлён";
+            UpdateAt.MinimumWidth=6;
+            UpdateAt.Name="UpdateAt";
+            UpdateAt.ReadOnly=true;
+            // 
+            // StartDate
+            // 
+            StartDate.HeaderText="Дата старта";
+            StartDate.MinimumWidth=6;
+            StartDate.Name="StartDate";
+            StartDate.ReadOnly=true;
+            // 
+            // EndDate
+            // 
+            EndDate.HeaderText="Дата окончания";
+            EndDate.MinimumWidth=6;
+            EndDate.Name="EndDate";
+            EndDate.ReadOnly=true;
+            // 
+            // Profit
+            // 
+            Profit.HeaderText="Доход";
+            Profit.MinimumWidth=6;
+            Profit.Name="Profit";
+            Profit.ReadOnly=true;
+            // 
+            // AnimalsCount
+            // 
+            AnimalsCount.HeaderText="Количество животных";
+            AnimalsCount.MinimumWidth=6;
+            AnimalsCount.Name="AnimalsCount";
+            AnimalsCount.ReadOnly=true;
+            // 
+            // ClosedAppsCount
+            // 
+            ClosedAppsCount.HeaderText="Количество закрытых заявок";
+            ClosedAppsCount.MinimumWidth=6;
+            ClosedAppsCount.Name="ClosedAppsCount";
+            ClosedAppsCount.ReadOnly=true;
+            // 
+            // User
+            // 
+            User.HeaderText="Пользователь";
+            User.MinimumWidth=6;
+            User.Name="User";
+            User.ReadOnly=true;
+            // 
+            // Status
+            // 
+            Status.HeaderText="Статус";
+            Status.MinimumWidth=6;
+            Status.Name="Status";
+            Status.ReadOnly=true;
+            // 
             // MainForm
             // 
             AutoScaleMode=AutoScaleMode.Inherit;
@@ -1032,8 +1089,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewReport).EndInit();
             tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)ContractTable).EndInit();
             tabPage4.ResumeLayout(false);
@@ -1061,7 +1117,7 @@
         private Button button7;
         private DateTimePicker dateTimePicker2;
         private Label label2;
-        private DataGridView dataGridView2;
+        private DataGridView dataGridViewReport;
         private TabPage tabPage3;
         private DataGridView ContractTable;
         private TabPage tabPage4;
@@ -1085,11 +1141,8 @@
         private DataGridViewTextBoxColumn Column6;
         private DateTimePicker dateTimePicker1;
         private Label label7;
-        private Button button1;
         private Button buttonAnimalCard;
         private CheckBox checkBox1;
-        private Label label5;
-        private PictureBox pictureBox2;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn CountDogs;
         private DataGridViewTextBoxColumn CountCats;
@@ -1123,6 +1176,16 @@
         private Button buttonExcelOrg;
         private Button buttonExcelHistory;
         private Button historyFiltersButton;
+        private DataGridViewTextBoxColumn IdReport;
+        private DataGridViewTextBoxColumn CreatedAt;
+        private DataGridViewTextBoxColumn UpdateAt;
+        private DataGridViewTextBoxColumn StartDate;
+        private DataGridViewTextBoxColumn EndDate;
+        private DataGridViewTextBoxColumn Profit;
+        private DataGridViewTextBoxColumn AnimalsCount;
+        private DataGridViewTextBoxColumn ClosedAppsCount;
+        private DataGridViewTextBoxColumn User;
+        private DataGridViewTextBoxColumn Status;
     }
 }
 
