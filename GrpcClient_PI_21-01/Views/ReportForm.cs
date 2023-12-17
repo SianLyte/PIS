@@ -27,11 +27,12 @@ namespace GrpcClient_PI_21_01.Views
             var reports = await ReportService.GenereteReport(dateTimePickerStart.Value, dateTimePickerEnd.Value);
             int sum = 0;
             // отчёты теперь отправляются в виде класса Report.cs, нужно переделать
-            //foreach (var rep in reports)
+            //foreach (var rep in reports.Select(x => ReportService.ToDataArray(x)))
             //{
             //    dataGridViewR.Rows.Add(rep);
             //    sum += int.Parse(rep[3].Split(',')[0]);
             //}
+            dataGridViewR.Rows.Add(ReportService.ToDataArray(reports));
             textBoxSum.Text = sum.ToString();
         }
 
