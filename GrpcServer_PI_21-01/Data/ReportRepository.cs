@@ -43,19 +43,14 @@ namespace GrpcServer_PI_21_01.Data
         }
 
 
-        public static Report GenereteReport(DateTime start, DateTime finish, int id = -1)
+        public static Report GenereteReport(DataRequest request, DateTime start, DateTime finish, int id = -1)
         {
             //при создании id=-1, при редактировании - id из бд
             double profit = 0;
             int animalsCount = 0;
             int closedAppsCount = 0;
             reports = new List<Report>();
-            var request = new DataRequest()
-            {
-                Filter = new FilterReply(),
-                Page = -1,
-            };
-            if (request.Actor.PrivelegeLevel != "Operator_Po_Otlovy" || request.Actor.PrivelegeLevel != "Admin")
+            if (request.Actor.PrivelegeLevel != "Operator_Po_Otlovy" && request.Actor.PrivelegeLevel != "Admin")
             {
                 throw new RpcException(new Status(StatusCode.PermissionDenied, "У вас нет прав на это действие"));
             }

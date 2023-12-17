@@ -55,6 +55,8 @@ namespace GrpcClient_PI_21_01
             //button1.Click += button1_Click;
             buttonAddReport.Click += buttonAddReport_Click;
 
+            buttonDeleteHistory.Click += buttonDeleteHistory_Click;
+
             buttonNextContract.Click += buttonNextContract_Click;
             buttonPreviosContract.Click += buttonPreviosContract_Click;
             buttonNextApps.Click += buttonNextApps_Click;
@@ -598,6 +600,19 @@ namespace GrpcClient_PI_21_01
             {
                 await InicilisationHistory();
             }
+        }
+
+        private async void buttonDeleteHistory_Click(object sender, EventArgs e)
+        {
+            if (await CheckPrivilege(NameMdels.History))
+                if (dataGridViewHistory.CurrentRow != null)
+                {
+                    foreach (DataGridViewRow row in dataGridViewHistory.SelectedRows)
+                    {
+                        //await OperationService.(int.Parse(row.Cells[0].Value.ToString()));
+                    }
+                    await SetDataGridAct();
+                }
         }
 
         private void OpenHistoryFilters(object sender, EventArgs e) =>

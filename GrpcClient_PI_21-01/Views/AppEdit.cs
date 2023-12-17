@@ -23,7 +23,15 @@ namespace GrpcClient_PI_21_01.Views
         public AppEdit()
         {
             InitializeComponent();
+
+            buttonCloseApp.Click += ButtonCloseApp_Click;
+
             Task.Run(SetupForm);
+        }
+
+        private void ButtonCloseApp_Click(object? sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         public AppEdit(App app)
@@ -50,8 +58,12 @@ namespace GrpcClient_PI_21_01.Views
 
         private void FillAppEdit()
         {
-            if (app is null) return;
-
+            if (app is null)
+            {
+                buttonCloseApp.Visible = false;
+                textBoxStatus.Text = "ожидает регистрации";
+                return;
+            }
             try
             {
                 dateTime.Value = app.date;
@@ -61,6 +73,7 @@ namespace GrpcClient_PI_21_01.Views
                 urgency.Text = app.urgencyOfExecution;
                 descrip.Text = app.animaldescription;
                 category.SelectedItem = app.applicantCategory;
+                textBoxStatus.Text = app.status.ToString();
             }
             catch
             {

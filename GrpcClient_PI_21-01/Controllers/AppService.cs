@@ -68,6 +68,7 @@ namespace GrpcClient_PI_21_01.Controllers
             dgv.Columns.Add("Urgency", "Срочность исполнения");
             dgv.Columns.Add("Description", "Описание животного");
             dgv.Columns.Add("ApplicantCategory", "Категория заявителя");
+            dgv.Columns.Add("Status", "Статус");
 
             // preparing columns
             dgv.Columns["ApplicationDate"].Tag = exp(a => a.date);
@@ -78,6 +79,7 @@ namespace GrpcClient_PI_21_01.Controllers
             dgv.Columns["Urgency"].Tag = exp(a => a.urgencyOfExecution);
             dgv.Columns["Description"].Tag = exp(a => a.animaldescription);
             dgv.Columns["ApplicantCategory"].Tag = exp(a => a.applicantCategory);
+            dgv.Columns["Status"].Tag = exp(a => a.status);
             foreach (DataGridViewColumn c in dgv.Columns)
                 c.SortMode = DataGridViewColumnSortMode.Programmatic;
 
