@@ -6,7 +6,39 @@ namespace GrpcClient_PI_21_01
 {
     public static class DataExtensions
     {
+        public static ReportReply ToReply(this Report rep)
+        {
+            return new ReportReply()
+            {
+                Id = rep.Id,
+                CreatedAt = rep.CreatedAt.ToTimestamp(),
+                UpdatedAt = rep.UpdatedAt.ToTimestamp(),
+                StartDate = rep.StartDate.ToTimestamp(),
+                EndDate = rep.EndDate.ToTimestamp(),
+                Profit
+                = rep.Profit,
+                ClosedAppsCount = rep.ClosedAppsCount,
+                AnimalsCount = rep.AnimalsCount,
+                Status = rep.Status,
+                User = rep.User.ToReply(),
+            };
+        }
 
+        public static Report FromReply(this ReportReply rep)
+        {
+            return new Report(
+                rep.Id,
+                rep.CreatedAt.ToDateTime(),
+                rep.UpdatedAt.ToDateTime(),
+                rep.StartDate.ToDateTime(),
+                rep.EndDate.ToDateTime(),
+                rep.Profit,
+                rep.ClosedAppsCount,
+                rep.AnimalsCount,
+                UserService.CurrentUser,
+                rep.Status
+            );
+        }
         public static DateTime ToUtc(this DateTime date)
         {
             return DateTime.SpecifyKind(date, DateTimeKind.Utc);
@@ -200,7 +232,7 @@ namespace GrpcClient_PI_21_01
 
         public static ActApp FromReply(this ActAppReply r)
         {
-            return new ActApp(r.Id, r.Act.FromReply(), r.App.FromReply());
+            return new ActApp(r.Id, r.Act.FromReply(), r.App.FromReply(), r.CountDogs, r.CountCats);
         }
 
         public static Operation FromReply(this OperationReply r)

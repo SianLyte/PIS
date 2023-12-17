@@ -18,11 +18,22 @@ namespace GrpcServer_PI_21_01.Models
         [Filterable("catch_request_id")]
         public App Application { get; set; }
 
-        public ActApp(int actAppNumber, Act act, App application)
+        [Filterable("count_dogs")]
+        public int CountDogs { get; set; }
+
+
+        [Filterable("count_cats")]
+        public int CountCats { get; set; }
+
+
+        public ActApp(int actAppNumber, Act act, App application, int countDogs, int countCats)
         {
             ActAppNumber = actAppNumber;
             Act = act;
             Application = application;
+            CountDogs = countDogs;
+            CountCats = countCats;
+
         }
 
         public static ActApp GetByActId(int actId, NpgsqlConnection cn)
@@ -37,10 +48,12 @@ namespace GrpcServer_PI_21_01.Models
                 arr[0] = reader[0].ToString(); //id 
                 arr[1] = reader[1].ToString(); //act_id
                 arr[2] = reader[2].ToString(); //app_id
+                arr[3] = reader[3].ToString(); //count_dogs
+                arr[4] = reader[4].ToString(); //count_cats
             }
             reader.Close();
             cn.Close();
-            return new ActApp(int.Parse(arr[0]), ActRepository.GetAct(int.Parse(arr[1])), AppRepository.GetApplication(int.Parse(arr[2])));
+            return new ActApp(int.Parse(arr[0]), ActRepository.GetAct(int.Parse(arr[1])), AppRepository.GetApplication(int.Parse(arr[2])), int.Parse(arr[3]), int.Parse(arr[4]));
         }
 
     }

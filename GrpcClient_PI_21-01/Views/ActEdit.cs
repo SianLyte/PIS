@@ -166,7 +166,7 @@ namespace GrpcClient_PI_21_01.Views
                         foreach (var app in _apps)
                         {
                             var appReply = await AppService.GetApplication(app);
-                            successful = await ActService.AddActApp(new ActApp(-1, act, appReply));
+                            successful = await ActService.AddActApp(new ActApp(-1, act, appReply, act.CountDogs, act.CountCats));
                             if (!successful)
                             {
                                 this.DialogResult = DialogResult.Cancel;
