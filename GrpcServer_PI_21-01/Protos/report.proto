@@ -3,8 +3,8 @@
 option csharp_namespace = "GrpcServer_PI_21_01";
 
 import "google/protobuf/timestamp.proto";
-package report;
 import "Protos/data.proto";
+package report;
 
 service ReportGenerator {
 	rpc GenerateReport (Report_FilterReply) returns (ReportReply);
