@@ -163,6 +163,7 @@ message ApplicationReply {
 	AppStatus status = 9;
 	UserReply actor = 10;
 	OrganizationReply organization = 11;
+	int32 animalCount = 12;
 }
 
 message AnimalCardReply {

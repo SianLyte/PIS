@@ -166,7 +166,7 @@ namespace GrpcServer_PI_21_01.Data
                     NpgsqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        appsEmpty.Add(new string[10] {
+                        appsEmpty.Add(new string[11] {
                         reader[0].ToString(), //id
                         reader[1].ToString(), //date
                         reader[2].ToString(), //territory
@@ -176,7 +176,8 @@ namespace GrpcServer_PI_21_01.Data
                         reader[6].ToString(), //client_category
                         reader[7].ToString(), //locality
                         reader[8].ToString(), //status
-                        reader[9].ToString() //orgid
+                        reader[9].ToString(), //orgid
+                        reader[10].ToString()//animalcount
                     });
                     }
                     reader.Close();
@@ -184,7 +185,8 @@ namespace GrpcServer_PI_21_01.Data
                     for (int i = 0; i < appsEmpty.Count; i++)
                     {
                         var a = appsEmpty[i];
-                        App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), LocationRepository.GetLocation(int.Parse(a[7])), a[2], a[3], a[4], a[5], a[6], Enum.Parse<AppStatus>(a[8]), OrgRepository.GetOrganization(int.Parse(a[9])));
+                        App app = new App(DateTime.Parse(a[1]), int.Parse(a[0]), LocationRepository.GetLocation(int.Parse(a[7])),
+                            a[2], a[3], a[4], a[5], a[6], Enum.Parse<AppStatus>(a[8]), OrgRepository.GetOrganization(int.Parse(a[9])), int.Parse(a[10]));
                         apps.Add(app);
                         
                         
@@ -209,7 +211,7 @@ namespace GrpcServer_PI_21_01.Data
                 if (!connectionAlreadyOpen)
                     cn.Open();
                 var reader = cmd.ExecuteReader();
-                string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0", "0" };
+                string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
                 while (reader.Read())
                 {
                     arr[0] = (reader[1].ToString()); //created at
@@ -221,20 +223,14 @@ namespace GrpcServer_PI_21_01.Data
                     arr[6] = reader[6].ToString(); //client category
                     arr[7] = reader[8].ToString(); //status
                     arr[8] = reader[9].ToString(); //orgid
+                    arr[9] = reader[10].ToString(); //animalcount
                 }
                 var status = Enum.Parse<AppStatus>(arr[7]);
                 reader.Close();
                 if (!connectionAlreadyOpen)
                     cn.Close();
-                if (arr[8] != null) {
-                    return new App(DateTime.Parse(arr[0]), id, LocationRepository.GetLocation(int.Parse(arr[1])),
-                    arr[2], arr[3], arr[4], arr[5], arr[6], status, OrgRepository.GetOrganization(int.Parse(arr[8])));
-                }
-                else
-                {
-                    return new App(DateTime.Parse(arr[0]), id, LocationRepository.GetLocation(int.Parse(arr[1])),
-                arr[2], arr[3], arr[4], arr[5], arr[6], status, null);
-                }
+                return new App(DateTime.Parse(arr[0]), id, LocationRepository.GetLocation(int.Parse(arr[1])),
+                    arr[2], arr[3], arr[4], arr[5], arr[6], status, OrgRepository.GetOrganization(int.Parse(arr[8])), int.Parse(arr[9]));
                 
             }
             catch (Exception e)

@@ -95,7 +95,9 @@ namespace GrpcClient_PI_21_01
                 Territory = app.territory,
                 UrgencyOfExecution = app.urgencyOfExecution,
                 Actor = UserService.CurrentUser?.ToReply(),
-                Organization = app.organization.ToReply()
+                Organization = app.organization.ToReply(),
+                AnimalCount = app.animalCount
+                
             };
         }
 
@@ -188,7 +190,8 @@ namespace GrpcClient_PI_21_01
                 reply.AnimalDescription,
                 reply.ApplicantCategory,
                 reply.Status,
-                reply.Organization.FromReply());
+                reply.Organization.FromReply(), 
+                reply.AnimalCount);
         }
 
         public static AnimalCard FromReply(this AnimalCardReply reply)
