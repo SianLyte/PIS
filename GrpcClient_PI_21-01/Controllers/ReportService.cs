@@ -25,20 +25,24 @@ namespace GrpcClient_PI_21_01.Controllers
             return reports;
         }
 
-        public static async Task<Report> GenereteReport(DateTime start, DateTime finish, int id = -1)
+
+
+        public static async Task<Report> GenereteReport(DateTime start, DateTime finish)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new ReportGenerator.ReportGeneratorClient(channel);
-            var serverData =await  client.GenerateReportAsync(new Report_FilterReply()
+
+            var request = new Report_FilterReply()
             {
-                Id = id,
+                Id = -1,
                 BeginDate = start.ToTimestamp(),
                 EndDate = finish.ToTimestamp(),
-                Actor = UserService.CurrentUser?.ToReply()
-            });
-            var report = serverData.FromReply();
-            return report;
-            
+                Actor = UserService.CurrentUser?.ToReply(),
+            };
+            var report = await client.GenerateReportAsync(request);
+            return report.FromReply();
+            //var rep = await GetReports(start, finish);
+            //var otvRep = new List<string[]>();
             //foreach (var item in rep)
             //{
             //    var old = new string[]

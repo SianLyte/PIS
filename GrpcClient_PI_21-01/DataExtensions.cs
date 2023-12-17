@@ -24,21 +24,6 @@ namespace GrpcClient_PI_21_01
             };
         }
 
-        //public static Report FromReply(this ReportReply rep)
-        //{
-        //    return new Report(
-        //        rep.Id,
-        //        rep.CreatedAt.ToDateTime(),
-        //        rep.UpdatedAt.ToDateTime(),
-        //        rep.StartDate.ToDateTime(),
-        //        rep.EndDate.ToDateTime(),
-        //        rep.Profit,
-        //        rep.ClosedAppsCount,
-        //        rep.AnimalsCount,
-        //        UserService.CurrentUser,
-        //        rep.Status
-        //    );
-        //}
         public static DateTime ToUtc(this DateTime date)
         {
             return DateTime.SpecifyKind(date, DateTimeKind.Utc);
