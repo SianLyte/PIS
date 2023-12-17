@@ -52,6 +52,7 @@ service DataRetriever {
 
   rpc GetOperations (DataRequest) returns (stream OperationReply);
   rpc GetOperationsPageCount (DataRequest) returns (PageCount);
+  rpc RemoveOperation (IdRequest) returns (OperationResult);
 
   rpc GetActApp (IdRequest) returns (ActAppReply);
   rpc GetActApps (DataRequest) returns (stream ActAppReply);

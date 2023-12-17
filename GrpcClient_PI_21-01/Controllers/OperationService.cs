@@ -30,6 +30,19 @@ namespace GrpcClient_PI_21_01.Controllers
             return pageCount.Count;
         }
 
+        public static async Task<bool> RemoveOperation(int operationId)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new DataRetriever.DataRetrieverClient(channel);
+            var request = new IdRequest()
+            {
+                Actor = UserService.CurrentUser?.ToReply(),
+                Id = operationId,
+            };
+            var operationResult = await client.RemoveOperationAsync(request);
+            return operationResult.Successful;
+        }
+
         public static string[] ToDataArray(Operation operation)
         {
             return new string[10] { operation.Actor.Surname.ToString(),

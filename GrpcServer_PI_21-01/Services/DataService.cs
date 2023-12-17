@@ -435,6 +435,13 @@ namespace GrpcServer_PI_21_01.Services
                 await responseStream.WriteAsync(op.ToReply());
         }
 
+        public override Task<OperationResult> RemoveOperation(IdRequest request, ServerCallContext context)
+        {
+            var successful = OperationRepository.RemoveOperation(request.Id);
+            if (successful) operationProxy.Reset();
+            return CRUD(request.Id, successful);
+        }
+
         public override Task<PageCount> GetOperationsPageCount(DataRequest req, ServerCallContext ctx)
             => Task.FromResult(new PageCount() { Count = OperationRepository.GetMaxPage(req) });
         #endregion
