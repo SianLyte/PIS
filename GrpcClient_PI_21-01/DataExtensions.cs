@@ -6,6 +6,7 @@ namespace GrpcClient_PI_21_01
 {
     public static class DataExtensions
     {
+
         public static DateTime ToUtc(this DateTime date)
         {
             return DateTime.SpecifyKind(date, DateTimeKind.Utc);

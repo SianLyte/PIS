@@ -7,7 +7,7 @@ import "Protos/data.proto";
 package report;
 
 service ReportGenerator {
-	rpc Generate_ActCaptureReport (Report_FilterReply) returns (stream ReportReply);
+	rpc GenerateReport (Report_FilterReply) returns (ReportReply);
 	rpc GetReport (data.IdRequest) returns (ReportReply);
 	rpc GetReports (data.DataRequest) returns (stream ReportReply);
 	rpc GetReportsPageCount (data.DataRequest) returns (data.PageCount);
@@ -18,8 +18,9 @@ service ReportGenerator {
 
 message Report_FilterReply {
 	data.UserReply actor = 1;
-	google.protobuf.Timestamp beginDate = 2;
-	google.protobuf.Timestamp endDate = 3;
+	int32 id = 2;
+	google.protobuf.Timestamp beginDate = 3;
+	google.protobuf.Timestamp endDate = 4;
 }
 
 message Report_ActCapture {
