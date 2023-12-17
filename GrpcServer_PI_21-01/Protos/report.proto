@@ -2,12 +2,18 @@
 
 option csharp_namespace = "GrpcServer_PI_21_01";
 
-import "Protos/data.proto";
 import "google/protobuf/timestamp.proto";
 package report;
+import "Protos/data.proto";
 
 service ReportGenerator {
-	rpc Generate_ActCaptureReport (Report_FilterReply) returns (stream Report_ActCapture);
+	rpc Generate_ActCaptureReport (Report_FilterReply) returns (stream ReportReply);
+	rpc GetReport (data.IdRequest) returns (ReportReply);
+	rpc GetReports (data.DataRequest) returns (stream ReportReply);
+	rpc GetReportsPageCount (data.DataRequest) returns (data.PageCount);
+	rpc AddReport (ReportReply) returns (data.OperationResult);
+	rpc RemoveReport (data.IdRequest) returns (data.OperationResult);
+	rpc UpdateReport (ReportReply) returns (data.OperationResult);
 }
 
 message Report_FilterReply {
@@ -23,4 +29,17 @@ message Report_ActCapture {
 	int32 closedAppCount = 4;
 	int32 capturedAnimalsCount = 5;
 	double summary = 6;
+}
+
+message ReportReply {
+	int32 id = 1;
+	google.protobuf.Timestamp createdAt = 2;
+	google.protobuf.Timestamp updatedAt = 3;
+	google.protobuf.Timestamp startDate = 4;
+	google.protobuf.Timestamp endDate = 5;
+	double profit = 6;
+	int32 closedAppsCount = 7;
+	int32 animalsCount = 8;
+	data.UserReply user = 9;
+	data.ReportStatus status = 10;
 }

@@ -107,6 +107,27 @@ namespace GrpcServer_PI_21_01.Data
             }
         }
 
+        public static bool RemoveOperation(int id)
+        {
+            try
+            {
+                using NpgsqlCommand cmd = new($"DELETE FROM operation WHERE id = {id}") { Connection = cn };
+                {
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                cn.Close();
+                Console.WriteLine(e.Message);
+                return false;
+                throw;
+            }
+        }
+
         public static Operation GetOperation(int id)
         {
 

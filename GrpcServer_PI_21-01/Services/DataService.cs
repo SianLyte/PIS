@@ -341,6 +341,7 @@ namespace GrpcServer_PI_21_01.Services
             return CRUD(app.number, successful);
         }
 
+
         public override Task<OperationResult> UpdateApp(ApplicationReply reply, ServerCallContext ctx)
         {
             var app = reply.FromReply();
@@ -528,7 +529,11 @@ namespace GrpcServer_PI_21_01.Services
             return CRUD(request.Id, successful);
         }
         #endregion
+
+
     }
+
+    
 
     public static class DataExtensions
     {

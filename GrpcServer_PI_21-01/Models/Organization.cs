@@ -10,6 +10,8 @@ namespace GrpcServer_PI_21_01.Models
     [FilterableModel("organization")]
     public class Organization
     {
+        [Filterable("id")]
+
         public int idOrg { get; set; }
 
         [Filterable("namee")]
