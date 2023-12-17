@@ -108,7 +108,13 @@ namespace GrpcServer_PI_21_01.Services
             var start = request.BeginDate.ToDateTime();
             var finish = request.EndDate.ToDateTime();
 
-            var report = ReportRepository.GenereteReport(start, finish, request.Id);
+            var dataRequest = new DataRequest()
+            {
+                Actor = request.Actor,
+                Page = -1,
+            };
+
+            var report = ReportRepository.GenereteReport(dataRequest, start, finish, request.Id);
 
             return Task.FromResult(report.ToReply());
 

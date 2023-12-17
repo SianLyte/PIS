@@ -38,7 +38,7 @@ namespace GrpcServer_PI_21_01.Data
             try
             {
                 using var cmd = new NpgsqlCommand($"SELECT * FROM userr WHERE " +
-                $"user.UserId = {userId}")
+                $"userr.UserId = {userId}")
                 { Connection = cn };
                 cn.Open();
                 var reader = cmd.ExecuteReader();
