@@ -55,7 +55,7 @@ namespace GrpcServer_PI_21_01.Data
                 Filter = new FilterReply(),
                 Page = -1,
             };
-            if (request.Actor.PrivelegeLevel != "Operator_Po_Otlovy")
+            if (request.Actor.PrivelegeLevel != "Operator_Po_Otlovy" || request.Actor.PrivelegeLevel != "Admin")
             {
                 throw new RpcException(new Status(StatusCode.PermissionDenied, "У вас нет прав на это действие"));
             }
