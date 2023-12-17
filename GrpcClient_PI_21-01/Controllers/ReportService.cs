@@ -3,6 +3,7 @@ using Grpc.Net.Client;
 using GrpcClient_PI_21_01.Models;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.Office.Interop.Excel;
+using System.Linq.Expressions;
 
 namespace GrpcClient_PI_21_01.Controllers
 {
@@ -24,8 +25,44 @@ namespace GrpcClient_PI_21_01.Controllers
                 reports.Add(response.FromReply());
             return reports;
         }
+        public static string[] ToDataArray(Report rep)
+        {
+            return new string[]
+            {
+                    rep.Id.ToString(),
+                    rep.CreatedAt.ToString(),
+                    rep.UpdatedAt.ToString(),
+                    rep.StartDate.ToString(),
+                    rep.EndDate.ToString(),
+                    rep.Profit.ToString(),
+                    rep.AnimalsCount.ToString(),
+                    rep.ClosedAppsCount.ToString(),
+                    rep.User.Name.ToString(),
+                    rep.Status.ToString()
+            };
+        }
 
+        public static async void FillDataGrid(List<Report> reports, DataGridView dgv)
+        {
+            static Expression<Func<Report, object>> exp(Expression<Func<Report, object>> exp) => exp;
 
+            // preparting columns
+            dgv.Columns[0].Tag = exp(a => a.Id);
+            dgv.Columns[1].Tag = exp(a => a.CreatedAt);
+            dgv.Columns[2].Tag = exp(a => a.UpdatedAt);
+            dgv.Columns[3].Tag = exp(a => a.StartDate);
+            dgv.Columns[4].Tag = exp(a => a.EndDate);
+            dgv.Columns[5].Tag = exp(a => a.Profit);
+            dgv.Columns[6].Tag = exp(a => a.AnimalsCount);
+            dgv.Columns[7].Tag = exp(a => a.ClosedAppsCount);
+            dgv.Columns[8].Tag = exp(a => a.User.Name);
+            dgv.Columns[9].Tag = exp(a => a.Status);
+            foreach (DataGridViewColumn c in dgv.Columns)
+                c.SortMode = DataGridViewColumnSortMode.Programmatic;
+
+            // filling in data
+            reports.ForEach(a => dgv.Rows.Add(ToDataArray(a)));
+        }
 
         public static async Task<Report> GenereteReport(DateTime start, DateTime finish)
         {
