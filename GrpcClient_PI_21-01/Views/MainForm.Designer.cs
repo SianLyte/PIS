@@ -110,6 +110,7 @@
             buttonNextContracts=new Button();
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
+            buttonDeleteHistory=new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
@@ -805,9 +806,9 @@
             buttonExcelOrg.FlatStyle=FlatStyle.Popup;
             buttonExcelOrg.Location=new Point(211, 627);
             buttonExcelOrg.Name="buttonExcelOrg";
-            buttonExcelOrg.Size=new Size(132, 76);
+            buttonExcelOrg.Size=new Size(197, 36);
             buttonExcelOrg.TabIndex=28;
-            buttonExcelOrg.Text="Экспорт в \r\nэксель";
+            buttonExcelOrg.Text="Экспорт в эксель";
             buttonExcelOrg.UseVisualStyleBackColor=false;
             // 
             // buttonPreviosOrganisations
@@ -901,6 +902,7 @@
             // tabPage6
             // 
             tabPage6.BackColor=Color.Tan;
+            tabPage6.Controls.Add(buttonDeleteHistory);
             tabPage6.Controls.Add(historyFiltersButton);
             tabPage6.Controls.Add(buttonExcelHistory);
             tabPage6.Controls.Add(buttonPriviosHistory);
@@ -918,9 +920,9 @@
             // 
             historyFiltersButton.BackColor=Color.Cornsilk;
             historyFiltersButton.FlatStyle=FlatStyle.Popup;
-            historyFiltersButton.Location=new Point(161, 619);
+            historyFiltersButton.Location=new Point(304, 619);
             historyFiltersButton.Name="historyFiltersButton";
-            historyFiltersButton.Size=new Size(132, 76);
+            historyFiltersButton.Size=new Size(132, 47);
             historyFiltersButton.TabIndex=22;
             historyFiltersButton.Text="Фильтры";
             historyFiltersButton.UseVisualStyleBackColor=false;
@@ -931,9 +933,9 @@
             buttonExcelHistory.FlatStyle=FlatStyle.Popup;
             buttonExcelHistory.Location=new Point(6, 619);
             buttonExcelHistory.Name="buttonExcelHistory";
-            buttonExcelHistory.Size=new Size(132, 76);
+            buttonExcelHistory.Size=new Size(189, 47);
             buttonExcelHistory.TabIndex=21;
-            buttonExcelHistory.Text="Экспорт в \r\nэксель";
+            buttonExcelHistory.Text="Экспорт в эксель";
             buttonExcelHistory.UseVisualStyleBackColor=false;
             // 
             // buttonPriviosHistory
@@ -1045,6 +1047,17 @@
             label7.Size=new Size(26, 16);
             label7.TabIndex=16;
             label7.Text="до:";
+            // 
+            // buttonDeleteHistory
+            // 
+            buttonDeleteHistory.BackColor=Color.Cornsilk;
+            buttonDeleteHistory.FlatStyle=FlatStyle.Popup;
+            buttonDeleteHistory.Location=new Point(1236, 667);
+            buttonDeleteHistory.Name="buttonDeleteHistory";
+            buttonDeleteHistory.Size=new Size(132, 45);
+            buttonDeleteHistory.TabIndex=23;
+            buttonDeleteHistory.Text="Удалить";
+            buttonDeleteHistory.UseVisualStyleBackColor=false;
             // 
             // MainForm
             // 
@@ -1163,6 +1176,7 @@
         private DataGridViewTextBoxColumn ClosedAppsCount;
         private DataGridViewTextBoxColumn User;
         private DataGridViewTextBoxColumn Status;
+        private Button buttonDeleteHistory;
     }
 }
 

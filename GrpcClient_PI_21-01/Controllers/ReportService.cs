@@ -72,8 +72,8 @@ namespace GrpcClient_PI_21_01.Controllers
             var request = new Report_FilterReply()
             {
                 Id = -1,
-                BeginDate = start.ToTimestamp(),
-                EndDate = finish.ToTimestamp(),
+                BeginDate = start.ToUtc().ToTimestamp(),
+                EndDate = finish.ToUtc().ToTimestamp(),
                 Actor = UserService.CurrentUser?.ToReply(),
             };
             var report = await client.GenerateReportAsync(request);
