@@ -51,6 +51,7 @@
             Kontracts=new DataGridViewTextBoxColumn();
             pictureBox1=new PictureBox();
             tabPage2=new TabPage();
+            buttonExportReport=new Button();
             buttonEditReport=new Button();
             button5=new Button();
             buttonAddReport=new Button();
@@ -112,7 +113,6 @@
             buttonNextContracts=new Button();
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
-            buttonExportReport=new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
@@ -289,7 +289,6 @@
             DataGridViewActs.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DataGridViewActs.Columns.AddRange(new DataGridViewColumn[] { Id, CountDogs, CountCats, Organization, Date, Target, Kontracts });
             DataGridViewActs.Location=new Point(6, 6);
-            DataGridViewActs.MultiSelect=false;
             DataGridViewActs.Name="DataGridViewActs";
             DataGridViewActs.ReadOnly=true;
             DataGridViewActs.RowHeadersVisible=false;
@@ -373,6 +372,17 @@
             tabPage2.Size=new Size(1374, 715);
             tabPage2.TabIndex=1;
             tabPage2.Text="Отчёт";
+            // 
+            // buttonExportReport
+            // 
+            buttonExportReport.BackColor=Color.Cornsilk;
+            buttonExportReport.FlatStyle=FlatStyle.Popup;
+            buttonExportReport.Location=new Point(6, 636);
+            buttonExportReport.Name="buttonExportReport";
+            buttonExportReport.Size=new Size(182, 48);
+            buttonExportReport.TabIndex=18;
+            buttonExportReport.Text="Экспорт в эксель";
+            buttonExportReport.UseVisualStyleBackColor=false;
             // 
             // buttonEditReport
             // 
@@ -789,7 +799,6 @@
             dataGridViewApp.CellBorderStyle=DataGridViewCellBorderStyle.RaisedVertical;
             dataGridViewApp.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewApp.Location=new Point(18, 14);
-            dataGridViewApp.MultiSelect=false;
             dataGridViewApp.Name="dataGridViewApp";
             dataGridViewApp.ReadOnly=true;
             dataGridViewApp.RowHeadersVisible=false;
@@ -872,7 +881,6 @@
             dataGridViewOrg.BackgroundColor=Color.OldLace;
             dataGridViewOrg.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewOrg.Location=new Point(26, 3);
-            dataGridViewOrg.MultiSelect=false;
             dataGridViewOrg.Name="dataGridViewOrg";
             dataGridViewOrg.ReadOnly=true;
             dataGridViewOrg.RowHeadersVisible=false;
@@ -999,7 +1007,6 @@
             dataGridViewHistory.BackgroundColor=Color.OldLace;
             dataGridViewHistory.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewHistory.Location=new Point(6, 6);
-            dataGridViewHistory.MultiSelect=false;
             dataGridViewHistory.Name="dataGridViewHistory";
             dataGridViewHistory.ReadOnly=true;
             dataGridViewHistory.RowHeadersVisible=false;
@@ -1074,17 +1081,6 @@
             label7.Size=new Size(26, 16);
             label7.TabIndex=16;
             label7.Text="до:";
-            // 
-            // buttonExportReport
-            // 
-            buttonExportReport.BackColor=Color.Cornsilk;
-            buttonExportReport.FlatStyle=FlatStyle.Popup;
-            buttonExportReport.Location=new Point(6, 636);
-            buttonExportReport.Name="buttonExportReport";
-            buttonExportReport.Size=new Size(182, 48);
-            buttonExportReport.TabIndex=18;
-            buttonExportReport.Text="Экспорт в эксель";
-            buttonExportReport.UseVisualStyleBackColor=false;
             // 
             // MainForm
             // 
