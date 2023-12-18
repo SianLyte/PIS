@@ -297,8 +297,8 @@ namespace GrpcServer_PI_21_01.Data
                     NpgsqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        AppCatchedAnimals += int.Parse(reader[3].ToString());
-                        AppCatchedAnimals += int.Parse(reader[4].ToString());
+                        AppCatchedAnimals += int.Parse(reader[0].ToString());
+                        AppCatchedAnimals += int.Parse(reader[1].ToString());
                     };
                     reader.Close();
                     cn.Close();
