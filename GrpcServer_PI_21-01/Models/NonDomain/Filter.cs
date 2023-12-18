@@ -282,8 +282,11 @@ namespace GrpcServer_PI_21_01.Models
                     dict[tableColumn] += $" or {tableColumn} {expression}";
                 }
 
-                if (!dict.ContainsKey(tableColumn) || andEquations.Count == 0 )
+                if (!dict.ContainsKey(tableColumn) && andEquations.Count == 0 )
                     dict.Add(tableColumn, $"( {tableColumn} {expression}");
+
+                //if (!dict.ContainsKey(tableColumn) && andEquations.Count == 0)
+                //    dict.Add(tableColumn, $"( {tableColumn} {expression}");
             }
             if (andEquations.Count > 0 || orEquations.Count > 0)
             {
