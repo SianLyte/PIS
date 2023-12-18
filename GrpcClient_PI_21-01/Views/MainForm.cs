@@ -93,6 +93,7 @@ namespace GrpcClient_PI_21_01
             buttonExcelContract.Click += buttonExportExel_Click;
             buttonExcelHistory.Click += buttonExportExel_Click;
             buttonExcelOrg.Click += buttonExportExel_Click;
+            buttonExportReport.Click += buttonExportExel_Click;
 
             Task.Run(Setup);
         }
@@ -123,7 +124,7 @@ namespace GrpcClient_PI_21_01
                 await InicilisationHistory();
 
             //if (await CheckPrivilegeNoError(NameMdels.Report))
-                await InicilisationReports();
+            await InicilisationReports();
         }
 
         private static async Task<bool> CheckPrivilege(NameMdels model)
@@ -181,7 +182,9 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.Act))
                 if (DataGridViewActs.CurrentRow != null)
                 {
-                    var editWindow = new ActEdit(int.Parse(DataGridViewActs.CurrentRow.Cells[0].Value.ToString()));
+                    var actId = int.Parse(DataGridViewActs.CurrentRow.Cells[0].Value.ToString());
+                    var act = await ActService.GetAct(actId);
+                    var editWindow = new ActEdit(act);
                     editWindow.ShowDialog();
                     await SetDataGridAct();
                 }
