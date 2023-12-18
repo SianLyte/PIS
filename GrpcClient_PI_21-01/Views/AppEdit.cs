@@ -119,7 +119,7 @@ namespace GrpcClient_PI_21_01.Views
 
             var app = new App(DateTime.Parse(dateTime.Text), this.app is null ? -1 : this.app.number,
                 loc, territory.Text, animalHabbiat.Text, urgency.Text,
-                descrip.Text, category.SelectedItem.ToString(), AppStatus.Registered, UserService.CurrentUser?.Organization, 100);
+                descrip.Text, category.SelectedItem.ToString(), AppStatus.Registered, UserService.CurrentUser?.Organization, (int)animalsCount.Value);
 
             if (this.app is null)
             {
