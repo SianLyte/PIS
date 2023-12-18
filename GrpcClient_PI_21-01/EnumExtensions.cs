@@ -120,5 +120,16 @@ namespace GrpcClient_PI_21_01
             OrganizationType.LocalGovernment => "Орган местного самоуправления",
             _ => throw new InvalidEnumArgumentException("Unknown OrganizationType enum for translation"),
         };
+
+        public static string Translate(this ReportStatus status) => status switch
+        {
+            ReportStatus.Revision => "Доработка",
+            ReportStatus.ApprovedByMunicipalContractExecutor => "Согласован у исполнителя Муниципального контракта",
+            ReportStatus.ApprovalFromMunicipalContractExecutor => "Согласование у исполнителя Муниципального контракта",
+            ReportStatus.ApprovedByOmsy => "Согласован в ОМСУ",
+            ReportStatus.Draft => "Черновик",
+            ReportStatus.AgreedWithMunicipalContractExecutor => "Утверждён у исполнителя Муниципального контракта",
+            _ => throw new InvalidEnumArgumentException("Unknown ReportStatus enum for translation"),
+        };
     }
 }

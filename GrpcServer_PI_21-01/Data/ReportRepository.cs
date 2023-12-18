@@ -52,6 +52,8 @@ namespace GrpcServer_PI_21_01.Data
             var org = request.Actor.Organization.FromReply();
             var actFilter = new Filter<Act>();
             actFilter.AddFilter(a => a.Organization, org.idOrg.ToString(), FilterType.Equals);
+            actFilter.AddFilter(a => a.Date, start.ToString(), FilterType.GreaterThan | FilterType.Equals);
+            actFilter.AddFilter(a => a.Date, finish.ToString(), FilterType.LesserThan | FilterType.Equals);
             var actFilterReply = new FilterReply();
             actFilter.ExtendReply(actFilterReply);
             var dataRequest = new DataRequest()
@@ -171,7 +173,7 @@ namespace GrpcServer_PI_21_01.Data
                 using NpgsqlCommand cmd = new($"INSERT INTO report " +
                     $"(created_at, updated_at, start_date, end_date, profit, closed_apps_count, animals_count, user_id, status)" +
                     $"VALUES ('{rep.CreatedAt}', '{rep.UpdatedAt}', '{rep.StartDate}', '{rep.EndDate}', {rep.Profit}, {rep.ClosedAppsCount}, {rep.AnimalsCount}, " +
-                    $"{rep.User.IdUser}, '{ReportStatus.ApprovalFromMunicipalContractExecutor}') RETURNING id")
+                    $"{rep.User.IdUser}, '{rep.Status}') RETURNING id")
                 { Connection = cn };
                 {
                     cn.Open();
@@ -201,15 +203,15 @@ namespace GrpcServer_PI_21_01.Data
                 string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0" };
                 while (reader.Read())
                 {
-                    arr[0] = (reader[1].ToString()); //createdat
-                    arr[1] = reader[7].ToString(); //updatedat
-                    arr[2] = reader[2].ToString(); //startdate
-                    arr[3] = reader[3].ToString(); //enddate
-                    arr[4] = reader[4].ToString(); //profit
-                    arr[5] = reader[5].ToString(); //closed_apps_count
-                    arr[6] = reader[6].ToString(); //animals_sount
-                    arr[7] = reader[8].ToString(); //userId
-                    arr[8] = reader[9].ToString(); //status
+                    arr[0] = reader[reader.GetOrdinal("created_at")].ToString(); //createdat
+                    arr[1] = reader[reader.GetOrdinal("updated_at")].ToString(); //updatedat
+                    arr[2] = reader[reader.GetOrdinal("start_date")].ToString(); //startdate
+                    arr[3] = reader[reader.GetOrdinal("end_date")].ToString(); //enddate
+                    arr[4] = reader[reader.GetOrdinal("profit")].ToString(); //profit
+                    arr[5] = reader[reader.GetOrdinal("closed_apps_count")].ToString(); //closed_apps_count
+                    arr[6] = reader[reader.GetOrdinal("animals_count")].ToString(); //animals_sount
+                    arr[7] = reader[reader.GetOrdinal("user_id")].ToString(); //userId
+                    arr[8] = reader[reader.GetOrdinal("status")].ToString(); //status
                 }
                 var status = Enum.Parse<AppStatus>(arr[7]);
                 reader.Close();
@@ -228,7 +230,11 @@ namespace GrpcServer_PI_21_01.Data
 
         public static bool UpdateReport(Report rep)
         {
-            if (rep.User.PrivelegeLevel == Roles.Curator_Po_Otlovy && (rep.Status == ReportStatus.ApprovedByMunicipalContractExecutor || rep.Status == ReportStatus.Revision))
+            if (rep.User.PrivelegeLevel == Roles.Operator_Po_Otlovy && (rep.Status == ReportStatus.Draft || rep.Status == ReportStatus.ApprovalFromMunicipalContractExecutor))
+            {
+                ; ; ;
+            }
+            else if (rep.User.PrivelegeLevel == Roles.Curator_Po_Otlovy && (rep.Status == ReportStatus.ApprovedByMunicipalContractExecutor || rep.Status == ReportStatus.Revision))
             {
                 ; ; ;
             }

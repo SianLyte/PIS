@@ -55,6 +55,8 @@ namespace GrpcClient_PI_21_01
 
             //button1.Click += button1_Click;
             buttonAddReport.Click += buttonAddReport_Click;
+            buttonEditReport.Click += ButtonEditReport_Click;
+            buttonDeleteReport.Click += ButtonDeleteReport_Click;
 
             buttonDeleteHistory.Click += buttonDeleteHistory_Click;
 
@@ -498,32 +500,17 @@ namespace GrpcClient_PI_21_01
 
         private async Task InicilisationReports()
         {
-            if (await CheckPrivilege(NameMdels.Report))
-            {
-                dataGridViewReport.Rows.Clear();
-                var report = await ReportService.GetReports(_ReportPage);
-                ReportService.FillDataGrid(report, dataGridViewReport);
-                //_ReportPageMax = ReportService.GetPageCount(_pageSize, reportFilter);
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            OpenReport();
-        }
-
-        private static async void OpenReport()
-        {
-            if (await CheckPrivilege(NameMdels.Report))
-            {
-                var rep = new ReportForm();
-                rep.ShowDialog();
-            }
+            dataGridViewReport.Rows.Clear();
+            var report = await ReportService.GetReports(_ReportPage);
+            ReportService.FillDataGrid(report, dataGridViewReport);
+            //_ReportPageMax = ReportService.GetPageCount(_pageSize, reportFilter);
         }
 
         private async void buttonAddReport_Click(object sender, EventArgs e)
         {
-            OpenReport();
+            var rep = new ReportForm();
+            rep.ShowDialog();
+            await InicilisationReports();
         }
 
         private async void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -535,6 +522,31 @@ namespace GrpcClient_PI_21_01
             //}
         }
 
+        private async void ButtonDeleteReport_Click(object? sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridViewReport.SelectedRows)
+            {
+                try
+                {
+                    var reportId = int.Parse(row.Cells["ID"].Value.ToString());
+                    await ReportService.RemoveReport(reportId);
+                }
+                catch { MessageBox.Show("Could not delete one of the selected rows"); }
+            }
+            await InicilisationReports();
+        }
+
+        private async void ButtonEditReport_Click(object? sender, EventArgs e)
+        {
+            if (dataGridViewReport.CurrentRow is null) return;
+
+            var cellId = dataGridViewReport.CurrentRow.Cells["ID"].Value.ToString();
+            var reportId = int.Parse(cellId);
+            var report = await ReportService.GetReport(reportId);
+            var editForm = new ReportForm(report);
+            editForm.ShowDialog();
+            await InicilisationReports();
+        }
 
         private async void SortReports(object sender, DataGridViewCellMouseEventArgs e)
         {

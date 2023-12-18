@@ -9,7 +9,18 @@ namespace GrpcClient_PI_21_01.Controllers
 {
     public static class ReportService
     {
+        public static async Task<Report> GetReport(int reportId)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+            var reportReply = await client.GetReportAsync(new IdRequest()
+            {
+                Actor = UserService.CurrentUser?.ToReply(),
+                Id = reportId,
+            });
 
+            return reportReply.FromReply();
+        }
 
         public static async Task<List<Report>> GetReports(int page = -1, Filter<Report>? filter = null)
         {
@@ -32,10 +43,10 @@ namespace GrpcClient_PI_21_01.Controllers
             return new string[]
             {
                     rep.Id.ToString(),
-                    rep.CreatedAt.ToString(),
-                    rep.UpdatedAt.ToString(),
-                    rep.StartDate.ToString(),
-                    rep.EndDate.ToString(),
+                    rep.CreatedAt.ToString("dd/MM/yyyy"),
+                    rep.UpdatedAt.ToString("dd/MM/yyyy"),
+                    rep.StartDate.ToString("dd/MM/yyyy"),
+                    rep.EndDate.ToString("dd/MM/yyyy"),
                     rep.Profit.ToString(),
                     rep.AnimalsCount.ToString(),
                     rep.ClosedAppsCount.ToString(),
