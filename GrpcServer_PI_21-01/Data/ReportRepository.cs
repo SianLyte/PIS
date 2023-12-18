@@ -1,11 +1,7 @@
 ﻿using Grpc.Core;
 using GrpcServer_PI_21_01.Models;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GrpcServer_PI_21_01.Services;
 
 namespace GrpcServer_PI_21_01.Data
 {
@@ -45,55 +41,72 @@ namespace GrpcServer_PI_21_01.Data
 
         public static Report GenereteReport(DataRequest request, DateTime start, DateTime finish, int id = -1)
         {
-            //при создании id=-1, при редактировании - id из бд
-            double profit = 0;
-            int animalsCount = 0;
-            int closedAppsCount = 0;
-            reports = new List<Report>();
             if (request.Actor.PrivelegeLevel != "Operator_Po_Otlovy" && request.Actor.PrivelegeLevel != "Admin")
             {
                 throw new RpcException(new Status(StatusCode.PermissionDenied, "У вас нет прав на это действие"));
             }
-            foreach (var loc in LocationRepository.GetLocations(request))
 
+            var profit = 0.0;
+            var animalsCount = 0;
+            var closedApps = new List<App>();
+            var org = request.Actor.Organization.FromReply();
+            var actFilter = new Filter<Act>();
+            actFilter.AddFilter(a => a.Organization, org.idOrg.ToString(), FilterType.Equals);
+            var actFilterReply = new FilterReply();
+            actFilter.ExtendReply(actFilterReply);
+            var dataRequest = new DataRequest()
             {
-                //все заявки_акты за определнный период в конкретном городе по организации оператора
-                var allActApps = ActRepository.GetActApps(request)
-                    .Where(actapp => actapp.Act.Date >= start & 
-                    actapp.Act.Date <= finish & 
-                    actapp.Application.locality.IdLocation == loc.IdLocation &
-                    actapp.Act.Organization.idOrg == request.Actor.Organization.IdOrganization);
-                //массив уникальных актов
-                List<Act> acts = new();
-                //массив уникальных 
-                List<App> apps = new();
-                foreach (var actapp in allActApps)
-                {
-                    closedAppsCount += 1;
-                    if (!acts.Contains(actapp.Act))
-                    {
-                        acts.Add(actapp.Act);
-                    }
-                    if (!apps.Contains(actapp.Application))
-                    {
-                        apps.Add(actapp.Application);
-                    }
-                }
-                
-                foreach (var act in acts)
-                {
-                    int contractId = act.Contracts.IdContract;
-                    int localityId = loc.IdLocation;
-                    profit += (double)Location_Contract.GetAnimalCost(localityId, contractId, cn).Price;
-                    animalsCount += act.CountCats;
-                    animalsCount += act.CountDogs;
-                }
+                Actor = request.Actor,
+                Filter = actFilterReply,
+                Page = -1,
+            };
+            var acts = ActRepository.GetActs(dataRequest);
 
-                //if (summ != 0)
-                //    reports.Add(new Report(start, finish, loc, apps.Count(), acts.Sum(x => x.Sum), summ, ReportStatus.Revision, DateTime.Now));
+            foreach (var act in acts)
+            {
+                var actAppFilter = new Filter<ActApp>();
+                actAppFilter.AddFilter(aa => aa.Act, act.ActNumber.ToString());
+                var actAppFilterReply = new FilterReply();
+                actAppFilter.ExtendReply(actAppFilterReply);
+                var actAppRequest = new DataRequest()
+                {
+                    Actor = request.Actor,
+                    Filter = actAppFilterReply,
+                    Page = -1,
+                };
+                var actApps = ActRepository.GetActApps(actAppRequest);
+
+                foreach (var actApp in actApps)
+                {
+                    var animalCount = actApp.CountDogs + actApp.CountCats;
+
+                    var lcFilter = new Filter<Location_Contract>();
+                    lcFilter.AddFilter(lc => lc.Contract, act.Contracts.IdContract.ToString());
+                    lcFilter.AddFilter(lc => lc.Locality, actApp.Application.locality.IdLocation.ToString());
+                    var lcFilterReply = new FilterReply();
+                    lcFilter.ExtendReply(lcFilterReply);
+                    var lcRequest = new DataRequest()
+                    {
+                        Actor = request.Actor,
+                        Filter = lcFilterReply,
+                        Page = -1,
+                    };
+                    var lcs = LocationRepository.GetLocationContracts(lcRequest);
+
+                    var lc = lcs.Single(); // найден должен быть один единственный
+
+                    profit += animalCount * (double)lc.Price;
+                    animalsCount += animalCount;
+                    if (!closedApps.Any(a => a.number == actApp.Application.number)
+                        && actApp.Application.status == AppStatus.Fulfilled)
+                    {
+                        closedApps.Add(actApp.Application);
+                    }
+                }
             }
-            return new Report(id, DateTime.Now, DateTime.Now, start, finish, profit, closedAppsCount,
-                animalsCount, UserRepository.GetUserById(request.Actor.UserId), ReportStatus.ApprovalFromMunicipalContractExecutor);
+
+            return new Report(id, DateTime.Now, DateTime.Now, start, finish, profit, closedApps.Count, animalsCount,
+                UserRepository.GetUserById(request.Actor.UserId), ReportStatus.Draft);
         }
 
         public static List<Report> GetReports(DataRequest r)
