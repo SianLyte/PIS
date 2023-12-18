@@ -164,7 +164,9 @@ namespace GrpcClient_PI_21_01
             if (await CheckPrivilege(NameMdels.Act))
                 if (DataGridViewActs.CurrentRow != null)
                 {
-                    var editWindow = new ActEdit(int.Parse(DataGridViewActs.CurrentRow.Cells[0].Value.ToString()));
+                    var actId = int.Parse(DataGridViewActs.CurrentRow.Cells[0].Value.ToString());
+                    var act = await ActService.GetAct(actId);
+                    var editWindow = new ActEdit(act);
                     editWindow.ShowDialog();
                     await SetDataGridAct();
                 }
