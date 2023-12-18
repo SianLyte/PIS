@@ -299,7 +299,7 @@ namespace GrpcClient_PI_21_01.Views
             else
                 if (costNumericUpDown.Value != 0)
             {
-                MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 costNumericUpDown.Value = 0;
             }
         }

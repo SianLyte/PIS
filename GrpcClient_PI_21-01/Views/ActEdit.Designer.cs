@@ -72,7 +72,7 @@ namespace GrpcClient_PI_21_01.Views
             Cancel.BackColor=Color.Cornsilk;
             Cancel.DialogResult=DialogResult.Cancel;
             Cancel.FlatStyle=FlatStyle.Popup;
-            Cancel.Location=new Point(376, 788);
+            Cancel.Location=new Point(366, 764);
             Cancel.Margin=new Padding(6, 9, 6, 9);
             Cancel.Name="Cancel";
             Cancel.Size=new Size(162, 61);
@@ -84,7 +84,7 @@ namespace GrpcClient_PI_21_01.Views
             // 
             OK.BackColor=Color.Cornsilk;
             OK.FlatStyle=FlatStyle.Popup;
-            OK.Location=new Point(201, 788);
+            OK.Location=new Point(191, 764);
             OK.Margin=new Padding(6, 9, 6, 9);
             OK.Name="OK";
             OK.Size=new Size(162, 61);
@@ -95,7 +95,7 @@ namespace GrpcClient_PI_21_01.Views
             // label2
             // 
             label2.AutoSize=true;
-            label2.Location=new Point(26, 229);
+            label2.Location=new Point(15, 88);
             label2.Margin=new Padding(6, 0, 6, 0);
             label2.Name="label2";
             label2.Size=new Size(225, 30);
@@ -105,7 +105,7 @@ namespace GrpcClient_PI_21_01.Views
             // label3
             // 
             label3.AutoSize=true;
-            label3.Location=new Point(25, 723);
+            label3.Location=new Point(15, 699);
             label3.Margin=new Padding(6, 0, 6, 0);
             label3.Name="label3";
             label3.Size=new Size(127, 30);
@@ -115,7 +115,7 @@ namespace GrpcClient_PI_21_01.Views
             // label4
             // 
             label4.AutoSize=true;
-            label4.Location=new Point(26, 441);
+            label4.Location=new Point(15, 300);
             label4.Margin=new Padding(6, 0, 6, 0);
             label4.Name="label4";
             label4.Size=new Size(72, 30);
@@ -128,7 +128,7 @@ namespace GrpcClient_PI_21_01.Views
             dateAct.CalendarTitleBackColor=Color.Cornsilk;
             dateAct.CalendarTrailingForeColor=SystemColors.ControlText;
             dateAct.Cursor=Cursors.PanNW;
-            dateAct.Location=new Point(283, 294);
+            dateAct.Location=new Point(272, 153);
             dateAct.Margin=new Padding(6, 9, 6, 9);
             dateAct.Name="dateAct";
             dateAct.Size=new Size(250, 37);
@@ -142,7 +142,7 @@ namespace GrpcClient_PI_21_01.Views
             comboBoxOrganization.DropDownStyle=ComboBoxStyle.DropDownList;
             comboBoxOrganization.FlatStyle=FlatStyle.Popup;
             comboBoxOrganization.FormattingEnabled=true;
-            comboBoxOrganization.Location=new Point(283, 220);
+            comboBoxOrganization.Location=new Point(272, 79);
             comboBoxOrganization.Margin=new Padding(6, 9, 6, 9);
             comboBoxOrganization.Name="comboBoxOrganization";
             comboBoxOrganization.Size=new Size(250, 38);
@@ -155,7 +155,7 @@ namespace GrpcClient_PI_21_01.Views
             comboBoxContract.DropDownStyle=ComboBoxStyle.DropDownList;
             comboBoxContract.FlatStyle=FlatStyle.Popup;
             comboBoxContract.FormattingEnabled=true;
-            comboBoxContract.Location=new Point(282, 715);
+            comboBoxContract.Location=new Point(272, 691);
             comboBoxContract.Margin=new Padding(6, 9, 6, 9);
             comboBoxContract.Name="comboBoxContract";
             comboBoxContract.Size=new Size(251, 38);
@@ -177,7 +177,7 @@ namespace GrpcClient_PI_21_01.Views
             // label5
             // 
             label5.AutoSize=true;
-            label5.Location=new Point(26, 364);
+            label5.Location=new Point(15, 223);
             label5.Margin=new Padding(6, 0, 6, 0);
             label5.Name="label5";
             label5.Size=new Size(129, 30);
@@ -188,7 +188,7 @@ namespace GrpcClient_PI_21_01.Views
             // 
             textBoxTarget.BackColor=Color.OldLace;
             textBoxTarget.BorderStyle=BorderStyle.None;
-            textBoxTarget.Location=new Point(283, 364);
+            textBoxTarget.Location=new Point(272, 223);
             textBoxTarget.Margin=new Padding(6, 9, 6, 9);
             textBoxTarget.Name="textBoxTarget";
             textBoxTarget.Size=new Size(251, 30);
@@ -197,7 +197,7 @@ namespace GrpcClient_PI_21_01.Views
             // R
             // 
             R.AutoSize=true;
-            R.Location=new Point(26, 159);
+            R.Location=new Point(6, 308);
             R.Margin=new Padding(6, 0, 6, 0);
             R.Name="R";
             R.Size=new Size(183, 30);
@@ -207,7 +207,7 @@ namespace GrpcClient_PI_21_01.Views
             // label7
             // 
             label7.AutoSize=true;
-            label7.Location=new Point(26, 89);
+            label7.Location=new Point(6, 238);
             label7.Margin=new Padding(6, 0, 6, 0);
             label7.Name="label7";
             label7.Size=new Size(177, 30);
@@ -227,7 +227,7 @@ namespace GrpcClient_PI_21_01.Views
             // numericUpDownDog
             // 
             numericUpDownDog.BackColor=Color.OldLace;
-            numericUpDownDog.Location=new Point(403, 86);
+            numericUpDownDog.Location=new Point(202, 242);
             numericUpDownDog.Margin=new Padding(6, 9, 6, 9);
             numericUpDownDog.Name="numericUpDownDog";
             numericUpDownDog.Size=new Size(136, 37);
@@ -236,7 +236,7 @@ namespace GrpcClient_PI_21_01.Views
             // numericUpDownCat
             // 
             numericUpDownCat.BackColor=Color.OldLace;
-            numericUpDownCat.Location=new Point(402, 150);
+            numericUpDownCat.Location=new Point(201, 306);
             numericUpDownCat.Margin=new Padding(6, 9, 6, 9);
             numericUpDownCat.Name="numericUpDownCat";
             numericUpDownCat.Size=new Size(136, 37);
@@ -245,12 +245,16 @@ namespace GrpcClient_PI_21_01.Views
             // groupBox2
             // 
             groupBox2.Controls.Add(deleteButton);
+            groupBox2.Controls.Add(numericUpDownCat);
+            groupBox2.Controls.Add(numericUpDownDog);
             groupBox2.Controls.Add(dataGridView1);
             groupBox2.Controls.Add(addApp);
+            groupBox2.Controls.Add(label7);
             groupBox2.Controls.Add(comboBoxApp);
-            groupBox2.Location=new Point(283, 441);
+            groupBox2.Controls.Add(R);
+            groupBox2.Location=new Point(272, 300);
             groupBox2.Name="groupBox2";
-            groupBox2.Size=new Size(388, 258);
+            groupBox2.Size=new Size(388, 358);
             groupBox2.TabIndex=52;
             groupBox2.TabStop=false;
             groupBox2.Text="Добавление заявки";
@@ -302,13 +306,9 @@ namespace GrpcClient_PI_21_01.Views
             AutoScaleDimensions=new SizeF(11F, 30F);
             AutoScaleMode=AutoScaleMode.Font;
             BackColor=Color.Wheat;
-            ClientSize=new Size(696, 868);
+            ClientSize=new Size(696, 845);
             Controls.Add(groupBox2);
-            Controls.Add(numericUpDownCat);
-            Controls.Add(numericUpDownDog);
             Controls.Add(Isus);
-            Controls.Add(label7);
-            Controls.Add(R);
             Controls.Add(textBoxTarget);
             Controls.Add(label5);
             Controls.Add(comboBoxContract);
@@ -330,6 +330,7 @@ namespace GrpcClient_PI_21_01.Views
             ((System.ComponentModel.ISupportInitialize)numericUpDownDog).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCat).EndInit();
             groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

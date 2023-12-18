@@ -9,6 +9,8 @@ namespace GrpcClient_PI_21_01.Views
         private readonly bool actToEdit = false;
         private readonly int actId;
         private List<int> _apps = new();
+        private readonly Dictionary<int, string> _idAppToDodAndCats = new();
+
 
         public ActEdit()
         {
@@ -29,14 +31,14 @@ namespace GrpcClient_PI_21_01.Views
             OK.Click += OK_Click;
             addApp.Click += AddApplication;
             deleteButton.Click += DeleteApplication;
+            dataGridView1.MouseClick += DataGridView1_MouseClick;
+
             Isus.Text = "Редактирование акта";
             dateAct.Value = DateTime.Now;
 
             if (actToEdit)
             {
                 var act = await ActService.GetAct(actId);
-                numericUpDownDog.Value = act.CountDogs;
-                numericUpDownCat.Value = act.CountCats;
                 dateAct.Value = act.Date;
                 textBoxTarget.Text = act.TargetCapture;
                 await FullComboBox();
@@ -44,6 +46,7 @@ namespace GrpcClient_PI_21_01.Views
                 comboBoxContract.Text = act.Contracts.IdContract.ToString();
                 var actApps = (await ActService.GetActApps())
                     .Where(aa => aa.Act.ActNumber == actId);
+                
                 _apps = actApps.Select(async aa => await Task.FromResult(aa.Application.number))
                     .Select(task => task.Result)
                     .ToList();
@@ -52,12 +55,59 @@ namespace GrpcClient_PI_21_01.Views
                 {
                     dataGridView1.Rows.Add(app.ToString());
                 }
+                numericUpDownDog.Value = act.CountDogs;
+                numericUpDownCat.Value = act.CountCats;
+                
+                var _appDogs = actApps.Select(async aa => await Task.FromResult(aa.CountDogs))
+                    .Select(task => task.Result)
+                    .ToList();
+                var _appCats = actApps.Select(async aa => await Task.FromResult(aa.CountCats))
+                    .Select(task => task.Result)
+                    .ToList();
+                for (int i = 0; i < _apps.Count; i++)
+                {
+                    _idAppToDodAndCats.Add(_apps[i], $"{_appDogs[i]};{_appCats[i]}");
+                }
+                DataGridClearSelection();
             }
             else
             {
                 await FullComboBox();
             }
+            numericUpDownDog.ValueChanged += numericUpDownDog_ValueChanged;
+            numericUpDownCat.ValueChanged += numericUpDownDog_ValueChanged;
         }
+
+        private void numericUpDownDog_ValueChanged(object? sender, EventArgs e)
+        {
+            if (CheckDataGrid())
+            {
+                var idApp = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+                var dog = (int)numericUpDownDog.Value;
+                var cat = (int)numericUpDownCat.Value;
+                if (!_idAppToDodAndCats.ContainsKey(idApp))
+                    _idAppToDodAndCats.Add(idApp, $"{dog};{cat}");
+                else
+                    _idAppToDodAndCats[idApp] = $"{dog};{cat}";
+            }
+            else
+                if (numericUpDownDog.Value != 0 || numericUpDownCat.Value != 0)
+            {
+                //MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                numericUpDownDog.Value = 0;
+                numericUpDownCat.Value = 0;
+            }
+        }
+
+        private void DataGridView1_MouseClick(object? sender, MouseEventArgs e)
+        {
+            if (CheckDataGrid())
+            {
+                numericUpDownDog.Value = int.Parse(_idAppToDodAndCats[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())].Split(";")[0]);
+                numericUpDownCat.Value = int.Parse(_idAppToDodAndCats[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())].Split(";")[1]);
+            }
+        }
+
 
         private async Task FullComboBox()
         {
@@ -216,6 +266,7 @@ namespace GrpcClient_PI_21_01.Views
             else
             {
                 _apps.Add(selectedApp);
+                _idAppToDodAndCats.Add(selectedApp, "0;0");
                 InitialisationData();
             }
         }
@@ -250,9 +301,10 @@ namespace GrpcClient_PI_21_01.Views
             {
                 int appId = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
                 dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+                numericUpDownDog.Value = 0;
+                numericUpDownCat.Value = 0;
                 _apps.Remove(appId);
-                dataGridView1.ClearSelection();
-                dataGridView1.CurrentCell  = null;
+                DataGridClearSelection();
             }
         }
 
@@ -265,9 +317,14 @@ namespace GrpcClient_PI_21_01.Views
 
             else
             {
-                MessageBox.Show("Вы не выбрали город!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Вы не выбрали заявку!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+        }
+        private void DataGridClearSelection()
+        {
+            dataGridView1.ClearSelection();
+            dataGridView1.CurrentCell  = null;
         }
     }
 }
