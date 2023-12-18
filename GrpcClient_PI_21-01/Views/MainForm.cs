@@ -633,9 +633,9 @@ namespace GrpcClient_PI_21_01
                 {
                     foreach (DataGridViewRow row in dataGridViewHistory.SelectedRows)
                     {
-                        //await OperationService.(int.Parse(row.Cells[0].Value.ToString()));
+                        await OperationService.RemoveOperation(int.Parse(row.Cells[10].Value.ToString()));
                     }
-                    await SetDataGridAct();
+                    await InicilisationHistory();
                 }
         }
 

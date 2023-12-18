@@ -45,7 +45,7 @@ namespace GrpcClient_PI_21_01.Controllers
 
         public static string[] ToDataArray(Operation operation)
         {
-            return new string[10] { operation.Actor.Surname.ToString(),
+            return new string[11] { operation.Actor.Surname.ToString(),
                                     operation.Actor.Name.ToString(),
                                     operation.Actor.Patronymic.ToString(),
                                     operation.Actor.Organization.name.ToString(),
@@ -54,7 +54,8 @@ namespace GrpcClient_PI_21_01.Controllers
                                     operation.ActionDate.ToString(),
                                     operation.ModifiedObjectId.ToString(),
                                     operation.ActionType.ToString(),
-                                    operation.ModifiedTableName.ToString()};
+                                    operation.ModifiedTableName.ToString(),
+                                    operation.IdOperation.ToString()};
         }
 
         public static void FillDataGrid(List<Operation> operations, DataGridView dgv)
@@ -87,6 +88,7 @@ namespace GrpcClient_PI_21_01.Controllers
             dgv.Columns.Add("ModifiedObjectID", "Идетификационный номер экземляра объекта");
             dgv.Columns.Add("ActionType", "Вид действия");
             dgv.Columns.Add("ModifiedTableName", "Наименование таблицы, в которой произошло изменение");
+            dgv.Columns.Add("Id", "Id");
 
             // preparting columns
             dgv.Columns[0].Tag = expActor(a => a.Surname);
@@ -99,6 +101,7 @@ namespace GrpcClient_PI_21_01.Controllers
             dgv.Columns[7].Tag = exp(a => a.ModifiedObjectId);
             dgv.Columns[8].Tag = exp(a => a.ActionType);
             dgv.Columns[9].Tag = exp(a => a.ModifiedTableName);
+            dgv.Columns[10].Tag = exp(a => a.IdOperation);
 
             foreach (DataGridViewColumn c in dgv.Columns)
                 c.SortMode = DataGridViewColumnSortMode.Programmatic;
