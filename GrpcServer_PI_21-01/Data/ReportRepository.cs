@@ -230,26 +230,6 @@ namespace GrpcServer_PI_21_01.Data
 
         public static bool UpdateReport(Report rep)
         {
-            if (rep.User.PrivelegeLevel == Roles.Operator_Po_Otlovy && (rep.Status == ReportStatus.Draft || rep.Status == ReportStatus.ApprovalFromMunicipalContractExecutor))
-            {
-                ; ; ;
-            }
-            else if (rep.User.PrivelegeLevel == Roles.Curator_Po_Otlovy && (rep.Status == ReportStatus.ApprovedByMunicipalContractExecutor || rep.Status == ReportStatus.Revision))
-            {
-                ; ; ;
-            }
-            else if (rep.User.PrivelegeLevel == Roles.Podpisant_Po_Otlovy && (rep.Status == ReportStatus.Revision || rep.Status == ReportStatus.AgreedWithMunicipalContractExecutor))
-            {
-                ; ; ;
-            }
-            else if (rep.User.PrivelegeLevel == Roles.Curator_OMSY && (rep.Status == ReportStatus.Revision || rep.Status == ReportStatus.ApprovedByOmsy))
-            {
-                ; ; ;
-            }
-            else
-            {
-                throw new RpcException(new Status(StatusCode.PermissionDenied, "У вас нет прав на это"));
-            }
 
             try
             {

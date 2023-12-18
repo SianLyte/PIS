@@ -43,4 +43,5 @@ message ReportReply {
 	int32 animalsCount = 8;
 	data.UserReply user = 9;
 	data.ReportStatus status = 10;
+	data.UserReply actor = 11;
 }

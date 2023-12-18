@@ -93,12 +93,36 @@ namespace GrpcServer_PI_21_01.Services
 
         public override Task<OperationResult> UpdateReport(ReportReply request, ServerCallContext context)
         {
-            var app = request.FromReply();
-            var successful = ReportRepository.UpdateReport(app);
+            var rep = request.FromReply();
+            if (request.Actor.PrivelegeLevel == Roles.Operator_Po_Otlovy.ToString()
+                && (rep.Status == ReportStatus.Draft || rep.Status == ReportStatus.ApprovalFromMunicipalContractExecutor))
+            {
+                ; ; ;
+            }
+            else if (request.Actor.PrivelegeLevel == Roles.Curator_Po_Otlovy.ToString()
+                && (rep.Status == ReportStatus.ApprovedByMunicipalContractExecutor || rep.Status == ReportStatus.Revision))
+            {
+                ; ; ;
+            }
+            else if (request.Actor.PrivelegeLevel == Roles.Podpisant_Po_Otlovy.ToString()
+                && (rep.Status == ReportStatus.Revision || rep.Status == ReportStatus.AgreedWithMunicipalContractExecutor))
+            {
+                ; ; ;
+            }
+            else if (request.Actor.PrivelegeLevel == Roles.Curator_OMSY.ToString()
+                && (rep.Status == ReportStatus.Revision || rep.Status == ReportStatus.ApprovedByOmsy))
+            {
+                ; ; ;
+            }
+            else
+            {
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "У вас нет прав на это"));
+            }
+            var successful = ReportRepository.UpdateReport(rep);
             if (successful)
             {
                 reportCacheProxy.Reset();
-                Log(ActionType.ActionUpdate, "Report", request.Id, request.User);
+                Log(ActionType.ActionUpdate, "Report", request.Id, request.Actor);
             }
             return CRUD(request.Id, successful);
         }

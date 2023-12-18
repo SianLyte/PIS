@@ -51,7 +51,7 @@ namespace GrpcClient_PI_21_01.Controllers
                     rep.AnimalsCount.ToString(),
                     rep.ClosedAppsCount.ToString(),
                     rep.User.Name.ToString(),
-                    rep.Status.ToString()
+                    rep.Status.Translate()
             };
         }
 
@@ -71,7 +71,7 @@ namespace GrpcClient_PI_21_01.Controllers
             SortOrder memorizedSort = SortOrder.None;
             DataGridViewColumn? memorizedColumn = null;
 
-            // memorizing current glyph direction
+            // memorizing current glyph directionw
             foreach (DataGridViewColumn c in dgv.Columns)
                 if (c.HeaderCell.SortGlyphDirection != SortOrder.None)
                 {
@@ -162,6 +162,7 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             rep.Id = -1;
             var reply = rep.ToReply();
+            reply.Actor = UserService.CurrentUser?.ToReply();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new ReportGenerator.ReportGeneratorClient(channel);
             var response = await client.AddReportAsync(reply);
@@ -172,6 +173,7 @@ namespace GrpcClient_PI_21_01.Controllers
         public static async Task<bool> UpdateReport(Report rep)
         {
             var reply = rep.ToReply();
+            reply.Actor = UserService.CurrentUser?.ToReply();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new ReportGenerator.ReportGeneratorClient(channel);
             var response = await client.UpdateReportAsync(reply);

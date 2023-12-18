@@ -16,11 +16,35 @@ namespace GrpcServer_PI_21_01.Data
                 Roles.Operator_Po_Otlovy.ToString(),
                 new Dictionary<NameMdels, bool>()
                 {
+                    { NameMdels.Act, true },
+                    { NameMdels.App, false },
+                    { NameMdels.Contract, false },
+                    { NameMdels.Org, false },
+                    { NameMdels.Report, false },
+                    { NameMdels.History, false },
+                }
+            },
+            {
+                Roles.Curator_Po_Otlovy.ToString(),
+                new Dictionary<NameMdels, bool>()
+                {
                     {NameMdels.Act, true},
-                    {NameMdels.App, false},
-                    {NameMdels.Contract, false},
-                    {NameMdels.Org, false},
-                    {NameMdels.Report, false},
+                    {NameMdels.App, true},
+                    {NameMdels.Contract, true},
+                    {NameMdels.Org, true},
+                    {NameMdels.Report, true},
+                    {NameMdels.History, false},
+                }
+            },
+            {
+                Roles.Podpisant_Po_Otlovy.ToString(),
+                new Dictionary<NameMdels, bool>()
+                {
+                    {NameMdels.Act, true },
+                    {NameMdels.App, true },
+                    {NameMdels.Contract, true },
+                    {NameMdels.Org, true },
+                    {NameMdels.Report, true },
                     {NameMdels.History, false },
                 }
             },
@@ -38,6 +62,18 @@ namespace GrpcServer_PI_21_01.Data
             },
             {
                 Roles.Operator_OMSY.ToString(),
+                new Dictionary<NameMdels, bool>()
+                {
+                    {NameMdels.Act, false},
+                    {NameMdels.App, true},
+                    {NameMdels.Contract, true},
+                    {NameMdels.Org, true},
+                    {NameMdels.Report, true},
+                    {NameMdels.History, false },
+                }
+            },
+            {
+                Roles.Curator_OMSY.ToString(),
                 new Dictionary<NameMdels, bool>()
                 {
                     {NameMdels.Act, false},
