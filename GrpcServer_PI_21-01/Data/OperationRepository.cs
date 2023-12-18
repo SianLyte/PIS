@@ -111,7 +111,7 @@ namespace GrpcServer_PI_21_01.Data
         {
             try
             {
-                using NpgsqlCommand cmd = new($"DELETE FROM operation WHERE id = {id}") { Connection = cn };
+                using NpgsqlCommand cmd = new($"DELETE FROM operation WHERE operationid = {id}") { Connection = cn };
                 {
                     cn.Open();
                     cmd.ExecuteNonQuery();
