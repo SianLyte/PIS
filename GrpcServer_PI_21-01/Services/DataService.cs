@@ -661,7 +661,8 @@ namespace GrpcServer_PI_21_01.Services
                 Territory = app.territory,
                 UrgencyOfExecution = app.urgencyOfExecution,
                 Organization = app.organization.ToReply(),
-                AnimalCount = app.animalCount
+                AnimalCount = app.animalCount,
+                Status = app.status,
             };
         }
 

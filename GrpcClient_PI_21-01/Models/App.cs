@@ -57,53 +57,53 @@ namespace GrpcClient_PI_21_01.Models
             this.organization=organization;
             this.animalCount=animalCount;
         }
-        public static string EnumToString(AppStatus status)
-        {
-            if (status == AppStatus.AwaitingRegistration)
-            {
-                return "awaiting registration";
-            }
-            if (status == AppStatus.Registered)
-            {
-                return "registered";
-            }
-            if (status == AppStatus.Performed)
-            {
-                return "performed";
-            }
-            if (status == AppStatus.Fulfilled)
-            {
-                return "fulfilled";
-            }
-            if (status == AppStatus.Removed)
-            {
-                return "removed";
-            }
-            return "awaiting registration";
-        }
-        public static AppStatus StringToEnum(string status)
-        {
-            if (status == "awaiting registration")
-            {
-                return AppStatus.AwaitingRegistration;
-            }
-            if (status == "registered")
-            {
-                return AppStatus.Registered;
-            }
-            if (status == "performed")
-            {
-                return AppStatus.Performed;
-            }
-            if (status == "fulfilled")
-            {
-                return AppStatus.Fulfilled;
-            }
-            if (status == "removed")
-            {
-                return AppStatus.Removed;
-            }
-            return AppStatus.AwaitingRegistration;
-        }
+        //public static string EnumToString(AppStatus status)
+        //{
+        //    if (status == AppStatus.AwaitingRegistration)
+        //    {
+        //        return "awaiting registration";
+        //    }
+        //    if (status == AppStatus.Registered)
+        //    {
+        //        return "registered";
+        //    }
+        //    if (status == AppStatus.Performed)
+        //    {
+        //        return "performed";
+        //    }
+        //    if (status == AppStatus.Fulfilled)
+        //    {
+        //        return "fulfilled";
+        //    }
+        //    if (status == AppStatus.Removed)
+        //    {
+        //        return "removed";
+        //    }
+        //    return "awaiting registration";
+        //}
+        //public static AppStatus StringToEnum(string status)
+        //{
+        //    if (status == "awaiting registration")
+        //    {
+        //        return AppStatus.AwaitingRegistration;
+        //    }
+        //    if (status == "registered")
+        //    {
+        //        return AppStatus.Registered;
+        //    }
+        //    if (status == "performed")
+        //    {
+        //        return AppStatus.Performed;
+        //    }
+        //    if (status == "fulfilled")
+        //    {
+        //        return AppStatus.Fulfilled;
+        //    }
+        //    if (status == "removed")
+        //    {
+        //        return AppStatus.Removed;
+        //    }
+        //    return AppStatus.AwaitingRegistration;
+        //}
     }
 }
