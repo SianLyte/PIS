@@ -114,7 +114,7 @@ namespace GrpcClient_PI_21_01.Views
             return false;
         }
 
-        public async void GenereteReport()
+        public async Task GenereteReport()
         {
             var report = await ReportService.GenereteReport(dateTimePickerStart.Value, dateTimePickerEnd.Value);
             report.Id = -1;
@@ -190,9 +190,17 @@ namespace GrpcClient_PI_21_01.Views
             throw new Exception($"User with role {user.PrivelegeLevel} cannot change report status");
         }
 
-        private void dateTimePickerStart_ValueChanged(object sender, EventArgs e)
+        private async void dateTimePickerStart_ValueChanged(object sender, EventArgs e)
         {
-            GenereteReport();
+            await semaphore.WaitAsync();
+            try
+            {
+                await GenereteReport();
+            }
+            finally
+            {
+                semaphore.Release();
+            }
         }
     }
 }

@@ -107,13 +107,23 @@ namespace GrpcClient_PI_21_01
 
         private async Task Setup()
         {
-            await SetDataGridAct();
-            await ShowContract();
+            if (await CheckPrivilegeNoError(NameMdels.Act))
+                await SetDataGridAct();
 
-            await SetDataGridApp();
-            await SetDataGridOrg();
-            await InicilisationHistory();
-            await InicilisationReports();
+            if (await CheckPrivilegeNoError(NameMdels.Contract))
+                await ShowContract();
+
+            if (await CheckPrivilegeNoError(NameMdels.App))
+                await SetDataGridApp();
+
+            if (await CheckPrivilegeNoError(NameMdels.Org))
+                await SetDataGridOrg();
+
+            if (await CheckPrivilegeNoError(NameMdels.History))
+                await InicilisationHistory();
+
+            //if (await CheckPrivilegeNoError(NameMdels.Report))
+                await InicilisationReports();
         }
 
         private static async Task<bool> CheckPrivilege(NameMdels model)
@@ -125,6 +135,11 @@ namespace GrpcClient_PI_21_01
                 return false;
             }
             return true;
+        }
+
+        private static async Task<bool> CheckPrivilegeNoError(NameMdels model)
+        {
+            return await PreveligeService.IsUserPrevilegedFor(model);
         }
 
         #region Related: Act Capture
