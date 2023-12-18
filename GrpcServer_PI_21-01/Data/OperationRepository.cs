@@ -133,7 +133,7 @@ namespace GrpcServer_PI_21_01.Data
 
             try
             {
-                NpgsqlCommand cmd = new($"SELECT * FROM operation WHERE id = {id}") { Connection = cn };
+                NpgsqlCommand cmd = new($"SELECT * FROM operation WHERE operationid = {id}") { Connection = cn };
                 cmd.Connection = cn;
                 cn.Open();
                 var reader = cmd.ExecuteReader();

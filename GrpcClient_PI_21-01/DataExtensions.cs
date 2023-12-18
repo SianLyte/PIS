@@ -96,7 +96,8 @@ namespace GrpcClient_PI_21_01
                 UrgencyOfExecution = app.urgencyOfExecution,
                 Actor = UserService.CurrentUser?.ToReply(),
                 Organization = app.organization.ToReply(),
-                AnimalCount = app.animalCount
+                AnimalCount = app.animalCount,
+                Status = app.status
                 
             };
         }

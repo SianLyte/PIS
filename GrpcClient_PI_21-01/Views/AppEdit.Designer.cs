@@ -261,6 +261,7 @@
             buttonCloseApp.TabIndex=39;
             buttonCloseApp.Text="Закрыть заявку";
             buttonCloseApp.UseVisualStyleBackColor=false;
+            buttonCloseApp.Click+=ButtonCloseApp_Click;
             // 
             // AppEdit
             // 
