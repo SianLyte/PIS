@@ -73,7 +73,7 @@ namespace GrpcClient_PI_21_01.Views
                 urgency.Text = app.urgencyOfExecution;
                 descrip.Text = app.animaldescription;
                 category.SelectedItem = app.applicantCategory;
-                textBoxStatus.Text = app.status.ToString();
+                textBoxStatus.Text = app.status.Translate();
             }
             catch
             {

@@ -37,7 +37,7 @@ namespace GrpcClient_PI_21_01.Controllers
                     app.animaldescription,
                     app.applicantCategory,
                     app.animalCount.ToString(),
-                    app.status.ToString()
+                    app.status.Translate()
             };
         }
 
