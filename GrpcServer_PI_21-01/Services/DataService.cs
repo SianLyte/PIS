@@ -61,6 +61,9 @@ namespace GrpcServer_PI_21_01.Services
         {
             Contract? contr = ContractRepository.GetContract(request.Id);
 
+            if (!PrivilegeRepository.SetPrivilege(request.Actor.PrivelegeLevel, NameMdels.Contract))
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "You are not permitted to watch operations."));
+
             if (contr is null)
                 throw new RpcException(new Status(StatusCode.NotFound, $"Contract with ID {request.Id} does not exist"));
 
@@ -70,6 +73,10 @@ namespace GrpcServer_PI_21_01.Services
         public override Task<ContractsReply> GetContracts(DataRequest request, ServerCallContext context)
         {
             var filter = new Filter<Contract>();
+
+            if (!PrivilegeRepository.SetPrivilege(request.Actor.PrivelegeLevel, NameMdels.Contract))
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "You are not permitted to watch operations."));
+
             if (request.Actor.PrivelegeLevel != "Admin")
             {
                 filter.AddOrFilter(c => c.Costumer, request.Actor.Organization.IdOrganization.ToString());
@@ -197,6 +204,8 @@ namespace GrpcServer_PI_21_01.Services
             IServerStreamWriter<OrganizationReply> responseStream,
             ServerCallContext context)
         {
+            if (!PrivilegeRepository.SetPrivilege(request.Actor.PrivelegeLevel, NameMdels.Org))
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "You are not permitted to watch operations."));
             foreach (var org in orgCacheProxy.GetAll(request))
                 await responseStream.WriteAsync(org.ToReply());
         }
@@ -255,6 +264,8 @@ namespace GrpcServer_PI_21_01.Services
             IServerStreamWriter<ActReply> responseStream,
             ServerCallContext ctx)
         {
+            if (!PrivilegeRepository.SetPrivilege(request.Actor.PrivelegeLevel, NameMdels.Act))
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "You are not permitted to watch operations."));
             var filter = new Filter<Act>();
             if (request.Actor.PrivelegeLevel != "Admin")
                 filter.AddFilter(act => act.Organization, request.Actor.Organization.IdOrganization.ToString());
@@ -318,6 +329,8 @@ namespace GrpcServer_PI_21_01.Services
             IServerStreamWriter<ApplicationReply> responseStream,
             ServerCallContext ctx)
         {
+            if (!PrivilegeRepository.SetPrivilege(request.Actor.PrivelegeLevel, NameMdels.App))
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "You are not permitted to watch operations."));
             var filter = new Filter<App>(request.Filter);
             foreach (var app in appCacheProxy.GetAll(request))
                 // у заявки на отлов нет организации, хотя по суди должна быть
@@ -536,8 +549,6 @@ namespace GrpcServer_PI_21_01.Services
             return CRUD(request.Id, successful);
         }
         #endregion
-
-
     }
 
     
