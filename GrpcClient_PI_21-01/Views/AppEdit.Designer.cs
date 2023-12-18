@@ -48,6 +48,9 @@
             label8=new Label();
             textBoxStatus=new TextBox();
             buttonCloseApp=new Button();
+            animalsCount=new NumericUpDown();
+            label9=new Label();
+            ((System.ComponentModel.ISupportInitialize)animalsCount).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -169,7 +172,7 @@
             // 
             OkAppEdit.BackColor=Color.Cornsilk;
             OkAppEdit.FlatStyle=FlatStyle.Popup;
-            OkAppEdit.Location=new Point(170, 790);
+            OkAppEdit.Location=new Point(169, 844);
             OkAppEdit.Margin=new Padding(4, 5, 4, 5);
             OkAppEdit.Name="OkAppEdit";
             OkAppEdit.Size=new Size(191, 54);
@@ -182,7 +185,7 @@
             // 
             Cancel.BackColor=Color.Cornsilk;
             Cancel.FlatStyle=FlatStyle.Popup;
-            Cancel.Location=new Point(760, 790);
+            Cancel.Location=new Point(759, 844);
             Cancel.Margin=new Padding(4, 5, 4, 5);
             Cancel.Name="Cancel";
             Cancel.Size=new Size(191, 54);
@@ -231,7 +234,7 @@
             // label8
             // 
             label8.AutoSize=true;
-            label8.Location=new Point(41, 676);
+            label8.Location=new Point(40, 730);
             label8.Margin=new Padding(4, 0, 4, 0);
             label8.Name="label8";
             label8.Size=new Size(88, 30);
@@ -242,7 +245,7 @@
             // 
             textBoxStatus.BackColor=Color.Cornsilk;
             textBoxStatus.BorderStyle=BorderStyle.None;
-            textBoxStatus.Location=new Point(470, 676);
+            textBoxStatus.Location=new Point(469, 730);
             textBoxStatus.Margin=new Padding(4, 5, 4, 5);
             textBoxStatus.MaxLength=15;
             textBoxStatus.Name="textBoxStatus";
@@ -254,20 +257,41 @@
             // 
             buttonCloseApp.BackColor=Color.Cornsilk;
             buttonCloseApp.FlatStyle=FlatStyle.Popup;
-            buttonCloseApp.Location=new Point(789, 726);
+            buttonCloseApp.Location=new Point(788, 780);
             buttonCloseApp.Margin=new Padding(4, 5, 4, 5);
             buttonCloseApp.Name="buttonCloseApp";
             buttonCloseApp.Size=new Size(191, 54);
             buttonCloseApp.TabIndex=39;
             buttonCloseApp.Text="Закрыть заявку";
             buttonCloseApp.UseVisualStyleBackColor=false;
+            buttonCloseApp.Click+=ButtonCloseApp_Click;
+            // 
+            // animalsCount
+            // 
+            animalsCount.BackColor=Color.Cornsilk;
+            animalsCount.Location=new Point(656, 675);
+            animalsCount.Name="animalsCount";
+            animalsCount.Size=new Size(323, 37);
+            animalsCount.TabIndex=40;
+            // 
+            // label9
+            // 
+            label9.AutoSize=true;
+            label9.Location=new Point(41, 682);
+            label9.Margin=new Padding(4, 0, 4, 0);
+            label9.Name="label9";
+            label9.Size=new Size(222, 30);
+            label9.TabIndex=41;
+            label9.Text="Количество животных";
             // 
             // AppEdit
             // 
             AutoScaleDimensions=new SizeF(11F, 30F);
             AutoScaleMode=AutoScaleMode.Font;
             BackColor=Color.Wheat;
-            ClientSize=new Size(1106, 858);
+            ClientSize=new Size(1106, 912);
+            Controls.Add(label9);
+            Controls.Add(animalsCount);
             Controls.Add(buttonCloseApp);
             Controls.Add(textBoxStatus);
             Controls.Add(label8);
@@ -292,6 +316,7 @@
             Margin=new Padding(4, 5, 4, 5);
             Name="AppEdit";
             Text="Изменение заявки на отлов";
+            ((System.ComponentModel.ISupportInitialize)animalsCount).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -317,5 +342,7 @@
         private Label label8;
         private TextBox textBoxStatus;
         private Button buttonCloseApp;
+        private NumericUpDown animalsCount;
+        private Label label9;
     }
 }

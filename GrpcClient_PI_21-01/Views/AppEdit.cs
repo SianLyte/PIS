@@ -31,7 +31,7 @@ namespace GrpcClient_PI_21_01.Views
 
         private void ButtonCloseApp_Click(object? sender, EventArgs e)
         {
-            //throw new NotImplementedException();
+            textBoxStatus.Text = "Removed";
         }
 
         public AppEdit(App app)
@@ -40,6 +40,7 @@ namespace GrpcClient_PI_21_01.Views
             this.app = app;
             Task.Run(SetupForm);
         }
+
 
         private async void SetupForm()
         {
@@ -50,8 +51,19 @@ namespace GrpcClient_PI_21_01.Views
             locality.Items.AddRange(localities.ToArray());
             locality.DisplayMember = "City";
 
-            category.Items.Clear();
-            category.Items.AddRange(AppService.GetApplicantTypes());
+            if (category.InvokeRequired)
+            {
+                category.Invoke(() =>
+                {
+                    category.Items.Clear();
+                    category.Items.AddRange(AppService.GetApplicantTypes());
+                });
+            }
+            else
+            {
+                category.Items.Clear();
+                category.Items.AddRange(AppService.GetApplicantTypes());
+            }
 
             FillAppEdit();
         }
@@ -73,7 +85,11 @@ namespace GrpcClient_PI_21_01.Views
                 urgency.Text = app.urgencyOfExecution;
                 descrip.Text = app.animaldescription;
                 category.SelectedItem = app.applicantCategory;
-                textBoxStatus.Text = app.status.Translate();
+                textBoxStatus.Text = app.status.ToString();
+                if (textBoxStatus.Text == AppStatus.Fulfilled.ToString())
+                {
+                    buttonCloseApp.Enabled = false;
+                }
             }
             catch
             {
@@ -103,7 +119,7 @@ namespace GrpcClient_PI_21_01.Views
 
             var app = new App(DateTime.Parse(dateTime.Text), this.app is null ? -1 : this.app.number,
                 loc, territory.Text, animalHabbiat.Text, urgency.Text,
-                descrip.Text, category.SelectedItem.ToString(), AppStatus.Registered, UserService.CurrentUser?.Organization, 100);
+                descrip.Text, category.SelectedItem.ToString(), AppStatus.Registered, UserService.CurrentUser?.Organization, (int)animalsCount.Value);
 
             if (this.app is null)
             {
@@ -119,6 +135,7 @@ namespace GrpcClient_PI_21_01.Views
             }
             else
             {
+                app.status = Enum.Parse<AppStatus>(textBoxStatus.Text);
                 var updated = await AppService.UpdateApplication(app);
                 if (!updated)
                 {
