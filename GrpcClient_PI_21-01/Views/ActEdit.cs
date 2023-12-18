@@ -55,8 +55,8 @@ namespace GrpcClient_PI_21_01.Views
                 {
                     dataGridView1.Rows.Add(app.ToString());
                 }
-                numericUpDownDog.Value = act.CountDogs;
-                numericUpDownCat.Value = act.CountCats;
+                numericUpDownDog.Value = 0;
+                numericUpDownCat.Value = 0;
                 
                 var _appDogs = actApps.Select(async aa => await Task.FromResult(aa.CountDogs))
                     .Select(task => task.Result)
@@ -105,6 +105,7 @@ namespace GrpcClient_PI_21_01.Views
             {
                 numericUpDownDog.Value = int.Parse(_idAppToDodAndCats[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())].Split(";")[0]);
                 numericUpDownCat.Value = int.Parse(_idAppToDodAndCats[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())].Split(";")[1]);
+                //MessageBox.Show(_idAppToDodAndCats[int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString())]);
             }
         }
 
