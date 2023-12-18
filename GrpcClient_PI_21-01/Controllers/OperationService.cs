@@ -61,6 +61,7 @@ namespace GrpcClient_PI_21_01.Controllers
         {
             static Expression<Func<Operation, object>> exp(Expression<Func<Operation, object>> exp) => exp;
             static Expression<Func<User, object>> expActor(Expression<Func<User, object>> exp) => exp;
+            static Expression<Func<Organization, object>> expOrg(Expression<Func<Organization, object>> exp) => exp;
 
             SortOrder memorizedSort = SortOrder.None;
             DataGridViewColumn? memorizedColumn = null;
@@ -91,7 +92,7 @@ namespace GrpcClient_PI_21_01.Controllers
             dgv.Columns[0].Tag = expActor(a => a.Surname);
             dgv.Columns[1].Tag = expActor(a => a.Name);
             dgv.Columns[2].Tag = expActor(a => a.Patronymic);
-            dgv.Columns[3].Tag = expActor(a => a.Organization.name);
+            dgv.Columns[3].Tag = expOrg(o => o.name);
             dgv.Columns[4].Tag = expActor(a => a.PrivelegeLevel);
             dgv.Columns[5].Tag = expActor(a => a.Login);
             dgv.Columns[6].Tag = exp(a => a.ActionDate);

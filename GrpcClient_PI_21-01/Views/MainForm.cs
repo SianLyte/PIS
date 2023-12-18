@@ -32,6 +32,7 @@ namespace GrpcClient_PI_21_01
             // ((
             // и ведь никто даже не знает кто это пишет
             // пам пам паааам (тревожные звуки)
+            // мяу
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -83,6 +84,7 @@ namespace GrpcClient_PI_21_01
             dataGridViewOrg.ColumnHeaderMouseClick += SortOrganizations;
             ContractTable.ColumnHeaderMouseClick += SortContracts;
             dataGridViewHistory.ColumnHeaderMouseClick += SortOperations;
+            dataGridViewReport.ColumnHeaderMouseClick += SortReports;
 
             buttonExportExelActs.Click += buttonExportExel_Click;
             buttonExcelApp.Click += buttonExportExel_Click;
@@ -98,6 +100,7 @@ namespace GrpcClient_PI_21_01
         readonly Filter<Organization> orgFilter = new();
         readonly Filter<Contract> contrFilter = new();
         readonly Filter<Operation> operationFilter = new();
+        readonly Filter<Report> reportFilter = new();
         static private int _pageSize = 10;
 
         private async Task Setup()
@@ -532,6 +535,23 @@ namespace GrpcClient_PI_21_01
             //}
         }
 
+
+        private async void SortReports(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var column = dataGridViewReport.Columns[e.ColumnIndex];
+            foreach (DataGridViewColumn c in dataGridViewReport.Columns)
+                if (column.Index != c.Index) c.HeaderCell.SortGlyphDirection = SortOrder.None;
+
+            if (column.Tag is not Expression<Func<Report, object>> exp)
+            {
+                if (column.Tag is not Expression<Func<User, object>> expActor)
+                    throw new Exception("Column entity tags were empty");
+                else SorterService.SortByColumnInnerJoin(expActor, reportFilter, column);
+            }
+            else SorterService.SortByColumn(reportFilter, column);
+            await InicilisationReports();
+        }
+
         #endregion
         #region Related: Operation History
         private List<Operation>? _data;
@@ -575,7 +595,11 @@ namespace GrpcClient_PI_21_01
             if (column.Tag is not Expression<Func<Operation, object>> exp)
             {
                 if (column.Tag is not Expression<Func<User, object>> expActor)
-                    throw new Exception("Column entity tags were empty");
+                {
+                    if (column.Tag is not Expression<Func<Organization, object>> expOrg)
+                        throw new Exception("Column entity tags were empty");
+                    else SorterService.SortByColumnInnerJoin(expOrg, operationFilter, column);
+                }    
                 else SorterService.SortByColumnInnerJoin(expActor, operationFilter, column);
             }
             else SorterService.SortByColumn(operationFilter, column);

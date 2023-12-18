@@ -6,15 +6,7 @@ using System.Threading.Tasks;
 
 namespace GrpcClient_PI_21_01.Models
 {
-    //enum ReportStatus
-    //{
-    //    Draft,
-    //    ApprovalFromMunicipalContractExecutor,
-    //    AgreedWithMunicipalContractExecutor,
-    //    Revision,
-    //    ApprovedByMunicipalContractExecutor,
-    //    ApprovedByOMSY
-    //}
+    [FilterableModel]
     public class Report
     {
         [Filterable("id")]
