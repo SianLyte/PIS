@@ -200,7 +200,7 @@ namespace GrpcServer_PI_21_01.Data
                 cmd.Connection = cn;
                 cn.Open();
                 var reader = cmd.ExecuteReader();
-                string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0" };
+                string[] arr = { "0", "0", "0", "0", "0", "0", "0", "0", "0" };
                 while (reader.Read())
                 {
                     arr[0] = reader[reader.GetOrdinal("created_at")].ToString(); //createdat
