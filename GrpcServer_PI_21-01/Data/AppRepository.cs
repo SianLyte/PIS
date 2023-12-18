@@ -55,7 +55,9 @@ namespace GrpcServer_PI_21_01.Data
                 $"descr = '{app.animaldescription}'," +
                 $"client_category = '{app.applicantCategory}'," +
                 $"cityid = '{app.locality.IdLocation}'," +
-                $"status = '{app.status}'" +
+                $"status = '{app.status}'," +
+                $"organization_id = {app.organization.idOrg}," +
+                $"animal_count = {app.animalCount}" +
                 $" WHERE id = {app.number}")
                 { Connection = cn };
                 {
@@ -84,10 +86,10 @@ namespace GrpcServer_PI_21_01.Data
                 // этому ссылочному значению новое Id, которое было присвоено самой БД
                 //Applications.Add(app);
                 using NpgsqlCommand cmd = new($"INSERT INTO catch_request " +
-                    $"(created_at, territory, habitat, urgency, descr, client_category, cityid, status, organization_id)" +
+                    $"(created_at, territory, habitat, urgency, descr, client_category, cityid, status, organization_id, animal_count)" +
                     $"VALUES ('{app.date}', '{app.territory}', '{app.animalHabiat}', {app.urgencyOfExecution}, " +
                     $"'{app.animaldescription}', '{app.applicantCategory}', '{app.locality.IdLocation}'," +
-                    $" '{AppStatus.Performed}', {app.organization.idOrg}) RETURNING id")
+                    $" '{AppStatus.Performed}', {app.organization.idOrg}, {app.animalCount}) RETURNING id")
                 { Connection = cn };
                 {
                     cn.Open();
