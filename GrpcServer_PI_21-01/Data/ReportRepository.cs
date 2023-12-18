@@ -102,7 +102,7 @@ namespace GrpcServer_PI_21_01.Data
             {
                 List<Report> reports= new();
                 List<string?[]> reportsEmpty = new();
-                var query = new Filter<Report>(r.Filter).GenerateSQL(r.Page);
+                var query = new Filter<Report>(r.Filter).GenerateSQLReport(r.Page);
                 using (NpgsqlCommand cmd = new(query) { Connection = cn })
                 {
                     cn.Open();

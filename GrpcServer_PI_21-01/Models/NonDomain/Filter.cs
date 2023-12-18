@@ -221,6 +221,14 @@ namespace GrpcServer_PI_21_01.Models
                 $"left join organization on organization.id = userr.organizationid ";
             return GenerateSQL(page, startQuery);
         }
+
+        public string GenerateSQLReport(int page = -1)
+        {
+        var startQuery = $"SELECT id, report.created_at, report.updated_at, report.start_date, report.end_date, " +
+                $" report.profit, report.closed_apps_count, report.animals_count, report.user_id, report.status, userr.name FROM {tableName} " +
+                $"    left join userr on userr.userid = report.user_id";
+            return GenerateSQL(page, startQuery);
+        }
         //TODO
         //public string GenerateSQLContract(int page = -1)
         //{
