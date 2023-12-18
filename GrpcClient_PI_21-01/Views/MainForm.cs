@@ -681,6 +681,8 @@ namespace GrpcClient_PI_21_01
                     break;
                 case 1:
                     {
+                        var reports = await ReportService.GetReports(-1, reportFilter);
+                        ExelService.ExportExel(dataGridViewReport, reports.Select(x => ReportService.ToDataArray(x)).ToList(), "report");
                         // для отчётов надо отдельно смотреть
                     }
                     break;
