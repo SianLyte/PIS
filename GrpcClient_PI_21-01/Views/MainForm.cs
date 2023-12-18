@@ -93,7 +93,6 @@ namespace GrpcClient_PI_21_01
             buttonExcelContract.Click += buttonExportExel_Click;
             buttonExcelHistory.Click += buttonExportExel_Click;
             buttonExcelOrg.Click += buttonExportExel_Click;
-            buttonExportExcelReport.Click += buttonExportExel_Click;
 
             Task.Run(Setup);
         }
