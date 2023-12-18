@@ -229,6 +229,7 @@
             Controls.Add(applicantBox);
             Controls.Add(localityBox);
             Controls.Add(dateBox);
+            Cursor=Cursors.PanNW;
             FormBorderStyle=FormBorderStyle.FixedSingle;
             MaximizeBox=false;
             Name="AppFilter";

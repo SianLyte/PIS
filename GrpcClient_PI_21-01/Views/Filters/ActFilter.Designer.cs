@@ -538,6 +538,7 @@
             Controls.Add(goalBox);
             Controls.Add(animalBox);
             Controls.Add(orgBox);
+            Cursor=Cursors.PanNW;
             FormBorderStyle=FormBorderStyle.FixedSingle;
             MaximizeBox=false;
             Name="ActFilter";

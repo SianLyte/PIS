@@ -361,6 +361,7 @@
             Controls.Add(customerBox);
             Controls.Add(performerBox);
             Controls.Add(dateBox);
+            Cursor=Cursors.PanNW;
             FormBorderStyle=FormBorderStyle.FixedSingle;
             MaximizeBox=false;
             Name="ContractFilter";

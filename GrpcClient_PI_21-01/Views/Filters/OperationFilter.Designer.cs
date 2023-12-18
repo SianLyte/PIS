@@ -472,6 +472,7 @@
             Controls.Add(close);
             Controls.Add(reset);
             Controls.Add(apply);
+            Cursor=Cursors.PanNW;
             FormBorderStyle=FormBorderStyle.FixedSingle;
             MaximizeBox=false;
             Name="OperationFilter";
