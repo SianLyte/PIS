@@ -32,8 +32,6 @@ namespace GrpcClient_PI_21_01.Views
             addApp.Click += AddApplication;
             deleteButton.Click += DeleteApplication;
             dataGridView1.MouseClick += DataGridView1_MouseClick;
-            numericUpDownDog.ValueChanged += numericUpDownDog_ValueChanged;
-            numericUpDownCat.ValueChanged += numericUpDownDog_ValueChanged;
 
             Isus.Text = "Редактирование акта";
             dateAct.Value = DateTime.Now;
@@ -41,8 +39,6 @@ namespace GrpcClient_PI_21_01.Views
             if (actToEdit)
             {
                 var act = await ActService.GetAct(actId);
-                numericUpDownDog.Value = act.CountDogs;
-                numericUpDownCat.Value = act.CountCats;
                 dateAct.Value = act.Date;
                 textBoxTarget.Text = act.TargetCapture;
                 await FullComboBox();
@@ -59,6 +55,8 @@ namespace GrpcClient_PI_21_01.Views
                 {
                     dataGridView1.Rows.Add(app.ToString());
                 }
+                numericUpDownDog.Value = act.CountDogs;
+                numericUpDownCat.Value = act.CountCats;
                 
                 var _appDogs = actApps.Select(async aa => await Task.FromResult(aa.CountDogs))
                     .Select(task => task.Result)
@@ -76,6 +74,8 @@ namespace GrpcClient_PI_21_01.Views
             {
                 await FullComboBox();
             }
+            numericUpDownDog.ValueChanged += numericUpDownDog_ValueChanged;
+            numericUpDownCat.ValueChanged += numericUpDownDog_ValueChanged;
         }
 
         private void numericUpDownDog_ValueChanged(object? sender, EventArgs e)
