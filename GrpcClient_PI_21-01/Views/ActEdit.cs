@@ -62,10 +62,9 @@ namespace GrpcClient_PI_21_01.Views
         private async Task FullComboBox()
         {
             var appFilter = new Filter<App>();
-            // включить фильтры после прикручивания статусов
-            //appFilter.AddOrFilter(app => app.status, AppStatus.Registered.ToString());
-            //appFilter.AddOrFilter(app => app.status, AppStatus.Performed.ToString());
-            //if (actToEdit) appFilter.AddOrFilter(app => app.status, AppStatus.Fulfilled.ToString());
+            appFilter.AddOrFilter(app => app.status, AppStatus.Registered.ToString());
+            appFilter.AddOrFilter(app => app.status, AppStatus.Performed.ToString());
+            if (actToEdit) appFilter.AddOrFilter(app => app.status, AppStatus.Fulfilled.ToString());
 
             var contractFilter = new Filter<Contract>();
             if (UserService.CurrentUser?.PrivelegeLevel != "Admin")
