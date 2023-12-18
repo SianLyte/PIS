@@ -42,6 +42,13 @@
             dateTimePickerAct=new DateTimePicker();
             label1=new Label();
             DataGridViewActs=new DataGridView();
+            Id=new DataGridViewTextBoxColumn();
+            CountDogs=new DataGridViewTextBoxColumn();
+            CountCats=new DataGridViewTextBoxColumn();
+            Organization=new DataGridViewTextBoxColumn();
+            Date=new DataGridViewTextBoxColumn();
+            Target=new DataGridViewTextBoxColumn();
+            Kontracts=new DataGridViewTextBoxColumn();
             pictureBox1=new PictureBox();
             tabPage2=new TabPage();
             button5=new Button();
@@ -104,13 +111,6 @@
             buttonNextContracts=new Button();
             dateTimePicker1=new DateTimePicker();
             label7=new Label();
-            Id=new DataGridViewTextBoxColumn();
-            CountDogs=new DataGridViewTextBoxColumn();
-            CountCats=new DataGridViewTextBoxColumn();
-            Organization=new DataGridViewTextBoxColumn();
-            Date=new DataGridViewTextBoxColumn();
-            Target=new DataGridViewTextBoxColumn();
-            Kontracts=new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewActs).BeginInit();
@@ -287,7 +287,6 @@
             DataGridViewActs.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DataGridViewActs.Columns.AddRange(new DataGridViewColumn[] { Id, CountDogs, CountCats, Organization, Date, Target, Kontracts });
             DataGridViewActs.Location=new Point(6, 6);
-            DataGridViewActs.MultiSelect=false;
             DataGridViewActs.Name="DataGridViewActs";
             DataGridViewActs.ReadOnly=true;
             DataGridViewActs.RowHeadersVisible=false;
@@ -296,6 +295,57 @@
             DataGridViewActs.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
             DataGridViewActs.Size=new Size(1329, 580);
             DataGridViewActs.TabIndex=0;
+            // 
+            // Id
+            // 
+            Id.HeaderText="№ Акта";
+            Id.MinimumWidth=8;
+            Id.Name="Id";
+            Id.ReadOnly=true;
+            // 
+            // CountDogs
+            // 
+            CountDogs.HeaderText="Количество собак";
+            CountDogs.MinimumWidth=8;
+            CountDogs.Name="CountDogs";
+            CountDogs.ReadOnly=true;
+            CountDogs.Visible=false;
+            // 
+            // CountCats
+            // 
+            CountCats.HeaderText="Количество кошек";
+            CountCats.MinimumWidth=8;
+            CountCats.Name="CountCats";
+            CountCats.ReadOnly=true;
+            CountCats.Visible=false;
+            // 
+            // Organization
+            // 
+            Organization.HeaderText="Организация";
+            Organization.MinimumWidth=8;
+            Organization.Name="Organization";
+            Organization.ReadOnly=true;
+            // 
+            // Date
+            // 
+            Date.HeaderText="Дата";
+            Date.MinimumWidth=8;
+            Date.Name="Date";
+            Date.ReadOnly=true;
+            // 
+            // Target
+            // 
+            Target.HeaderText="Цель отлова";
+            Target.MinimumWidth=8;
+            Target.Name="Target";
+            Target.ReadOnly=true;
+            // 
+            // Kontracts
+            // 
+            Kontracts.HeaderText="Контракты";
+            Kontracts.MinimumWidth=8;
+            Kontracts.Name="Kontracts";
+            Kontracts.ReadOnly=true;
             // 
             // pictureBox1
             // 
@@ -724,7 +774,6 @@
             dataGridViewApp.CellBorderStyle=DataGridViewCellBorderStyle.RaisedVertical;
             dataGridViewApp.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewApp.Location=new Point(18, 14);
-            dataGridViewApp.MultiSelect=false;
             dataGridViewApp.Name="dataGridViewApp";
             dataGridViewApp.ReadOnly=true;
             dataGridViewApp.RowHeadersVisible=false;
@@ -807,7 +856,6 @@
             dataGridViewOrg.BackgroundColor=Color.OldLace;
             dataGridViewOrg.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewOrg.Location=new Point(26, 3);
-            dataGridViewOrg.MultiSelect=false;
             dataGridViewOrg.Name="dataGridViewOrg";
             dataGridViewOrg.ReadOnly=true;
             dataGridViewOrg.RowHeadersVisible=false;
@@ -934,7 +982,6 @@
             dataGridViewHistory.BackgroundColor=Color.OldLace;
             dataGridViewHistory.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewHistory.Location=new Point(6, 6);
-            dataGridViewHistory.MultiSelect=false;
             dataGridViewHistory.Name="dataGridViewHistory";
             dataGridViewHistory.ReadOnly=true;
             dataGridViewHistory.RowHeadersVisible=false;
@@ -1009,57 +1056,6 @@
             label7.Size=new Size(26, 16);
             label7.TabIndex=16;
             label7.Text="до:";
-            // 
-            // Id
-            // 
-            Id.HeaderText="№ Акта";
-            Id.MinimumWidth=8;
-            Id.Name="Id";
-            Id.ReadOnly=true;
-            // 
-            // CountDogs
-            // 
-            CountDogs.HeaderText="Количество собак";
-            CountDogs.MinimumWidth=8;
-            CountDogs.Name="CountDogs";
-            CountDogs.ReadOnly=true;
-            CountDogs.Visible=false;
-            // 
-            // CountCats
-            // 
-            CountCats.HeaderText="Количество кошек";
-            CountCats.MinimumWidth=8;
-            CountCats.Name="CountCats";
-            CountCats.ReadOnly=true;
-            CountCats.Visible=false;
-            // 
-            // Organization
-            // 
-            Organization.HeaderText="Организация";
-            Organization.MinimumWidth=8;
-            Organization.Name="Organization";
-            Organization.ReadOnly=true;
-            // 
-            // Date
-            // 
-            Date.HeaderText="Дата";
-            Date.MinimumWidth=8;
-            Date.Name="Date";
-            Date.ReadOnly=true;
-            // 
-            // Target
-            // 
-            Target.HeaderText="Цель отлова";
-            Target.MinimumWidth=8;
-            Target.Name="Target";
-            Target.ReadOnly=true;
-            // 
-            // Kontracts
-            // 
-            Kontracts.HeaderText="Контракты";
-            Kontracts.MinimumWidth=8;
-            Kontracts.Name="Kontracts";
-            Kontracts.ReadOnly=true;
             // 
             // MainForm
             // 

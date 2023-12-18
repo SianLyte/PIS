@@ -36,6 +36,7 @@ namespace GrpcClient_PI_21_01.Controllers
                     app.urgencyOfExecution,
                     app.animaldescription,
                     app.applicantCategory,
+                    app.animalCount.ToString(),
                     app.status.ToString()
             };
         }
@@ -68,6 +69,7 @@ namespace GrpcClient_PI_21_01.Controllers
             dgv.Columns.Add("Urgency", "Срочность исполнения");
             dgv.Columns.Add("Description", "Описание животного");
             dgv.Columns.Add("ApplicantCategory", "Категория заявителя");
+            dgv.Columns.Add("AnimalCount", "Количество животных");
             dgv.Columns.Add("Status", "Статус");
 
             // preparing columns
@@ -79,6 +81,7 @@ namespace GrpcClient_PI_21_01.Controllers
             dgv.Columns["Urgency"].Tag = exp(a => a.urgencyOfExecution);
             dgv.Columns["Description"].Tag = exp(a => a.animaldescription);
             dgv.Columns["ApplicantCategory"].Tag = exp(a => a.applicantCategory);
+            dgv.Columns["AnimalCount"].Tag = exp(a => a.animalCount);
             dgv.Columns["Status"].Tag = exp(a => a.status);
             foreach (DataGridViewColumn c in dgv.Columns)
                 c.SortMode = DataGridViewColumnSortMode.Programmatic;
