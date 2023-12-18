@@ -288,10 +288,20 @@ namespace GrpcServer_PI_21_01.Models
                 //if (!dict.ContainsKey(tableColumn) && andEquations.Count == 0)
                 //    dict.Add(tableColumn, $"( {tableColumn} {expression}");
             }
-            if (andEquations.Count > 0 || orEquations.Count > 0)
+            if (orEquations.Count > 0 && andEquations.Count ==0)
             {
                 startQuery += " WHERE ";
                 foreach (var table in dict.Keys)
+
+                    startQuery += dict[table] + ") or ";
+                startQuery = startQuery.Remove(startQuery.Length - 5);
+                if (startQuery.Contains("(")) startQuery += ")";
+            }
+            else if (andEquations.Count > 0 || orEquations.Count > 0)
+            {
+                startQuery += " WHERE ";
+                foreach (var table in dict.Keys)
+                    
                     startQuery += dict[table] + ") and ";
                 startQuery = startQuery.Remove(startQuery.Length - 6);
                 if (startQuery.Contains("(")) startQuery += ")";
