@@ -190,6 +190,7 @@
             Controls.Add(statusBox);
             Controls.Add(typeBox);
             Controls.Add(regBox);
+            Cursor=Cursors.PanNW;
             FormBorderStyle=FormBorderStyle.FixedSingle;
             MaximizeBox=false;
             Name="OrgFilter";

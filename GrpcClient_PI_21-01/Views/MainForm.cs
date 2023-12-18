@@ -599,7 +599,7 @@ namespace GrpcClient_PI_21_01
                     if (column.Tag is not Expression<Func<Organization, object>> expOrg)
                         throw new Exception("Column entity tags were empty");
                     else SorterService.SortByColumnInnerJoin(expOrg, operationFilter, column);
-                }    
+                }
                 else SorterService.SortByColumnInnerJoin(expActor, operationFilter, column);
             }
             else SorterService.SortByColumn(operationFilter, column);
