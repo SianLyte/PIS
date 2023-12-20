@@ -17,17 +17,17 @@ namespace GrpcServer_PI_21_01.Models
             Name = name;
         }
 
-        public static Roles ToString(string role)
-        {
-            foreach (Roles enumRole in Enum.GetValues(typeof(Roles)))
-            {
-                if (role == enumRole.ToString())
-                {
-                    return enumRole;
-                }
-            }
-            return Roles.Curator_OMSY;
-        }
+        //public static Roles ToString(string role)
+        //{
+        //    foreach (Roles enumRole in Enum.GetValues(typeof(Roles)))
+        //    {
+        //        if (role == enumRole.ToString())
+        //        {
+        //            return enumRole;
+        //        }
+        //    }
+        //    return Roles.Curator_OMSY;
+        //}
     }
 
     enum NameMdels
@@ -40,22 +40,22 @@ namespace GrpcServer_PI_21_01.Models
         History
     }
 
-    public enum Roles
-    {
-        Operator_Po_Otlovy,
-        Curator_Veterinary_Service,
-        Curator_Shelter,
-        Operator_Veterinary_Service,
-        Operator_Shelter,
-        Podpisant_Veterinary_Service,
-        Podpisant_Shelter,
-        Curator_OMSY,
-        Operator_OMSY,
-        Podpisant_OMSY,
-        Curator_Po_Otlovy,
-        Podpisant_Po_Otlovy,
-        Admin
-    }
+    //public enum Roles
+    //{
+    //    OperatorPoOtlovy,
+    //    CuratorVeterinaryService,
+    //    CuratorShelter,
+    //    OperatorVeterinaryService,
+    //    OperatorShelter,
+    //    PodpisantVeterinaryService,
+    //    PodpisantShelter,
+    //    CuratorOMSY,
+    //    OperatorOMSY,
+    //    PodpisantOMSY,
+    //    CuratorPoOtlovy,
+    //    PodpisantPoOtlovy,
+    //    Admin
+    //}
     //enum OrganizationType
     //{
     //    Znacheniya_Spravochnika,

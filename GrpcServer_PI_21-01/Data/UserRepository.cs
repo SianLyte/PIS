@@ -90,7 +90,7 @@ namespace GrpcServer_PI_21_01.Data
                         User user = new User(int.Parse(userEmpty[0]),
                             userEmpty[5],
                             userEmpty[6],
-                            Role.ToString(userEmpty[4]),
+                            Enum.Parse<Roles>(userEmpty[4]),
                             userEmpty[1], userEmpty[2],
                             userEmpty[3], org);
                         users.Add(user);
@@ -117,7 +117,7 @@ namespace GrpcServer_PI_21_01.Data
             var password = reader.GetString(reader.GetOrdinal("Password"));
             var org = OrgRepository.GetOrganization(reader.GetInt32(reader.GetOrdinal("OrganizationId")));
 
-            var user = new User(userId, login, password, Role.ToString(privelegeLevel), name, surname, patronymic, org);
+            var user = new User(userId, login, password, Enum.Parse<Roles>(privelegeLevel), name, surname, patronymic, org);
             return user;
         }
     }

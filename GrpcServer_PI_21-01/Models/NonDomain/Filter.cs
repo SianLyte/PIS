@@ -93,7 +93,7 @@ namespace GrpcServer_PI_21_01.Models
         public IReadOnlyList<string> AndFilters => andEquations;
         public IReadOnlyList<string> OrFilters => orEquations;
 
-        /// <summary>
+        /// <summary>   
         /// Adds an 'and' filter.
         /// <example>
         /// <code>

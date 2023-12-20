@@ -40,7 +40,7 @@ namespace GrpcClient_PI_21_01.Views
             dateTimePickerEnd.ValueChanged += dateTimePickerStart_ValueChanged;
         }
 
-        public void InitWatch()
+        public async void InitWatch()
         {
             InitBase();
             if (editableReport == null)
@@ -52,42 +52,57 @@ namespace GrpcClient_PI_21_01.Views
                 dateTimePickerStart.Enabled = false;
             }
 
+
             var user = UserService.CurrentUser;
             if (user is null) throw new Exception("User is null");
 
             saveButton.Enabled = false;
-            if (user.PrivelegeLevel == "Operator_Po_Otlovy")
-            {
-                saveButton.Text = "Сохранить";
-                saveButton.Enabled = editableReport.Status == ReportStatus.Draft
-                    || editableReport.Status == ReportStatus.Revision
-                    || editableReport.Status == ReportStatus.ApprovalFromMunicipalContractExecutor;
-            }
-            else if (user.PrivelegeLevel == "Curator_Po_Otlovy")
-            {
-                saveButton.Text = "Согласовать";
-                saveButton.Enabled = editableReport.Status == ReportStatus.ApprovalFromMunicipalContractExecutor;
-            }
-            else if (user.PrivelegeLevel == "Podpisant_Po_Otlovy")
-            {
-                saveButton.Text = "Утвердить";
-                saveButton.Enabled = editableReport.Status == ReportStatus.ApprovedByMunicipalContractExecutor;
-            }
-            else if (user.PrivelegeLevel == "Curator_OMSY")
-            {
-                saveButton.Text = "Согласовать в ОМСУ";
-                saveButton.Enabled = editableReport.Status == ReportStatus.AgreedWithMunicipalContractExecutor;
-            }
-            else if (user.PrivelegeLevel == "Admin")
-            {
-                saveButton.Text = "Кнопка админа";
-                saveButton.Enabled = editableReport.Status != ReportStatus.ApprovedByOmsy;
-            }
-            else
-            {
-                MessageBox.Show("You are not allowed to edit this report.",
-                    "Caution", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            reportStatuses.Items.Clear();
+            var availableStatuses = await ReportService.GetAvailableStatuses();
+    //        comboBoxOrganization.DataSource = new BindingSource(organizations
+    //.Where(o => o.type == OrganizationType.Trapping || o.type == OrganizationType.TrappingAndShelter).ToList(), null);
+    //        comboBoxOrganization.DisplayMember = "name";
+    //        comboBoxOrganization.ValueMember = "idOrg";
+
+    //        comboBoxApp.Items.AddRange(applications.ToArray());
+    //        comboBoxApp.DisplayMember = "number";
+    //        comboBoxApp.ValueMember = "number";
+
+
+
+
+            //if (user.PrivelegeLevel == "Operator_Po_Otlovy")
+            //{
+            //    saveButton.Text = "Сохранить";
+            //    saveButton.Enabled = editableReport.Status == ReportStatus.Draft
+            //        || editableReport.Status == ReportStatus.Revision
+            //        || editableReport.Status == ReportStatus.ApprovalFromMunicipalContractExecutor;
+            //}
+            //else if (user.PrivelegeLevel == "Curator_Po_Otlovy")
+            //{
+            //    saveButton.Text = "Согласовать";
+            //    saveButton.Enabled = editableReport.Status == ReportStatus.ApprovalFromMunicipalContractExecutor;
+            //}
+            //else if (user.PrivelegeLevel == "Podpisant_Po_Otlovy")
+            //{
+            //    saveButton.Text = "Утвердить";
+            //    saveButton.Enabled = editableReport.Status == ReportStatus.ApprovedByMunicipalContractExecutor;
+            //}
+            //else if (user.PrivelegeLevel == "Curator_OMSY")
+            //{
+            //    saveButton.Text = "Согласовать в ОМСУ";
+            //    saveButton.Enabled = editableReport.Status == ReportStatus.AgreedWithMunicipalContractExecutor;
+            //}
+            //else if (user.PrivelegeLevel == "Admin")
+            //{
+            //    saveButton.Text = "Кнопка админа";
+            //    saveButton.Enabled = editableReport.Status != ReportStatus.ApprovedByOmsy;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("You are not allowed to edit this report.",
+            //        "Caution", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
 
             actorName.Text = String.Join(" ", editableReport.User.Surname, editableReport.User.Name, editableReport.User.Patronymic);
             textBoxSum.Text = editableReport.Profit + " ₽";

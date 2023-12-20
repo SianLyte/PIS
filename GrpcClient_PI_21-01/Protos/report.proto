@@ -14,6 +14,15 @@ service ReportGenerator {
 	rpc AddReport (ReportReply) returns (data.OperationResult);
 	rpc RemoveReport (data.IdRequest) returns (data.OperationResult);
 	rpc UpdateReport (ReportReply) returns (data.OperationResult);
+	rpc GetAvailableStatuses (Id) returns (stream AvailableStatuses);
+}
+
+message AvailableStatuses {
+	string availableStatuses = 1;
+}
+
+message Id {
+	int32 id = 1;
 }
 
 message Report_FilterReply {

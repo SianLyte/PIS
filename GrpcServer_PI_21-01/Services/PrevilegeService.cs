@@ -15,7 +15,7 @@ namespace GrpcServer_PI_21_01.Services
         public override Task<AccessReply> GetAccessFor(UserRequest request, ServerCallContext ctx)
         {
             var nameMdls = (NameMdels)Enum.Parse(typeof(NameMdels), request.RequestingForm);
-            var accessGranted = PrivilegeRepository.SetPrivilege(request.UserPrevilege, nameMdls);
+            var accessGranted = PrivilegeRepository.SetPrivilege(Enum.Parse<Roles>(request.UserPrevilege), nameMdls);
 
             return Task.FromResult(new AccessReply()
             {

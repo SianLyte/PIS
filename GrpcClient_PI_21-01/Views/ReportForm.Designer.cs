@@ -30,308 +30,318 @@ namespace GrpcClient_PI_21_01.Views
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportForm));
-            this.dateTimePickerStart = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
-            this.comboBoxSity = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxSum = new System.Windows.Forms.TextBox();
-            this.totalLabel = new System.Windows.Forms.Label();
-            this.actorLabel = new System.Windows.Forms.Label();
-            this.actorName = new System.Windows.Forms.TextBox();
-            this.closedAppLabel = new System.Windows.Forms.Label();
-            this.closedAppsCount = new System.Windows.Forms.NumericUpDown();
-            this.animalCount = new System.Windows.Forms.NumericUpDown();
-            this.animalCountLabel = new System.Windows.Forms.Label();
-            this.updatedAtLabel = new System.Windows.Forms.Label();
-            this.updatedAt = new System.Windows.Forms.TextBox();
-            this.createdAtLabel = new System.Windows.Forms.Label();
-            this.createdAt = new System.Windows.Forms.TextBox();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.closeButton = new System.Windows.Forms.Button();
-            this.reportStatusLabel = new System.Windows.Forms.Label();
-            this.reportStatus = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.closedAppsCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.animalCount)).BeginInit();
-            this.SuspendLayout();
+            dateTimePickerStart=new DateTimePicker();
+            dateTimePickerEnd=new DateTimePicker();
+            comboBoxSity=new ComboBox();
+            label2=new Label();
+            label3=new Label();
+            label1=new Label();
+            textBoxSum=new TextBox();
+            totalLabel=new Label();
+            actorLabel=new Label();
+            actorName=new TextBox();
+            closedAppLabel=new Label();
+            closedAppsCount=new NumericUpDown();
+            animalCount=new NumericUpDown();
+            animalCountLabel=new Label();
+            updatedAtLabel=new Label();
+            updatedAt=new TextBox();
+            createdAtLabel=new Label();
+            createdAt=new TextBox();
+            saveButton=new Button();
+            closeButton=new Button();
+            reportStatusLabel=new Label();
+            reportStatus=new TextBox();
+            reportStatuses=new ComboBox();
+            ((System.ComponentModel.ISupportInitialize)closedAppsCount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)animalCount).BeginInit();
+            SuspendLayout();
             // 
             // dateTimePickerStart
             // 
-            this.dateTimePickerStart.CalendarMonthBackground = System.Drawing.Color.Cornsilk;
-            this.dateTimePickerStart.Location = new System.Drawing.Point(32, 91);
-            this.dateTimePickerStart.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.dateTimePickerStart.Name = "dateTimePickerStart";
-            this.dateTimePickerStart.Size = new System.Drawing.Size(252, 37);
-            this.dateTimePickerStart.TabIndex = 0;
+            dateTimePickerStart.CalendarMonthBackground=Color.Cornsilk;
+            dateTimePickerStart.Location=new Point(32, 91);
+            dateTimePickerStart.Margin=new Padding(6, 9, 6, 9);
+            dateTimePickerStart.Name="dateTimePickerStart";
+            dateTimePickerStart.Size=new Size(252, 37);
+            dateTimePickerStart.TabIndex=0;
             // 
             // dateTimePickerEnd
             // 
-            this.dateTimePickerEnd.CalendarMonthBackground = System.Drawing.Color.Cornsilk;
-            this.dateTimePickerEnd.Location = new System.Drawing.Point(431, 91);
-            this.dateTimePickerEnd.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.dateTimePickerEnd.Name = "dateTimePickerEnd";
-            this.dateTimePickerEnd.Size = new System.Drawing.Size(252, 37);
-            this.dateTimePickerEnd.TabIndex = 1;
+            dateTimePickerEnd.CalendarMonthBackground=Color.Cornsilk;
+            dateTimePickerEnd.Location=new Point(431, 91);
+            dateTimePickerEnd.Margin=new Padding(6, 9, 6, 9);
+            dateTimePickerEnd.Name="dateTimePickerEnd";
+            dateTimePickerEnd.Size=new Size(252, 37);
+            dateTimePickerEnd.TabIndex=1;
             // 
             // comboBoxSity
             // 
-            this.comboBoxSity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSity.FormattingEnabled = true;
-            this.comboBoxSity.Location = new System.Drawing.Point(1127, 382);
-            this.comboBoxSity.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.comboBoxSity.Name = "comboBoxSity";
-            this.comboBoxSity.Size = new System.Drawing.Size(252, 38);
-            this.comboBoxSity.TabIndex = 2;
+            comboBoxSity.DropDownStyle=ComboBoxStyle.DropDownList;
+            comboBoxSity.FormattingEnabled=true;
+            comboBoxSity.Location=new Point(1127, 382);
+            comboBoxSity.Margin=new Padding(6, 9, 6, 9);
+            comboBoxSity.Name="comboBoxSity";
+            comboBoxSity.Size=new Size(252, 38);
+            comboBoxSity.TabIndex=2;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(431, 24);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 30);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Дата конца";
+            label2.AutoSize=true;
+            label2.Location=new Point(431, 24);
+            label2.Margin=new Padding(6, 0, 6, 0);
+            label2.Name="label2";
+            label2.Size=new Size(123, 30);
+            label2.TabIndex=4;
+            label2.Text="Дата конца";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1121, 318);
-            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 30);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Город";
+            label3.AutoSize=true;
+            label3.Location=new Point(1121, 318);
+            label3.Margin=new Padding(6, 0, 6, 0);
+            label3.Name="label3";
+            label3.Size=new Size(65, 30);
+            label3.TabIndex=5;
+            label3.Text="Город";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 24);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 30);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Дата начала";
+            label1.AutoSize=true;
+            label1.Location=new Point(26, 24);
+            label1.Margin=new Padding(6, 0, 6, 0);
+            label1.Name="label1";
+            label1.Size=new Size(132, 30);
+            label1.TabIndex=3;
+            label1.Text="Дата начала";
             // 
             // textBoxSum
             // 
-            this.textBoxSum.BackColor = System.Drawing.Color.Cornsilk;
-            this.textBoxSum.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxSum.Location = new System.Drawing.Point(182, 227);
-            this.textBoxSum.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.textBoxSum.Name = "textBoxSum";
-            this.textBoxSum.ReadOnly = true;
-            this.textBoxSum.Size = new System.Drawing.Size(501, 30);
-            this.textBoxSum.TabIndex = 8;
+            textBoxSum.BackColor=Color.Cornsilk;
+            textBoxSum.BorderStyle=BorderStyle.None;
+            textBoxSum.Location=new Point(182, 227);
+            textBoxSum.Margin=new Padding(6, 9, 6, 9);
+            textBoxSum.Name="textBoxSum";
+            textBoxSum.ReadOnly=true;
+            textBoxSum.Size=new Size(501, 30);
+            textBoxSum.TabIndex=8;
             // 
             // totalLabel
             // 
-            this.totalLabel.AutoSize = true;
-            this.totalLabel.Location = new System.Drawing.Point(32, 227);
-            this.totalLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.totalLabel.Name = "totalLabel";
-            this.totalLabel.Size = new System.Drawing.Size(148, 30);
-            this.totalLabel.TabIndex = 9;
-            this.totalLabel.Text = "Доход в рублях";
+            totalLabel.AutoSize=true;
+            totalLabel.Location=new Point(32, 227);
+            totalLabel.Margin=new Padding(6, 0, 6, 0);
+            totalLabel.Name="totalLabel";
+            totalLabel.Size=new Size(148, 30);
+            totalLabel.TabIndex=9;
+            totalLabel.Text="Доход в рублях";
             // 
             // actorLabel
             // 
-            this.actorLabel.AutoSize = true;
-            this.actorLabel.Location = new System.Drawing.Point(32, 162);
-            this.actorLabel.Name = "actorLabel";
-            this.actorLabel.Size = new System.Drawing.Size(107, 30);
-            this.actorLabel.TabIndex = 10;
-            this.actorLabel.Text = "Создатель";
+            actorLabel.AutoSize=true;
+            actorLabel.Location=new Point(32, 162);
+            actorLabel.Name="actorLabel";
+            actorLabel.Size=new Size(107, 30);
+            actorLabel.TabIndex=10;
+            actorLabel.Text="Создатель";
             // 
             // actorName
             // 
-            this.actorName.BackColor = System.Drawing.Color.Cornsilk;
-            this.actorName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.actorName.Location = new System.Drawing.Point(182, 162);
-            this.actorName.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.actorName.Name = "actorName";
-            this.actorName.ReadOnly = true;
-            this.actorName.Size = new System.Drawing.Size(501, 30);
-            this.actorName.TabIndex = 11;
+            actorName.BackColor=Color.Cornsilk;
+            actorName.BorderStyle=BorderStyle.None;
+            actorName.Location=new Point(182, 162);
+            actorName.Margin=new Padding(6, 9, 6, 9);
+            actorName.Name="actorName";
+            actorName.ReadOnly=true;
+            actorName.Size=new Size(501, 30);
+            actorName.TabIndex=11;
             // 
             // closedAppLabel
             // 
-            this.closedAppLabel.AutoSize = true;
-            this.closedAppLabel.Location = new System.Drawing.Point(32, 291);
-            this.closedAppLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.closedAppLabel.Name = "closedAppLabel";
-            this.closedAppLabel.Size = new System.Drawing.Size(240, 30);
-            this.closedAppLabel.TabIndex = 13;
-            this.closedAppLabel.Text = "Кол-во закрытых заявок";
+            closedAppLabel.AutoSize=true;
+            closedAppLabel.Location=new Point(32, 291);
+            closedAppLabel.Margin=new Padding(6, 0, 6, 0);
+            closedAppLabel.Name="closedAppLabel";
+            closedAppLabel.Size=new Size(240, 30);
+            closedAppLabel.TabIndex=13;
+            closedAppLabel.Text="Кол-во закрытых заявок";
             // 
             // closedAppsCount
             // 
-            this.closedAppsCount.BackColor = System.Drawing.Color.Cornsilk;
-            this.closedAppsCount.Enabled = false;
-            this.closedAppsCount.Location = new System.Drawing.Point(360, 289);
-            this.closedAppsCount.Name = "closedAppsCount";
-            this.closedAppsCount.ReadOnly = true;
-            this.closedAppsCount.Size = new System.Drawing.Size(323, 37);
-            this.closedAppsCount.TabIndex = 14;
+            closedAppsCount.BackColor=Color.Cornsilk;
+            closedAppsCount.Enabled=false;
+            closedAppsCount.Location=new Point(360, 289);
+            closedAppsCount.Name="closedAppsCount";
+            closedAppsCount.ReadOnly=true;
+            closedAppsCount.Size=new Size(323, 37);
+            closedAppsCount.TabIndex=14;
             // 
             // animalCount
             // 
-            this.animalCount.BackColor = System.Drawing.Color.Cornsilk;
-            this.animalCount.Enabled = false;
-            this.animalCount.Location = new System.Drawing.Point(360, 352);
-            this.animalCount.Name = "animalCount";
-            this.animalCount.ReadOnly = true;
-            this.animalCount.Size = new System.Drawing.Size(323, 37);
-            this.animalCount.TabIndex = 16;
+            animalCount.BackColor=Color.Cornsilk;
+            animalCount.Enabled=false;
+            animalCount.Location=new Point(360, 352);
+            animalCount.Name="animalCount";
+            animalCount.ReadOnly=true;
+            animalCount.Size=new Size(323, 37);
+            animalCount.TabIndex=16;
             // 
             // animalCountLabel
             // 
-            this.animalCountLabel.AutoSize = true;
-            this.animalCountLabel.Location = new System.Drawing.Point(32, 354);
-            this.animalCountLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.animalCountLabel.Name = "animalCountLabel";
-            this.animalCountLabel.Size = new System.Drawing.Size(303, 30);
-            this.animalCountLabel.TabIndex = 15;
-            this.animalCountLabel.Text = "Кол-во отловленных животных";
+            animalCountLabel.AutoSize=true;
+            animalCountLabel.Location=new Point(32, 354);
+            animalCountLabel.Margin=new Padding(6, 0, 6, 0);
+            animalCountLabel.Name="animalCountLabel";
+            animalCountLabel.Size=new Size(303, 30);
+            animalCountLabel.TabIndex=15;
+            animalCountLabel.Text="Кол-во отловленных животных";
             // 
             // updatedAtLabel
             // 
-            this.updatedAtLabel.AutoSize = true;
-            this.updatedAtLabel.Location = new System.Drawing.Point(32, 423);
-            this.updatedAtLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.updatedAtLabel.Name = "updatedAtLabel";
-            this.updatedAtLabel.Size = new System.Drawing.Size(105, 30);
-            this.updatedAtLabel.TabIndex = 18;
-            this.updatedAtLabel.Text = "Обновлено";
+            updatedAtLabel.AutoSize=true;
+            updatedAtLabel.Location=new Point(32, 423);
+            updatedAtLabel.Margin=new Padding(6, 0, 6, 0);
+            updatedAtLabel.Name="updatedAtLabel";
+            updatedAtLabel.Size=new Size(105, 30);
+            updatedAtLabel.TabIndex=18;
+            updatedAtLabel.Text="Обновлено";
             // 
             // updatedAt
             // 
-            this.updatedAt.BackColor = System.Drawing.Color.Cornsilk;
-            this.updatedAt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.updatedAt.Location = new System.Drawing.Point(182, 423);
-            this.updatedAt.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.updatedAt.Name = "updatedAt";
-            this.updatedAt.ReadOnly = true;
-            this.updatedAt.Size = new System.Drawing.Size(501, 30);
-            this.updatedAt.TabIndex = 17;
+            updatedAt.BackColor=Color.Cornsilk;
+            updatedAt.BorderStyle=BorderStyle.None;
+            updatedAt.Location=new Point(182, 423);
+            updatedAt.Margin=new Padding(6, 9, 6, 9);
+            updatedAt.Name="updatedAt";
+            updatedAt.ReadOnly=true;
+            updatedAt.Size=new Size(501, 30);
+            updatedAt.TabIndex=17;
             // 
             // createdAtLabel
             // 
-            this.createdAtLabel.AutoSize = true;
-            this.createdAtLabel.Location = new System.Drawing.Point(32, 485);
-            this.createdAtLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.createdAtLabel.Name = "createdAtLabel";
-            this.createdAtLabel.Size = new System.Drawing.Size(82, 30);
-            this.createdAtLabel.TabIndex = 20;
-            this.createdAtLabel.Text = "Создано";
+            createdAtLabel.AutoSize=true;
+            createdAtLabel.Location=new Point(32, 485);
+            createdAtLabel.Margin=new Padding(6, 0, 6, 0);
+            createdAtLabel.Name="createdAtLabel";
+            createdAtLabel.Size=new Size(82, 30);
+            createdAtLabel.TabIndex=20;
+            createdAtLabel.Text="Создано";
             // 
             // createdAt
             // 
-            this.createdAt.BackColor = System.Drawing.Color.Cornsilk;
-            this.createdAt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.createdAt.Location = new System.Drawing.Point(182, 485);
-            this.createdAt.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.createdAt.Name = "createdAt";
-            this.createdAt.ReadOnly = true;
-            this.createdAt.Size = new System.Drawing.Size(501, 30);
-            this.createdAt.TabIndex = 19;
+            createdAt.BackColor=Color.Cornsilk;
+            createdAt.BorderStyle=BorderStyle.None;
+            createdAt.Location=new Point(182, 485);
+            createdAt.Margin=new Padding(6, 9, 6, 9);
+            createdAt.Name="createdAt";
+            createdAt.ReadOnly=true;
+            createdAt.Size=new Size(501, 30);
+            createdAt.TabIndex=19;
             // 
             // saveButton
             // 
-            this.saveButton.BackColor = System.Drawing.Color.Cornsilk;
-            this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveButton.Location = new System.Drawing.Point(32, 614);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(160, 41);
-            this.saveButton.TabIndex = 21;
-            this.saveButton.Text = "Сохранить";
-            this.saveButton.UseVisualStyleBackColor = false;
+            saveButton.BackColor=Color.Cornsilk;
+            saveButton.FlatStyle=FlatStyle.Flat;
+            saveButton.Location=new Point(32, 614);
+            saveButton.Name="saveButton";
+            saveButton.Size=new Size(160, 41);
+            saveButton.TabIndex=21;
+            saveButton.Text="Сохранить";
+            saveButton.UseVisualStyleBackColor=false;
             // 
             // closeButton
             // 
-            this.closeButton.BackColor = System.Drawing.Color.Cornsilk;
-            this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.closeButton.Location = new System.Drawing.Point(523, 614);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(160, 41);
-            this.closeButton.TabIndex = 22;
-            this.closeButton.Text = "Закрыть";
-            this.closeButton.UseVisualStyleBackColor = false;
+            closeButton.BackColor=Color.Cornsilk;
+            closeButton.FlatStyle=FlatStyle.Flat;
+            closeButton.Location=new Point(523, 614);
+            closeButton.Name="closeButton";
+            closeButton.Size=new Size(160, 41);
+            closeButton.TabIndex=22;
+            closeButton.Text="Закрыть";
+            closeButton.UseVisualStyleBackColor=false;
             // 
             // reportStatusLabel
             // 
-            this.reportStatusLabel.AutoSize = true;
-            this.reportStatusLabel.Location = new System.Drawing.Point(32, 549);
-            this.reportStatusLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.reportStatusLabel.Name = "reportStatusLabel";
-            this.reportStatusLabel.Size = new System.Drawing.Size(88, 30);
-            this.reportStatusLabel.TabIndex = 24;
-            this.reportStatusLabel.Text = "Статус";
+            reportStatusLabel.AutoSize=true;
+            reportStatusLabel.Location=new Point(32, 549);
+            reportStatusLabel.Margin=new Padding(6, 0, 6, 0);
+            reportStatusLabel.Name="reportStatusLabel";
+            reportStatusLabel.Size=new Size(88, 30);
+            reportStatusLabel.TabIndex=24;
+            reportStatusLabel.Text="Статус";
             // 
             // reportStatus
             // 
-            this.reportStatus.BackColor = System.Drawing.Color.Cornsilk;
-            this.reportStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.reportStatus.Location = new System.Drawing.Point(182, 549);
-            this.reportStatus.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.reportStatus.Name = "reportStatus";
-            this.reportStatus.ReadOnly = true;
-            this.reportStatus.Size = new System.Drawing.Size(501, 30);
-            this.reportStatus.TabIndex = 23;
+            reportStatus.BackColor=Color.Cornsilk;
+            reportStatus.BorderStyle=BorderStyle.None;
+            reportStatus.Location=new Point(182, 549);
+            reportStatus.Margin=new Padding(6, 9, 6, 9);
+            reportStatus.Name="reportStatus";
+            reportStatus.ReadOnly=true;
+            reportStatus.Size=new Size(501, 30);
+            reportStatus.TabIndex=23;
+            // 
+            // reportStatuses
+            // 
+            reportStatuses.BackColor=Color.Cornsilk;
+            reportStatuses.FormattingEnabled=true;
+            reportStatuses.Location=new Point(235, 591);
+            reportStatuses.Name="reportStatuses";
+            reportStatuses.Size=new Size(151, 38);
+            reportStatuses.TabIndex=25;
             // 
             // ReportForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 30F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Wheat;
-            this.ClientSize = new System.Drawing.Size(729, 667);
-            this.Controls.Add(this.reportStatusLabel);
-            this.Controls.Add(this.reportStatus);
-            this.Controls.Add(this.closeButton);
-            this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.createdAtLabel);
-            this.Controls.Add(this.createdAt);
-            this.Controls.Add(this.updatedAtLabel);
-            this.Controls.Add(this.updatedAt);
-            this.Controls.Add(this.animalCount);
-            this.Controls.Add(this.animalCountLabel);
-            this.Controls.Add(this.closedAppsCount);
-            this.Controls.Add(this.closedAppLabel);
-            this.Controls.Add(this.actorName);
-            this.Controls.Add(this.actorLabel);
-            this.Controls.Add(this.totalLabel);
-            this.Controls.Add(this.textBoxSum);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBoxSity);
-            this.Controls.Add(this.dateTimePickerEnd);
-            this.Controls.Add(this.dateTimePickerStart);
-            this.Font = new System.Drawing.Font("Segoe Print", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
-            this.Name = "ReportForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Отчёт";
-            ((System.ComponentModel.ISupportInitialize)(this.closedAppsCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.animalCount)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions=new SizeF(11F, 30F);
+            AutoScaleMode=AutoScaleMode.Font;
+            BackColor=Color.Wheat;
+            ClientSize=new Size(729, 667);
+            Controls.Add(reportStatuses);
+            Controls.Add(reportStatusLabel);
+            Controls.Add(reportStatus);
+            Controls.Add(closeButton);
+            Controls.Add(saveButton);
+            Controls.Add(createdAtLabel);
+            Controls.Add(createdAt);
+            Controls.Add(updatedAtLabel);
+            Controls.Add(updatedAt);
+            Controls.Add(animalCount);
+            Controls.Add(animalCountLabel);
+            Controls.Add(closedAppsCount);
+            Controls.Add(closedAppLabel);
+            Controls.Add(actorName);
+            Controls.Add(actorLabel);
+            Controls.Add(totalLabel);
+            Controls.Add(textBoxSum);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(comboBoxSity);
+            Controls.Add(dateTimePickerEnd);
+            Controls.Add(dateTimePickerStart);
+            Font=new Font("Segoe Print", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            FormBorderStyle=FormBorderStyle.FixedSingle;
+            Icon=(Icon)resources.GetObject("$this.Icon");
+            Margin=new Padding(6, 9, 6, 9);
+            Name="ReportForm";
+            StartPosition=FormStartPosition.CenterScreen;
+            Text="Отчёт";
+            ((System.ComponentModel.ISupportInitialize)closedAppsCount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)animalCount).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.DateTimePicker dateTimePickerStart;
-        private System.Windows.Forms.DateTimePicker dateTimePickerEnd;
-        private System.Windows.Forms.ComboBox comboBoxSity;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxSum;
-        private System.Windows.Forms.Label totalLabel;
+        private DateTimePicker dateTimePickerStart;
+        private DateTimePicker dateTimePickerEnd;
+        private ComboBox comboBoxSity;
+        private Label label2;
+        private Label label3;
+        private Label label1;
+        private TextBox textBoxSum;
+        private Label totalLabel;
         private Label actorLabel;
         private TextBox actorName;
         private Label closedAppLabel;
@@ -346,5 +356,6 @@ namespace GrpcClient_PI_21_01.Views
         private Button closeButton;
         private Label reportStatusLabel;
         private TextBox reportStatus;
+        private ComboBox reportStatuses;
     }
 }

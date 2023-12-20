@@ -67,7 +67,7 @@ namespace GrpcServer_PI_21_01.Data
                             Enum.Parse<ActionType>(operationEmpty[1]),
                             operationEmpty[2],
                             operationEmpty[3],
-                            User.GetById(int.Parse(operationEmpty[4]), cn),
+                            UserRepository.GetUserById(int.Parse(operationEmpty[4])),
                             DateTime.Parse(operationEmpty[5]));
                         operations.Add(operation);
                     }
@@ -148,7 +148,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
                 reader.Close();
                 cn.Close();
-                return new Operation(id, Enum.Parse<ActionType>(arr[0]), arr[1], arr[2], User.GetById(int.Parse(arr[3]), cn), DateTime.Parse(arr[4]));
+                return new Operation(id, Enum.Parse<ActionType>(arr[0]), arr[1], arr[2], UserRepository.GetUserById(int.Parse(arr[3])), DateTime.Parse(arr[4]));
             }
             catch (Exception e)
             {

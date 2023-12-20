@@ -146,6 +146,21 @@ namespace GrpcClient_PI_21_01.Controllers
             //}
             //return otvRep;
         }
+
+        public static async Task<List<string>> GetAvailableStatuses()
+        {
+            var statuses = new List<string>();
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+            var serverData = client.GetAvailableStatuses(new Id()
+            {
+                Id_ = UserService.CurrentUser.IdUser
+            });
+            var responseStream = serverData.ResponseStream;
+            await foreach (var response in responseStream.ReadAllAsync())
+                statuses.Add(response.AvailableStatuses_);
+            return statuses;
+        }
         public static async Task<bool> RemoveReport(int reportId)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");

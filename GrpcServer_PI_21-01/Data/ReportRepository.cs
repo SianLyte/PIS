@@ -39,9 +39,16 @@ namespace GrpcServer_PI_21_01.Data
         }
 
 
+        public static void ChangeAvailableStatuses(int userId, StatusReportSubject subject)
+        {
+            var user = UserRepository.GetUserById(userId);
+            subject.Role = user.PrivelegeLevel;
+        }
+
+
         public static Report GenereteReport(DataRequest request, DateTime start, DateTime finish, int id = -1)
         {
-            if (request.Actor.PrivelegeLevel != "Operator_Po_Otlovy" && request.Actor.PrivelegeLevel != "Admin")
+            if (request.Actor.PrivelegeLevel != Roles.OperatorPoOtlovy.ToString() && request.Actor.PrivelegeLevel != Roles.Admin.ToString())
             {
                 throw new RpcException(new Status(StatusCode.PermissionDenied, "У вас нет прав на это действие"));
             }
@@ -159,6 +166,7 @@ namespace GrpcServer_PI_21_01.Data
                 throw;
             }
         }
+
         public List<Report> GetAll(DataRequest request)
         {
             return GetReports(request);

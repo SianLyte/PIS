@@ -11,11 +11,13 @@ namespace GrpcServer_PI_21_01.Services
         private readonly ILogger<ReportService> _logger;
         private readonly DataCacheProxy<Report> reportCacheProxy = new(new ReportRepository(), CacheDurationMs);
         private readonly DataCacheProxy<Operation> operationProxy = new(new OperationRepository(), CacheDurationMs);
+        private readonly StatusReportObserver statusReportObserver = new StatusReportObserver();
+        private readonly StatusReportSubject statusReportSubject = new StatusReportSubject();
 
         public ReportService(ILogger<ReportService> logger)
         {
             _logger = logger;
-            
+            statusReportSubject.RegisterObserver(statusReportObserver);
         }
 
         private static Task<OperationResult> CRUD(int modifiedId, bool successful)
@@ -80,6 +82,18 @@ namespace GrpcServer_PI_21_01.Services
             }
             return CRUD(report.Id, successful);
         }
+
+        public override async Task GetAvailableStatuses(Id request, IServerStreamWriter<AvailableStatuses> responseStream, ServerCallContext context)
+        {
+            ReportRepository.ChangeAvailableStatuses(request.Id_, statusReportSubject);
+            var statuses = statusReportObserver.Statuses.Select(status => status.ToString()).ToList();
+            foreach (var status in statuses)
+                await responseStream.WriteAsync(new AvailableStatuses() 
+                { 
+                    AvailableStatuses_ = status
+                });
+        } 
+        
         public override Task<OperationResult> RemoveReport(IdRequest request, ServerCallContext context)
         {
             var successful = ReportRepository.RemoveReport(request.Id);
@@ -94,30 +108,30 @@ namespace GrpcServer_PI_21_01.Services
         public override Task<OperationResult> UpdateReport(ReportReply request, ServerCallContext context)
         {
             var rep = request.FromReply();
-            if (request.Actor.PrivelegeLevel == Roles.Operator_Po_Otlovy.ToString()
-                && (rep.Status == ReportStatus.Draft || rep.Status == ReportStatus.ApprovalFromMunicipalContractExecutor))
-            {
-                ; ; ;
-            }
-            else if (request.Actor.PrivelegeLevel == Roles.Curator_Po_Otlovy.ToString()
-                && (rep.Status == ReportStatus.ApprovedByMunicipalContractExecutor || rep.Status == ReportStatus.Revision))
-            {
-                ; ; ;
-            }
-            else if (request.Actor.PrivelegeLevel == Roles.Podpisant_Po_Otlovy.ToString()
-                && (rep.Status == ReportStatus.Revision || rep.Status == ReportStatus.AgreedWithMunicipalContractExecutor))
-            {
-                ; ; ;
-            }
-            else if (request.Actor.PrivelegeLevel == Roles.Curator_OMSY.ToString()
-                && (rep.Status == ReportStatus.Revision || rep.Status == ReportStatus.ApprovedByOmsy))
-            {
-                ; ; ;
-            }
-            else
-            {
-                throw new RpcException(new Status(StatusCode.PermissionDenied, "У вас нет прав на это"));
-            }
+            //if (request.Actor.PrivelegeLevel == Roles.Operator_Po_Otlovy.ToString()
+            //    && (rep.Status == ReportStatus.Draft || rep.Status == ReportStatus.ApprovalFromMunicipalContractExecutor))
+            //{
+            //    ; ; ;
+            //}
+            //else if (request.Actor.PrivelegeLevel == Roles.Curator_Po_Otlovy.ToString()
+            //    && (rep.Status == ReportStatus.ApprovedByMunicipalContractExecutor || rep.Status == ReportStatus.Revision))
+            //{
+            //    ; ; ;
+            //}
+            //else if (request.Actor.PrivelegeLevel == Roles.Podpisant_Po_Otlovy.ToString()
+            //    && (rep.Status == ReportStatus.Revision || rep.Status == ReportStatus.AgreedWithMunicipalContractExecutor))
+            //{
+            //    ; ; ;
+            //}
+            //else if (request.Actor.PrivelegeLevel == Roles.Curator_OMSY.ToString()
+            //    && (rep.Status == ReportStatus.Revision || rep.Status == ReportStatus.ApprovedByOmsy))
+            //{
+            //    ; ; ;
+            //}
+            //else
+            //{
+            //    throw new RpcException(new Status(StatusCode.PermissionDenied, "У вас нет прав на это"));
+            //}
             var successful = ReportRepository.UpdateReport(rep);
             if (successful)
             {

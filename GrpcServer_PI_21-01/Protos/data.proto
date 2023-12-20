@@ -249,3 +249,20 @@ enum ReportStatus {
     agreed_with_municipal_contract_executor = 4;
     approval_from_municipal_contract_executor = 5;
 }
+
+enum Roles {
+	OperatorPoOtlovy = 0;
+    CuratorVeterinaryService = 1;
+    CuratorShelter = 2;
+    OperatorVeterinaryService = 3;
+    OperatorShelter = 4;
+    PodpisantVeterinaryService = 5;
+    PodpisantShelter = 6;
+    CuratorOMSY = 7;
+    OperatorOMSY = 8;
+    PodpisantOMSY = 9;
+    CuratorPoOtlovy = 10;
+    PodpisantPoOtlovy = 11;
+    Admin = 12;
+}
+

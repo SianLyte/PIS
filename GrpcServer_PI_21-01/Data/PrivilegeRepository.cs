@@ -9,11 +9,11 @@ namespace GrpcServer_PI_21_01.Data
 {
     class PrivilegeRepository
     {
-        private readonly static Dictionary<string, Dictionary<NameMdels, bool>> rols = new()
+        private readonly static Dictionary<Roles, Dictionary<NameMdels, bool>> rols = new()
         {
             // этот ужас желательно исправить, но мне лень
             {
-                Roles.Operator_Po_Otlovy.ToString(),
+                Roles.OperatorPoOtlovy,
                 new Dictionary<NameMdels, bool>()
                 {
                     { NameMdels.Act, true },
@@ -25,7 +25,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
             },
             {
-                Roles.Curator_Po_Otlovy.ToString(),
+                Roles.CuratorPoOtlovy,
                 new Dictionary<NameMdels, bool>()
                 {
                     {NameMdels.Act, true},
@@ -37,7 +37,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
             },
             {
-                Roles.Podpisant_Po_Otlovy.ToString(),
+                Roles.PodpisantPoOtlovy,
                 new Dictionary<NameMdels, bool>()
                 {
                     {NameMdels.Act, true },
@@ -49,7 +49,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
             },
             {
-                Roles.Operator_Veterinary_Service.ToString(),
+                Roles.OperatorVeterinaryService,
                 new Dictionary<NameMdels, bool>()
                 {
                     {NameMdels.Act, false},
@@ -61,7 +61,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
             },
             {
-                Roles.Operator_OMSY.ToString(),
+                Roles.OperatorOmsy,
                 new Dictionary<NameMdels, bool>()
                 {
                     {NameMdels.Act, false},
@@ -73,7 +73,7 @@ namespace GrpcServer_PI_21_01.Data
                 }
             },
             {
-                Roles.Curator_OMSY.ToString(),
+                Roles.CuratorOmsy,
                 new Dictionary<NameMdels, bool>()
                 {
                     {NameMdels.Act, false},
@@ -84,56 +84,56 @@ namespace GrpcServer_PI_21_01.Data
                     {NameMdels.History, false },
                 }
             },
+            //{
+            //     "Сотрудник вет. службы",
+            //    new Dictionary<NameMdels, bool>()
+            //    {
+            //        {NameMdels.Act, false},
+            //        {NameMdels.App, false},
+            //        {NameMdels.Contract, false},
+            //        {NameMdels.Org, false},
+            //        {NameMdels.Report, false},
+            //        {NameMdels.History, false },
+            //    }
+            //},
+            //{
+            //    "Сотрудник отлова",
+            //    new Dictionary<NameMdels, bool>()
+            //    {
+            //        {NameMdels.Act, false},
+            //        {NameMdels.App, false},
+            //        {NameMdels.Contract, false},
+            //        {NameMdels.Org, false},
+            //        {NameMdels.Report, false},
+            //        {NameMdels.History, false },
+            //    }
+            //},
+            //{
+            //    "Сотрудник ОМСУ",
+            //    new Dictionary<NameMdels, bool>()
+            //    {
+            //        {NameMdels.Act, false},
+            //        {NameMdels.App, false},
+            //        {NameMdels.Contract, false},
+            //        {NameMdels.Org, false},
+            //        {NameMdels.Report, false},
+            //        {NameMdels.History, false },
+            //    }
+            //},
+            //{
+            //    "Сотрудник приюта",
+            //    new Dictionary<NameMdels, bool>()
+            //    {
+            //        {NameMdels.Act, false},
+            //        {NameMdels.App, false},
+            //        {NameMdels.Contract, false},
+            //        {NameMdels.Org, false},
+            //        {NameMdels.Report, false},
+            //        {NameMdels.History, false },
+            //    }
+            //},
             {
-                "Сотрудник вет. службы",
-                new Dictionary<NameMdels, bool>()
-                {
-                    {NameMdels.Act, false},
-                    {NameMdels.App, false},
-                    {NameMdels.Contract, false},
-                    {NameMdels.Org, false},
-                    {NameMdels.Report, false},
-                    {NameMdels.History, false },
-                }
-            },
-            {
-                "Сотрудник отлова",
-                new Dictionary<NameMdels, bool>()
-                {
-                    {NameMdels.Act, false},
-                    {NameMdels.App, false},
-                    {NameMdels.Contract, false},
-                    {NameMdels.Org, false},
-                    {NameMdels.Report, false},
-                    {NameMdels.History, false },
-                }
-            },
-            {
-                "Сотрудник ОМСУ",
-                new Dictionary<NameMdels, bool>()
-                {
-                    {NameMdels.Act, false},
-                    {NameMdels.App, false},
-                    {NameMdels.Contract, false},
-                    {NameMdels.Org, false},
-                    {NameMdels.Report, false},
-                    {NameMdels.History, false },
-                }
-            },
-            {
-                "Сотрудник приюта",
-                new Dictionary<NameMdels, bool>()
-                {
-                    {NameMdels.Act, false},
-                    {NameMdels.App, false},
-                    {NameMdels.Contract, false},
-                    {NameMdels.Org, false},
-                    {NameMdels.Report, false},
-                    {NameMdels.History, false },
-                }
-            },
-            {
-                Roles.Admin.ToString(),
+                Roles.Admin,
                 new Dictionary<NameMdels, bool>()
                 {
                     {NameMdels.Act, true},
@@ -146,7 +146,7 @@ namespace GrpcServer_PI_21_01.Data
             }
         };
 
-        public static bool SetPrivilege(string privelege, NameMdels model)
+        public static bool SetPrivilege(Roles privelege, NameMdels model)
         {
             return rols[privelege][model];
             //var user = UserSessia.UserLog;
