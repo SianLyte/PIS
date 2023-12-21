@@ -17,22 +17,16 @@ using System.Xml.Linq;
 
 namespace GrpcClient_PI_21_01
 {
+    
     public partial class MainForm : Form
     {
+        public ReportDataClass reportData;
         public MainForm()
         {
+
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            // Только сейчас заметил, что это?!
-            // где?
-            // именно, где мои кнопки?!)
-            // кончились
-            //нормально вы тут чатитесь ребята, лампово сидите
-            // ((
-            // и ведь никто даже не знает кто это пишет
-            // пам пам паааам (тревожные звуки)
-            // мяу
             dateTimePickerAct.ValueChanged += dateTimePickerAct_ValueChanged;
 
             OrgAdd.Click += OrgAdd_Click;
@@ -526,9 +520,20 @@ namespace GrpcClient_PI_21_01
 
         private async void buttonAddReport_Click(object sender, EventArgs e)
         {
-            var rep = new ReportForm();
-            rep.ShowDialog();
-            await InicilisationReports();
+            reportData = await ReportService.GetAvailableActions();
+            if (!reportData.availableActions.Contains("Add"))
+            {
+                MessageBox.Show("У вас недостаточно прав!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                //Драфт, потому что при добавлении статус ни на что не влияет(он неизвестен) (надо исправить)
+                reportData.availableStatuses = await ReportService.GetAvailableStatuses(ActionType.ActionDelete, ReportStatus.Draft);
+                var rep = new ReportForm(reportData);
+                rep.ShowDialog();
+                await InicilisationReports();
+            }
+
         }
 
         private async void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -542,28 +547,48 @@ namespace GrpcClient_PI_21_01
 
         private async void ButtonDeleteReport_Click(object? sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridViewReport.SelectedRows)
+            reportData = await ReportService.GetAvailableActions();
+            if (!reportData.availableActions.Contains("Delete"))
             {
-                try
-                {
-                    var reportId = int.Parse(row.Cells["ID"].Value.ToString());
-                    await ReportService.RemoveReport(reportId);
-                }
-                catch { MessageBox.Show("Could not delete one of the selected rows"); }
+                MessageBox.Show("У вас недостаточно прав!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            await InicilisationReports();
+            else
+            {
+                foreach (DataGridViewRow row in dataGridViewReport.SelectedRows)
+                {
+                    try
+                    {
+                        var reportId = int.Parse(row.Cells["ID"].Value.ToString());
+                        await ReportService.RemoveReport(reportId);
+                    }
+                    catch { MessageBox.Show("Could not delete one of the selected rows"); }
+                }
+                await InicilisationReports();
+            }
         }
-
+        
         private async void ButtonEditReport_Click(object? sender, EventArgs e)
         {
-            if (dataGridViewReport.CurrentRow is null) return;
+            reportData = await ReportService.GetAvailableActions();
+            if (!reportData.availableActions.Contains("Update") 
+                && !reportData.availableActions.Contains("UpdateStatus"))
+            {
+                MessageBox.Show("У вас недостаточно прав!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
 
-            var cellId = dataGridViewReport.CurrentRow.Cells["ID"].Value.ToString();
-            var reportId = int.Parse(cellId);
-            var report = await ReportService.GetReport(reportId);
-            var editForm = new ReportForm(report);
-            editForm.ShowDialog();
-            await InicilisationReports();
+                if (dataGridViewReport.CurrentRow is null) return;
+
+                var cellId = dataGridViewReport.CurrentRow.Cells["ID"].Value.ToString();
+                var reportId = int.Parse(cellId);
+                var report = await ReportService.GetReport(reportId);
+                reportData.availableStatuses = await ReportService.GetAvailableStatuses(ActionType.ActionUpdate, report.Status);
+                var editForm = new ReportForm(report, reportData);
+                editForm.ShowDialog();
+                await InicilisationReports();
+            }
+                        
         }
 
         private async void SortReports(object sender, DataGridViewCellMouseEventArgs e)

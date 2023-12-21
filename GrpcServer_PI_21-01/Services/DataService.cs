@@ -2,6 +2,7 @@
 using Google.Protobuf.WellKnownTypes;
 using GrpcServer_PI_21_01.Data;
 using GrpcServer_PI_21_01.Models;
+using GrpcServer_PI_21_01.Models.Observers;
 
 namespace GrpcServer_PI_21_01.Services
 {
@@ -12,6 +13,8 @@ namespace GrpcServer_PI_21_01.Services
         public DataService(ILogger<DataService> logger)
         {
             _logger = logger;
+            LoggingObserver loggingObserver = new LoggingObserver(_logger, operationProxy);
+            Subject.Instance.RegisterObserver(loggingObserver);
         }
 
         private static Task<OperationResult> CRUD(int modifiedId, bool successful)
@@ -33,30 +36,29 @@ namespace GrpcServer_PI_21_01.Services
         //    return Task.FromResult(result);
         //}
 
-        public void Log(ActionType actType, string tableName, int modifId, UserReply actor)
-        {
-            var operation = new OperationReply()
-            {
-                Action = actType,
-                ModifiedObjectId = modifId,
-                ModifiedTableName = tableName,
-                OperationId = -1,
-                User = actor,
-                Date = DateTime.Now.ToUtc().ToTimestamp(),
-            };
-            var logged = OperationRepository.AddOperation(operation);
-            if (!logged)
-            {
-                _logger.LogError("Error has occured during operation log. Please debug this log:" +
-                    "\n{Username} has made changes to {tableName} table at index {modifId}." +
-                    " Action type: {actType}.",
-                    string.Join(" ", actor.Surname, actor.Name, actor.Patronymic), tableName, modifId, actType);
-            }
-            else operationProxy.Reset();
-        }
+        //public void Log(ActionType actType, string tableName, int modifId, UserReply actor)
+        //{
+        //    var operation = new OperationReply()
+        //    {
+        //        Action = actType,
+        //        ModifiedObjectId = modifId,
+        //        ModifiedTableName = tableName,
+        //        OperationId = -1,
+        //        User = actor,
+        //        Date = DateTime.Now.ToUtc().ToTimestamp(),
+        //    };
+        //    var logged = OperationRepository.AddOperation(operation);
+        //    if (!logged)
+        //    {
+        //        _logger.LogError("Error has occured during operation log. Please debug this log:" +
+        //            "\n{Username} has made changes to {tableName} table at index {modifId}." +
+        //            " Action type: {actType}.",
+        //            string.Join(" ", actor.Surname, actor.Name, actor.Patronymic), tableName, modifId, actType);
+        //    }
+        //    else operationProxy.Reset();
+        //}
 
         #region Contracts
-        private readonly DataCacheProxy<Contract> contractCacheProxy = new(new ContractRepository(), CacheDurationMs);
         public override Task<ContractReply> GetContract(IdRequest request, ServerCallContext context)
         {
             Contract? contr = ContractRepository.GetContract(request.Id);
@@ -83,7 +85,7 @@ namespace GrpcServer_PI_21_01.Services
                 filter.AddOrFilter(c => c.Executer, request.Actor.Organization.IdOrganization.ToString());
             }
             filter.ExtendReply(request.Filter);
-            var contracts = contractCacheProxy.GetAll(request).Select(c => c.ToReply());
+            var contracts = ContractRepository.ContractCacheProxy.GetAll(request).Select(c => c.ToReply());
 
             var reply = new ContractsReply();
             reply.Contracts.AddRange(contracts);
@@ -99,8 +101,17 @@ namespace GrpcServer_PI_21_01.Services
             var successful = ContractRepository.AddContract(contract);
             if (successful)
             {
-                contractCacheProxy.Reset();
-                Log(ActionType.ActionAdd, "Contract", contract.IdContract, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Contract>()
+                {
+                    ModifiedObjectId = contract.IdContract,
+                    TableName = "Contract",
+                    ActionType = ActionType.ActionAdd,
+                    CacheProxy = ContractRepository.ContractCacheProxy,
+                    User = request.Actor
+                });
+
+                //contractCacheProxy.Reset();
+                //Log(ActionType.ActionAdd, "Contract", contract.IdContract, request.Actor);
             }
             return CRUD(contract.IdContract, successful);
         }
@@ -111,8 +122,16 @@ namespace GrpcServer_PI_21_01.Services
             var successful = ContractRepository.UpdateContract(contract);
             if (successful)
             {
-                contractCacheProxy.Reset();
-                Log(ActionType.ActionUpdate, "Contract", contract.IdContract, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Contract>()
+                {
+                    ActionType = ActionType.ActionUpdate,
+                    CacheProxy = ContractRepository.ContractCacheProxy,
+                    ModifiedObjectId = contract.IdContract,
+                    TableName = "Contract",
+                    User = request.Actor
+                });
+                //contractCacheProxy.Reset();
+                //Log(ActionType.ActionUpdate, "Contract", contract.IdContract, request.Actor);
             }
             return CRUD(contract.IdContract, successful);
         }
@@ -122,8 +141,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = ContractRepository.DeleteContract(id.Id);
             if (successful)
             {
-                contractCacheProxy.Reset();
-                Log(ActionType.ActionDelete, "Contract", id.Id, id.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Contract>()
+                {
+                    ActionType = ActionType.ActionDelete,
+                    CacheProxy = ContractRepository.ContractCacheProxy,
+                    ModifiedObjectId = id.Id,
+                    TableName = "Contract",
+                    User = id.Actor
+                });
             }
             return CRUD(id.Id, successful);
         }
@@ -159,8 +184,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = LocationRepository.AddLocation(location);
             if (successful)
             {
-                locationCacheProxy.Reset();
-                Log(ActionType.ActionAdd, "Location", location.IdLocation, request.Actor);
+                //locationCacheProxy.Reset();
+                Subject.Instance.NotifyObservers(new ObserverArguments<Location>() {
+                    ActionType = ActionType.ActionAdd,
+                    ModifiedObjectId = location.IdLocation,
+                    CacheProxy = locationCacheProxy,
+                    TableName = "Location",
+                    User = request.Actor 
+                });
             }
             return CRUD(location.IdLocation, successful);
         }
@@ -170,8 +201,15 @@ namespace GrpcServer_PI_21_01.Services
             var successful = LocationRepository.RemoveLocation(request.Id);
             if (successful)
             {
-                locationCacheProxy.Reset();
-                Log(ActionType.ActionDelete, "Location", request.Id, request.Actor);
+                //locationCacheProxy.Reset();
+                Subject.Instance.NotifyObservers(new ObserverArguments<Location>() 
+                { 
+                    ActionType = ActionType.ActionDelete, 
+                    ModifiedObjectId = request.Id, 
+                    CacheProxy = locationCacheProxy,
+                    TableName = "Location", 
+                    User = request.Actor 
+                });
             }
             return CRUD(request.Id, successful);
         }
@@ -182,8 +220,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = LocationRepository.UpdateLocation(location);
             if (successful)
             {
-                locationCacheProxy.Reset();
-                Log(ActionType.ActionUpdate, "Location", location.IdLocation, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Location>()
+                {
+                    ActionType = ActionType.ActionUpdate,
+                    ModifiedObjectId = request.IdLocation,
+                    CacheProxy = locationCacheProxy,
+                    TableName = "Location",
+                    User = request.Actor
+                });
             }
             return CRUD(location.IdLocation, successful);
         }
@@ -219,8 +263,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = OrgRepository.AddOrganization(org);
             if (successful)
             {
-                orgCacheProxy.Reset();
-                Log(ActionType.ActionAdd, "Organization", org.idOrg, reply.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Organization>()
+                {
+                    ActionType = ActionType.ActionAdd,
+                    CacheProxy = orgCacheProxy,
+                    ModifiedObjectId = org.idOrg,
+                    TableName = "Organization",
+                    User = reply.Actor
+                });
             }
             return CRUD(org.idOrg, successful);
         }
@@ -231,8 +281,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = OrgRepository.UpdateOrganization(org);
             if (successful)
             {
-                orgCacheProxy.Reset();
-                Log(ActionType.ActionUpdate, "Organization", org.idOrg, reply.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Organization>()
+                {
+                    ActionType = ActionType.ActionUpdate,
+                    CacheProxy = orgCacheProxy,
+                    ModifiedObjectId = org.idOrg,
+                    TableName = "Organization",
+                    User = reply.Actor
+                });
             }
             return CRUD(org.idOrg, successful);
         }
@@ -242,8 +298,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = OrgRepository.RemoveOrganization(id.Id);
             if (successful)
             {
-                orgCacheProxy.Reset();
-                Log(ActionType.ActionDelete, "Organization", id.Id, id.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Organization>()
+                {
+                    ActionType = ActionType.ActionDelete,
+                    CacheProxy = orgCacheProxy,
+                    ModifiedObjectId = id.Id,
+                    TableName = "Organization",
+                    User = id.Actor
+                });
             }
             return CRUD(id.Id, successful);
         }
@@ -284,8 +346,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = ActRepository.AddAct(act);
             if (successful)
             {
-                actCacheProxy.Reset();
-                Log(ActionType.ActionAdd, "Act Capture", act.ActNumber, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Act>()
+                {
+                    ActionType = ActionType.ActionAdd,
+                    CacheProxy = actCacheProxy,
+                    ModifiedObjectId = act.ActNumber,
+                    TableName = "Act Capture",
+                    User = request.Actor
+                });
             }
             return CRUD(act.ActNumber, successful);
         }
@@ -295,8 +363,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = ActRepository.RemoveAct(request.Id);
             if (successful)
             {
-                actCacheProxy.Reset();
-                Log(ActionType.ActionDelete, "Act Capture", request.Id, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Act>()
+                {
+                    ActionType = ActionType.ActionDelete,
+                    CacheProxy = actCacheProxy,
+                    ModifiedObjectId = request.Id,
+                    TableName = "Act Capture",
+                    User = request.Actor
+                });
             }
             return CRUD(request.Id, successful);
         }
@@ -307,8 +381,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = ActRepository.UpdateAct(act);
             if (successful)
             {
-                actCacheProxy.Reset();
-                Log(ActionType.ActionUpdate, "Act Capture", act.ActNumber, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Act>()
+                {
+                    ActionType = ActionType.ActionUpdate,
+                    CacheProxy = actCacheProxy,
+                    ModifiedObjectId = act.ActNumber,
+                    TableName = "Act Capture",
+                    User = request.Actor
+                });
             }
             return CRUD(act.ActNumber, successful);
         }
@@ -348,8 +428,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = AppRepository.AddApplication(app);
             if (successful)
             {
-                appCacheProxy.Reset();
-                Log(ActionType.ActionAdd, "Application", app.number, reply.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<App>()
+                {
+                    ActionType = ActionType.ActionAdd,
+                    CacheProxy = appCacheProxy,
+                    ModifiedObjectId = app.number,
+                    TableName = "Application",
+                    User = reply.Actor
+                });
             }
             return CRUD(app.number, successful);
         }
@@ -361,8 +447,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = AppRepository.UpdateApplication(app);
             if (successful)
             {
-                appCacheProxy.Reset();
-                Log(ActionType.ActionUpdate, "Application", app.number, reply.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<App>()
+                {
+                    ActionType = ActionType.ActionUpdate,
+                    CacheProxy = appCacheProxy,
+                    ModifiedObjectId = app.number,
+                    TableName = "Application",
+                    User = reply.Actor
+                });
             }
             return CRUD(app.number, successful);
         }
@@ -372,8 +464,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = AppRepository.RemoveApplication(request.Id);
             if (successful)
             {
-                appCacheProxy.Reset();
-                Log(ActionType.ActionDelete, "Application", request.Id, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<App>()
+                {
+                    ActionType = ActionType.ActionDelete,
+                    CacheProxy = appCacheProxy,
+                    ModifiedObjectId = request.Id,
+                    TableName = "Application",
+                    User = request.Actor
+                });
             }
             return CRUD(request.Id, successful);
         }
@@ -407,8 +505,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = AnimalRepository.AddAnimalCard(animalCard);
             if (successful)
             {
-                animalCardCacheProxy.Reset();
-                Log(ActionType.ActionAdd, "Animal Card", animalCard.IdAnimalCard, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<AnimalCard>()
+                {
+                    ActionType = ActionType.ActionAdd,
+                    CacheProxy = animalCardCacheProxy,
+                    ModifiedObjectId = animalCard.IdAnimalCard,
+                    TableName = "Animal Card",
+                    User = request.Actor
+                });
             }
             return CRUD(animalCard.IdAnimalCard, successful);
         }
@@ -419,8 +523,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = AnimalRepository.UpdateAnimalCard(animalCard);
             if (successful)
             {
-                animalCardCacheProxy.Reset();
-                Log(ActionType.ActionUpdate, "Animal Card", animalCard.IdAnimalCard, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<AnimalCard>()
+                {
+                    ActionType = ActionType.ActionUpdate,
+                    CacheProxy = animalCardCacheProxy,
+                    ModifiedObjectId = animalCard.IdAnimalCard,
+                    TableName = "Animal Card",
+                    User = request.Actor
+                });
             }
             return CRUD(animalCard.IdAnimalCard, successful);
         }
@@ -430,8 +540,14 @@ namespace GrpcServer_PI_21_01.Services
             var successful = AnimalRepository.RemoveAnimalCard(request.Id);
             if (successful)
             {
-                animalCardCacheProxy.Reset();
-                Log(ActionType.ActionDelete, "Animal Card", request.Id, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<AnimalCard>()
+                {
+                    ActionType = ActionType.ActionDelete,
+                    CacheProxy = animalCardCacheProxy,
+                    ModifiedObjectId = request.Id,
+                    TableName = "Animal Card",
+                    User = request.Actor
+                });
             }
             return CRUD(request.Id, successful);
         }
@@ -485,14 +601,28 @@ namespace GrpcServer_PI_21_01.Services
         {
             var actApp = request.FromReply();
             var successful = ActRepository.AddActApp(actApp);
-            Log(ActionType.ActionAdd, "Act Application", actApp.ActAppNumber, request.Actor);
+            Subject.Instance.NotifyObservers(new ObserverArguments<ActApp>()
+            {
+                ActionType = ActionType.ActionAdd,
+                ModifiedObjectId = actApp.ActAppNumber,
+                TableName = "Act Application",
+                User = request.Actor
+            });
+            //Log(ActionType.ActionAdd, "Act Application", actApp.ActAppNumber, request.Actor);
             return CRUD(request.Id, successful);
         }
 
         public override Task<OperationResult> RemoveActApps(IdRequest request, ServerCallContext context)
         {
             var successful = ActRepository.RemoveActAppp(request.Id);
-            Log(ActionType.ActionDelete, "Act Application", request.Id, request.Actor);
+            Subject.Instance.NotifyObservers(new ObserverArguments<ActApp>()
+            {
+                ActionType = ActionType.ActionDelete,
+                ModifiedObjectId = request.Id,
+                TableName = "Act Application",
+                User = request.Actor
+            });
+            //Log(ActionType.ActionDelete, "Act Application", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
 
@@ -500,7 +630,14 @@ namespace GrpcServer_PI_21_01.Services
         {
             var actApp = request.FromReply();
             var successful = ActRepository.UpdateActApp(actApp);
-            Log(ActionType.ActionUpdate, "Act Application", actApp.ActAppNumber, request.Actor);
+            Subject.Instance.NotifyObservers(new ObserverArguments<ActApp>()
+            {
+                ActionType = ActionType.ActionUpdate,
+                ModifiedObjectId = request.Id,
+                TableName = "Act Application",
+                User = request.Actor
+            });
+            //Log(ActionType.ActionUpdate, "Act Application", actApp.ActAppNumber, request.Actor);
             return CRUD(request.Id, successful);
         }
         #endregion
@@ -530,7 +667,13 @@ namespace GrpcServer_PI_21_01.Services
         {
             var lc = request.FromReply();
             var successful = LocationRepository.AddLocationContract(lc);
-            Log(ActionType.ActionAdd, "Location Contract", lc.Id, request.Actor);
+            Subject.Instance.NotifyObservers(new ObserverArguments<Location_Contract>() 
+            {
+                ActionType = ActionType.ActionAdd, 
+                ModifiedObjectId = lc.Id, 
+                TableName = "Location Contract", 
+                User = request.Actor 
+            });
             return CRUD(request.Id, successful);
         }
 
@@ -538,19 +681,32 @@ namespace GrpcServer_PI_21_01.Services
         {
             var lc = request.FromReply();
             var successful = LocationRepository.UpdateLocationContract(lc);
-            Log(ActionType.ActionUpdate, "Location Contract", lc.Id, request.Actor);
+            Subject.Instance.NotifyObservers(new ObserverArguments<Location_Contract>()
+            {
+                ActionType = ActionType.ActionUpdate,
+                ModifiedObjectId = lc.Id,
+                TableName = "Location Contract",
+                User = request.Actor
+            });
+            //Log(ActionType.ActionUpdate, "Location Contract", lc.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
 
         public override Task<OperationResult> RemoveLocationContract(IdRequest request, ServerCallContext context)
         {
             var successful = LocationRepository.RemoveLocationContract(request.Id);
-            Log(ActionType.ActionDelete, "Location Contract", request.Id, request.Actor);
+            Subject.Instance.NotifyObservers(new ObserverArguments<Location_Contract>()
+            {
+                ActionType = ActionType.ActionDelete,
+                ModifiedObjectId = request.Id,
+                TableName = "Location Contract",
+                User = request.Actor
+            });
+            //Log(ActionType.ActionDelete, "Location Contract", request.Id, request.Actor);
             return CRUD(request.Id, successful);
         }
         #endregion
     }
-
     
 
     public static class DataExtensions

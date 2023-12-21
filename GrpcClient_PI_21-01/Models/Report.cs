@@ -63,4 +63,17 @@ namespace GrpcClient_PI_21_01.Models
             Status = status;
         }
     }
+
+    public class ReportDataClass
+    {
+        public List<string> availableStatuses { get; set; }
+        public List<string> availableActions { get; set; }
+
+        public ReportDataClass()
+        {
+            availableStatuses = new List<string>();
+            availableActions = new List<string>();
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ namespace GrpcServer_PI_21_01.Data
     class ContractRepository : IRepository<Contract>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
+        public static readonly DataCacheProxy<Contract> ContractCacheProxy = new(new ContractRepository(), IRepository<Contract>.CacheDurationMs);
 
         public static int GetMaxPage(DataRequest req)
         {

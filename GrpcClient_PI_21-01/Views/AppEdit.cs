@@ -31,7 +31,8 @@ namespace GrpcClient_PI_21_01.Views
 
         private void ButtonCloseApp_Click(object? sender, EventArgs e)
         {
-            textBoxStatus.Text = "Removed";
+            app.status = AppStatus.Removed;
+            textBoxStatus.Text = "Снята с исполнения";
         }
 
         public AppEdit(App app)
@@ -86,9 +87,13 @@ namespace GrpcClient_PI_21_01.Views
                 descrip.Text = app.animaldescription;
                 category.SelectedItem = app.applicantCategory;
                 textBoxStatus.Text = app.status.Translate();
-                if (textBoxStatus.Text == AppStatus.Fulfilled.Translate())
+                if (app.status == AppStatus.Fulfilled)
                 {
                     buttonCloseApp.Enabled = false;
+                }
+                if (app.status == AppStatus.Removed)
+                {
+                    OkAppEdit.Enabled = false;
                 }
             }
             catch
@@ -135,7 +140,7 @@ namespace GrpcClient_PI_21_01.Views
             }
             else
             {
-                app.status = Enum.Parse<AppStatus>(textBoxStatus.Text);
+                //app.status = Enum.Parse<AppStatus>(textBoxStatus.Text);
                 var updated = await AppService.UpdateApplication(app);
                 if (!updated)
                 {

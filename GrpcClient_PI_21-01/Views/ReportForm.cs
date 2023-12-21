@@ -1,5 +1,6 @@
 ﻿using GrpcClient_PI_21_01.Controllers;
 using GrpcClient_PI_21_01.Models;
+using System.Linq;
 
 namespace GrpcClient_PI_21_01.Views
 {
@@ -7,18 +8,19 @@ namespace GrpcClient_PI_21_01.Views
     {
         Report? editableReport;
         readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+        ReportDataClass reportData;
 
-        public ReportForm()
+        public ReportForm(ReportDataClass reportData)
         {
+            this.reportData = reportData;
             InitializeComponent();
-
             InitNew();
         }
 
-        public ReportForm(Report editableReport)
+        public ReportForm(Report editableReport, ReportDataClass reportData)
         {
+            this.reportData = reportData;
             InitializeComponent();
-
             this.editableReport = editableReport;
             InitWatch();
         }
@@ -38,6 +40,17 @@ namespace GrpcClient_PI_21_01.Views
 
             dateTimePickerStart.ValueChanged += dateTimePickerStart_ValueChanged;
             dateTimePickerEnd.ValueChanged += dateTimePickerStart_ValueChanged;
+
+            reportStatuses.Items.Clear();
+
+            List<StatusTranslate<ReportStatus>> statusComboboxList = new();
+            statusComboboxList = statusComboboxList.Concat(reportData.availableStatuses
+                .Select(status => new StatusTranslate<ReportStatus>(Enum.Parse<ReportStatus>(status), Enum.Parse<ReportStatus>(status).Translate()))).ToList();
+
+            reportStatuses.DataSource = new BindingSource(statusComboboxList, null);
+            reportStatuses.DropDownStyle = ComboBoxStyle.DropDownList;
+            reportStatuses.DisplayMember = "StatusTranslate";
+            reportStatuses.ValueMember = "Status";
         }
 
         public async void InitWatch()
@@ -46,7 +59,7 @@ namespace GrpcClient_PI_21_01.Views
             if (editableReport == null)
                 throw new Exception("Editable report was null");
 
-            if (!CanEditReport(editableReport))
+            if (!reportData.availableStatuses.Contains(ReportStatus.ApprovalFromMunicipalContractExecutor.ToString()))
             {
                 dateTimePickerEnd.Enabled = false;
                 dateTimePickerStart.Enabled = false;
@@ -56,53 +69,26 @@ namespace GrpcClient_PI_21_01.Views
             var user = UserService.CurrentUser;
             if (user is null) throw new Exception("User is null");
 
-            saveButton.Enabled = false;
+            //saveButton.Enabled = false;
             reportStatuses.Items.Clear();
-            var availableStatuses = await ReportService.GetAvailableStatuses();
-    //        comboBoxOrganization.DataSource = new BindingSource(organizations
-    //.Where(o => o.type == OrganizationType.Trapping || o.type == OrganizationType.TrappingAndShelter).ToList(), null);
-    //        comboBoxOrganization.DisplayMember = "name";
-    //        comboBoxOrganization.ValueMember = "idOrg";
 
-    //        comboBoxApp.Items.AddRange(applications.ToArray());
-    //        comboBoxApp.DisplayMember = "number";
-    //        comboBoxApp.ValueMember = "number";
-
-
-
-
-            //if (user.PrivelegeLevel == "Operator_Po_Otlovy")
-            //{
-            //    saveButton.Text = "Сохранить";
-            //    saveButton.Enabled = editableReport.Status == ReportStatus.Draft
-            //        || editableReport.Status == ReportStatus.Revision
-            //        || editableReport.Status == ReportStatus.ApprovalFromMunicipalContractExecutor;
-            //}
-            //else if (user.PrivelegeLevel == "Curator_Po_Otlovy")
-            //{
-            //    saveButton.Text = "Согласовать";
-            //    saveButton.Enabled = editableReport.Status == ReportStatus.ApprovalFromMunicipalContractExecutor;
-            //}
-            //else if (user.PrivelegeLevel == "Podpisant_Po_Otlovy")
-            //{
-            //    saveButton.Text = "Утвердить";
-            //    saveButton.Enabled = editableReport.Status == ReportStatus.ApprovedByMunicipalContractExecutor;
-            //}
-            //else if (user.PrivelegeLevel == "Curator_OMSY")
-            //{
-            //    saveButton.Text = "Согласовать в ОМСУ";
-            //    saveButton.Enabled = editableReport.Status == ReportStatus.AgreedWithMunicipalContractExecutor;
-            //}
-            //else if (user.PrivelegeLevel == "Admin")
-            //{
-            //    saveButton.Text = "Кнопка админа";
-            //    saveButton.Enabled = editableReport.Status != ReportStatus.ApprovedByOmsy;
-            //}
-            //else
-            //{
-            //    MessageBox.Show("You are not allowed to edit this report.",
-            //        "Caution", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
+            List<StatusTranslate<ReportStatus>> statusComboboxList = new();
+            statusComboboxList = statusComboboxList.Concat(reportData.availableStatuses
+                .Select(status => new StatusTranslate<ReportStatus>(Enum.Parse<ReportStatus>(status), Enum.Parse<ReportStatus>(status).Translate()))).ToList();
+            if (reportData.availableStatuses.Count == 0)
+            {
+                reportStatuses.Enabled = false;
+                reportStatuses.Text = editableReport.Status.Translate();
+                saveButton.Enabled = false;
+            }
+            else
+            {
+                reportStatuses.DataSource = new BindingSource(statusComboboxList, null);
+                reportStatuses.DropDownStyle = ComboBoxStyle.DropDownList;
+                reportStatuses.DisplayMember = "StatusTranslate";
+                reportStatuses.ValueMember = "Status";
+                reportStatuses.Text = editableReport.Status.Translate();
+            }
 
             actorName.Text = String.Join(" ", editableReport.User.Surname, editableReport.User.Name, editableReport.User.Patronymic);
             textBoxSum.Text = editableReport.Profit + " ₽";
@@ -113,20 +99,6 @@ namespace GrpcClient_PI_21_01.Views
             createdAt.Text = editableReport.CreatedAt.ToString("dd/MM/yyyy");
             updatedAt.Text = editableReport.UpdatedAt.ToString("dd/MM/yyyy");
             reportStatus.Text = editableReport.Status.Translate();
-        }
-
-        static bool CanEditReport(Report report)
-        {
-            var user = UserService.CurrentUser;
-            if (user is null) throw new Exception("User is null");
-
-            if (report.Status == ReportStatus.Revision ||
-                report.Status == ReportStatus.Draft ||
-                report.Status == ReportStatus.ApprovalFromMunicipalContractExecutor)
-            {
-                return user.PrivelegeLevel == "Operator_Po_Otlovy";
-            }
-            return false;
         }
 
         public async Task GenereteReport()
@@ -150,7 +122,7 @@ namespace GrpcClient_PI_21_01.Views
             {
                 if (editableReport?.Id == -1)
                 {
-                    editableReport.Status = ReportStatus.ApprovalFromMunicipalContractExecutor;
+                    editableReport.Status = Enum.Parse<ReportStatus>(reportStatuses.SelectedValue.ToString());
                     var successful = await ReportService.AddReport(editableReport);
                     if (successful)
                     {
@@ -162,11 +134,13 @@ namespace GrpcClient_PI_21_01.Views
                 }
                 else
                 {
-                    var status = GetNewReportStatus(editableReport);
-                    editableReport.Status = status;
+                    //var status = GetNewReportStatus(editableReport);
+                    editableReport.Status = Enum.Parse<ReportStatus>(reportStatuses.SelectedValue.ToString());
                     var successful = await ReportService.UpdateReport(editableReport);
                     if (successful)
-                        InitWatch();
+                    {
+                        Close();
+                    }
                     else MessageBox.Show("Internal error has occured. Please contract the administrator.",
                         "Internal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -175,34 +149,6 @@ namespace GrpcClient_PI_21_01.Views
             {
                 semaphore.Release();
             }
-        }
-
-        static ReportStatus GetNewReportStatus(Report report)
-        {
-            var user = UserService.CurrentUser;
-            if (user is null)
-                throw new Exception("User is null");
-
-            if (report.Status == ReportStatus.ApprovalFromMunicipalContractExecutor
-                && user.PrivelegeLevel == "Curator_Po_Otlovy")
-                return ReportStatus.ApprovedByMunicipalContractExecutor;
-
-            if (report.Status == ReportStatus.ApprovedByMunicipalContractExecutor
-                && user.PrivelegeLevel == "Podpisant_Po_Otlovy")
-                return ReportStatus.AgreedWithMunicipalContractExecutor;
-
-            if (report.Status == ReportStatus.AgreedWithMunicipalContractExecutor
-                && user.PrivelegeLevel == "Curator_OMSY")
-                return ReportStatus.ApprovedByOmsy;
-
-            if (report.Status == ReportStatus.Draft || report.Status == ReportStatus.Revision
-                || report.Status == ReportStatus.ApprovalFromMunicipalContractExecutor)
-            {
-                if (user.PrivelegeLevel == "Operator_Po_Otlovy")
-                    return ReportStatus.ApprovalFromMunicipalContractExecutor;
-            }
-
-            throw new Exception($"User with role {user.PrivelegeLevel} cannot change report status");
         }
 
         private async void dateTimePickerStart_ValueChanged(object sender, EventArgs e)
@@ -216,6 +162,17 @@ namespace GrpcClient_PI_21_01.Views
             {
                 semaphore.Release();
             }
+        }
+    }
+    public class StatusTranslate<T>
+    {
+        public T Status { get; set; }
+        public string Translate { get; set; }
+
+        public StatusTranslate(T status, string Translate)
+        {
+            Status = status;
+            this.Translate = Translate;
         }
     }
 }

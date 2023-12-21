@@ -5,6 +5,12 @@ using GrpcServer_PI_21_01.Services;
 
 namespace GrpcServer_PI_21_01.Data
 {
+    public enum ReportActions
+    {
+        Add = 0,
+        Remove = 1,
+        Update = 2,
+    }
     internal class ReportRepository : IRepository<Report>
     {
         private static List<Report> reports = new();
@@ -39,10 +45,83 @@ namespace GrpcServer_PI_21_01.Data
         }
 
 
-        public static void ChangeAvailableStatuses(int userId, StatusReportSubject subject)
+        public static List<ReportActions> GetAvailableActions(int userId)
+        {
+            var actions = new List<ReportActions>();
+            var user = UserRepository.GetUserById(userId);
+            if (user.PrivelegeLevel == Roles.OperatorPoOtlovy || user.PrivelegeLevel == Roles.Admin)
+            {
+                foreach (var rol in Enum.GetValues(typeof(ReportActions)))
+                    actions.Add((ReportActions)rol);
+            }
+            else if (user.PrivelegeLevel == Roles.CuratorPoOtlovy ||
+                     user.PrivelegeLevel == Roles.PodpisantPoOtlovy ||
+                     user.PrivelegeLevel == Roles.CuratorOmsy)
+            {
+                actions.Add(ReportActions.Update);
+            }
+            return actions;
+        }
+
+        public static List<ReportStatus> GetAvailableStatuses(int userId, ActionType actionType, ReportStatus currentStatus)
         {
             var user = UserRepository.GetUserById(userId);
-            subject.Role = user.PrivelegeLevel;
+            var statuses = new List<ReportStatus>();
+            if (user.PrivelegeLevel == Roles.Admin)
+                foreach (var rol in Enum.GetValues(typeof(ReportStatus)))
+                    statuses.Add((ReportStatus)rol);
+
+            if (user.PrivelegeLevel == Roles.OperatorPoOtlovy)
+            {
+                if (actionType == ActionType.ActionAdd)
+                {
+                    statuses.Add(ReportStatus.ApprovalFromMunicipalContractExecutor);
+                }
+                else
+                {
+                    if (currentStatus == ReportStatus.Revision || currentStatus == ReportStatus.ApprovalFromMunicipalContractExecutor)
+                    {
+                        statuses.Add(ReportStatus.ApprovalFromMunicipalContractExecutor);
+                    }
+                }
+            }
+
+            if (user.PrivelegeLevel == Roles.CuratorPoOtlovy)
+            {
+                if (actionType == ActionType.ActionUpdate)
+                {
+                    if (currentStatus == ReportStatus.ApprovalFromMunicipalContractExecutor)
+                    {
+                        statuses.Add(ReportStatus.Revision);
+                        statuses.Add(ReportStatus.ApprovedByMunicipalContractExecutor);
+                    }
+                }
+            }
+
+            if (user.PrivelegeLevel == Roles.PodpisantPoOtlovy)
+            {
+                if (actionType == ActionType.ActionUpdate)
+                {
+                    if (currentStatus == ReportStatus.ApprovedByMunicipalContractExecutor)
+                    {
+                        statuses.Add(ReportStatus.Revision);
+                        statuses.Add(ReportStatus.AgreedWithMunicipalContractExecutor);
+                    }
+                }
+            }
+
+            if (user.PrivelegeLevel == Roles.CuratorOmsy)
+            {
+                if (actionType == ActionType.ActionUpdate)
+                {
+                    if (currentStatus == ReportStatus.AgreedWithMunicipalContractExecutor)
+                    {
+                        statuses.Add(ReportStatus.Revision);
+                        statuses.Add(ReportStatus.ApprovedByOmsy);
+                    }
+                }
+            }
+            return statuses;
         }
 
 

@@ -2,6 +2,7 @@
 using GrpcServer_PI_21_01.Data;
 using Google.Protobuf.WellKnownTypes;
 using GrpcServer_PI_21_01.Models;
+using System.Diagnostics.Contracts;
 
 namespace GrpcServer_PI_21_01.Services
 {
@@ -11,13 +12,12 @@ namespace GrpcServer_PI_21_01.Services
         private readonly ILogger<ReportService> _logger;
         private readonly DataCacheProxy<Report> reportCacheProxy = new(new ReportRepository(), CacheDurationMs);
         private readonly DataCacheProxy<Operation> operationProxy = new(new OperationRepository(), CacheDurationMs);
-        private readonly StatusReportObserver statusReportObserver = new StatusReportObserver();
-        private readonly StatusReportSubject statusReportSubject = new StatusReportSubject();
+        //private readonly StatusReportObserver statusReportObserver = new StatusReportObserver();
+        //private readonly StatusReportSubject statusReportSubject = new StatusReportSubject();
 
         public ReportService(ILogger<ReportService> logger)
         {
             _logger = logger;
-            statusReportSubject.RegisterObserver(statusReportObserver);
         }
 
         private static Task<OperationResult> CRUD(int modifiedId, bool successful)
@@ -30,27 +30,27 @@ namespace GrpcServer_PI_21_01.Services
             return Task.FromResult(result);
         }
 
-        public void Log(ActionType actType, string tableName, int modifId, UserReply actor)
-        {
-            var operation = new OperationReply()
-            {
-                Action = actType,
-                ModifiedObjectId = modifId,
-                ModifiedTableName = tableName,
-                OperationId = -1,
-                User = actor,
-                Date = DateTime.Now.ToUtc().ToTimestamp(),
-            };
-            var logged = OperationRepository.AddOperation(operation);
-            if (!logged)
-            {
-                _logger.LogError("Error has occured during operation log. Please debug this log:" +
-                    "\n{Username} has made changes to {tableName} table at index {modifId}." +
-                    " Action type: {actType}.",
-                    string.Join(" ", actor.Surname, actor.Name, actor.Patronymic), tableName, modifId, actType);
-            }
-            else operationProxy.Reset();
-        }
+        //public void Log(ActionType actType, string tableName, int modifId, UserReply actor)
+        //{
+        //    var operation = new OperationReply()
+        //    {
+        //        Action = actType,
+        //        ModifiedObjectId = modifId,
+        //        ModifiedTableName = tableName,
+        //        OperationId = -1,
+        //        User = actor,
+        //        Date = DateTime.Now.ToUtc().ToTimestamp(),
+        //    };
+        //    var logged = OperationRepository.AddOperation(operation);
+        //    if (!logged)
+        //    {
+        //        _logger.LogError("Error has occured during operation log. Please debug this log:" +
+        //            "\n{Username} has made changes to {tableName} table at index {modifId}." +
+        //            " Action type: {actType}.",
+        //            string.Join(" ", actor.Surname, actor.Name, actor.Patronymic), tableName, modifId, actType);
+        //    }
+        //    else operationProxy.Reset();
+        //}
         public override async Task GetReports(DataRequest request, IServerStreamWriter<ReportReply> responseStream, ServerCallContext context)
         {
             var filter = new Filter<Report>(request.Filter);
@@ -77,30 +77,55 @@ namespace GrpcServer_PI_21_01.Services
             var successful = ReportRepository.AddReport(report);
             if (successful)
             {
-                reportCacheProxy.Reset();
-                Log(ActionType.ActionAdd, "Report", report.Id, report.User.ToReply());
+                Subject.Instance.NotifyObservers(new ObserverArguments<Report>()
+                {
+                    ModifiedObjectId = report.Id,
+                    TableName = "Report",
+                    ActionType = ActionType.ActionAdd,
+                    CacheProxy = reportCacheProxy,
+                    User = request.Actor
+                });
+                //reportCacheProxy.Reset();
+                //Log(ActionType.ActionAdd, "Report", report.Id, report.User.ToReply());
             }
             return CRUD(report.Id, successful);
         }
 
-        public override async Task GetAvailableStatuses(Id request, IServerStreamWriter<AvailableStatuses> responseStream, ServerCallContext context)
-        {
-            ReportRepository.ChangeAvailableStatuses(request.Id_, statusReportSubject);
-            var statuses = statusReportObserver.Statuses.Select(status => status.ToString()).ToList();
-            foreach (var status in statuses)
-                await responseStream.WriteAsync(new AvailableStatuses() 
-                { 
-                    AvailableStatuses_ = status
-                });
-        } 
         
+
+        public override Task<AvailableActions> GetAvailableActions(Id request, ServerCallContext context)
+        {
+            var actions = ReportRepository.GetAvailableActions(request.Id_).Select(action => action.ToString()).ToList();
+            var reportResponse = new AvailableActions();
+            reportResponse.AvailableActions_.AddRange(actions);
+            return Task.FromResult(reportResponse);
+        }
+
+        public override Task<AvailableStatuses> GetAvailableStatuses(IdAndStatus request, ServerCallContext context)
+        {
+            
+            var statuses = ReportRepository.GetAvailableStatuses(request.Id, request.ActionType, request.Status)
+                .Select(status=> status.ToString()).ToList();
+            var reportResponse = new AvailableStatuses();
+            reportResponse.AvailableStatuses_.AddRange(statuses);
+            return Task.FromResult(reportResponse);
+        }
+
         public override Task<OperationResult> RemoveReport(IdRequest request, ServerCallContext context)
         {
             var successful = ReportRepository.RemoveReport(request.Id);
             if (successful)
             {
-                reportCacheProxy.Reset();
-                Log(ActionType.ActionDelete, "Report", request.Id, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Report>()
+                {
+                    ModifiedObjectId = request.Id,
+                    TableName = "Report",
+                    ActionType = ActionType.ActionDelete,
+                    CacheProxy = reportCacheProxy,
+                    User = request.Actor
+                });
+                //reportCacheProxy.Reset();
+                //Log(ActionType.ActionDelete, "Report", request.Id, request.Actor);
             }
             return CRUD(request.Id, successful);
         }
@@ -135,8 +160,16 @@ namespace GrpcServer_PI_21_01.Services
             var successful = ReportRepository.UpdateReport(rep);
             if (successful)
             {
-                reportCacheProxy.Reset();
-                Log(ActionType.ActionUpdate, "Report", request.Id, request.Actor);
+                Subject.Instance.NotifyObservers(new ObserverArguments<Report>()
+                {
+                    ModifiedObjectId = request.Id,
+                    TableName = "Report",
+                    ActionType = ActionType.ActionUpdate,
+                    CacheProxy = reportCacheProxy,
+                    User = request.Actor
+                });
+                //reportCacheProxy.Reset();
+                //Log(ActionType.ActionUpdate, "Report", request.Id, request.Actor);
             }
             return CRUD(request.Id, successful);
         }

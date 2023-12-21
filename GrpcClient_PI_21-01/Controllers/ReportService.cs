@@ -147,20 +147,34 @@ namespace GrpcClient_PI_21_01.Controllers
             //return otvRep;
         }
 
-        public static async Task<List<string>> GetAvailableStatuses()
+        public static async Task<ReportDataClass> GetAvailableActions()
         {
-            var statuses = new List<string>();
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");
             var client = new ReportGenerator.ReportGeneratorClient(channel);
-            var serverData = client.GetAvailableStatuses(new Id()
+            var serverData = await client.GetAvailableActionsAsync(new Id()
             {
                 Id_ = UserService.CurrentUser.IdUser
             });
-            var responseStream = serverData.ResponseStream;
-            await foreach (var response in responseStream.ReadAllAsync())
-                statuses.Add(response.AvailableStatuses_);
-            return statuses;
+            var reportData = new ReportDataClass();
+            reportData.availableActions = serverData.AvailableActions_.ToList();
+            return reportData;
         }
+
+        public static async Task<List<string>> GetAvailableStatuses(ActionType type, ReportStatus status)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:7275");
+            var client = new ReportGenerator.ReportGeneratorClient(channel);
+            var serverData = await client.GetAvailableStatusesAsync(new IdAndStatus()
+            {
+                Id = UserService.CurrentUser.IdUser,
+                Status = status,
+                ActionType = type
+
+            });
+            var reportData = new ReportDataClass();
+            return serverData.AvailableStatuses_.ToList();
+        }
+
         public static async Task<bool> RemoveReport(int reportId)
         {
             using var channel = GrpcChannel.ForAddress("https://localhost:7275");

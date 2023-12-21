@@ -6,6 +6,7 @@ namespace GrpcServer_PI_21_01.Data
     public class ActRepository : IRepository<Act>
     {
         static readonly NpgsqlConnection cn = new NpgsqlConnection(DatabaseAssistant.ConnectionString);
+        //static readonly DataCacheProxy<Act> 
 
         public static bool UpdateAct(Act actData)
         {
@@ -324,7 +325,6 @@ namespace GrpcServer_PI_21_01.Data
 
         public static bool AddActApp(ActApp actApp)
         {
-
             try
             {
                 using NpgsqlCommand cmd = new($"INSERT INTO act_catch_request " +
@@ -337,6 +337,7 @@ namespace GrpcServer_PI_21_01.Data
                     actApp.ActAppNumber = returnValue;
                     cn.Close();
                 }
+
                 CheckCatchedAnimals(actApp.Application);
                 
                 // 'A' подаётся с Id = -1. После добавления в БД нужно присвоить

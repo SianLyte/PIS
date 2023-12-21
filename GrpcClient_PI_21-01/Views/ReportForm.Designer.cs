@@ -274,7 +274,7 @@ namespace GrpcClient_PI_21_01.Views
             // 
             reportStatus.BackColor=Color.Cornsilk;
             reportStatus.BorderStyle=BorderStyle.None;
-            reportStatus.Location=new Point(182, 549);
+            reportStatus.Location=new Point(182, 519);
             reportStatus.Margin=new Padding(6, 9, 6, 9);
             reportStatus.Name="reportStatus";
             reportStatus.ReadOnly=true;
@@ -285,9 +285,9 @@ namespace GrpcClient_PI_21_01.Views
             // 
             reportStatuses.BackColor=Color.Cornsilk;
             reportStatuses.FormattingEnabled=true;
-            reportStatuses.Location=new Point(235, 591);
+            reportStatuses.Location=new Point(182, 561);
             reportStatuses.Name="reportStatuses";
-            reportStatuses.Size=new Size(151, 38);
+            reportStatuses.Size=new Size(501, 38);
             reportStatuses.TabIndex=25;
             // 
             // ReportForm
@@ -330,6 +330,7 @@ namespace GrpcClient_PI_21_01.Views
             ((System.ComponentModel.ISupportInitialize)animalCount).EndInit();
             ResumeLayout(false);
             PerformLayout();
+
         }
 
         #endregion
